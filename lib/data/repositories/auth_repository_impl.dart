@@ -6,7 +6,9 @@ import 'package:anivsub/domain/entities/refresh_user_session_request_entity.dart
 import 'package:anivsub/domain/entities/refresh_user_session_response_entity.dart';
 import 'package:anivsub/domain/entities/user/user_entity.dart';
 import 'package:anivsub/domain/repositories/auth_repository.dart';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _authRemoteDataSource;
 

@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:geolocator/geolocator.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class LocationService {
   Future<Position?> getUserPosition({
     bool canRetrieveCachedPosition = true,

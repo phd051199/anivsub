@@ -65,6 +65,11 @@ EOL
 
 if [ "$with_bloc" == "true" ]; then
   cat <<EOL >> "$view_dir/${feature_name}_page.dart"
+import 'package:$package_name/core/base/base.dart';
+import 'package:$package_name/features/shared/loading_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../bloc/${feature_name}_bloc.dart';
 import '../bloc/${feature_name}_state.dart';
 
@@ -75,15 +80,27 @@ class ${capitalized_feature_name}Page extends StatefulWidget {
   State<${capitalized_feature_name}Page> createState() => _${capitalized_feature_name}PageState();
 }
 
-class _${capitalized_feature_name}PageState extends State<${capitalized_feature_name}Page> {
+class _${capitalized_feature_name}PageState extends BlocState<${capitalized_feature_name}Page, ${capitalized_feature_name}Bloc> {
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    bloc.add(Load${capitalized_feature_name}());
+  }
+
+  @override
+  void dispose() async {
+    super.dispose();
+    await bloc.close();
+  }
+
+  @override
+  Widget buildPage(BuildContext context) {
     return BlocConsumer<${capitalized_feature_name}Bloc, ${capitalized_feature_name}State>(
       listener: (context, state) {},
       builder: (context, state) {
-        return SafeArea(
-          child: switch (state) {
-            ${capitalized_feature_name}Initial() || ${capitalized_feature_name}Loading() => const Center(child: CircularProgressIndicator()),
+        return Scaffold(
+          body: switch (state) {
+            ${capitalized_feature_name}Initial() || ${capitalized_feature_name}Loading() => const LoadingWidget(),
             ${capitalized_feature_name}Loaded() => _buildBody(context, state),
             _ => Container(),
           },
@@ -128,8 +145,8 @@ class _${capitalized_feature_name}PageState extends CubitState<${capitalized_fea
   Widget buildPage(BuildContext context) {
     return BlocBuilder<${capitalized_feature_name}Cubit, ${capitalized_feature_name}State>(
       builder: (context, state) {
-        return SafeArea(
-          child: switch (state) {
+        return Scaffold(
+          body: switch (state) {
             ${capitalized_feature_name}Initial() || ${capitalized_feature_name}Loading() => const LoadingWidget(),
             ${capitalized_feature_name}Loaded() => _buildBody(context, state),
             _ => Container(),

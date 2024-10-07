@@ -31,10 +31,12 @@ class _ChewiePlayerState extends State<ChewiePlayer> {
   }
 
   @override
-  void dispose() {
+  void dispose() async {
+    super.dispose();
+
+    await _chewieController.pause();
     _chewieController.dispose();
     _videoPlayerController.dispose();
-    super.dispose();
   }
 
   @override

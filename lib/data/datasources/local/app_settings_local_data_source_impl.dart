@@ -1,7 +1,9 @@
 import 'package:anivsub/core/service/shared_preferences_service.dart';
 import 'package:anivsub/data/datasources/local/app_settings_local_data_source.dart';
 import 'package:anivsub/data/dto/app_settings_dto.dart';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton(as: AppSettingsLocalDataSource)
 class AppSettingsLocalDataSourceImpl implements AppSettingsLocalDataSource {
   static const appSettingsKey = 'app_settings';
   final SharedPreferenceService sharedPreferenceService;

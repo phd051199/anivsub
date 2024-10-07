@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:injectable/injectable.dart';
 
+@singleton
 class AuthNotifier with ChangeNotifier {
   final AuthUseCases authUseCases;
   var _status = AuthStatus.notAuthenticated;

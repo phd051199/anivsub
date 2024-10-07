@@ -5,7 +5,9 @@ import 'package:anivsub/data/dto/user_session_response_dto.dart';
 import 'package:anivsub/data/dto/refresh_user_session_request_dto.dart';
 import 'package:anivsub/data/dto/refresh_user_session_response_dto.dart';
 import 'package:anivsub/data/dto/user/user_dto.dart';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final AuthApiClient client;
 

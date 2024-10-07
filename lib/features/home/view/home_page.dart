@@ -1,12 +1,13 @@
 import 'dart:ui';
 
+import 'package:anivsub/core/routes/go_router_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/features/home/cubit/home_cubit.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
-import 'package:anivsub/features/shared/chewie_player.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 import '../cubit/home_state.dart';
 
@@ -98,31 +99,23 @@ class HomePage extends StatelessWidget {
         Divider(
           height: 32,
         ),
-        _buildSection(
-          context,
-          title: 'Playing',
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 20),
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-              color: Colors.black87,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ChewiePlayer(),
-          ),
-        ),
       ],
     );
   }
 
   Widget _buildChapter(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.85,
-      child: Row(
-        children: [
-          _buildThumb(context),
-          _buildDesc(context),
-        ],
+    return InkWell(
+      onTap: () {
+        context.push(ScreenPaths.watch);
+      },
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.85,
+        child: Row(
+          children: [
+            _buildThumb(context),
+            _buildDesc(context),
+          ],
+        ),
       ),
     );
   }

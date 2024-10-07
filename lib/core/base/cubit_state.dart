@@ -6,7 +6,7 @@ import 'cubit/base_cubit.dart';
 
 abstract class CubitState<T extends StatefulWidget, C extends BaseCubit>
     extends State<T> {
-  final C cubit = GetIt.instance.get<C>();
+  final C cubit = GetIt.I.get<C>();
 
   @override
   Widget build(BuildContext context) {

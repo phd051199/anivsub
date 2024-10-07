@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:anivsub/features/settings/widgets/logout_widget.dart';
-import 'package:anivsub/features/settings/widgets/theme_color_widget.dart';
-import 'package:anivsub/features/settings/widgets/theme_mode_widget.dart';
+import 'package:anivsub/features/settings/widget/logout_widget.dart';
+import 'package:anivsub/features/settings/widget/theme_color_widget.dart';
+import 'package:anivsub/features/settings/widget/theme_mode_widget.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

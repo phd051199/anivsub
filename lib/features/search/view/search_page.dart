@@ -36,8 +36,10 @@ class _SearchPageState extends CubitState<SearchPage, SearchCubit> {
   }
 
   Widget _buildBody(BuildContext context, SearchLoaded state) {
-    return Center(
-      child: Text('Search loaded'),
+    return Scaffold(
+      body: Center(
+        child: Text('Search loaded'),
+      ),
     );
   }
 }

@@ -5,5 +5,10 @@ import 'package:get_it/get_it.dart';
 
 void registerApiClient(GetIt getIt, Environment environment) {
   getIt.registerSingleton<AuthApiClient>(
-      AuthApiClient(NetworkClient.getDio(baseUrl: environment.baseUrl)));
+    AuthApiClient(
+      NetworkClient.getDio(
+        baseUrl: environment.baseUrl,
+      ),
+    ),
+  );
 }

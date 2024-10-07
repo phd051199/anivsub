@@ -6,7 +6,7 @@ import 'bloc/base_bloc.dart';
 
 abstract class BlocState<T extends StatefulWidget, B extends BaseBloc>
     extends State<T> {
-  final B bloc = GetIt.instance.get<B>();
+  final B bloc = GetIt.I.get<B>();
 
   @override
   Widget build(BuildContext context) {
