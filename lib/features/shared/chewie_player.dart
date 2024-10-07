@@ -33,7 +33,6 @@ class _ChewiePlayerState extends State<ChewiePlayer> {
   void dispose() {
     _chewieController.dispose();
     _videoPlayerController.dispose();
-    print('dispose called');
     super.dispose();
   }
 

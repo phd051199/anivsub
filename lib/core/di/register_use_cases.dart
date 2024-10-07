@@ -1,6 +1,5 @@
 import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/domain/usecases/home_usecases.dart';
 import 'package:get_it/get_it.dart';
 
 void registerUseCases(GetIt getIt) {

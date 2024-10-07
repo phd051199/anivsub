@@ -4,7 +4,6 @@ import 'package:anivsub/core/service/flutter_secure_storage_service.dart';
 import 'package:anivsub/core/service/shared_preferences_service.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/domain/usecases/home_usecases.dart';
 import 'package:get_it/get_it.dart';
 
 Environment get environment => GetIt.I<Environment>();

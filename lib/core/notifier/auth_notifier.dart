@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/domain/entities/refresh_user_session_request_entity.dart';
 
 class AuthNotifier with ChangeNotifier {
   final AuthUseCases authUseCases;
