@@ -2,3 +2,4 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   errors:
     unused_element: ignore
+    avoid_shadowing_type_parameters: ignore

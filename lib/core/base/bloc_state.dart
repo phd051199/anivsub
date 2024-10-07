@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+
+import 'bloc/base_bloc.dart';
+
+abstract class BlocState<T extends StatefulWidget, B extends BaseBloc>
+    extends State<T> {
+  final B bloc = GetIt.instance.get<B>();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => bloc,
+      child: buildPage(context),
+    );
+  }
+
+  Widget buildPage(BuildContext context);
+
+  void onErrorListener<T extends Object>(
+    BuildContext context,
+    T state,
+  ) {
+    if (state is IBaseBlocStateErrorMessage && state.message != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(state.message!),
+        ),
+      );
+      return;
+    }
+  }
+}

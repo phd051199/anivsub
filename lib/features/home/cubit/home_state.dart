@@ -1,30 +1,13 @@
-part of 'home_cubit.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:anivsub/domain/entities/user_session_response_entity.dart';
 
-sealed class HomeState extends Equatable {
-  const HomeState();
+part 'home_state.freezed.dart';
 
-  @override
-  List<Object> get props => [];
-}
-
-class HomeInitial extends HomeState {}
-
-class HomeLoading extends HomeState {}
-
-class HomeLoaded extends HomeState {
-  final UserSessionResponseEntity user;
-
-  const HomeLoaded({required this.user});
-
-  @override
-  List<Object> get props => [user];
-}
-
-class HomeError extends HomeState {
-  final String message;
-
-  const HomeError(this.message);
-
-  @override
-  List<Object> get props => [message];
+@freezed
+class HomeState with _$HomeState {
+  const factory HomeState.initial() = HomeInitial;
+  const factory HomeState.loading() = HomeLoading;
+  const factory HomeState.loaded({required UserSessionResponseEntity user}) =
+      HomeLoaded;
+  const factory HomeState.error(String message) = HomeError;
 }

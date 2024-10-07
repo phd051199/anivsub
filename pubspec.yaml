@@ -52,6 +52,7 @@ dependencies:
   # Video player
   chewie: ^1.8.5
   video_player: ^2.9.2
+  injectable: ^2.5.0
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,7 @@ dev_dependencies:
   retrofit_generator: ^9.1.2
   flutter_native_splash: ^2.4.1
   flutter_launcher_icons: ^0.14.1
+  injectable_generator: ^2.6.2
 
 flutter:
   generate: true

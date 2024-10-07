@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:anivsub/domain/entities/user_session_response_entity.dart';
 import 'package:anivsub/domain/usecases/home_usecases.dart';
+import 'package:injectable/injectable.dart';
 
-part 'home_state.dart';
+import 'home_state.dart';
 
+@injectable
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this._homeUseCases) : super(HomeInitial()) {
     getUser();

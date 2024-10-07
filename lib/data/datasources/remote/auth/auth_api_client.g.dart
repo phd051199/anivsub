@@ -104,7 +104,7 @@ class _AuthApiClient implements AuthApiClient {
     )
         .compose(
           _dio.options,
-          '/auth/me/?delay=2000',
+          '/auth/me',
           queryParameters: queryParameters,
           data: _data,
         )

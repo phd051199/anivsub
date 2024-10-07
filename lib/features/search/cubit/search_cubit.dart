@@ -7,7 +7,7 @@ class SearchCubit extends Cubit<SearchState> {
   SearchCubit() : super(SearchInitial());
 
   void load() {
-    emit(SearchLoading());
+    // emit(SearchLoading());
     // Add your loading logic here
     emit(SearchLoaded());
   }

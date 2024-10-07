@@ -22,6 +22,6 @@ abstract class AuthApiClient {
     @Body() RefreshUserSessionRequestDTO refreshTokenRequestModel,
   );
 
-  @GET('/auth/me/?delay=2000')
+  @GET('/auth/me')
   Future<UserDTO> getUser();
 }
