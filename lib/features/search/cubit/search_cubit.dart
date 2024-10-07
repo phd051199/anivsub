@@ -1,13 +1,14 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:anivsub/core/base/base.dart';
+import 'package:injectable/injectable.dart';
 
-part 'search_state.dart';
+import 'search_state.dart';
 
-class SearchCubit extends Cubit<SearchState> {
+@injectable
+class SearchCubit extends BaseCubit<SearchState> {
   SearchCubit() : super(SearchInitial());
 
   void load() {
-    // emit(SearchLoading());
+    emit(SearchLoading());
     // Add your loading logic here
     emit(SearchLoaded());
   }

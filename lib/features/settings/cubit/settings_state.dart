@@ -1,15 +1,11 @@
-part of 'settings_cubit.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-sealed class SettingsState {
-  final bool isHintVisible;
+part 'settings_state.freezed.dart';
 
-  const SettingsState({required this.isHintVisible});
-}
-
-class SettingsInitial extends SettingsState {
-  SettingsInitial({required super.isHintVisible});
-}
-
-class SettingsChanged extends SettingsState {
-  SettingsChanged({required super.isHintVisible});
+@freezed
+class SettingsState with _$SettingsState {
+  const factory SettingsState.initial({required bool isHintVisible}) =
+      SettingsInitial;
+  const factory SettingsState.changed({required bool isHintVisible}) =
+      SettingsChanged;
 }

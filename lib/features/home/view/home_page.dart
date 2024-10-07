@@ -8,7 +8,7 @@ import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:anivsub/features/shared/chewie_player.dart';
 import 'package:gap/gap.dart';
 
-import 'cubit/home_state.dart';
+import '../cubit/home_state.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

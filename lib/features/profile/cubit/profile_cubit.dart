@@ -1,11 +1,11 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:anivsub/domain/entities/user/user_entity.dart';
-import 'package:anivsub/domain/usecases/profile_use_cases.dart';
+import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/domain/domain_exports.dart';
+import 'package:injectable/injectable.dart';
 
-part 'profile_state.dart';
+import 'profile_state.dart';
 
-class ProfileCubit extends Cubit<ProfileState> {
+@injectable
+class ProfileCubit extends BaseCubit<ProfileState> {
   ProfileCubit(this.profileUseCases) : super(ProfileInitial()) {
     getUser();
   }

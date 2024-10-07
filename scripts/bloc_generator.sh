@@ -1,5 +1,7 @@
 #!/bin/bash
 
+package_name="anivsub"
+
 # Function to capitalize the feature name
 capitalize_feature_name() {
   echo "$1" | awk -F'_' '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2)); print $0}' OFS=''
@@ -38,6 +40,7 @@ cd ..
 
 # Paths
 feature_dir="lib/features/$feature_name"
+view_dir="$feature_dir/view"
 bloc_dir="$feature_dir/bloc"
 cubit_dir="$feature_dir/cubit"
 
@@ -47,23 +50,23 @@ if [ -d "$feature_dir" ]; then
   exit 1
 fi
 
-# Create feature directory
-mkdir -p "$feature_dir"
+# Create feature directory and view directory
+mkdir -p "$view_dir"
 
 # Capitalize the first letter of the feature name
 capitalized_feature_name=$(capitalize_feature_name "$feature_name")
 
-# Create widget file for both Bloc and Cubit
-cat <<EOL > "$feature_dir/${feature_name}_page.dart"
+# Create widget file in view folder for both Bloc and Cubit
+cat <<EOL > "$view_dir/${feature_name}_page.dart"
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 EOL
 
 if [ "$with_bloc" == "true" ]; then
-  cat <<EOL >> "$feature_dir/${feature_name}_page.dart"
-import 'bloc/${feature_name}_bloc.dart';
-import 'bloc/${feature_name}_state.dart';
+  cat <<EOL >> "$view_dir/${feature_name}_page.dart"
+import '../bloc/${feature_name}_bloc.dart';
+import '../bloc/${feature_name}_state.dart';
 
 class ${capitalized_feature_name}Page extends StatefulWidget {
   const ${capitalized_feature_name}Page({super.key});
@@ -98,20 +101,36 @@ class _${capitalized_feature_name}PageState extends State<${capitalized_feature_
 EOL
 
 elif [ "$with_cubit" == "true" ]; then
-  cat <<EOL >> "$feature_dir/${feature_name}_page.dart"
-import 'cubit/${feature_name}_cubit.dart';
-import 'cubit/${feature_name}_state.dart';
+  cat <<EOL >> "$view_dir/${feature_name}_page.dart"
+import 'package:$package_name/core/base/base.dart';
+import 'package:$package_name/features/shared/loading_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ${capitalized_feature_name}Page extends StatelessWidget {
+import '../cubit/${feature_name}_cubit.dart';
+import '../cubit/${feature_name}_state.dart';
+
+class ${capitalized_feature_name}Page extends StatefulWidget {
   const ${capitalized_feature_name}Page({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<${capitalized_feature_name}Page> createState() => _${capitalized_feature_name}PageState();
+}
+
+class _${capitalized_feature_name}PageState extends CubitState<${capitalized_feature_name}Page, ${capitalized_feature_name}Cubit> {
+  @override
+  void initState() {
+    super.initState();
+    cubit.load();
+  }
+
+  @override
+  Widget buildPage(BuildContext context) {
     return BlocBuilder<${capitalized_feature_name}Cubit, ${capitalized_feature_name}State>(
       builder: (context, state) {
         return SafeArea(
           child: switch (state) {
-            ${capitalized_feature_name}Initial() || ${capitalized_feature_name}Loading() => const Center(child: CircularProgressIndicator()),
+            ${capitalized_feature_name}Initial() || ${capitalized_feature_name}Loading() => const LoadingWidget(),
             ${capitalized_feature_name}Loaded() => _buildBody(context, state),
             _ => Container(),
           },
@@ -135,7 +154,7 @@ if [ "$with_bloc" == "true" ]; then
   
   # Create bloc, event, state files
   cat <<EOL > "$bloc_dir/${feature_name}_bloc.dart"
-import 'package:anivsub/core/base/base.dart';
+import 'package:$package_name/core/base/base.dart';
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -160,7 +179,7 @@ class ${capitalized_feature_name}Bloc extends BaseBloc<${capitalized_feature_nam
 EOL
 
   cat <<EOL > "$bloc_dir/${feature_name}_event.dart"
-import 'package:anivsub/core/base/base.dart';
+import 'package:$package_name/core/base/base.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '${feature_name}_event.freezed.dart';
@@ -179,7 +198,7 @@ class Error${capitalized_feature_name} extends ${capitalized_feature_name}Event 
 EOL
 
   cat <<EOL > "$bloc_dir/${feature_name}_state.dart"
-import 'package:anivsub/core/base/base.dart';
+import 'package:$package_name/core/base/base.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '${feature_name}_state.freezed.dart';
@@ -200,7 +219,7 @@ if [ "$with_cubit" == "true" ]; then
 
   # Create cubit and state files
   cat <<EOL > "$cubit_dir/${feature_name}_cubit.dart"
-import 'package:anivsub/core/base/base.dart';
+import 'package:$package_name/core/base/base.dart';
 import 'package:injectable/injectable.dart';
 
 import '${feature_name}_state.dart';
@@ -233,6 +252,25 @@ class ${capitalized_feature_name}State with _\$${capitalized_feature_name}State 
   const factory ${capitalized_feature_name}State.loaded() = ${capitalized_feature_name}Loaded;
   const factory ${capitalized_feature_name}State.error(String message) = ${capitalized_feature_name}Error;
 }
+EOL
+fi
+
+# Create the feature's main entry file
+cat <<EOL > "$feature_dir/${feature_name}.dart"
+export 'view/${feature_name}_page.dart';
+EOL
+
+if [ "$with_bloc" == "true" ]; then
+  cat <<EOL >> "$feature_dir/${feature_name}.dart"
+export 'bloc/${feature_name}_bloc.dart';
+export 'bloc/${feature_name}_state.dart';
+EOL
+fi
+
+if [ "$with_cubit" == "true" ]; then
+  cat <<EOL >> "$feature_dir/${feature_name}.dart"
+export 'cubit/${feature_name}_cubit.dart';
+export 'cubit/${feature_name}_state.dart';
 EOL
 fi
 

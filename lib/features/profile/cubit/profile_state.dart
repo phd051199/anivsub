@@ -1,30 +1,12 @@
-part of 'profile_cubit.dart';
+import 'package:anivsub/domain/domain_exports.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-sealed class ProfileState extends Equatable {
-  const ProfileState();
+part 'profile_state.freezed.dart';
 
-  @override
-  List<Object> get props => [];
-}
-
-class ProfileInitial extends ProfileState {}
-
-class ProfileLoading extends ProfileState {}
-
-class ProfileLoaded extends ProfileState {
-  final UserEntity user;
-
-  const ProfileLoaded(this.user);
-
-  @override
-  List<Object> get props => [user];
-}
-
-class ProfileError extends ProfileState {
-  final String message;
-
-  const ProfileError(this.message);
-
-  @override
-  List<Object> get props => [message];
+@freezed
+class ProfileState with _$ProfileState {
+  const factory ProfileState.initial() = ProfileInitial;
+  const factory ProfileState.loading() = ProfileLoading;
+ const factory ProfileState.loaded(UserEntity user) = ProfileLoaded;
+  const factory ProfileState.error(String message) = ProfileError;
 }

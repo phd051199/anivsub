@@ -39,23 +39,11 @@ class _ChewiePlayerState extends State<ChewiePlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Chewie(
-            controller: _chewieController,
-          ),
-        ),
-        ElevatedButton(
-          onPressed: () => {
-            _chewieController.seekTo(
-              Duration(seconds: 50),
-            ),
-          },
-          child: Text('seek'),
-        ),
-      ],
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: Chewie(
+        controller: _chewieController,
+      ),
     );
   }
 }

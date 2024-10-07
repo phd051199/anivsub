@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
-import 'package:anivsub/features/profile/cubit/profile_cubit.dart';
 import 'package:anivsub/features/shared/error_dialog.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+
+import '../cubit/profile_cubit.dart';
+import '../cubit/profile_state.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});

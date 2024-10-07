@@ -1,19 +1,15 @@
-import 'package:anivsub/features/search/cubit/search_cubit.dart';
-import 'package:anivsub/features/search/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:anivsub/features/bottom_navigation_screen.dart';
+import 'package:anivsub/features/home/home.dart';
+import 'package:anivsub/features/login/login.dart';
+import 'package:anivsub/features/profile/profile.dart';
+import 'package:anivsub/features/search/search.dart';
+import 'package:anivsub/features/settings/settings.dart';
 import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/notifier/auth_notifier.dart';
-import 'package:anivsub/features/bottom_navigation_screen.dart';
-import 'package:anivsub/features/home/cubit/home_cubit.dart';
-import 'package:anivsub/features/home/home_page.dart';
-import 'package:anivsub/features/profile/cubit/profile_cubit.dart';
-import 'package:anivsub/features/profile/profile_page.dart';
-import 'package:anivsub/features/settings/cubit/settings_cubit.dart';
-import 'package:anivsub/features/settings/settings_screen.dart';
-import 'package:anivsub/features/login/cubit/login_cubit.dart';
-import 'package:anivsub/features/login/login_screen.dart';
-import 'package:go_router/go_router.dart';
 
 abstract final class ScreenPaths {
   static const home = '/';
