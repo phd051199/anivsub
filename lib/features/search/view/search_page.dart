@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/search_cubit.dart';
-import '../cubit/search_state.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

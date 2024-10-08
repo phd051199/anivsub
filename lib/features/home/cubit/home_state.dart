@@ -1,7 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:anivsub/domain/entities/user_session_response_entity.dart';
-
-part 'home_state.freezed.dart';
+part of 'home_cubit.dart';
 
 @freezed
 class HomeState with _$HomeState {

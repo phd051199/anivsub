@@ -67,11 +67,8 @@ if [ "$with_bloc" == "true" ]; then
   cat <<EOL >> "$view_dir/${feature_name}_page.dart"
 import 'package:$package_name/core/base/base.dart';
 import 'package:$package_name/features/shared/loading_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/${feature_name}_bloc.dart';
-import '../bloc/${feature_name}_state.dart';
 
 class ${capitalized_feature_name}Page extends StatefulWidget {
   const ${capitalized_feature_name}Page({super.key});
@@ -121,11 +118,8 @@ elif [ "$with_cubit" == "true" ]; then
   cat <<EOL >> "$view_dir/${feature_name}_page.dart"
 import 'package:$package_name/core/base/base.dart';
 import 'package:$package_name/features/shared/loading_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/${feature_name}_cubit.dart';
-import '../cubit/${feature_name}_state.dart';
 
 class ${capitalized_feature_name}Page extends StatefulWidget {
   const ${capitalized_feature_name}Page({super.key});
@@ -174,9 +168,11 @@ if [ "$with_bloc" == "true" ]; then
 import 'package:$package_name/core/base/base.dart';
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '${feature_name}_event.dart';
-import '${feature_name}_state.dart';
+part '${feature_name}_event.dart';
+part '${feature_name}_state.dart';
+part '${feature_name}_bloc.freezed.dart';
 
 @injectable
 class ${capitalized_feature_name}Bloc extends BaseBloc<${capitalized_feature_name}Event, ${capitalized_feature_name}State> {
@@ -196,10 +192,7 @@ class ${capitalized_feature_name}Bloc extends BaseBloc<${capitalized_feature_nam
 EOL
 
   cat <<EOL > "$bloc_dir/${feature_name}_event.dart"
-import 'package:$package_name/core/base/base.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part '${feature_name}_event.freezed.dart';
+part of '${feature_name}_event.freezed.dart';
 
 abstract class ${capitalized_feature_name}Event extends BaseBlocEvent {}
 
@@ -215,10 +208,7 @@ class Error${capitalized_feature_name} extends ${capitalized_feature_name}Event 
 EOL
 
   cat <<EOL > "$bloc_dir/${feature_name}_state.dart"
-import 'package:$package_name/core/base/base.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part '${feature_name}_state.freezed.dart';
+part of '${feature_name}_cubit.dart';
 
 @freezed
 class ${capitalized_feature_name}State extends BaseBlocState with _\$${capitalized_feature_name}State {
@@ -238,8 +228,10 @@ if [ "$with_cubit" == "true" ]; then
   cat <<EOL > "$cubit_dir/${feature_name}_cubit.dart"
 import 'package:$package_name/core/base/base.dart';
 import 'package:injectable/injectable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '${feature_name}_state.dart';
+part '${feature_name}_state.dart';
+part '${feature_name}_cubit.freezed.dart';
 
 @injectable
 class ${capitalized_feature_name}Cubit extends BaseCubit<${capitalized_feature_name}State> {
@@ -258,9 +250,7 @@ class ${capitalized_feature_name}Cubit extends BaseCubit<${capitalized_feature_n
 EOL
 
   cat <<EOL > "$cubit_dir/${feature_name}_state.dart"
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part '${feature_name}_state.freezed.dart';
+part of '${feature_name}_cubit.dart';
 
 @freezed
 class ${capitalized_feature_name}State with _\$${capitalized_feature_name}State {
@@ -280,14 +270,12 @@ EOL
 if [ "$with_bloc" == "true" ]; then
   cat <<EOL >> "$feature_dir/${feature_name}.dart"
 export 'bloc/${feature_name}_bloc.dart';
-export 'bloc/${feature_name}_state.dart';
 EOL
 fi
 
 if [ "$with_cubit" == "true" ]; then
   cat <<EOL >> "$feature_dir/${feature_name}.dart"
 export 'cubit/${feature_name}_cubit.dart';
-export 'cubit/${feature_name}_state.dart';
 EOL
 fi
 

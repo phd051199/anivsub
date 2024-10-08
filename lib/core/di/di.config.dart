@@ -46,6 +46,7 @@ import 'package:anivsub/domain/usecases/profile_use_cases.dart' as _i826;
 import 'package:anivsub/features/home/cubit/home_cubit.dart' as _i987;
 import 'package:anivsub/features/profile/cubit/profile_cubit.dart' as _i132;
 import 'package:anivsub/features/search/cubit/search_cubit.dart' as _i607;
+import 'package:anivsub/features/settings/cubit/settings_cubit.dart' as _i185;
 import 'package:anivsub/features/watch/bloc/watch_bloc.dart' as _i451;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
@@ -63,6 +64,7 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
+    gh.factory<_i185.SettingsCubit>(() => _i185.SettingsCubit());
     gh.factory<_i607.SearchCubit>(() => _i607.SearchCubit());
     gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc());
     gh.singleton<_i595.SharedPreferenceService>(

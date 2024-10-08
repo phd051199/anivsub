@@ -1,7 +1,4 @@
-import 'package:anivsub/core/base/base.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'watch_event.freezed.dart';
+part of 'watch_bloc.dart';
 
 abstract class WatchEvent extends BaseBlocEvent {}
 

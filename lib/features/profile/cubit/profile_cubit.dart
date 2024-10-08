@@ -1,8 +1,10 @@
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:injectable/injectable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'profile_state.dart';
+part 'profile_state.dart';
+part 'profile_cubit.freezed.dart';
 
 @injectable
 class ProfileCubit extends BaseCubit<ProfileState> {

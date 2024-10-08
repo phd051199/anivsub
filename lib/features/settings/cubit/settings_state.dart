@@ -1,6 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'settings_state.freezed.dart';
+part of 'settings_cubit.dart';
 
 @freezed
 class SettingsState with _$SettingsState {

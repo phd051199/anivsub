@@ -1,12 +1,10 @@
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
-import 'package:anivsub/features/watch/bloc/watch_event.dart';
 import 'package:anivsub/features/watch/widget/chewie_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/watch_bloc.dart';
-import '../bloc/watch_state.dart';
 
 class WatchPage extends StatefulWidget {
   const WatchPage({super.key});

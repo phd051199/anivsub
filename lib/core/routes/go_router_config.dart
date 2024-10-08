@@ -1,9 +1,9 @@
+import 'package:anivsub/features/bottom_navigation/bottom_navigation.dart';
 import 'package:anivsub/features/watch/watch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:anivsub/features/bottom_navigation_screen.dart';
 import 'package:anivsub/features/home/home.dart';
 import 'package:anivsub/features/login/login.dart';
 import 'package:anivsub/features/profile/profile.dart';

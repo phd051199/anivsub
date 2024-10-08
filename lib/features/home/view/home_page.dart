@@ -9,8 +9,6 @@ import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-import '../cubit/home_state.dart';
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -19,32 +17,39 @@ class HomePage extends StatelessWidget {
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {
         if (state is HomeError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-            ),
-          );
+          _showErrorSnackBar(context, state.message);
         }
       },
       builder: (context, state) => SafeArea(
-        child: switch (state) {
-          HomeInitial() || HomeLoading() => const LoadingWidget(),
-          HomeLoaded() => _buildBody(context),
-          _ => Container(),
-        },
+        child: _getBody(context, state),
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  void _showErrorSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+  Widget _getBody(BuildContext context, HomeState state) {
+    return switch (state) {
+      HomeInitial() || HomeLoading() => const LoadingWidget(),
+      HomeLoaded() => _buildHomeContent(context),
+      _ => Container(),
+    };
+  }
+
+  Widget _buildHomeContent(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTitle(context),
-          Divider(height: 32),
+          Divider(),
+          const Gap(16),
           _buildContent(context),
         ],
       ),
@@ -58,56 +63,47 @@ class HomePage extends StatelessWidget {
           context,
           title: 'Airing',
           subtitle: 'This week',
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  _buildChapter(context),
-                  _buildChapter(context),
-                  _buildChapter(context),
-                  _buildChapter(context),
-                ],
-              ),
-            ),
-          ),
+          child: _buildAiringSection(context),
         ),
         Divider(height: 32),
-        _buildSection2(
+        _buildSection(
           context,
           title: 'Trending',
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: IntrinsicWidth(
-              child: Wrap(
-                runSpacing: 20,
-                alignment: WrapAlignment.spaceBetween,
-                children: [
-                  _buildThumb(context),
-                  _buildThumb(context),
-                  _buildThumb(context),
-                  _buildThumb(context),
-                  _buildThumb(context),
-                  _buildThumb(context),
-                  _buildThumb(context),
-                ],
-              ),
-            ),
-          ),
+          child: _buildTrendingSection(context),
         ),
-        Divider(
-          height: 32,
-        ),
+        Divider(height: 32),
       ],
+    );
+  }
+
+  Widget _buildAiringSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(4, (_) => _buildChapter(context)),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTrendingSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: IntrinsicWidth(
+        child: Wrap(
+          runSpacing: 20,
+          alignment: WrapAlignment.spaceBetween,
+          children: List.generate(7, (_) => _buildThumb(context)),
+        ),
+      ),
     );
   }
 
   Widget _buildChapter(BuildContext context) {
     return InkWell(
-      onTap: () {
-        context.push(ScreenPaths.watch);
-      },
+      onTap: () => context.push(ScreenPaths.watch),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.85,
         child: Row(
@@ -124,7 +120,7 @@ class HomePage extends StatelessWidget {
     return Expanded(
       child: Container(
         height: 160,
-        margin: const EdgeInsets.only(left: 10, right: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,41 +198,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Column _buildSection2(
-    BuildContext context, {
-    String? subtitle,
-    required String title,
-    required Widget child,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              title,
-              style: context.textTheme.titleLarge!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            if (subtitle != null) ...[
-              const Gap(12),
-              Text(
-                subtitle,
-                style: context.textTheme.titleMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                ),
-              )
-            ],
-          ],
-        ),
-        child,
-      ],
-    );
-  }
-
   Column _buildSection(
     BuildContext context, {
     String? subtitle,
@@ -263,21 +224,12 @@ class HomePage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.grey,
                 ),
-              )
+              ),
             ],
           ],
         ),
         child,
       ],
-    );
-  }
-
-  Text _buildTitle(BuildContext context) {
-    return Text(
-      context.l10n.home,
-      style: context.textTheme.headlineLarge!.copyWith(
-        fontWeight: FontWeight.bold,
-      ),
     );
   }
 }

@@ -1,6 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'search_state.freezed.dart';
+part of 'search_cubit.dart';
 
 @freezed
 class SearchState with _$SearchState {
