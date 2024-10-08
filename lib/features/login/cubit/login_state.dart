@@ -1,34 +1,21 @@
 part of 'login_cubit.dart';
 
-sealed class LoginState extends Equatable {
-  final bool isPasswordObscured;
-  final int currentMessageIndex;
+@freezed
+class LoginState with _$LoginState {
+  const factory LoginState.initial({
+    required bool isPasswordObscured,
+  }) = LoginInitial;
 
-  const LoginState(
-      {required this.isPasswordObscured, required this.currentMessageIndex});
+  const factory LoginState.loaded({
+    required bool isPasswordObscured,
+  }) = LoginLoaded;
 
-  @override
-  List<Object> get props => [isPasswordObscured, currentMessageIndex];
-}
+  const factory LoginState.loading({
+    required bool isPasswordObscured,
+  }) = LoginLoading;
 
-class LoginInitial extends LoginState {
-  const LoginInitial(
-      {required super.isPasswordObscured, required super.currentMessageIndex});
-}
-
-class LoginLoaded extends LoginState {
-  const LoginLoaded(
-      {required super.isPasswordObscured, required super.currentMessageIndex});
-}
-
-class LoginLoading extends LoginState {
-  const LoginLoading(
-      {required super.isPasswordObscured, required super.currentMessageIndex});
-}
-
-class LoginError extends LoginState {
-  final String message;
-
-  const LoginError(this.message,
-      {required super.isPasswordObscured, required super.currentMessageIndex});
+  const factory LoginState.error({
+    required bool isPasswordObscured,
+    required String message,
+  }) = LoginError;
 }

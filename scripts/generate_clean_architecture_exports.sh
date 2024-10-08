@@ -27,8 +27,8 @@ for directory in "${directories[@]}"; do
   echo "// Auto-generated file. Do not modify." > $output_file
   echo "" >> $output_file
 
-  # Find all Dart files in the specified directory excluding .g.dart files
-  find $directory -type f -name "*.dart" ! -name "*.g.dart" | while read file; do
+  # Find all Dart files in the specified directory excluding .g.dart and .freezed.dart files
+  find $directory -type f -name "*.dart" ! -name "*.g.dart" ! -name "*.freezed.dart" | while read -r file; do
     # Remove the directory prefix from the file path
     relative_path=${file#$directory/}
     # Convert file path to export statement

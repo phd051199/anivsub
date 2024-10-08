@@ -1,6 +1,6 @@
 name: anivsub
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -10,49 +10,31 @@ dependencies:
   flutter:
     sdk: flutter
 
-   # Locale
   flutter_localizations:
     sdk: flutter
   intl: any
-
-  # DI
   get_it: ^8.0.0
-
-  # Layout
   gap: ^3.0.1
-
-  # Networking
   dio: ^5.7.0
   retrofit: ^4.4.1
   json_annotation: ^4.9.0
   pretty_dio_logger: ^1.4.0
   freezed_annotation: ^2.4.4
   google_fonts: ^6.2.1
-
-  # State management
   bloc: ^8.1.4
   flutter_bloc: ^8.1.6
-
-  # Routing
   go_router: ^14.2.8
-
-  # Shared
   shared_preferences: ^2.3.2
   flutter_secure_storage: ^9.2.2
-
-  # Location
   geolocator: ^13.0.1
-
-  # Utils
   equatable: ^2.0.5
-
-  # Animation
   lottie: ^3.1.2
-
-  # Video player
   chewie: ^1.8.5
   video_player: ^2.9.2
   injectable: ^2.5.0
+  html: ^0.15.4
+  cached_network_image: ^3.4.1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -71,5 +53,4 @@ flutter:
   generate: true
   uses-material-design: true
   assets:
-    - assets/icons/
     - assets/json/

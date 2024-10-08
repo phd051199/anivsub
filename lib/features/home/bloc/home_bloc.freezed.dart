@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'home_cubit.dart';
+part of 'home_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,28 +15,160 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
+mixin _$LoadHome {}
+
+/// @nodoc
+abstract class $LoadHomeCopyWith<$Res> {
+  factory $LoadHomeCopyWith(LoadHome value, $Res Function(LoadHome) then) =
+      _$LoadHomeCopyWithImpl<$Res, LoadHome>;
+}
+
+/// @nodoc
+class _$LoadHomeCopyWithImpl<$Res, $Val extends LoadHome>
+    implements $LoadHomeCopyWith<$Res> {
+  _$LoadHomeCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LoadHome
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$LoadHomeImplCopyWith<$Res> {
+  factory _$$LoadHomeImplCopyWith(
+          _$LoadHomeImpl value, $Res Function(_$LoadHomeImpl) then) =
+      __$$LoadHomeImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LoadHomeImplCopyWithImpl<$Res>
+    extends _$LoadHomeCopyWithImpl<$Res, _$LoadHomeImpl>
+    implements _$$LoadHomeImplCopyWith<$Res> {
+  __$$LoadHomeImplCopyWithImpl(
+      _$LoadHomeImpl _value, $Res Function(_$LoadHomeImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LoadHome
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$LoadHomeImpl implements _LoadHome {
+  const _$LoadHomeImpl();
+
+  @override
+  String toString() {
+    return 'LoadHome()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoadHomeImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+abstract class _LoadHome implements LoadHome {
+  const factory _LoadHome() = _$LoadHomeImpl;
+}
+
+/// @nodoc
+mixin _$ErrorHome {}
+
+/// @nodoc
+abstract class $ErrorHomeCopyWith<$Res> {
+  factory $ErrorHomeCopyWith(ErrorHome value, $Res Function(ErrorHome) then) =
+      _$ErrorHomeCopyWithImpl<$Res, ErrorHome>;
+}
+
+/// @nodoc
+class _$ErrorHomeCopyWithImpl<$Res, $Val extends ErrorHome>
+    implements $ErrorHomeCopyWith<$Res> {
+  _$ErrorHomeCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ErrorHome
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$ErrorHomeImplCopyWith<$Res> {
+  factory _$$ErrorHomeImplCopyWith(
+          _$ErrorHomeImpl value, $Res Function(_$ErrorHomeImpl) then) =
+      __$$ErrorHomeImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ErrorHomeImplCopyWithImpl<$Res>
+    extends _$ErrorHomeCopyWithImpl<$Res, _$ErrorHomeImpl>
+    implements _$$ErrorHomeImplCopyWith<$Res> {
+  __$$ErrorHomeImplCopyWithImpl(
+      _$ErrorHomeImpl _value, $Res Function(_$ErrorHomeImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ErrorHome
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$ErrorHomeImpl implements _ErrorHome {
+  const _$ErrorHomeImpl();
+
+  @override
+  String toString() {
+    return 'ErrorHome()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ErrorHomeImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+abstract class _ErrorHome implements ErrorHome {
+  const factory _ErrorHome() = _$ErrorHomeImpl;
+}
+
+/// @nodoc
 mixin _$HomeState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(HomeDataCategoriesEntity? homeData) initial,
     required TResult Function() loading,
-    required TResult Function(UserSessionResponseEntity user) loaded,
+    required TResult Function(HomeDataCategoriesEntity homeData) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(HomeDataCategoriesEntity? homeData)? initial,
     TResult? Function()? loading,
-    TResult? Function(UserSessionResponseEntity user)? loaded,
+    TResult? Function(HomeDataCategoriesEntity homeData)? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(HomeDataCategoriesEntity? homeData)? initial,
     TResult Function()? loading,
-    TResult Function(UserSessionResponseEntity user)? loaded,
+    TResult Function(HomeDataCategoriesEntity homeData)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -93,6 +225,8 @@ abstract class _$$HomeInitialImplCopyWith<$Res> {
   factory _$$HomeInitialImplCopyWith(
           _$HomeInitialImpl value, $Res Function(_$HomeInitialImpl) then) =
       __$$HomeInitialImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({HomeDataCategoriesEntity? homeData});
 }
 
 /// @nodoc
@@ -105,60 +239,86 @@ class __$$HomeInitialImplCopyWithImpl<$Res>
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? homeData = freezed,
+  }) {
+    return _then(_$HomeInitialImpl(
+      homeData: freezed == homeData
+          ? _value.homeData
+          : homeData // ignore: cast_nullable_to_non_nullable
+              as HomeDataCategoriesEntity?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$HomeInitialImpl implements HomeInitial {
-  const _$HomeInitialImpl();
+  const _$HomeInitialImpl({this.homeData});
+
+  @override
+  final HomeDataCategoriesEntity? homeData;
 
   @override
   String toString() {
-    return 'HomeState.initial()';
+    return 'HomeState.initial(homeData: $homeData)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$HomeInitialImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$HomeInitialImpl &&
+            (identical(other.homeData, homeData) ||
+                other.homeData == homeData));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, homeData);
+
+  /// Create a copy of HomeState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$HomeInitialImplCopyWith<_$HomeInitialImpl> get copyWith =>
+      __$$HomeInitialImplCopyWithImpl<_$HomeInitialImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(HomeDataCategoriesEntity? homeData) initial,
     required TResult Function() loading,
-    required TResult Function(UserSessionResponseEntity user) loaded,
+    required TResult Function(HomeDataCategoriesEntity homeData) loaded,
     required TResult Function(String message) error,
   }) {
-    return initial();
+    return initial(homeData);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(HomeDataCategoriesEntity? homeData)? initial,
     TResult? Function()? loading,
-    TResult? Function(UserSessionResponseEntity user)? loaded,
+    TResult? Function(HomeDataCategoriesEntity homeData)? loaded,
     TResult? Function(String message)? error,
   }) {
-    return initial?.call();
+    return initial?.call(homeData);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(HomeDataCategoriesEntity? homeData)? initial,
     TResult Function()? loading,
-    TResult Function(UserSessionResponseEntity user)? loaded,
+    TResult Function(HomeDataCategoriesEntity homeData)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(homeData);
     }
     return orElse();
   }
@@ -202,7 +362,16 @@ class _$HomeInitialImpl implements HomeInitial {
 }
 
 abstract class HomeInitial implements HomeState {
-  const factory HomeInitial() = _$HomeInitialImpl;
+  const factory HomeInitial({final HomeDataCategoriesEntity? homeData}) =
+      _$HomeInitialImpl;
+
+  HomeDataCategoriesEntity? get homeData;
+
+  /// Create a copy of HomeState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$HomeInitialImplCopyWith<_$HomeInitialImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -246,9 +415,9 @@ class _$HomeLoadingImpl implements HomeLoading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(HomeDataCategoriesEntity? homeData) initial,
     required TResult Function() loading,
-    required TResult Function(UserSessionResponseEntity user) loaded,
+    required TResult Function(HomeDataCategoriesEntity homeData) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -257,9 +426,9 @@ class _$HomeLoadingImpl implements HomeLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(HomeDataCategoriesEntity? homeData)? initial,
     TResult? Function()? loading,
-    TResult? Function(UserSessionResponseEntity user)? loaded,
+    TResult? Function(HomeDataCategoriesEntity homeData)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -268,9 +437,9 @@ class _$HomeLoadingImpl implements HomeLoading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(HomeDataCategoriesEntity? homeData)? initial,
     TResult Function()? loading,
-    TResult Function(UserSessionResponseEntity user)? loaded,
+    TResult Function(HomeDataCategoriesEntity homeData)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -328,7 +497,7 @@ abstract class _$$HomeLoadedImplCopyWith<$Res> {
           _$HomeLoadedImpl value, $Res Function(_$HomeLoadedImpl) then) =
       __$$HomeLoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({UserSessionResponseEntity user});
+  $Res call({HomeDataCategoriesEntity homeData});
 }
 
 /// @nodoc
@@ -344,13 +513,13 @@ class __$$HomeLoadedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = null,
+    Object? homeData = null,
   }) {
     return _then(_$HomeLoadedImpl(
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as UserSessionResponseEntity,
+      homeData: null == homeData
+          ? _value.homeData
+          : homeData // ignore: cast_nullable_to_non_nullable
+              as HomeDataCategoriesEntity,
     ));
   }
 }
@@ -358,14 +527,14 @@ class __$$HomeLoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$HomeLoadedImpl implements HomeLoaded {
-  const _$HomeLoadedImpl({required this.user});
+  const _$HomeLoadedImpl({required this.homeData});
 
   @override
-  final UserSessionResponseEntity user;
+  final HomeDataCategoriesEntity homeData;
 
   @override
   String toString() {
-    return 'HomeState.loaded(user: $user)';
+    return 'HomeState.loaded(homeData: $homeData)';
   }
 
   @override
@@ -373,11 +542,12 @@ class _$HomeLoadedImpl implements HomeLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeLoadedImpl &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.homeData, homeData) ||
+                other.homeData == homeData));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, homeData);
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -390,36 +560,36 @@ class _$HomeLoadedImpl implements HomeLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(HomeDataCategoriesEntity? homeData) initial,
     required TResult Function() loading,
-    required TResult Function(UserSessionResponseEntity user) loaded,
+    required TResult Function(HomeDataCategoriesEntity homeData) loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(user);
+    return loaded(homeData);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(HomeDataCategoriesEntity? homeData)? initial,
     TResult? Function()? loading,
-    TResult? Function(UserSessionResponseEntity user)? loaded,
+    TResult? Function(HomeDataCategoriesEntity homeData)? loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(user);
+    return loaded?.call(homeData);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(HomeDataCategoriesEntity? homeData)? initial,
     TResult Function()? loading,
-    TResult Function(UserSessionResponseEntity user)? loaded,
+    TResult Function(HomeDataCategoriesEntity homeData)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(user);
+      return loaded(homeData);
     }
     return orElse();
   }
@@ -463,10 +633,10 @@ class _$HomeLoadedImpl implements HomeLoaded {
 }
 
 abstract class HomeLoaded implements HomeState {
-  const factory HomeLoaded({required final UserSessionResponseEntity user}) =
+  const factory HomeLoaded({required final HomeDataCategoriesEntity homeData}) =
       _$HomeLoadedImpl;
 
-  UserSessionResponseEntity get user;
+  HomeDataCategoriesEntity get homeData;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -543,9 +713,9 @@ class _$HomeErrorImpl implements HomeError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(HomeDataCategoriesEntity? homeData) initial,
     required TResult Function() loading,
-    required TResult Function(UserSessionResponseEntity user) loaded,
+    required TResult Function(HomeDataCategoriesEntity homeData) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -554,9 +724,9 @@ class _$HomeErrorImpl implements HomeError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(HomeDataCategoriesEntity? homeData)? initial,
     TResult? Function()? loading,
-    TResult? Function(UserSessionResponseEntity user)? loaded,
+    TResult? Function(HomeDataCategoriesEntity homeData)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -565,9 +735,9 @@ class _$HomeErrorImpl implements HomeError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(HomeDataCategoriesEntity? homeData)? initial,
     TResult Function()? loading,
-    TResult Function(UserSessionResponseEntity user)? loaded,
+    TResult Function(HomeDataCategoriesEntity homeData)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

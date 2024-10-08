@@ -192,7 +192,7 @@ class ${capitalized_feature_name}Bloc extends BaseBloc<${capitalized_feature_nam
 EOL
 
   cat <<EOL > "$bloc_dir/${feature_name}_event.dart"
-part of '${feature_name}_event.freezed.dart';
+part of '${feature_name}_bloc.dart';
 
 abstract class ${capitalized_feature_name}Event extends BaseBlocEvent {}
 
@@ -208,7 +208,7 @@ class Error${capitalized_feature_name} extends ${capitalized_feature_name}Event 
 EOL
 
   cat <<EOL > "$bloc_dir/${feature_name}_state.dart"
-part of '${feature_name}_cubit.dart';
+part of '${feature_name}_bloc.dart';
 
 @freezed
 class ${capitalized_feature_name}State extends BaseBlocState with _\$${capitalized_feature_name}State {

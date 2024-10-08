@@ -1,9 +1,9 @@
+import 'package:anivsub/core/base/base.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anivsub/core/utils/validator.dart';
 import 'package:anivsub/domain/entities/user_session_request_entity.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
-import 'package:anivsub/features/login/login_const.dart';
 import 'package:anivsub/features/login/cubit/login_cubit.dart';
 import 'package:anivsub/features/shared/error_dialog.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
@@ -16,7 +16,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -28,8 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     emailValidator = Validator<String>([
       (value) => value.isEmpty ? context.l10n.requiredField : null,
-      // Regex for email validation
-      //(value) => !RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$').hasMatch(value) ? 'Invalid email' : null,
     ]);
     passwordValidator = Validator<String>([
       (value) => value.isEmpty ? context.l10n.requiredField : null,
@@ -42,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         username: _emailController.text,
         password: _passwordController.text,
       );
-      context.read<LoginCubit>().getUserSession(request);
+      cubit.getUserSession(request);
     }
   }
 
@@ -54,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildPage(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
@@ -78,16 +76,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        AnimatedSwitcher(
-                          duration: const Duration(seconds: 1),
-                          child: Text(
-                            kWelcomeMessageList[state.currentMessageIndex],
-                            key: ValueKey<String>(
-                                kWelcomeMessageList[state.currentMessageIndex]),
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        Text(
+                          context.l10n.login,
+                          style: context.textTheme.headlineLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         Expanded(
@@ -112,12 +104,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     labelText: context.l10n.password,
                                     prefixIcon: Icon(Icons.lock),
                                     suffixIcon: IconButton(
-                                      icon: Icon(state.isPasswordObscured
-                                          ? Icons.visibility
-                                          : Icons.visibility_off),
-                                      onPressed: () => context
-                                          .read<LoginCubit>()
-                                          .togglePasswordVisibility(),
+                                      icon: Icon(
+                                        state.isPasswordObscured
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                      ),
+                                      onPressed: () =>
+                                          cubit.togglePasswordVisibility(),
                                     ),
                                   ),
                                   validator: passwordValidator.validate,

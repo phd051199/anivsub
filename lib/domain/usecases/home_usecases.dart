@@ -1,6 +1,5 @@
 import 'package:anivsub/core/network/response.dart';
-import 'package:anivsub/domain/entities/user_session_response_entity.dart';
-import 'package:anivsub/domain/repositories/auth_local_repository.dart';
+import 'package:anivsub/domain/domain_exports.dart';
 import 'package:injectable/injectable.dart';
 
 @singleton

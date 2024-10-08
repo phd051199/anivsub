@@ -1,128 +1,204 @@
 import 'dart:ui';
-
-import 'package:anivsub/core/routes/go_router_config.dart';
+import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/shared/number_extension.dart';
+import 'package:anivsub/core/shared/constants.dart';
+import 'package:anivsub/features/home/home.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:anivsub/core/shared/context_extension.dart';
-import 'package:anivsub/features/home/cubit/home_cubit.dart';
-import 'package:anivsub/features/shared/loading_widget.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gap/gap.dart';
+import 'package:anivsub/core/routes/go_router_config.dart';
+import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/features/shared/loading_widget.dart';
+import 'package:shimmer/shimmer.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeState>(
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends BlocState<HomePage, HomeBloc> {
+  @override
+  void initState() {
+    super.initState();
+
+    bloc.add(const LoadHome());
+  }
+
+  @override
+  void dispose() async {
+    super.dispose();
+
+    await bloc.close();
+  }
+
+  @override
+  Widget buildPage(BuildContext context) {
+    return BlocConsumer<HomeBloc, HomeState>(
       listener: (context, state) {
         if (state is HomeError) {
-          _showErrorSnackBar(context, state.message);
+          onErrorListener(context, state);
         }
       },
       builder: (context, state) => SafeArea(
-        child: _getBody(context, state),
+        child: _buildPageContent(context, state),
       ),
     );
   }
 
-  void _showErrorSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
-
-  Widget _getBody(BuildContext context, HomeState state) {
+  Widget _buildPageContent(BuildContext context, HomeState state) {
     return switch (state) {
-      HomeInitial() || HomeLoading() => const LoadingWidget(),
-      HomeLoaded() => _buildHomeContent(context),
+      HomeInitial() ||
+      HomeLoading() =>
+        const LoadingWidget(isTransparent: true),
+      HomeLoaded() => _buildHomeSection(context, state),
       _ => Container(),
     };
   }
 
-  Widget _buildHomeContent(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Divider(),
-          const Gap(16),
-          _buildContent(context),
-        ],
+  Widget _buildHomeSection(BuildContext context, HomeLoaded state) {
+    return RefreshIndicator(
+      onRefresh: () {
+        bloc.add(const LoadHome());
+        return Future.value();
+      },
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: _buildSectionHeaders(context, state),
       ),
     );
   }
 
-  Widget _buildContent(BuildContext context) {
+  Widget _buildSectionHeaders(BuildContext context, HomeLoaded state) {
     return Column(
       children: [
-        _buildSection(
+        _buildAiringList(context, state),
+        const Divider(height: 32),
+        _buildSectionHeader(
           context,
-          title: 'Airing',
-          subtitle: 'This week',
-          child: _buildAiringSection(context),
+          title: context.l10n.hotUpdates,
+          showSeeAllButton: true,
+          child: _buildAnimeList(context, state,
+              movies: state.homeData.hotUpdates),
         ),
-        Divider(height: 32),
-        _buildSection(
+        const Divider(height: 32),
+        _buildSectionHeader(
           context,
-          title: 'Trending',
-          child: _buildTrendingSection(context),
+          title: context.l10n.topMovies,
+          showSeeAllButton: true,
+          child:
+              _buildAnimeList(context, state, movies: state.homeData.topMovies),
         ),
-        Divider(height: 32),
+        const Divider(height: 32),
+        _buildSectionHeader(
+          context,
+          title: context.l10n.latestUpdates,
+          showSeeAllButton: true,
+          child: _buildAnimeList(context, state,
+              movies: state.homeData.latestUpdates),
+        ),
+        const Divider(height: 32),
+        _buildSectionHeader(
+          context,
+          title: context.l10n.preRelease,
+          showSeeAllButton: true,
+          child: _buildAnimeList(context, state,
+              movies: state.homeData.preRelease),
+        ),
       ],
     );
   }
 
-  Widget _buildAiringSection(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: List.generate(4, (_) => _buildChapter(context)),
-        ),
+  Widget _buildAiringList(BuildContext context, HomeLoaded state) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: state.homeData.sliderMovies
+            .map((movie) => _buildMovieCard(context, movie))
+            .toList(),
       ),
     );
   }
 
-  Widget _buildTrendingSection(BuildContext context) {
+  Widget _buildAnimeList(
+    BuildContext context,
+    HomeLoaded state, {
+    required List<AnimeDataEntity> movies,
+  }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.only(top: 16),
       child: IntrinsicWidth(
         child: Wrap(
-          runSpacing: 20,
+          runSpacing: 24,
           alignment: WrapAlignment.spaceBetween,
-          children: List.generate(7, (_) => _buildThumb(context)),
+          children: movies.map((item) {
+            return SizedBox(
+              width: 120,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildMovieThumbnail(
+                    context,
+                    item,
+                    height: 160,
+                  ),
+                  const Gap(8),
+                  Text(
+                    item.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.titleSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  if (item.views != 0) ...[
+                    const Gap(4),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: Text(
+                        '${context.l10n.views}: ${item.views.formatNumber()}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.labelSmall!.copyWith(
+                          color: context.theme.colorScheme.secondary,
+                        ),
+                      ),
+                    ),
+                  ]
+                ],
+              ),
+            );
+          }).toList(),
         ),
       ),
     );
   }
 
-  Widget _buildChapter(BuildContext context) {
-    return InkWell(
+  Widget _buildMovieCard(BuildContext context, AnimeDataEntity movie) {
+    return GestureDetector(
       onTap: () => context.push(ScreenPaths.watch),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.85,
         child: Row(
           children: [
-            _buildThumb(context),
-            _buildDesc(context),
+            _buildMovieThumbnail(context, movie),
+            _buildMovieDescription(context, movie),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDesc(BuildContext context) {
+  Widget _buildMovieDescription(BuildContext context, AnimeDataEntity movie) {
     return Expanded(
       child: Container(
-        height: 160,
-        margin: const EdgeInsets.symmetric(horizontal: 20),
+        height: 180,
+        margin: const EdgeInsets.only(left: 12, right: 24),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -134,18 +210,30 @@ class HomePage extends StatelessWidget {
             ),
             const Gap(4),
             Text(
-              'Ojarumaru',
-              style: context.textTheme.titleLarge!.copyWith(
+              movie.name,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: context.textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Gap(8),
+            const Gap(4),
             Text(
-              'In the Heian era, around 1000 years ago, a young boy of noble family named Ojarumaru is bored with his life of privilege. Meanwhile, three demons steal the power-stick of Enma, king of demons, and then lose it. Ojarumaru finds it, and uses it to transport himself...',
-              maxLines: 5,
+              movie.description,
+              maxLines: 4,
               overflow: TextOverflow.ellipsis,
               style: context.textTheme.labelMedium!.copyWith(
-                color: Colors.grey[700],
+                color: context.theme.colorScheme.secondary,
+              ),
+            ),
+            const Spacer(),
+            Text(
+              movie.genre.map((e) => e['name']).join(', '),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: context.textTheme.labelMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.theme.colorScheme.tertiary,
               ),
             ),
           ],
@@ -154,53 +242,63 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Stack _buildThumb(BuildContext context) {
+  Stack _buildMovieThumbnail(BuildContext context, AnimeDataEntity movie,
+      {double? height = 180, double? width = 120}) {
     return Stack(
       children: [
-        Container(
+        Card(
           clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Image.network(
-            'https://cdn.noitatnemucod.net/thumbnail/300x400/100/2ec55cad86a731311b88909ae808c673.jpg',
+          child: CachedNetworkImage(
+            imageUrl: movie.image,
+            httpHeaders: headers,
             fit: BoxFit.cover,
-            height: 160,
-            width: 110,
+            height: height,
+            width: width,
+            placeholder: (context, url) => Shimmer.fromColors(
+              baseColor: context.theme.colorScheme.surface,
+              highlightColor: context.theme.colorScheme.onSurface,
+              child: Container(
+                height: height,
+                width: width,
+                color: context.theme.colorScheme.onPrimary.withOpacity(0.25),
+              ),
+            ),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
         ),
-        Positioned(
-          bottom: 10,
-          left: 10,
-          right: 10,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-              child: Container(
-                height: 30,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: context.theme.colorScheme.onPrimary.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  'S01.E01',
-                  style: context.textTheme.labelMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
+        if (movie.process != '')
+          Positioned(
+            bottom: 10,
+            left: 10,
+            right: 10,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                child: Container(
+                  height: 30,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: context.theme.colorScheme.onPrimary.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    '${context.l10n.ep}${movie.process}',
+                    style: context.textTheme.labelMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
       ],
     );
   }
 
-  Column _buildSection(
+  Column _buildSectionHeader(
     BuildContext context, {
-    String? subtitle,
+    bool showSeeAllButton = false,
     required String title,
     required Widget child,
   }) {
@@ -209,6 +307,7 @@ class HomePage extends StatelessWidget {
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               title,
@@ -216,16 +315,14 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            if (subtitle != null) ...[
-              const Gap(12),
+            if (showSeeAllButton)
               Text(
-                subtitle,
+                'See all',
                 style: context.textTheme.titleMedium!.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey,
+                  color: context.theme.colorScheme.secondary,
                 ),
               ),
-            ],
           ],
         ),
         child,

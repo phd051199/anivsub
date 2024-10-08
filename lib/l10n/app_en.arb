@@ -23,5 +23,12 @@
   "welcome": "Welcome {name}",
   "themeColor": "Theme color",
   "themeColorMessage": "Select the theme color",
-  "themeScrollMessage": "Scroll horizontally to navigate colors\nTap to select"
+  "themeScrollMessage": "Scroll horizontally to navigate colors\nTap to select",
+  "episode": "Episode",
+  "ep": "Ep.",
+  "views": "Views",
+  "hotUpdates": "Hot updates",
+  "preRelease": "Pre-release",
+  "topMovies": "Top movies",
+  "latestUpdates": "Latest updates"
 }

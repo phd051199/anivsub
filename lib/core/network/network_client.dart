@@ -7,11 +7,13 @@ class NetworkClient {
   static Dio getDio({
     required String baseUrl,
     bool isAuthenticated = true,
+    Map<String, dynamic>? headers,
   }) {
     return Dio(
       BaseOptions(
         baseUrl: baseUrl,
         connectTimeout: const Duration(seconds: 20),
+        headers: headers,
       ),
     )..interceptors.addAll([
         if (kDebugMode) PrettyDioLogger(requestBody: true, responseBody: true),

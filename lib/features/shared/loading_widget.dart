@@ -15,8 +15,8 @@ class LoadingWidget extends StatelessWidget {
         alignment: Alignment.center,
         child: Lottie.asset(
           'assets/json/loading.json',
-          width: 150,
-          height: 150,
+          width: 240,
+          height: 240,
         ),
       ),
     );

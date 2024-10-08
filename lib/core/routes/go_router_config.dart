@@ -65,7 +65,7 @@ final goRouter = GoRouter(
             GoRoute(
               path: ScreenPaths.home,
               builder: (context, state) => BlocProvider(
-                create: (context) => HomeCubit(homeUseCases),
+                create: (context) => HomeBloc(getHomeDataUseCase),
                 child: const HomePage(),
               ),
             ),
