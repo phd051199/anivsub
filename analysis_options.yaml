@@ -1,5 +1,64 @@
 include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    directives_ordering: true
+    prefer_single_quotes: true
+    always_declare_return_types: true
+    require_trailing_commas: true
+    avoid_print: true
+    avoid_dynamic_calls: true
+    cancel_subscriptions: true
+    close_sinks: true
+    collection_methods_unrelated_type: true
+    empty_statements: true
+    unnecessary_statements: true
+    use_key_in_widget_constructors: true
+    annotate_overrides: true
+    avoid_as: true
+    camel_case_extensions: true
+    camel_case_types: true
+    file_names: true
+    implementation_imports: true
+    library_names: true
+    library_prefixes: true
+    prefer_is_empty: true
+    prefer_is_not_empty: true
+    prefer_mixin: true
+    sort_constructors_first: true
+    package_names: true
+    use_to_and_as_if_applicable: true
+
 analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/di.config.dart"
   errors:
-    unused_element: ignore
-    avoid_shadowing_type_parameters: ignore
+    invalid_annotation_target: ignore
+    directives_ordering: error
+    prefer_single_quotes: error
+    always_declare_return_types: error
+    require_trailing_commas: error
+    avoid_print: error
+    avoid_dynamic_calls: error
+    cancel_subscriptions: error
+    close_sinks: error
+    collection_methods_unrelated_type: error
+    empty_statements: error
+    unnecessary_statements: error
+    use_key_in_widget_constructors: error
+    annotate_overrides: error
+    avoid_as: error
+    camel_case_extensions: error
+    camel_case_types: error
+    file_names: error
+    implementation_imports: error
+    library_names: error
+    library_prefixes: error
+    prefer_is_empty: error
+    prefer_is_not_empty: error
+    prefer_mixin: error
+    sort_constructors_first: error
+    package_names: error
+    use_to_and_as_if_applicable: error

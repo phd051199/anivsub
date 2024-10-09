@@ -10,10 +10,6 @@ part 'get_encrypted_hls_response_dto.g.dart';
 )
 class GetEncryptedHlsResponseDTO
     extends BaseDTO<GetEncryptedHlsResponseEntity> {
-  final int success;
-  final String title;
-  final List<Link> link;
-  final String playTech;
 
   const GetEncryptedHlsResponseDTO({
     required this.success,
@@ -21,6 +17,13 @@ class GetEncryptedHlsResponseDTO
     required this.link,
     required this.playTech,
   });
+
+  factory GetEncryptedHlsResponseDTO.fromJson(Map<String, dynamic> json) =>
+      _$GetEncryptedHlsResponseDTOFromJson(json);
+  final int success;
+  final String title;
+  final List<Link> link;
+  final String playTech;
 
   @override
   List<Object?> get props => [success, title, link, playTech];
@@ -34,9 +37,6 @@ class GetEncryptedHlsResponseDTO
       playTech: playTech,
     );
   }
-
-  factory GetEncryptedHlsResponseDTO.fromJson(Map<String, dynamic> json) =>
-      _$GetEncryptedHlsResponseDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$GetEncryptedHlsResponseDTOToJson(this);
 }

@@ -1,14 +1,14 @@
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 part 'decrypt_hls_usecase.freezed.dart';
 
 @injectable
 class DecryptHlsUseCase
     extends BaseFutureUseCase<DecryptHlsUseCaseInput, DecryptHlsUseCaseOutput> {
-  final AnimeRepository _repository;
   const DecryptHlsUseCase(this._repository);
+  final AnimeRepository _repository;
 
   @protected
   @override

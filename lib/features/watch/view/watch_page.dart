@@ -2,10 +2,9 @@ import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:anivsub/features/watch/view/chewie_player.dart';
+import 'package:anivsub/features/watch/watch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/watch_bloc.dart';
 
 class WatchPage extends StatefulWidget {
   const WatchPage({super.key, required this.path});
@@ -89,12 +88,13 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
                                   .withOpacity(0.1)
                               : null,
                           child: Center(
-                              child: Text(
-                            chap.name,
-                            style: context.textTheme.bodySmall!.copyWith(
-                              fontWeight: FontWeight.bold,
+                            child: Text(
+                              chap.name,
+                              style: context.textTheme.bodySmall!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          )),
+                          ),
                         ),
                       ),
                     ),

@@ -7,111 +7,111 @@ class AnimeDetailParser {
     final dom.Document document = parser.parse(html);
     final int now = DateTime.now().millisecondsSinceEpoch;
 
-    final String name = document.querySelector(".Title")?.text ?? "";
-    final String othername = document.querySelector(".SubTitle")?.text ?? "";
+    final String name = document.querySelector('.Title')?.text ?? '';
+    final String othername = document.querySelector('.SubTitle')?.text ?? '';
 
     final String image =
-        document.querySelector(".Image img")?.attributes['src'] ?? "";
+        document.querySelector('.Image img')?.attributes['src'] ?? '';
     final String poster =
-        document.querySelector(".TPostBg img")?.attributes['src'] ?? "";
-    final String? pathToView = document.querySelector(".watch_button_more") !=
+        document.querySelector('.TPostBg img')?.attributes['src'] ?? '';
+    final String? pathToView = document.querySelector('.watch_button_more') !=
             null
         ? _getPathName(
-            document.querySelector(".watch_button_more")?.attributes['href'] ??
-                "")
+            document.querySelector('.watch_button_more')?.attributes['href'] ??
+                '',)
         : null;
     final String description =
-        document.querySelector(".Description")?.text.trim() ?? "";
+        document.querySelector('.Description')?.text.trim() ?? '';
     final int rate =
-        int.tryParse(document.querySelector("#average_score")?.text ?? "0") ??
+        int.tryParse(document.querySelector('#average_score')?.text ?? '0') ??
             0;
     final int countRate =
-        int.tryParse(document.querySelector(".num-rating")?.text ?? "0") ?? 0;
+        int.tryParse(document.querySelector('.num-rating')?.text ?? '0') ?? 0;
     final String duration =
-        document.querySelector(".AAIco-access_time")?.text ?? "";
+        document.querySelector('.AAIco-access_time')?.text ?? '';
     final int yearOf = int.tryParse(
-            document.querySelector(".AAIco-date_range a")?.text ?? "0") ??
+            document.querySelector('.AAIco-date_range a')?.text ?? '0',) ??
         0;
     final int views = int.tryParse(
           document
-                  .querySelector(".AAIco-remove_red_eye")
+                  .querySelector('.AAIco-remove_red_eye')
                   ?.text
-                  .replaceAll(RegExp(r'[\D]+'), "") ??
-              "0",
+                  .replaceAll(RegExp(r'[\D]+'), '') ??
+              '0',
         ) ??
         0;
 
     final List<Map<String, String>> season = document
-        .querySelectorAll(".season_item > a")
+        .querySelectorAll('.season_item > a')
         .map((item) => _getInfoAnchor(item))
         .toList();
 
     final List<Map<String, String>> genre = document
-        .querySelectorAll(".breadcrumb > li > a")
+        .querySelectorAll('.breadcrumb > li > a')
         .skip(1)
-        .take(document.querySelectorAll(".breadcrumb > li > a").length - 2)
+        .take(document.querySelectorAll('.breadcrumb > li > a').length - 2)
         .map((item) => _getInfoAnchor(item))
         .toList();
 
-    final String quality = document.querySelector(".Qlty")?.text ?? "";
+    final String quality = document.querySelector('.Qlty')?.text ?? '';
 
     // Info section
     final dom.Element? infoListLeft =
-        document.querySelector(".mvici-left .InfoList .AAIco-adjust");
+        document.querySelector('.mvici-left .InfoList .AAIco-adjust');
     final dom.Element? infoListRight =
-        document.querySelector(".mvici-right .InfoList .AAIco-adjust");
+        document.querySelector('.mvici-right .InfoList .AAIco-adjust');
 
-    final String status = _findInfo(document, infoListLeft, "trạng thái")
+    final String status = _findInfo(document, infoListLeft, 'trạng thái')
             ?.text
-            .split(":")
+            .split(':')
             .last
             .trim() ??
-        "";
+        '';
     final List<Map<String, String>> authors =
-        _findInfo(document, infoListLeft, "đạo diễn")
-                ?.querySelectorAll("a")
+        _findInfo(document, infoListLeft, 'đạo diễn')
+                ?.querySelectorAll('a')
                 .map((item) => _getInfoAnchor(item))
                 .toList() ??
             [];
 
     final List<Map<String, String>> countries =
-        _findInfo(document, infoListLeft, "quốc gia")
-                ?.querySelectorAll("a")
+        _findInfo(document, infoListLeft, 'quốc gia')
+                ?.querySelectorAll('a')
                 .map((item) => _getInfoAnchor(item))
                 .toList() ??
             [];
 
     final int follows = int.tryParse(
-          _findInfo(document, infoListLeft, "số người theo dõi")
+          _findInfo(document, infoListLeft, 'số người theo dõi')
                   ?.text
-                  .split(":")
+                  .split(':')
                   .last
                   .trim()
-                  .replaceAll(",", "") ??
-              "0",
+                  .replaceAll(',', '') ??
+              '0',
         ) ??
         0;
 
-    final String language = _findInfo(document, infoListRight, "ngôn ngữ")
+    final String language = _findInfo(document, infoListRight, 'ngôn ngữ')
             ?.text
-            .split(":")
+            .split(':')
             .last
             .trim() ??
-        "";
-    final String studio = _findInfo(document, infoListRight, "studio")
+        '';
+    final String studio = _findInfo(document, infoListRight, 'studio')
             ?.text
-            .split(":")
+            .split(':')
             .last
             .trim() ??
-        "";
+        '';
     final Map<String, String> seasonOf = _getInfoAnchor(
-        _findInfo(document, infoListRight, "season")?.querySelector("a"));
+        _findInfo(document, infoListRight, 'season')?.querySelector('a'),);
 
     final String? trailer =
-        document.querySelector("#Opt1 iframe")?.attributes['src'];
+        document.querySelector('#Opt1 iframe')?.attributes['src'];
 
     final List<AnimeDataEntity> toPut = document
-        .querySelectorAll(".MovieListRelated .TPostMv")
+        .querySelectorAll('.MovieListRelated .TPostMv')
         .map((item) => _getInfoTPost(item, now))
         .toList();
 
@@ -143,7 +143,7 @@ class AnimeDetailParser {
   }
 
   static String _getPathName(String? url) {
-    if (url == null) return "";
+    if (url == null) return '';
     try {
       final uri = Uri.parse(url);
       return uri.path;
@@ -154,13 +154,13 @@ class AnimeDetailParser {
 
   static Map<String, String> _getInfoAnchor(dom.Element? anchor) {
     final path = _getPathName(anchor?.attributes['href']);
-    final name = anchor?.text.trim() ?? "";
+    final name = anchor?.text.trim() ?? '';
     return {'path': path, 'name': name};
   }
 
   static dom.Element? _findInfo(
-      dom.Document document, dom.Element? listElement, String keyword) {
-    return listElement?.querySelectorAll(".AAIco-adjust").firstWhere(
+      dom.Document document, dom.Element? listElement, String keyword,) {
+    return listElement?.querySelectorAll('.AAIco-adjust').firstWhere(
           (element) =>
               element.text.toLowerCase().contains(keyword.toLowerCase()),
           orElse: () => dom.Element.tag(''),
@@ -169,19 +169,19 @@ class AnimeDetailParser {
 
   static AnimeDataEntity _getInfoTPost(dom.Element element, int now) {
     final String path =
-        _getPathName(element.querySelector("a")?.attributes['href'] ?? "");
-    final img = element.querySelector("img");
+        _getPathName(element.querySelector('a')?.attributes['href'] ?? '');
+    final img = element.querySelector('img');
     final String image =
-        img?.attributes['data-cfsrc'] ?? img?.attributes['src'] ?? "";
-    final String name = element.querySelector(".Title")?.text.trim() ?? "";
+        img?.attributes['data-cfsrc'] ?? img?.attributes['src'] ?? '';
+    final String name = element.querySelector('.Title')?.text.trim() ?? '';
     final String chap =
-        element.querySelector(".mli-eps > i")?.text.trim() ?? "";
-    final String quality = element.querySelector(".Qlty")?.text.trim() ?? "";
+        element.querySelector('.mli-eps > i')?.text.trim() ?? '';
+    final String quality = element.querySelector('.Qlty')?.text.trim() ?? '';
     final int year = int.tryParse(
-            element.querySelector(".AAIco-date_range")?.text.trim() ?? "0") ??
+            element.querySelector('.AAIco-date_range')?.text.trim() ?? '0',) ??
         0;
     final String description =
-        element.querySelector(".Description > p")?.text.trim() ?? "";
+        element.querySelector('.Description > p')?.text.trim() ?? '';
 
     return AnimeDataEntity(
       path: path,
@@ -196,9 +196,9 @@ class AnimeDetailParser {
   }
 
   static int? _getTimeRelease(dom.Element element, int now) {
-    final timeschedule = element.querySelector(".mli-timeschedule");
+    final timeschedule = element.querySelector('.mli-timeschedule');
     final countdown =
-        int.tryParse(timeschedule?.attributes['data-timer_second'] ?? "");
+        int.tryParse(timeschedule?.attributes['data-timer_second'] ?? '');
     return countdown != null ? (now ~/ 1000 + countdown) * 1000 : null;
   }
 }

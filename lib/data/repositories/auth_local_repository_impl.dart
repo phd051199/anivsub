@@ -6,10 +6,10 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthLocalRepository)
 class AuthLocalRepositoryImpl implements AuthLocalRepository {
-  final AuthLocalDataSource _authLocalDataSource;
 
   AuthLocalRepositoryImpl({required AuthLocalDataSource authLocalDataSource})
       : _authLocalDataSource = authLocalDataSource;
+  final AuthLocalDataSource _authLocalDataSource;
 
   @override
   Future<ResponseWrapper<UserSessionResponseEntity>> getLocalUserSession() {

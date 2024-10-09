@@ -1,5 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:anivsub/core/network/auth_interceptor.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 

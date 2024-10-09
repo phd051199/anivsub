@@ -5,10 +5,10 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthLocalDataSource)
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
-  static const authKey = 'auth_token';
-  final FlutterSecureStorageService flutterSecureStorageService;
 
   AuthLocalDataSourceImpl({required this.flutterSecureStorageService});
+  static const authKey = 'auth_token';
+  final FlutterSecureStorageService flutterSecureStorageService;
 
   @override
   Future<UserSessionResponseDTO> getLocalUserSession() async {
@@ -19,7 +19,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   @override
   Future<void> setLocalUserSession(UserSessionResponseDTO auth) {
     return flutterSecureStorageService.saveJSON(
-        key: authKey, map: auth.toJson());
+        key: authKey, map: auth.toJson(),);
   }
 
   @override

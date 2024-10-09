@@ -2,10 +2,6 @@ import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class ChapDataEntity extends BaseEntity<ChapDataDTO> {
-  final String id;
-  final String play;
-  final String hash;
-  final String name;
 
   const ChapDataEntity({
     required this.id,
@@ -13,6 +9,10 @@ class ChapDataEntity extends BaseEntity<ChapDataDTO> {
     required this.hash,
     required this.name,
   });
+  final String id;
+  final String play;
+  final String hash;
+  final String name;
 
   ChapDataEntity copyWith({
     String? id,

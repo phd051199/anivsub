@@ -1,7 +1,7 @@
 class Validator<T> {
-  final List<String? Function(T)> _validators;
 
   Validator(this._validators);
+  final List<String? Function(T)> _validators;
 
   String? validate(T value) {
     for (var validator in _validators) {

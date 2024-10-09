@@ -1,5 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:anivsub/core/di/shared_export.dart';
+import 'package:dio/dio.dart';
 
 class AuthInterceptor extends Interceptor {
   @override

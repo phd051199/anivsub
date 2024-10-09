@@ -9,10 +9,6 @@ part 'play_data_dto.g.dart';
   explicitToJson: true,
 )
 class PlayDataDTO extends BaseDTO<PlayDataEntity> {
-  final List<ChapDataDTO> chaps;
-  final List<int>? update;
-  final String image;
-  final String poster;
 
   const PlayDataDTO({
     required this.chaps,
@@ -20,6 +16,13 @@ class PlayDataDTO extends BaseDTO<PlayDataEntity> {
     required this.image,
     required this.poster,
   });
+
+  factory PlayDataDTO.fromJson(Map<String, dynamic> json) =>
+      _$PlayDataDTOFromJson(json);
+  final List<ChapDataDTO> chaps;
+  final List<int>? update;
+  final String image;
+  final String poster;
 
   @override
   List<Object?> get props => [chaps, update, image, poster];
@@ -33,9 +36,6 @@ class PlayDataDTO extends BaseDTO<PlayDataEntity> {
       poster: poster,
     );
   }
-
-  factory PlayDataDTO.fromJson(Map<String, dynamic> json) =>
-      _$PlayDataDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlayDataDTOToJson(this);
 }

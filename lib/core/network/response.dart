@@ -13,15 +13,15 @@ sealed class ResponseWrapper<T> {
 }
 
 class Success<T> extends ResponseWrapper<T> {
-  final T data;
 
   Success(this.data);
+  final T data;
 }
 
 class Error<T> extends ResponseWrapper<T> {
-  final String error;
 
   Error(this.error);
+  final String error;
 }
 
 Future<ResponseWrapper<T>> execute<T>(
@@ -33,6 +33,7 @@ Future<ResponseWrapper<T>> execute<T>(
     return Success(response);
   } catch (e) {
     if (e is DioException) {
+      // ignore: avoid_dynamic_calls
       return Error(e.response?.data['message'] ?? '');
     }
     return onError?.call(e) ?? Error(e.toString());

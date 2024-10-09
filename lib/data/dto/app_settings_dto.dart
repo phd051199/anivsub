@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/entities/app_settings_entity.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'app_settings_dto.g.dart';
@@ -10,8 +10,6 @@ part 'app_settings_dto.g.dart';
   explicitToJson: true,
 )
 class AppSettingsDTO extends BaseDTO<AppSettingsEntity> {
-  final int themeMode;
-  final int color;
 
   const AppSettingsDTO({
     required this.themeMode,
@@ -24,6 +22,11 @@ class AppSettingsDTO extends BaseDTO<AppSettingsEntity> {
       color: Colors.blueAccent.value,
     );
   }
+
+  factory AppSettingsDTO.fromJson(Map<String, dynamic> json) =>
+      _$AppSettingsDTOFromJson(json);
+  final int themeMode;
+  final int color;
 
   @override
   List<Object?> get props => [
@@ -38,9 +41,6 @@ class AppSettingsDTO extends BaseDTO<AppSettingsEntity> {
       color: color,
     );
   }
-
-  factory AppSettingsDTO.fromJson(Map<String, dynamic> json) =>
-      _$AppSettingsDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$AppSettingsDTOToJson(this);
 }

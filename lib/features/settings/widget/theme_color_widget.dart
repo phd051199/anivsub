@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/core/theme/const/theme_colors.dart';
 import 'package:anivsub/core/theme/cubit/theme_cubit.dart';
 import 'package:anivsub/features/settings/cubit/settings_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ThemeColorWidget extends StatefulWidget {
   const ThemeColorWidget({super.key});
@@ -43,7 +43,7 @@ class _ThemeColorWidgetState extends State<ThemeColorWidget>
                     isSelected: kThemeColors
                         .map((color) =>
                             color.value ==
-                            context.read<ThemeCubit>().state.appSettings.color)
+                            context.read<ThemeCubit>().state.appSettings.color,)
                         .toList(),
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
                     onPressed: (index) {

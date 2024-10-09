@@ -60,7 +60,7 @@ class FlutterSecureStorageService {
 
   Future<void> removeValue(String key) async {
     await storage.delete(
-        key: key, iOptions: iosOptions, aOptions: androidOptions);
+        key: key, iOptions: iosOptions, aOptions: androidOptions,);
   }
 
   Future<void> clearAllData() async {

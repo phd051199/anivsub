@@ -3,8 +3,8 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AnimeRemoteDataSource)
 class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
-  final ScrapingClient client;
   AnimeRemoteDataSourceImpl({required this.client});
+  final ScrapingClient client;
 
   @override
   Future<String> getHomeData() {

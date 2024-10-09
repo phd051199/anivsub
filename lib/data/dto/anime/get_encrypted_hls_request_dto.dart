@@ -9,10 +9,6 @@ part 'get_encrypted_hls_request_dto.g.dart';
   explicitToJson: true,
 )
 class GetEncryptedHlsRequestDTO extends BaseDTO<GetEncryptedHlsRequestEntity> {
-  final String id;
-  final String play;
-  final String link;
-  final String backuplinks;
 
   const GetEncryptedHlsRequestDTO({
     required this.id,
@@ -20,6 +16,13 @@ class GetEncryptedHlsRequestDTO extends BaseDTO<GetEncryptedHlsRequestEntity> {
     required this.link,
     required this.backuplinks,
   });
+
+  factory GetEncryptedHlsRequestDTO.fromJson(Map<String, dynamic> json) =>
+      _$GetEncryptedHlsRequestDTOFromJson(json);
+  final String id;
+  final String play;
+  final String link;
+  final String backuplinks;
 
   @override
   List<Object?> get props => [id, play, link, backuplinks];
@@ -33,9 +36,6 @@ class GetEncryptedHlsRequestDTO extends BaseDTO<GetEncryptedHlsRequestEntity> {
       backuplinks: backuplinks,
     );
   }
-
-  factory GetEncryptedHlsRequestDTO.fromJson(Map<String, dynamic> json) =>
-      _$GetEncryptedHlsRequestDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$GetEncryptedHlsRequestDTOToJson(this);
 }

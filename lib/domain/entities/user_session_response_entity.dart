@@ -2,15 +2,6 @@ import 'package:anivsub/data/dto/user_session_response_dto.dart';
 import 'package:anivsub/domain/entities/base_entity.dart';
 
 class UserSessionResponseEntity extends BaseEntity {
-  final String? accessToken;
-  final String? refreshToken;
-  final int? id;
-  final String? username;
-  final String? email;
-  final String? firstName;
-  final String? lastName;
-  final String? gender;
-  final String? image;
 
   const UserSessionResponseEntity({
     this.accessToken,
@@ -23,6 +14,15 @@ class UserSessionResponseEntity extends BaseEntity {
     this.gender,
     this.image,
   });
+  final String? accessToken;
+  final String? refreshToken;
+  final int? id;
+  final String? username;
+  final String? email;
+  final String? firstName;
+  final String? lastName;
+  final String? gender;
+  final String? image;
 
   @override
   UserSessionResponseDTO toDTO() => UserSessionResponseDTO(

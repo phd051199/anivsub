@@ -2,15 +2,15 @@ import 'package:anivsub/data/dto/user/crypto_dto.dart';
 import 'package:anivsub/domain/entities/base_entity.dart';
 
 class CryptoEntity extends BaseEntity<CryptoDTO> {
-  final String? coin;
-  final String? wallet;
-  final String? network;
 
   const CryptoEntity({
     this.coin,
     this.wallet,
     this.network,
   });
+  final String? coin;
+  final String? wallet;
+  final String? network;
 
   @override
   List<Object?> get props => [

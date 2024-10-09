@@ -1,9 +1,9 @@
 import 'package:anivsub/core/base/base.dart';
-import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
-part 'search_state.dart';
 part 'search_cubit.freezed.dart';
+part 'search_state.dart';
 
 @injectable
 class SearchCubit extends BaseCubit<SearchState> {

@@ -9,10 +9,6 @@ part 'chap_data_dto.g.dart';
   explicitToJson: true,
 )
 class ChapDataDTO extends BaseDTO<ChapDataEntity> {
-  final String id;
-  final String play;
-  final String hash;
-  final String name;
 
   const ChapDataDTO({
     required this.id,
@@ -20,6 +16,13 @@ class ChapDataDTO extends BaseDTO<ChapDataEntity> {
     required this.hash,
     required this.name,
   });
+
+  factory ChapDataDTO.fromJson(Map<String, dynamic> json) =>
+      _$ChapDataDTOFromJson(json);
+  final String id;
+  final String play;
+  final String hash;
+  final String name;
 
   @override
   List<Object?> get props => [
@@ -38,9 +41,6 @@ class ChapDataDTO extends BaseDTO<ChapDataEntity> {
       name: name,
     );
   }
-
-  factory ChapDataDTO.fromJson(Map<String, dynamic> json) =>
-      _$ChapDataDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChapDataDTOToJson(this);
 }

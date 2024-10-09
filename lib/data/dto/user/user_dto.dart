@@ -9,34 +9,6 @@ part 'user_dto.g.dart';
   explicitToJson: true,
 )
 class UserDTO extends BaseDTO<UserEntity> {
-  final int? id;
-  final String? firstName;
-  final String? lastName;
-  final String? maidenName;
-  final int? age;
-  final String? gender;
-  final String? email;
-  final String? phone;
-  final String? username;
-  final String? password;
-  final String? birthDate;
-  final String? image;
-  final String? bloodGroup;
-  final double? height;
-  final double? weight;
-  final String? eyeColor;
-  final HairDTO? hair;
-  final String? ip;
-  final AddressDTO? address;
-  final String? macAddress;
-  final String? university;
-  final BankDTO? bank;
-  final CompanyDTO? company;
-  final String? ein;
-  final String? ssn;
-  final String? userAgent;
-  final CryptoDTO? crypto;
-  final String? role;
 
   const UserDTO({
     this.id,
@@ -71,6 +43,34 @@ class UserDTO extends BaseDTO<UserEntity> {
 
   factory UserDTO.fromJson(Map<String, dynamic> json) =>
       _$UserDTOFromJson(json);
+  final int? id;
+  final String? firstName;
+  final String? lastName;
+  final String? maidenName;
+  final int? age;
+  final String? gender;
+  final String? email;
+  final String? phone;
+  final String? username;
+  final String? password;
+  final String? birthDate;
+  final String? image;
+  final String? bloodGroup;
+  final double? height;
+  final double? weight;
+  final String? eyeColor;
+  final HairDTO? hair;
+  final String? ip;
+  final AddressDTO? address;
+  final String? macAddress;
+  final String? university;
+  final BankDTO? bank;
+  final CompanyDTO? company;
+  final String? ein;
+  final String? ssn;
+  final String? userAgent;
+  final CryptoDTO? crypto;
+  final String? role;
 
   Map<String, dynamic> toJson() => _$UserDTOToJson(this);
 

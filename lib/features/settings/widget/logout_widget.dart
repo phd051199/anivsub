@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:flutter/material.dart';
 
 class LogoutWidget extends StatelessWidget {
   const LogoutWidget({super.key});

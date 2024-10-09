@@ -5,10 +5,10 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AppSettingsLocalDataSource)
 class AppSettingsLocalDataSourceImpl implements AppSettingsLocalDataSource {
-  static const appSettingsKey = 'app_settings';
-  final SharedPreferenceService sharedPreferenceService;
 
   AppSettingsLocalDataSourceImpl({required this.sharedPreferenceService});
+  static const appSettingsKey = 'app_settings';
+  final SharedPreferenceService sharedPreferenceService;
 
   @override
   Future<AppSettingsDTO> getAppSettings() async {
@@ -22,6 +22,6 @@ class AppSettingsLocalDataSourceImpl implements AppSettingsLocalDataSource {
   @override
   Future<void> setAppSettings(AppSettingsDTO appSettings) async {
     await sharedPreferenceService.saveJSON(
-        appSettingsKey, appSettings.toJson());
+        appSettingsKey, appSettings.toJson(),);
   }
 }

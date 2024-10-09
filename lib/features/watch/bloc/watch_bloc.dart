@@ -5,12 +5,12 @@ import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/domain/usecases/decrypt_hls_usecase.dart';
 import 'package:anivsub/domain/usecases/get_encrypted_hls_usecase.dart';
 import 'package:bloc/bloc.dart';
-import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
+part 'watch_bloc.freezed.dart';
 part 'watch_event.dart';
 part 'watch_state.dart';
-part 'watch_bloc.freezed.dart';
 
 @injectable
 class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
@@ -37,11 +37,13 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     final ChapDataEntity chap = playDataOutput.result.chaps.first;
     final link = await _getChap(chap);
 
-    emit(WatchLoaded(
-      link: link,
-      playingId: chap.id,
-      chaps: playDataOutput.result.chaps,
-    ));
+    emit(
+      WatchLoaded(
+        link: link,
+        playingId: chap.id,
+        chaps: playDataOutput.result.chaps,
+      ),
+    );
   }
 
   void _onChangeChap(ChangeChap event, Emitter<WatchState> emit) async {
@@ -51,10 +53,12 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     }
     final newLink = await _getChap(event.chap);
 
-    emit(currentState.copyWith(
-      link: newLink,
-      playingId: event.chap.id,
-    ));
+    emit(
+      currentState.copyWith(
+        link: newLink,
+        playingId: event.chap.id,
+      ),
+    );
   }
 
   Future<String> _getChap(ChapDataEntity chap) async {

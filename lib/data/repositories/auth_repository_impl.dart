@@ -1,23 +1,23 @@
-import 'package:anivsub/data/datasources/remote/auth/auth_remote_data_source.dart';
 import 'package:anivsub/core/network/response.dart';
-import 'package:anivsub/domain/entities/user_session_request_entity.dart';
-import 'package:anivsub/domain/entities/user_session_response_entity.dart';
+import 'package:anivsub/data/datasources/remote/auth/auth_remote_data_source.dart';
 import 'package:anivsub/domain/entities/refresh_user_session_request_entity.dart';
 import 'package:anivsub/domain/entities/refresh_user_session_response_entity.dart';
 import 'package:anivsub/domain/entities/user/user_entity.dart';
+import 'package:anivsub/domain/entities/user_session_request_entity.dart';
+import 'package:anivsub/domain/entities/user_session_response_entity.dart';
 import 'package:anivsub/domain/repositories/auth_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthRemoteDataSource _authRemoteDataSource;
 
   AuthRepositoryImpl({required AuthRemoteDataSource authRemoteDataSource})
       : _authRemoteDataSource = authRemoteDataSource;
+  final AuthRemoteDataSource _authRemoteDataSource;
 
   @override
   Future<ResponseWrapper<UserSessionResponseEntity>> getUserSession(
-      UserSessionRequestEntity authRequestEntity) {
+      UserSessionRequestEntity authRequestEntity,) {
     return execute(() async {
       final response =
           await _authRemoteDataSource.getUserSession(authRequestEntity.toDTO());

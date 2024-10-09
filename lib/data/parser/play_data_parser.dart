@@ -6,7 +6,7 @@ class PlayDataParser {
     final document = parser.parse(html);
 
     final chaps = document
-        .querySelectorAll("#list-server .list-episode .episode a")
+        .querySelectorAll('#list-server .list-episode .episode a')
         .map((element) {
       return ChapDataEntity(
         id: element.attributes['data-id']!,
@@ -17,7 +17,7 @@ class PlayDataParser {
     }).toList();
 
     final scheduleTitle = document
-        .querySelector(".schedule-title-main > h4 > strong:nth-child(3)");
+        .querySelector('.schedule-title-main > h4 > strong:nth-child(3)');
     final match = scheduleTitle?.text
         .matchAsPrefix(r'(Thứ [^\s]+|chủ nhật) vào lúc (\d+) giờ (\d+) phút');
 
@@ -30,9 +30,9 @@ class PlayDataParser {
       update = [dayTextToNum(day!.toLowerCase()), hour, minute];
     }
 
-    final image = document.querySelector(".Image img")?.attributes['src'] ?? '';
+    final image = document.querySelector('.Image img')?.attributes['src'] ?? '';
     final poster =
-        document.querySelector(".TPostBg img")?.attributes['src'] ?? '';
+        document.querySelector('.TPostBg img')?.attributes['src'] ?? '';
 
     return PlayDataEntity(
       chaps: chaps,

@@ -1,13 +1,20 @@
-import 'package:flutter/material.dart';
+import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/features/settings/settings.dart';
 import 'package:anivsub/features/settings/widget/logout_widget.dart';
 import 'package:anivsub/features/settings/widget/theme_color_widget.dart';
 import 'package:anivsub/features/settings/widget/theme_mode_widget.dart';
+import 'package:flutter/material.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends CubitState<SettingsPage, SettingsCubit> {
+  @override
+  Widget buildPage(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

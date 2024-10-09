@@ -5,11 +5,11 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AppSettingsLocalRepository)
 class AppSettingsLocalRepositoryImpl implements AppSettingsLocalRepository {
-  final AppSettingsLocalDataSource _appSettingsLocalDataSource;
 
   AppSettingsLocalRepositoryImpl(
-      {required AppSettingsLocalDataSource appSettingsLocalDataSource})
+      {required AppSettingsLocalDataSource appSettingsLocalDataSource,})
       : _appSettingsLocalDataSource = appSettingsLocalDataSource;
+  final AppSettingsLocalDataSource _appSettingsLocalDataSource;
 
   @override
   Future<void> setAppSettings(AppSettingsEntity appSettings) {

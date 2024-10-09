@@ -1,17 +1,18 @@
 import 'dart:ui';
+
 import 'package:anivsub/core/base/base.dart';
-import 'package:anivsub/core/shared/number_extension.dart';
+import 'package:anivsub/core/routes/go_router_config.dart';
 import 'package:anivsub/core/shared/constants.dart';
+import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/shared/number_extension.dart';
+import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/home/home.dart';
+import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:gap/gap.dart';
-import 'package:anivsub/core/routes/go_router_config.dart';
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/core/shared/context_extension.dart';
-import 'package:anivsub/features/shared/loading_widget.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatefulWidget {
@@ -83,7 +84,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
           title: context.l10n.hotUpdates,
           showSeeAllButton: true,
           child: _buildAnimeList(context, state,
-              movies: state.homeData.hotUpdates),
+              movies: state.homeData.hotUpdates,),
         ),
         const Divider(height: 32),
         _buildSectionHeader(
@@ -99,7 +100,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
           title: context.l10n.latestUpdates,
           showSeeAllButton: true,
           child: _buildAnimeList(context, state,
-              movies: state.homeData.latestUpdates),
+              movies: state.homeData.latestUpdates,),
         ),
         const Divider(height: 32),
         _buildSectionHeader(
@@ -107,7 +108,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
           title: context.l10n.preRelease,
           showSeeAllButton: true,
           child: _buildAnimeList(context, state,
-              movies: state.homeData.preRelease),
+              movies: state.homeData.preRelease,),
         ),
       ],
     );
@@ -179,7 +180,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
                             ),
                           ),
                         ),
-                      ]
+                      ],
                     ],
                   ),
                 ),
@@ -262,7 +263,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
   }
 
   Stack _buildMovieThumbnail(BuildContext context, AnimeDataEntity movie,
-      {double? height = 180, double? width = 120}) {
+      {double? height = 180, double? width = 120,}) {
     return Stack(
       children: [
         Card(

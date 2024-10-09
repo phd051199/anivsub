@@ -3,19 +3,6 @@ import 'package:anivsub/data/data_exports.dart';
 import '../base_entity.dart';
 
 class AnimeDataEntity extends BaseEntity {
-  final String path;
-  final String image;
-  final String name;
-  final String chap;
-  final double? rate;
-  final int? views;
-  final String quality;
-  final String? process;
-  final int year;
-  final String description;
-  final String? studio;
-  final List<Map<String, String>>? genre;
-  final int? timeRelease;
 
   const AnimeDataEntity({
     required this.path,
@@ -32,6 +19,19 @@ class AnimeDataEntity extends BaseEntity {
     this.genre,
     this.timeRelease,
   });
+  final String path;
+  final String image;
+  final String name;
+  final String chap;
+  final double? rate;
+  final int? views;
+  final String quality;
+  final String? process;
+  final int year;
+  final String description;
+  final String? studio;
+  final List<Map<String, String>>? genre;
+  final int? timeRelease;
 
   @override
   List<Object?> get props => [

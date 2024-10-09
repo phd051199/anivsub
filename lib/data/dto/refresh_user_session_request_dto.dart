@@ -10,13 +10,13 @@ part 'refresh_user_session_request_dto.g.dart';
 )
 class RefreshUserSessionRequestDTO
     extends BaseDTO<RefreshUserSessionRequestEntity> {
-  final String refreshToken;
-  final int? expiresInMins;
 
   const RefreshUserSessionRequestDTO({
     required this.refreshToken,
     this.expiresInMins,
   });
+  final String refreshToken;
+  final int? expiresInMins;
 
   @override
   RefreshUserSessionRequestEntity toEntity() => RefreshUserSessionRequestEntity(

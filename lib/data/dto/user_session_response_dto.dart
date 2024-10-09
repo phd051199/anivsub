@@ -6,15 +6,6 @@ part 'user_session_response_dto.g.dart';
 
 @JsonSerializable()
 class UserSessionResponseDTO extends BaseDTO<UserSessionResponseEntity> {
-  final String? accessToken;
-  final String? refreshToken;
-  final int? id;
-  final String? username;
-  final String? email;
-  final String? firstName;
-  final String? lastName;
-  final String? gender;
-  final String? image;
 
   const UserSessionResponseDTO({
     this.accessToken,
@@ -27,6 +18,18 @@ class UserSessionResponseDTO extends BaseDTO<UserSessionResponseEntity> {
     this.gender,
     this.image,
   });
+
+  factory UserSessionResponseDTO.fromJson(Map<String, dynamic> json) =>
+      _$UserSessionResponseDTOFromJson(json);
+  final String? accessToken;
+  final String? refreshToken;
+  final int? id;
+  final String? username;
+  final String? email;
+  final String? firstName;
+  final String? lastName;
+  final String? gender;
+  final String? image;
 
   @override
   UserSessionResponseEntity toEntity() {
@@ -46,9 +49,6 @@ class UserSessionResponseDTO extends BaseDTO<UserSessionResponseEntity> {
   @override
   List<Object?> get props =>
       [accessToken, refreshToken, id, username, email, firstName, lastName];
-
-  factory UserSessionResponseDTO.fromJson(Map<String, dynamic> json) =>
-      _$UserSessionResponseDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserSessionResponseDTOToJson(this);
 }

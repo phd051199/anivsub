@@ -9,19 +9,6 @@ part 'anime_data_response_dto.g.dart';
   explicitToJson: true,
 )
 class AnimeDataResponseDTO extends BaseDTO<AnimeDataEntity> {
-  final String path;
-  final String image;
-  final String name;
-  final String chap;
-  final double? rate;
-  final int? views;
-  final String quality;
-  final String? process;
-  final int year;
-  final String description;
-  final String? studio;
-  final List<Map<String, String>>? genre;
-  final int? timeRelease;
 
   const AnimeDataResponseDTO({
     required this.path,
@@ -38,6 +25,22 @@ class AnimeDataResponseDTO extends BaseDTO<AnimeDataEntity> {
     this.genre,
     this.timeRelease,
   });
+
+  factory AnimeDataResponseDTO.fromJson(Map<String, dynamic> json) =>
+      _$AnimeDataResponseDTOFromJson(json);
+  final String path;
+  final String image;
+  final String name;
+  final String chap;
+  final double? rate;
+  final int? views;
+  final String quality;
+  final String? process;
+  final int year;
+  final String description;
+  final String? studio;
+  final List<Map<String, String>>? genre;
+  final int? timeRelease;
 
   @override
   List<Object?> get props => [
@@ -74,9 +77,6 @@ class AnimeDataResponseDTO extends BaseDTO<AnimeDataEntity> {
       timeRelease: timeRelease,
     );
   }
-
-  factory AnimeDataResponseDTO.fromJson(Map<String, dynamic> json) =>
-      _$AnimeDataResponseDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$AnimeDataResponseDTOToJson(this);
 }

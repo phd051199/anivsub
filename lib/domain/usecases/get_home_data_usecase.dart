@@ -1,15 +1,15 @@
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 part 'get_home_data_usecase.freezed.dart';
 
 @injectable
 class GetHomeDataUseCase extends BaseFutureUseCase<GetHomeDataUseCaseInput,
     GetHomeDataUseCaseOutput> {
-  final AnimeRepository _repository;
 
   const GetHomeDataUseCase(this._repository);
+  final AnimeRepository _repository;
 
   @protected
   @override

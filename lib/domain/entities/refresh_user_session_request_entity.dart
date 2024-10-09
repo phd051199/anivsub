@@ -3,13 +3,13 @@ import 'package:anivsub/domain/entities/base_entity.dart';
 
 class RefreshUserSessionRequestEntity
     extends BaseEntity<RefreshUserSessionRequestDTO> {
-  final String refreshToken;
-  final int? expiresInMins;
 
   const RefreshUserSessionRequestEntity({
     required this.refreshToken,
     this.expiresInMins,
   });
+  final String refreshToken;
+  final int? expiresInMins;
 
   @override
   List<Object?> get props => [refreshToken, expiresInMins];

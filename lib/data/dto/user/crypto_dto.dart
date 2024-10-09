@@ -9,9 +9,6 @@ part 'crypto_dto.g.dart';
   explicitToJson: true,
 )
 class CryptoDTO extends BaseDTO<CryptoEntity> {
-  final String? coin;
-  final String? wallet;
-  final String? network;
 
   const CryptoDTO({
     this.coin,
@@ -21,6 +18,9 @@ class CryptoDTO extends BaseDTO<CryptoEntity> {
 
   factory CryptoDTO.fromJson(Map<String, dynamic> json) =>
       _$CryptoDTOFromJson(json);
+  final String? coin;
+  final String? wallet;
+  final String? network;
 
   Map<String, dynamic> toJson() => _$CryptoDTOToJson(this);
 

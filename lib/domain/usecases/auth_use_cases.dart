@@ -1,18 +1,18 @@
 import 'package:anivsub/core/network/response.dart';
-import 'package:anivsub/domain/entities/user_session_request_entity.dart';
-import 'package:anivsub/domain/entities/user_session_response_entity.dart';
 import 'package:anivsub/domain/entities/refresh_user_session_request_entity.dart';
 import 'package:anivsub/domain/entities/refresh_user_session_response_entity.dart';
+import 'package:anivsub/domain/entities/user_session_request_entity.dart';
+import 'package:anivsub/domain/entities/user_session_response_entity.dart';
 import 'package:anivsub/domain/repositories/auth_local_repository.dart';
 import 'package:anivsub/domain/repositories/auth_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @singleton
 class AuthUseCases {
-  final AuthRepository _authRepository;
-  final AuthLocalRepository _authLocalRepository;
 
   const AuthUseCases(this._authRepository, this._authLocalRepository);
+  final AuthRepository _authRepository;
+  final AuthLocalRepository _authLocalRepository;
 
   Future<ResponseWrapper<UserSessionResponseEntity>> getUserSession(
     UserSessionRequestEntity authRequestEntity,

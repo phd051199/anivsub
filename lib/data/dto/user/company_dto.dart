@@ -8,10 +8,6 @@ part 'company_dto.g.dart';
   explicitToJson: true,
 )
 class CompanyDTO extends BaseDTO<CompanyEntity> {
-  final String? department;
-  final String? name;
-  final String? title;
-  final AddressDTO? address;
 
   const CompanyDTO({
     this.department,
@@ -22,6 +18,10 @@ class CompanyDTO extends BaseDTO<CompanyEntity> {
 
   factory CompanyDTO.fromJson(Map<String, dynamic> json) =>
       _$CompanyDTOFromJson(json);
+  final String? department;
+  final String? name;
+  final String? title;
+  final AddressDTO? address;
 
   Map<String, dynamic> toJson() => _$CompanyDTOToJson(this);
 

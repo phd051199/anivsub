@@ -2,12 +2,6 @@ import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class HomeDataCategoriesEntity extends BaseEntity {
-  final List<AnimeDataEntity> topMovies;
-  final List<AnimeDataEntity> sliderMovies;
-  final List<AnimeDataEntity> latestUpdates;
-  final List<AnimeDataEntity> preRelease;
-  final List<AnimeDataEntity> hotUpdates;
-  final List<AnimeDataEntity> thisSeason;
 
   const HomeDataCategoriesEntity({
     required this.topMovies,
@@ -17,6 +11,12 @@ class HomeDataCategoriesEntity extends BaseEntity {
     required this.hotUpdates,
     required this.thisSeason,
   });
+  final List<AnimeDataEntity> topMovies;
+  final List<AnimeDataEntity> sliderMovies;
+  final List<AnimeDataEntity> latestUpdates;
+  final List<AnimeDataEntity> preRelease;
+  final List<AnimeDataEntity> hotUpdates;
+  final List<AnimeDataEntity> thisSeason;
 
   @override
   List<Object?> get props => [

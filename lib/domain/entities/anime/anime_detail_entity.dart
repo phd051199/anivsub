@@ -2,29 +2,6 @@ import 'package:anivsub/data/dto/anime/anime_detail_dto.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
-  final String name;
-  final String othername;
-  final String image;
-  final String poster;
-  final String? pathToView;
-  final String description;
-  final int rate;
-  final int countRate;
-  final String duration;
-  final int yearOf;
-  final int views;
-  final List<Map<String, String>> season;
-  final List<Map<String, String>> genre;
-  final String quality;
-  final String status;
-  final List<Map<String, String>> authors;
-  final List<Map<String, String>> countries;
-  final int follows;
-  final String language;
-  final String studio;
-  final Map<String, String>? seasonOf;
-  final String? trailer;
-  final List<AnimeDataEntity> toPut;
 
   const AnimeDetailEntity({
     required this.name,
@@ -51,6 +28,29 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
     this.trailer,
     required this.toPut,
   });
+  final String name;
+  final String othername;
+  final String image;
+  final String poster;
+  final String? pathToView;
+  final String description;
+  final int rate;
+  final int countRate;
+  final String duration;
+  final int yearOf;
+  final int views;
+  final List<Map<String, String>> season;
+  final List<Map<String, String>> genre;
+  final String quality;
+  final String status;
+  final List<Map<String, String>> authors;
+  final List<Map<String, String>> countries;
+  final int follows;
+  final String language;
+  final String studio;
+  final Map<String, String>? seasonOf;
+  final String? trailer;
+  final List<AnimeDataEntity> toPut;
 
   AnimeDetailEntity copyWith({
     String? name,

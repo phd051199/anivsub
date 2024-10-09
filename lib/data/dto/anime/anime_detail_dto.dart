@@ -9,29 +9,6 @@ part 'anime_detail_dto.g.dart';
   explicitToJson: true,
 )
 class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> {
-  final String name;
-  final String othername;
-  final String image;
-  final String poster;
-  final String? pathToView;
-  final String description;
-  final int rate;
-  final int countRate;
-  final String duration;
-  final int yearOf;
-  final int views;
-  final List<Map<String, String>> season;
-  final List<Map<String, String>> genre;
-  final String quality;
-  final String status;
-  final List<Map<String, String>> authors;
-  final List<Map<String, String>> countries;
-  final int follows;
-  final String language;
-  final String studio;
-  final Map<String, String>? seasonOf;
-  final String? trailer;
-  final List<AnimeDataResponseDTO> toPut;
 
   const AnimeDetailDTO({
     required this.name,
@@ -58,6 +35,32 @@ class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> {
     this.trailer,
     required this.toPut,
   });
+
+  factory AnimeDetailDTO.fromJson(Map<String, dynamic> json) =>
+      _$AnimeDetailDTOFromJson(json);
+  final String name;
+  final String othername;
+  final String image;
+  final String poster;
+  final String? pathToView;
+  final String description;
+  final int rate;
+  final int countRate;
+  final String duration;
+  final int yearOf;
+  final int views;
+  final List<Map<String, String>> season;
+  final List<Map<String, String>> genre;
+  final String quality;
+  final String status;
+  final List<Map<String, String>> authors;
+  final List<Map<String, String>> countries;
+  final int follows;
+  final String language;
+  final String studio;
+  final Map<String, String>? seasonOf;
+  final String? trailer;
+  final List<AnimeDataResponseDTO> toPut;
 
   @override
   List<Object?> get props => [
@@ -114,9 +117,6 @@ class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> {
       toPut: toPut.map((dto) => dto.toEntity()).toList(),
     );
   }
-
-  factory AnimeDetailDTO.fromJson(Map<String, dynamic> json) =>
-      _$AnimeDetailDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$AnimeDetailDTOToJson(this);
 }

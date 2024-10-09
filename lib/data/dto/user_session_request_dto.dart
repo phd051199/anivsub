@@ -9,15 +9,18 @@ part 'user_session_request_dto.g.dart';
   explicitToJson: true,
 )
 class UserSessionRequestDTO extends BaseDTO<UserSessionRequestEntity> {
-  final String username;
-  final String password;
-  final int? expiresInMins;
 
   const UserSessionRequestDTO({
     required this.username,
     required this.password,
     this.expiresInMins,
   });
+
+  factory UserSessionRequestDTO.fromJson(Map<String, dynamic> json) =>
+      _$UserSessionRequestDTOFromJson(json);
+  final String username;
+  final String password;
+  final int? expiresInMins;
 
   @override
   UserSessionRequestEntity toEntity() => UserSessionRequestEntity(
@@ -28,9 +31,6 @@ class UserSessionRequestDTO extends BaseDTO<UserSessionRequestEntity> {
 
   @override
   List<Object?> get props => [username, password, expiresInMins];
-
-  factory UserSessionRequestDTO.fromJson(Map<String, dynamic> json) =>
-      _$UserSessionRequestDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserSessionRequestDTOToJson(this);
 }

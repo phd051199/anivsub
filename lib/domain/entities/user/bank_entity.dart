@@ -2,11 +2,6 @@ import 'package:anivsub/data/dto/user/bank_dto.dart';
 import 'package:anivsub/domain/entities/base_entity.dart';
 
 class BankEntity extends BaseEntity<BankDTO> {
-  final String? cardExpire;
-  final String? cardNumber;
-  final String? cardType;
-  final String? currency;
-  final String? iban;
 
   const BankEntity({
     this.cardExpire,
@@ -15,6 +10,11 @@ class BankEntity extends BaseEntity<BankDTO> {
     this.currency,
     this.iban,
   });
+  final String? cardExpire;
+  final String? cardNumber;
+  final String? cardType;
+  final String? currency;
+  final String? iban;
 
   @override
   List<Object?> get props => [

@@ -1,8 +1,8 @@
+import 'package:anivsub/domain/entities/app_settings_entity.dart';
+import 'package:anivsub/domain/usecases/app_settings_use_cases.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:anivsub/domain/entities/app_settings_entity.dart';
-import 'package:anivsub/domain/usecases/app_settings_use_cases.dart';
 
 part 'theme_state.dart';
 

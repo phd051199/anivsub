@@ -9,11 +9,6 @@ part 'bank_dto.g.dart';
   explicitToJson: true,
 )
 class BankDTO extends BaseDTO<BankEntity> {
-  final String? cardExpire;
-  final String? cardNumber;
-  final String? cardType;
-  final String? currency;
-  final String? iban;
 
   const BankDTO({
     this.cardExpire,
@@ -25,6 +20,11 @@ class BankDTO extends BaseDTO<BankEntity> {
 
   factory BankDTO.fromJson(Map<String, dynamic> json) =>
       _$BankDTOFromJson(json);
+  final String? cardExpire;
+  final String? cardNumber;
+  final String? cardType;
+  final String? currency;
+  final String? iban;
 
   Map<String, dynamic> toJson() => _$BankDTOToJson(this);
 

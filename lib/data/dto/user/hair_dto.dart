@@ -9,8 +9,6 @@ part 'hair_dto.g.dart';
   explicitToJson: true,
 )
 class HairDTO extends BaseDTO<HairEntity> {
-  final String? color;
-  final String? type;
 
   const HairDTO({
     this.color,
@@ -19,6 +17,8 @@ class HairDTO extends BaseDTO<HairEntity> {
 
   factory HairDTO.fromJson(Map<String, dynamic> json) =>
       _$HairDTOFromJson(json);
+  final String? color;
+  final String? type;
 
   Map<String, dynamic> toJson() => _$HairDTOToJson(this);
 

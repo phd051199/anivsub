@@ -167,12 +167,12 @@ if [ "$with_bloc" == "true" ]; then
   cat <<EOL > "$bloc_dir/${feature_name}_bloc.dart"
 import 'package:$package_name/core/base/base.dart';
 import 'package:bloc/bloc.dart';
-import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
+part '${feature_name}_bloc.freezed.dart';
 part '${feature_name}_event.dart';
 part '${feature_name}_state.dart';
-part '${feature_name}_bloc.freezed.dart';
 
 @injectable
 class ${capitalized_feature_name}Bloc extends BaseBloc<${capitalized_feature_name}Event, ${capitalized_feature_name}State> {
@@ -227,11 +227,11 @@ if [ "$with_cubit" == "true" ]; then
   # Create cubit and state files
   cat <<EOL > "$cubit_dir/${feature_name}_cubit.dart"
 import 'package:$package_name/core/base/base.dart';
-import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
-part '${feature_name}_state.dart';
 part '${feature_name}_cubit.freezed.dart';
+part '${feature_name}_state.dart';
 
 @injectable
 class ${capitalized_feature_name}Cubit extends BaseCubit<${capitalized_feature_name}State> {

@@ -9,12 +9,6 @@ part 'home_data_categories_dto.g.dart';
   explicitToJson: true,
 )
 class HomeDataCategoriesDTO extends BaseDTO<HomeDataCategoriesEntity> {
-  final List<AnimeDataResponseDTO> topMovies;
-  final List<AnimeDataResponseDTO> sliderMovies;
-  final List<AnimeDataResponseDTO> latestUpdates;
-  final List<AnimeDataResponseDTO> preRelease;
-  final List<AnimeDataResponseDTO> hotUpdates;
-  final List<AnimeDataResponseDTO> thisSeason;
 
   const HomeDataCategoriesDTO({
     required this.topMovies,
@@ -24,6 +18,15 @@ class HomeDataCategoriesDTO extends BaseDTO<HomeDataCategoriesEntity> {
     required this.hotUpdates,
     required this.thisSeason,
   });
+
+  factory HomeDataCategoriesDTO.fromJson(Map<String, dynamic> json) =>
+      _$HomeDataCategoriesDTOFromJson(json);
+  final List<AnimeDataResponseDTO> topMovies;
+  final List<AnimeDataResponseDTO> sliderMovies;
+  final List<AnimeDataResponseDTO> latestUpdates;
+  final List<AnimeDataResponseDTO> preRelease;
+  final List<AnimeDataResponseDTO> hotUpdates;
+  final List<AnimeDataResponseDTO> thisSeason;
 
   @override
   List<Object?> get props => [
@@ -45,9 +48,6 @@ class HomeDataCategoriesDTO extends BaseDTO<HomeDataCategoriesEntity> {
       thisSeason: thisSeason.map((dto) => dto.toEntity()).toList(),
     );
   }
-
-  factory HomeDataCategoriesDTO.fromJson(Map<String, dynamic> json) =>
-      _$HomeDataCategoriesDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$HomeDataCategoriesDTOToJson(this);
 }

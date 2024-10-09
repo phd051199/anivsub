@@ -2,10 +2,6 @@ import 'package:anivsub/data/dto/user/company_dto.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class CompanyEntity extends BaseEntity<CompanyDTO> {
-  final String? department;
-  final String? name;
-  final String? title;
-  final AddressEntity? address;
 
   const CompanyEntity({
     this.department,
@@ -13,6 +9,10 @@ class CompanyEntity extends BaseEntity<CompanyDTO> {
     this.title,
     this.address,
   });
+  final String? department;
+  final String? name;
+  final String? title;
+  final AddressEntity? address;
 
   @override
   List<Object?> get props => [

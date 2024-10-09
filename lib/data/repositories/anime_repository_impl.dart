@@ -5,10 +5,10 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AnimeRepository)
 class AnimeRepositoryImpl implements AnimeRepository {
-  final AnimeRemoteDataSource _animeRemoteDataSource;
-  final DecryptHlsService _decryptHlsService;
 
   AnimeRepositoryImpl(this._animeRemoteDataSource, this._decryptHlsService);
+  final AnimeRemoteDataSource _animeRemoteDataSource;
+  final DecryptHlsService _decryptHlsService;
 
   @override
   Future<HomeDataCategoriesEntity> fetchHomeData() async {

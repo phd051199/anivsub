@@ -4,9 +4,9 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class ProfileUseCases {
-  final AuthRepository authRepository;
 
   const ProfileUseCases(this.authRepository);
+  final AuthRepository authRepository;
 
   Future<ResponseWrapper<UserEntity>> getUser() {
     return authRepository.getUser();

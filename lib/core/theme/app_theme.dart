@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  final Brightness brightness;
-  final Color seedColor;
-  late ColorScheme colorScheme;
 
   AppTheme.fromBrightness({
     required this.brightness,
@@ -15,6 +12,9 @@ class AppTheme {
       seedColor: seedColor,
     );
   }
+  final Brightness brightness;
+  final Color seedColor;
+  late ColorScheme colorScheme;
 
   ThemeData toThemeData() {
     return ThemeData.from(

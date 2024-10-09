@@ -9,8 +9,6 @@ part 'coordinates_dto.g.dart';
   explicitToJson: true,
 )
 class CoordinatesDTO extends BaseDTO<CoordinatesEntity> {
-  final double? lat;
-  final double? lng;
 
   const CoordinatesDTO({
     this.lat,
@@ -19,6 +17,8 @@ class CoordinatesDTO extends BaseDTO<CoordinatesEntity> {
 
   factory CoordinatesDTO.fromJson(Map<String, dynamic> json) =>
       _$CoordinatesDTOFromJson(json);
+  final double? lat;
+  final double? lng;
 
   Map<String, dynamic> toJson() => _$CoordinatesDTOToJson(this);
 

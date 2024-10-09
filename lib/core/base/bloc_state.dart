@@ -18,6 +18,7 @@ abstract class BlocState<T extends StatefulWidget, B extends BaseBloc>
 
   Widget buildPage(BuildContext context);
 
+  // ignore: avoid_shadowing_type_parameters
   void onErrorListener<T extends Object>(
     BuildContext context,
     T state,

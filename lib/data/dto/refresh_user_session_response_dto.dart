@@ -10,13 +10,16 @@ part 'refresh_user_session_response_dto.g.dart';
 )
 class RefreshUserSessionResponseDTO
     extends BaseDTO<RefreshUserSessionResponseEntity> {
-  final String? accessToken;
-  final String? refreshToken;
 
   const RefreshUserSessionResponseDTO({
     required this.accessToken,
     required this.refreshToken,
   });
+
+  factory RefreshUserSessionResponseDTO.fromJson(Map<String, dynamic> json) =>
+      _$RefreshUserSessionResponseDTOFromJson(json);
+  final String? accessToken;
+  final String? refreshToken;
 
   @override
   RefreshUserSessionResponseEntity toEntity() =>
@@ -27,9 +30,6 @@ class RefreshUserSessionResponseDTO
 
   @override
   List<Object?> get props => [accessToken, refreshToken];
-
-  factory RefreshUserSessionResponseDTO.fromJson(Map<String, dynamic> json) =>
-      _$RefreshUserSessionResponseDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$RefreshUserSessionResponseDTOToJson(this);
 }

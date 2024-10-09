@@ -3,10 +3,6 @@ import 'package:anivsub/domain/domain_exports.dart';
 
 class GetEncryptedHlsRequestEntity
     extends BaseEntity<GetEncryptedHlsRequestDTO> {
-  final String id;
-  final String play;
-  final String link;
-  final String backuplinks;
 
   const GetEncryptedHlsRequestEntity({
     required this.id,
@@ -14,6 +10,10 @@ class GetEncryptedHlsRequestEntity
     required this.link,
     required this.backuplinks,
   });
+  final String id;
+  final String play;
+  final String link;
+  final String backuplinks;
 
   @override
   List<Object?> get props => [id, play, link, backuplinks];

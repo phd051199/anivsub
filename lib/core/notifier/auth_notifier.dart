@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @singleton
 class AuthNotifier with ChangeNotifier {
+
+  AuthNotifier({required this.authUseCases});
   final AuthUseCases authUseCases;
   var _status = AuthStatus.notAuthenticated;
   UserSessionResponseEntity? _loginResponseEntity;
-
-  AuthNotifier({required this.authUseCases});
 
   AuthStatus get status => _status;
   UserSessionResponseEntity? get loginResponseEntity => _loginResponseEntity;

@@ -2,34 +2,6 @@ import 'package:anivsub/data/dto/user/user_dto.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class UserEntity extends BaseEntity<UserDTO> {
-  final int? id;
-  final String? firstName;
-  final String? lastName;
-  final String? maidenName;
-  final int? age;
-  final String? gender;
-  final String? email;
-  final String? phone;
-  final String? username;
-  final String? password;
-  final String? birthDate;
-  final String? image;
-  final String? bloodGroup;
-  final double? height;
-  final double? weight;
-  final String? eyeColor;
-  final HairEntity? hair;
-  final String? ip;
-  final AddressEntity? address;
-  final String? macAddress;
-  final String? university;
-  final BankEntity? bank;
-  final CompanyEntity? company;
-  final String? ein;
-  final String? ssn;
-  final String? userAgent;
-  final CryptoEntity? crypto;
-  final String? role;
 
   const UserEntity({
     this.id,
@@ -61,6 +33,34 @@ class UserEntity extends BaseEntity<UserDTO> {
     this.crypto,
     this.role,
   });
+  final int? id;
+  final String? firstName;
+  final String? lastName;
+  final String? maidenName;
+  final int? age;
+  final String? gender;
+  final String? email;
+  final String? phone;
+  final String? username;
+  final String? password;
+  final String? birthDate;
+  final String? image;
+  final String? bloodGroup;
+  final double? height;
+  final double? weight;
+  final String? eyeColor;
+  final HairEntity? hair;
+  final String? ip;
+  final AddressEntity? address;
+  final String? macAddress;
+  final String? university;
+  final BankEntity? bank;
+  final CompanyEntity? company;
+  final String? ein;
+  final String? ssn;
+  final String? userAgent;
+  final CryptoEntity? crypto;
+  final String? role;
 
   @override
   List<Object?> get props => [

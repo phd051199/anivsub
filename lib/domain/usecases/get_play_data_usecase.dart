@@ -1,15 +1,15 @@
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 part 'get_play_data_usecase.freezed.dart';
 
 @injectable
 class GetPlayDataUseCase extends BaseFutureUseCase<GetPlayDataUseCaseInput,
     GetPlayDataUseCaseOutput> {
-  final AnimeRepository _repository;
 
   const GetPlayDataUseCase(this._repository);
+  final AnimeRepository _repository;
 
   @protected
   @override

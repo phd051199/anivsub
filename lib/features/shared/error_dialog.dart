@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:flutter/material.dart';
 
 class ErrorDialog {
   static void showErrorDialog({

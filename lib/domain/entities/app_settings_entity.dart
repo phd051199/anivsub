@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:anivsub/data/dto/app_settings_dto.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:flutter/material.dart';
 
 class AppSettingsEntity extends BaseEntity<AppSettingsDTO> {
-  final int themeMode;
-  final int color;
 
   const AppSettingsEntity({
     required this.themeMode,
@@ -17,6 +15,8 @@ class AppSettingsEntity extends BaseEntity<AppSettingsDTO> {
       color: Colors.blueAccent.value,
     );
   }
+  final int themeMode;
+  final int color;
 
   AppSettingsEntity copyWith({
     int? themeMode,

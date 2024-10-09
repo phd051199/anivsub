@@ -2,13 +2,13 @@ import 'package:anivsub/data/dto/user/hair_dto.dart';
 import 'package:anivsub/domain/entities/base_entity.dart';
 
 class HairEntity extends BaseEntity<HairDTO> {
-  final String? color;
-  final String? type;
 
   const HairEntity({
     this.color,
     this.type,
   });
+  final String? color;
+  final String? type;
 
   @override
   List<Object?> get props => [

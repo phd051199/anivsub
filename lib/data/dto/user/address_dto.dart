@@ -10,13 +10,6 @@ part 'address_dto.g.dart';
   explicitToJson: true,
 )
 class AddressDTO extends BaseDTO<AddressEntity> {
-  final String? address;
-  final String? city;
-  final String? state;
-  final String? stateCode;
-  final String? postalCode;
-  final CoordinatesDTO? coordinates;
-  final String? country;
 
   const AddressDTO({
     this.address,
@@ -30,6 +23,13 @@ class AddressDTO extends BaseDTO<AddressEntity> {
 
   factory AddressDTO.fromJson(Map<String, dynamic> json) =>
       _$AddressDTOFromJson(json);
+  final String? address;
+  final String? city;
+  final String? state;
+  final String? stateCode;
+  final String? postalCode;
+  final CoordinatesDTO? coordinates;
+  final String? country;
 
   Map<String, dynamic> toJson() => _$AddressDTOToJson(this);
 

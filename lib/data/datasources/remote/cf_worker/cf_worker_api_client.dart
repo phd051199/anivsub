@@ -4,11 +4,11 @@ import 'package:retrofit/retrofit.dart';
 part 'cf_worker_api_client.g.dart';
 
 class RequestDTO {
-  String hash;
   RequestDTO({required this.hash});
 
   factory RequestDTO.fromJson(Map<String, dynamic> json) =>
       RequestDTO(hash: json['hash']);
+  String hash;
   Map<String, dynamic> toJson() => {'hash': hash};
 }
 

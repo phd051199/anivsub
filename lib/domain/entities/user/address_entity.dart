@@ -2,13 +2,6 @@ import 'package:anivsub/data/dto/user/address_dto.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class AddressEntity extends BaseEntity<AddressDTO> {
-  final String? address;
-  final String? city;
-  final String? state;
-  final String? stateCode;
-  final String? postalCode;
-  final CoordinatesEntity? coordinates;
-  final String? country;
 
   const AddressEntity({
     this.address,
@@ -19,6 +12,13 @@ class AddressEntity extends BaseEntity<AddressDTO> {
     this.coordinates,
     this.country,
   });
+  final String? address;
+  final String? city;
+  final String? state;
+  final String? stateCode;
+  final String? postalCode;
+  final CoordinatesEntity? coordinates;
+  final String? country;
 
   @override
   List<Object?> get props => [
