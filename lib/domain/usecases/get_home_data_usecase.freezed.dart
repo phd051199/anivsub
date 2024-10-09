@@ -88,7 +88,7 @@ abstract class _GetHomeDataUseCaseInput implements GetHomeDataUseCaseInput {
 
 /// @nodoc
 mixin _$GetHomeDataUseCaseOutput {
-  HomeDataCategoriesEntity get homeData => throw _privateConstructorUsedError;
+  HomeDataCategoriesEntity get result => throw _privateConstructorUsedError;
 
   /// Create a copy of GetHomeDataUseCaseOutput
   /// with the given fields replaced by the non-null parameter values.
@@ -103,7 +103,7 @@ abstract class $GetHomeDataUseCaseOutputCopyWith<$Res> {
           $Res Function(GetHomeDataUseCaseOutput) then) =
       _$GetHomeDataUseCaseOutputCopyWithImpl<$Res, GetHomeDataUseCaseOutput>;
   @useResult
-  $Res call({HomeDataCategoriesEntity homeData});
+  $Res call({HomeDataCategoriesEntity result});
 }
 
 /// @nodoc
@@ -122,12 +122,12 @@ class _$GetHomeDataUseCaseOutputCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? homeData = null,
+    Object? result = null,
   }) {
     return _then(_value.copyWith(
-      homeData: null == homeData
-          ? _value.homeData
-          : homeData // ignore: cast_nullable_to_non_nullable
+      result: null == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
               as HomeDataCategoriesEntity,
     ) as $Val);
   }
@@ -142,7 +142,7 @@ abstract class _$$GetHomeDataUseCaseOutputImplCopyWith<$Res>
       __$$GetHomeDataUseCaseOutputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({HomeDataCategoriesEntity homeData});
+  $Res call({HomeDataCategoriesEntity result});
 }
 
 /// @nodoc
@@ -160,12 +160,12 @@ class __$$GetHomeDataUseCaseOutputImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? homeData = null,
+    Object? result = null,
   }) {
     return _then(_$GetHomeDataUseCaseOutputImpl(
-      homeData: null == homeData
-          ? _value.homeData
-          : homeData // ignore: cast_nullable_to_non_nullable
+      result: null == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
               as HomeDataCategoriesEntity,
     ));
   }
@@ -174,14 +174,14 @@ class __$$GetHomeDataUseCaseOutputImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GetHomeDataUseCaseOutputImpl implements _GetHomeDataUseCaseOutput {
-  const _$GetHomeDataUseCaseOutputImpl({required this.homeData});
+  const _$GetHomeDataUseCaseOutputImpl({required this.result});
 
   @override
-  final HomeDataCategoriesEntity homeData;
+  final HomeDataCategoriesEntity result;
 
   @override
   String toString() {
-    return 'GetHomeDataUseCaseOutput(homeData: $homeData)';
+    return 'GetHomeDataUseCaseOutput(result: $result)';
   }
 
   @override
@@ -189,12 +189,11 @@ class _$GetHomeDataUseCaseOutputImpl implements _GetHomeDataUseCaseOutput {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetHomeDataUseCaseOutputImpl &&
-            (identical(other.homeData, homeData) ||
-                other.homeData == homeData));
+            (identical(other.result, result) || other.result == result));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, homeData);
+  int get hashCode => Object.hash(runtimeType, result);
 
   /// Create a copy of GetHomeDataUseCaseOutput
   /// with the given fields replaced by the non-null parameter values.
@@ -208,11 +207,11 @@ class _$GetHomeDataUseCaseOutputImpl implements _GetHomeDataUseCaseOutput {
 
 abstract class _GetHomeDataUseCaseOutput implements GetHomeDataUseCaseOutput {
   const factory _GetHomeDataUseCaseOutput(
-          {required final HomeDataCategoriesEntity homeData}) =
+          {required final HomeDataCategoriesEntity result}) =
       _$GetHomeDataUseCaseOutputImpl;
 
   @override
-  HomeDataCategoriesEntity get homeData;
+  HomeDataCategoriesEntity get result;
 
   /// Create a copy of GetHomeDataUseCaseOutput
   /// with the given fields replaced by the non-null parameter values.

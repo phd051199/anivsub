@@ -7,6 +7,7 @@ class HomeDataCategoriesEntity extends BaseEntity {
   final List<AnimeDataEntity> latestUpdates;
   final List<AnimeDataEntity> preRelease;
   final List<AnimeDataEntity> hotUpdates;
+  final List<AnimeDataEntity> thisSeason;
 
   const HomeDataCategoriesEntity({
     required this.topMovies,
@@ -14,6 +15,7 @@ class HomeDataCategoriesEntity extends BaseEntity {
     required this.latestUpdates,
     required this.preRelease,
     required this.hotUpdates,
+    required this.thisSeason,
   });
 
   @override
@@ -23,6 +25,7 @@ class HomeDataCategoriesEntity extends BaseEntity {
         latestUpdates,
         preRelease,
         hotUpdates,
+        thisSeason,
       ];
 
   @override
@@ -32,5 +35,6 @@ class HomeDataCategoriesEntity extends BaseEntity {
         latestUpdates: latestUpdates.map((dto) => dto.toDTO()).toList(),
         preRelease: preRelease.map((dto) => dto.toDTO()).toList(),
         hotUpdates: hotUpdates.map((dto) => dto.toDTO()).toList(),
+        thisSeason: thisSeason.map((dto) => dto.toDTO()).toList(),
       );
 }

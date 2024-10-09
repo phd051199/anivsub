@@ -18,6 +18,7 @@ FlutterSecureStorageService get flutterSecureStorageService =>
 // Api Client
 AuthApiClient get authApiClient => GetIt.I<AuthApiClient>();
 ScrapingClient get scrapingClient => GetIt.I<ScrapingClient>();
+CFWorkerApiClient get cfWorkerApiClient => GetIt.I<CFWorkerApiClient>();
 
 // Remote Data Source
 AuthRemoteDataSource get authRemoteDataSource =>
@@ -42,3 +43,4 @@ ProfileUseCases get profileUseCases => GetIt.I<ProfileUseCases>();
 AppSettingsUseCases get appSettingsUseCases => GetIt.I<AppSettingsUseCases>();
 HomeUseCases get homeUseCases => GetIt.I<HomeUseCases>();
 GetHomeDataUseCase get getHomeDataUseCase => GetIt.I<GetHomeDataUseCase>();
+GetPlayDataUseCase get getPlayDataUseCase => GetIt.I<GetPlayDataUseCase>();

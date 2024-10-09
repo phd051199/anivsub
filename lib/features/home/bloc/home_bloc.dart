@@ -12,24 +12,17 @@ part 'home_bloc.freezed.dart';
 class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   HomeBloc(this._getHomeDataUseCase) : super(HomeInitial()) {
     on<LoadHome>(_onLoadHome);
-    on<ErrorHome>(_onErrorHome);
   }
 
   final GetHomeDataUseCase _getHomeDataUseCase;
 
   void _onLoadHome(LoadHome event, Emitter<HomeState> emit) async {
     emit(HomeLoading());
-    try {
-      final GetHomeDataUseCaseOutput result = await _getHomeDataUseCase.send(
-        GetHomeDataUseCaseInput(),
-      );
-      emit(HomeLoaded(homeData: result.homeData));
-    } catch (error) {
-      emit(HomeError(error.toString()));
-    }
-  }
 
-  void _onErrorHome(ErrorHome event, Emitter<HomeState> emit) {
-    emit(HomeError('An error occurred'));
+    final GetHomeDataUseCaseOutput output = await _getHomeDataUseCase.send(
+      GetHomeDataUseCaseInput(),
+    );
+
+    emit(HomeLoaded(homeData: output.result));
   }
 }

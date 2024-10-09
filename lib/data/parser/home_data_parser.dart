@@ -1,48 +1,37 @@
-import 'package:anivsub/data/data_exports.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:html/parser.dart' as parser;
+
 import 'package:anivsub/domain/domain_exports.dart';
 
-import 'package:html/parser.dart' as parser;
-import 'package:html/dom.dart' as dom;
-import 'package:injectable/injectable.dart';
+class HomeDataParser {
+  static HomeDataCategoriesEntity parse(String html) {
+    final dom.Document document = parser.parse(html);
+    final int now = DateTime.now().millisecondsSinceEpoch;
 
-@LazySingleton(as: HomeRepository)
-class HomeRepositoryImpl implements HomeRepository {
-  final ScrapingClient _scrapingClient;
+    final List<AnimeDataEntity> thisSeason = _extractHomeData(
+        document.querySelectorAll(".MovieListTopCn .TPostMv"), now);
+    final List<AnimeDataEntity> sliderMovies = _extractHomeData(
+        document.querySelectorAll(".MovieListSldCn .TPostMv"), now);
+    final List<AnimeDataEntity> latestUpdates = _extractHomeData(
+        document.querySelectorAll("#single-home .TPostMv"), now);
+    final List<AnimeDataEntity> preRelease =
+        _extractHomeData(document.querySelectorAll("#new-home .TPostMv"), now);
+    final List<AnimeDataEntity> hotUpdates =
+        _extractHomeData(document.querySelectorAll("#hot-home .TPostMv"), now);
+    final List<AnimeDataEntity> topMovies =
+        _extractHomeData(document.querySelectorAll("#showTopPhim .TPost"), now);
 
-  HomeRepositoryImpl(this._scrapingClient);
-
-  @override
-  Future<HomeDataCategoriesEntity> fetchHomeData() async {
-    try {
-      final String html = await _scrapingClient.getHomeData();
-
-      final dom.Document document = parser.parse(html);
-      final int now = DateTime.now().millisecondsSinceEpoch;
-
-      final List<AnimeDataEntity> topMovies = _extractHomeData(
-          document.querySelectorAll(".MovieListTopCn .TPostMv"), now);
-      final List<AnimeDataEntity> sliderMovies = _extractHomeData(
-          document.querySelectorAll(".MovieListSldCn .TPostMv"), now);
-      final List<AnimeDataEntity> latestUpdates = _extractHomeData(
-          document.querySelectorAll("#single-home .TPostMv"), now);
-      final List<AnimeDataEntity> preRelease = _extractHomeData(
-          document.querySelectorAll("#new-home .TPostMv"), now);
-      final List<AnimeDataEntity> hotUpdates = _extractHomeData(
-          document.querySelectorAll("#hot-home .TPostMv"), now);
-
-      return HomeDataCategoriesEntity(
-        topMovies: topMovies,
-        sliderMovies: sliderMovies,
-        latestUpdates: latestUpdates,
-        preRelease: preRelease,
-        hotUpdates: hotUpdates,
-      );
-    } catch (e) {
-      throw Exception('Error fetching home data: $e');
-    }
+    return HomeDataCategoriesEntity(
+      topMovies: topMovies,
+      sliderMovies: sliderMovies,
+      latestUpdates: latestUpdates,
+      preRelease: preRelease,
+      hotUpdates: hotUpdates,
+      thisSeason: thisSeason,
+    );
   }
 
-  List<AnimeDataEntity> _extractHomeData(
+  static List<AnimeDataEntity> _extractHomeData(
       Iterable<dom.Element> elements, int now) {
     return elements.map((element) {
       final String path =
@@ -93,7 +82,7 @@ class HomeRepositoryImpl implements HomeRepository {
     }).toList();
   }
 
-  String _getPathName(String url) {
+  static String _getPathName(String url) {
     try {
       final uri = Uri.parse(url);
       return uri.path;
@@ -102,13 +91,13 @@ class HomeRepositoryImpl implements HomeRepository {
     }
   }
 
-  Map<String, String> _getInfoAnchor(dom.Element anchor) {
+  static Map<String, String> _getInfoAnchor(dom.Element anchor) {
     final path = _getPathName(anchor.attributes['href'] ?? "");
     final name = anchor.text.trim();
     return {'path': path, 'name': name};
   }
 
-  int? _getTimeRelease(dom.Element element, int now) {
+  static int? _getTimeRelease(dom.Element element, int now) {
     final timeschedule = element.querySelector(".mli-timeschedule");
     final countdown =
         int.tryParse(timeschedule?.attributes['data-timer_second'] ?? "");

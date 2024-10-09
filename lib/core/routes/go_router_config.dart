@@ -1,7 +1,7 @@
 import 'package:anivsub/features/bottom_navigation/bottom_navigation.dart';
 import 'package:anivsub/features/watch/watch.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:anivsub/features/home/home.dart';
@@ -18,13 +18,22 @@ abstract final class ScreenPaths {
   static const profile = '/profile';
   static const settings = '/settings';
   static const login = '/login';
-  static const watch = '/watch';
+  static const watch = '/watch/:path';
+}
+
+abstract final class ScreenNames {
+  static const home = 'Home';
+  static const search = 'Search';
+  static const profile = 'Profile';
+  static const settings = 'Settings';
+  static const login = 'Login';
+  static const watch = 'Watch';
 }
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
 final goRouter = GoRouter(
-  debugLogDiagnostics: true,
+  debugLogDiagnostics: kDebugMode,
   initialLocation: ScreenPaths.home,
   navigatorKey: _rootNavigatorKey,
   refreshListenable: authNotifier,
@@ -40,19 +49,17 @@ final goRouter = GoRouter(
   },
   routes: [
     GoRoute(
+      name: ScreenNames.login,
       path: ScreenPaths.login,
-      builder: (context, state) => BlocProvider(
-        create: (context) => LoginCubit(authUseCases),
-        child: const LoginScreen(),
-      ),
+      builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
+      name: ScreenNames.watch,
       path: ScreenPaths.watch,
       builder: (context, state) {
-        return BlocProvider(
-          create: (context) => WatchBloc(),
-          child: const WatchPage(),
-        );
+        final String path = state.pathParameters['path']!;
+
+        return WatchPage(path: path);
       },
     ),
     StatefulShellRoute.indexedStack(
@@ -63,44 +70,36 @@ final goRouter = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
+              name: ScreenNames.home,
               path: ScreenPaths.home,
-              builder: (context, state) => BlocProvider(
-                create: (context) => HomeBloc(getHomeDataUseCase),
-                child: const HomePage(),
-              ),
+              builder: (context, state) => const HomePage(),
             ),
           ],
         ),
         StatefulShellBranch(
           routes: [
             GoRoute(
+              name: ScreenNames.search,
               path: ScreenPaths.search,
-              builder: (context, state) => BlocProvider(
-                create: (context) => SearchCubit(),
-                child: const SearchPage(),
-              ),
+              builder: (context, state) => const SearchPage(),
             ),
           ],
         ),
         StatefulShellBranch(
           routes: [
             GoRoute(
+              name: ScreenNames.profile,
               path: ScreenPaths.profile,
-              builder: (context, state) => BlocProvider(
-                create: (context) => ProfileCubit(profileUseCases),
-                child: const ProfilePage(),
-              ),
+              builder: (context, state) => const ProfilePage(),
             ),
           ],
         ),
         StatefulShellBranch(
           routes: [
             GoRoute(
+              name: ScreenNames.settings,
               path: ScreenPaths.settings,
-              builder: (context, state) => BlocProvider(
-                create: (context) => SettingsCubit(),
-                child: const SettingsPage(),
-              ),
+              builder: (context, state) => const SettingsPage(),
             ),
           ],
         ),

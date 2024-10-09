@@ -1,13 +1,15 @@
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
-import 'package:anivsub/features/watch/widget/chewie_player.dart';
+import 'package:anivsub/features/watch/view/chewie_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/watch_bloc.dart';
 
 class WatchPage extends StatefulWidget {
-  const WatchPage({super.key});
+  const WatchPage({super.key, required this.path});
+
+  final String path;
 
   @override
   State<WatchPage> createState() => _WatchPageState();
@@ -17,7 +19,9 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
   @override
   void initState() {
     super.initState();
-    bloc.add(LoadWatch());
+    bloc.add(
+      LoadWatch(id: widget.path),
+    );
   }
 
   @override
@@ -37,7 +41,9 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
           ),
           body: SafeArea(
             child: switch (state) {
-              WatchInitial() || WatchLoading() => const LoadingWidget(),
+              WatchInitial() || WatchLoading() => const LoadingWidget(
+                  isTransparent: true,
+                ),
               WatchLoaded() => _buildBody(context, state),
               _ => Container(),
             },
@@ -55,7 +61,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
         color: Colors.black87,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: ChewiePlayer(),
+      child: ChewiePlayer(url: state.link),
     );
   }
 }

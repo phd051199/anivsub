@@ -4,7 +4,9 @@ abstract class WatchEvent extends BaseBlocEvent {}
 
 @freezed
 class LoadWatch extends WatchEvent with _$LoadWatch {
-  const factory LoadWatch() = _LoadWatch;
+  const factory LoadWatch({
+    required String id,
+  }) = _LoadWatch;
 }
 
 @freezed

@@ -1,5 +1,5 @@
 import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/entities/home_data_categories_entity.dart';
+import 'package:anivsub/domain/entities/anime/home_data_categories_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'home_data_categories_dto.g.dart';
@@ -9,11 +9,12 @@ part 'home_data_categories_dto.g.dart';
   explicitToJson: true,
 )
 class HomeDataCategoriesDTO extends BaseDTO<HomeDataCategoriesEntity> {
-  final List<AnimeDataDTO> topMovies;
-  final List<AnimeDataDTO> sliderMovies;
-  final List<AnimeDataDTO> latestUpdates;
-  final List<AnimeDataDTO> preRelease;
-  final List<AnimeDataDTO> hotUpdates;
+  final List<AnimeDataResponseDTO> topMovies;
+  final List<AnimeDataResponseDTO> sliderMovies;
+  final List<AnimeDataResponseDTO> latestUpdates;
+  final List<AnimeDataResponseDTO> preRelease;
+  final List<AnimeDataResponseDTO> hotUpdates;
+  final List<AnimeDataResponseDTO> thisSeason;
 
   const HomeDataCategoriesDTO({
     required this.topMovies,
@@ -21,6 +22,7 @@ class HomeDataCategoriesDTO extends BaseDTO<HomeDataCategoriesEntity> {
     required this.latestUpdates,
     required this.preRelease,
     required this.hotUpdates,
+    required this.thisSeason,
   });
 
   @override
@@ -40,6 +42,7 @@ class HomeDataCategoriesDTO extends BaseDTO<HomeDataCategoriesEntity> {
       latestUpdates: latestUpdates.map((dto) => dto.toEntity()).toList(),
       preRelease: preRelease.map((dto) => dto.toEntity()).toList(),
       hotUpdates: hotUpdates.map((dto) => dto.toEntity()).toList(),
+      thisSeason: thisSeason.map((dto) => dto.toEntity()).toList(),
     );
   }
 

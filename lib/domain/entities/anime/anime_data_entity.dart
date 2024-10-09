@@ -1,20 +1,20 @@
 import 'package:anivsub/data/data_exports.dart';
 
-import 'base_entity.dart';
+import '../base_entity.dart';
 
 class AnimeDataEntity extends BaseEntity {
   final String path;
   final String image;
   final String name;
   final String chap;
-  final double rate;
-  final int views;
+  final double? rate;
+  final int? views;
   final String quality;
-  final String process;
+  final String? process;
   final int year;
   final String description;
-  final String studio;
-  final List<Map<String, String>> genre;
+  final String? studio;
+  final List<Map<String, String>>? genre;
   final int? timeRelease;
 
   const AnimeDataEntity({
@@ -22,14 +22,14 @@ class AnimeDataEntity extends BaseEntity {
     required this.image,
     required this.name,
     required this.chap,
-    required this.rate,
-    required this.views,
+    this.rate,
+    this.views,
     required this.quality,
-    required this.process,
+    this.process,
     required this.year,
     required this.description,
-    required this.studio,
-    required this.genre,
+    this.studio,
+    this.genre,
     this.timeRelease,
   });
 
@@ -51,7 +51,7 @@ class AnimeDataEntity extends BaseEntity {
       ];
 
   @override
-  AnimeDataDTO toDTO() => AnimeDataDTO(
+  AnimeDataResponseDTO toDTO() => AnimeDataResponseDTO(
         path: path,
         image: image,
         name: name,

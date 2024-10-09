@@ -1,3 +1,4 @@
+import 'package:anivsub/data/data_exports.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -9,4 +10,19 @@ abstract class ScrapingClient {
 
   @GET('/')
   Future<String> getHomeData();
+
+  @GET('/phim/{id}')
+  Future<String> getAnimeDetail(@Path('id') String id);
+
+  @GET('/{id}/xem-phim.html')
+  Future<String> getPlayData(@Path('id') String id);
+
+  @POST('/ajax/player?v=2019a')
+  @FormUrlEncoded()
+  Future<GetEncryptedHlsResponseDTO> getEncryptedHls(
+    @Field('id') String id,
+    @Field('play') String play,
+    @Field('link') String link,
+    @Field('backuplinks') String backuplinks,
+  );
 }

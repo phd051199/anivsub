@@ -134,42 +134,50 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
       child: IntrinsicWidth(
         child: Wrap(
           runSpacing: 24,
-          alignment: WrapAlignment.spaceBetween,
+          alignment: WrapAlignment.start,
           children: movies.map((item) {
-            return SizedBox(
-              width: 120,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildMovieThumbnail(
-                    context,
-                    item,
-                    height: 160,
-                  ),
-                  const Gap(8),
-                  Text(
-                    item.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.textTheme.titleSmall!.copyWith(
-                      fontWeight: FontWeight.bold,
+            return GestureDetector(
+              onTap: () => context.pushNamed(
+                ScreenNames.watch,
+                pathParameters: {
+                  'path': item.path,
+                },
+              ),
+              child: SizedBox(
+                width: 120,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildMovieThumbnail(
+                      context,
+                      item,
+                      height: 160,
                     ),
-                  ),
-                  if (item.views != 0) ...[
-                    const Gap(4),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: Text(
-                        '${context.l10n.views}: ${item.views.formatNumber()}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: context.textTheme.labelSmall!.copyWith(
-                          color: context.theme.colorScheme.secondary,
-                        ),
+                    const Gap(8),
+                    Text(
+                      item.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.textTheme.titleSmall!.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ]
-                ],
+                    if (item.views != 0) ...[
+                      const Gap(4),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Text(
+                          '${context.l10n.views}: ${item.views?.formatNumber()}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: context.textTheme.labelSmall!.copyWith(
+                            color: context.theme.colorScheme.secondary,
+                          ),
+                        ),
+                      ),
+                    ]
+                  ],
+                ),
               ),
             );
           }).toList(),
@@ -180,7 +188,12 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
 
   Widget _buildMovieCard(BuildContext context, AnimeDataEntity movie) {
     return GestureDetector(
-      onTap: () => context.push(ScreenPaths.watch),
+      onTap: () => context.pushNamed(
+        ScreenNames.watch,
+        pathParameters: {
+          'path': movie.path,
+        },
+      ),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.85,
         child: Row(
@@ -228,7 +241,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
             ),
             const Spacer(),
             Text(
-              movie.genre.map((e) => e['name']).join(', '),
+              movie.genre?.map((e) => e['name']).join(', ') ?? '',
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: context.textTheme.labelMedium!.copyWith(

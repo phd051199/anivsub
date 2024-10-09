@@ -15,12 +15,22 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$LoadWatch {}
+mixin _$LoadWatch {
+  String get id => throw _privateConstructorUsedError;
+
+  /// Create a copy of LoadWatch
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LoadWatchCopyWith<LoadWatch> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 abstract class $LoadWatchCopyWith<$Res> {
   factory $LoadWatchCopyWith(LoadWatch value, $Res Function(LoadWatch) then) =
       _$LoadWatchCopyWithImpl<$Res, LoadWatch>;
+  @useResult
+  $Res call({String id});
 }
 
 /// @nodoc
@@ -35,13 +45,29 @@ class _$LoadWatchCopyWithImpl<$Res, $Val extends LoadWatch>
 
   /// Create a copy of LoadWatch
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$LoadWatchImplCopyWith<$Res> {
+abstract class _$$LoadWatchImplCopyWith<$Res>
+    implements $LoadWatchCopyWith<$Res> {
   factory _$$LoadWatchImplCopyWith(
           _$LoadWatchImpl value, $Res Function(_$LoadWatchImpl) then) =
       __$$LoadWatchImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String id});
 }
 
 /// @nodoc
@@ -54,30 +80,65 @@ class __$$LoadWatchImplCopyWithImpl<$Res>
 
   /// Create a copy of LoadWatch
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_$LoadWatchImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$LoadWatchImpl implements _LoadWatch {
-  const _$LoadWatchImpl();
+  const _$LoadWatchImpl({required this.id});
+
+  @override
+  final String id;
 
   @override
   String toString() {
-    return 'LoadWatch()';
+    return 'LoadWatch(id: $id)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadWatchImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadWatchImpl &&
+            (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, id);
+
+  /// Create a copy of LoadWatch
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadWatchImplCopyWith<_$LoadWatchImpl> get copyWith =>
+      __$$LoadWatchImplCopyWithImpl<_$LoadWatchImpl>(this, _$identity);
 }
 
 abstract class _LoadWatch implements LoadWatch {
-  const factory _LoadWatch() = _$LoadWatchImpl;
+  const factory _LoadWatch({required final String id}) = _$LoadWatchImpl;
+
+  @override
+  String get id;
+
+  /// Create a copy of LoadWatch
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoadWatchImplCopyWith<_$LoadWatchImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -153,7 +214,7 @@ mixin _$WatchState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(String link) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -161,7 +222,7 @@ mixin _$WatchState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(String link)? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -169,7 +230,7 @@ mixin _$WatchState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(String link)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -265,7 +326,7 @@ class _$WatchInitialImpl implements WatchInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(String link) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -276,7 +337,7 @@ class _$WatchInitialImpl implements WatchInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(String link)? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -287,7 +348,7 @@ class _$WatchInitialImpl implements WatchInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(String link)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -382,7 +443,7 @@ class _$WatchLoadingImpl implements WatchLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(String link) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -393,7 +454,7 @@ class _$WatchLoadingImpl implements WatchLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(String link)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -404,7 +465,7 @@ class _$WatchLoadingImpl implements WatchLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(String link)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -461,6 +522,8 @@ abstract class _$$WatchLoadedImplCopyWith<$Res> {
   factory _$$WatchLoadedImplCopyWith(
           _$WatchLoadedImpl value, $Res Function(_$WatchLoadedImpl) then) =
       __$$WatchLoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String link});
 }
 
 /// @nodoc
@@ -473,36 +536,61 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? link = null,
+  }) {
+    return _then(_$WatchLoadedImpl(
+      link: null == link
+          ? _value.link
+          : link // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$WatchLoadedImpl implements WatchLoaded {
-  const _$WatchLoadedImpl();
+  const _$WatchLoadedImpl({required this.link});
+
+  @override
+  final String link;
 
   @override
   String toString() {
-    return 'WatchState.loaded()';
+    return 'WatchState.loaded(link: $link)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$WatchLoadedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$WatchLoadedImpl &&
+            (identical(other.link, link) || other.link == link));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, link);
+
+  /// Create a copy of WatchState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$WatchLoadedImplCopyWith<_$WatchLoadedImpl> get copyWith =>
+      __$$WatchLoadedImplCopyWithImpl<_$WatchLoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(String link) loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded();
+    return loaded(link);
   }
 
   @override
@@ -510,10 +598,10 @@ class _$WatchLoadedImpl implements WatchLoaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(String link)? loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call();
+    return loaded?.call(link);
   }
 
   @override
@@ -521,12 +609,12 @@ class _$WatchLoadedImpl implements WatchLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(String link)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(link);
     }
     return orElse();
   }
@@ -570,7 +658,15 @@ class _$WatchLoadedImpl implements WatchLoaded {
 }
 
 abstract class WatchLoaded implements WatchState {
-  const factory WatchLoaded() = _$WatchLoadedImpl;
+  const factory WatchLoaded({required final String link}) = _$WatchLoadedImpl;
+
+  String get link;
+
+  /// Create a copy of WatchState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$WatchLoadedImplCopyWith<_$WatchLoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -643,7 +739,7 @@ class _$WatchErrorImpl implements WatchError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(String link) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -654,7 +750,7 @@ class _$WatchErrorImpl implements WatchError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(String link)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -665,7 +761,7 @@ class _$WatchErrorImpl implements WatchError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(String link)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

@@ -4,6 +4,6 @@ part of 'watch_bloc.dart';
 class WatchState extends BaseBlocState with _$WatchState {
   const factory WatchState.initial() = WatchInitial;
   const factory WatchState.loading() = WatchLoading;
-  const factory WatchState.loaded() = WatchLoaded;
+  const factory WatchState.loaded({required String link}) = WatchLoaded;
   const factory WatchState.error(String message) = WatchError;
 }

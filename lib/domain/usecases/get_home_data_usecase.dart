@@ -7,7 +7,7 @@ part 'get_home_data_usecase.freezed.dart';
 @injectable
 class GetHomeDataUseCase extends BaseFutureUseCase<GetHomeDataUseCaseInput,
     GetHomeDataUseCaseOutput> {
-  final HomeRepository _repository;
+  final AnimeRepository _repository;
 
   const GetHomeDataUseCase(this._repository);
 
@@ -17,9 +17,8 @@ class GetHomeDataUseCase extends BaseFutureUseCase<GetHomeDataUseCaseInput,
     GetHomeDataUseCaseInput input,
   ) async {
     final result = await _repository.fetchHomeData();
-
     return GetHomeDataUseCaseOutput(
-      homeData: result,
+      result: result,
     );
   }
 }
@@ -33,6 +32,6 @@ class GetHomeDataUseCaseInput extends BaseInput with _$GetHomeDataUseCaseInput {
 class GetHomeDataUseCaseOutput extends BaseOutput
     with _$GetHomeDataUseCaseOutput {
   const factory GetHomeDataUseCaseOutput({
-    required HomeDataCategoriesEntity homeData,
+    required HomeDataCategoriesEntity result,
   }) = _GetHomeDataUseCaseOutput;
 }

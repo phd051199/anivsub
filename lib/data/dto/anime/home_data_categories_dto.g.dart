@@ -10,19 +10,22 @@ HomeDataCategoriesDTO _$HomeDataCategoriesDTOFromJson(
         Map<String, dynamic> json) =>
     HomeDataCategoriesDTO(
       topMovies: (json['topMovies'] as List<dynamic>)
-          .map((e) => AnimeDataDTO.fromJson(e as Map<String, dynamic>))
+          .map((e) => AnimeDataResponseDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
       sliderMovies: (json['sliderMovies'] as List<dynamic>)
-          .map((e) => AnimeDataDTO.fromJson(e as Map<String, dynamic>))
+          .map((e) => AnimeDataResponseDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
       latestUpdates: (json['latestUpdates'] as List<dynamic>)
-          .map((e) => AnimeDataDTO.fromJson(e as Map<String, dynamic>))
+          .map((e) => AnimeDataResponseDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
       preRelease: (json['preRelease'] as List<dynamic>)
-          .map((e) => AnimeDataDTO.fromJson(e as Map<String, dynamic>))
+          .map((e) => AnimeDataResponseDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
       hotUpdates: (json['hotUpdates'] as List<dynamic>)
-          .map((e) => AnimeDataDTO.fromJson(e as Map<String, dynamic>))
+          .map((e) => AnimeDataResponseDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      thisSeason: (json['thisSeason'] as List<dynamic>)
+          .map((e) => AnimeDataResponseDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -34,4 +37,5 @@ Map<String, dynamic> _$HomeDataCategoriesDTOToJson(
       'latestUpdates': instance.latestUpdates.map((e) => e.toJson()).toList(),
       'preRelease': instance.preRelease.map((e) => e.toJson()).toList(),
       'hotUpdates': instance.hotUpdates.map((e) => e.toJson()).toList(),
+      'thisSeason': instance.thisSeason.map((e) => e.toJson()).toList(),
     };

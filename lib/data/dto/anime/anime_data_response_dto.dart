@@ -1,41 +1,41 @@
 import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/entities/anime_data_entity.dart';
+import 'package:anivsub/domain/entities/anime/anime_data_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'anime_data_dto.g.dart';
+part 'anime_data_response_dto.g.dart';
 
 @JsonSerializable(
   createToJson: true,
   explicitToJson: true,
 )
-class AnimeDataDTO extends BaseDTO<AnimeDataEntity> {
+class AnimeDataResponseDTO extends BaseDTO<AnimeDataEntity> {
   final String path;
   final String image;
   final String name;
   final String chap;
-  final double rate;
-  final int views;
+  final double? rate;
+  final int? views;
   final String quality;
-  final String process;
+  final String? process;
   final int year;
   final String description;
-  final String studio;
-  final List<Map<String, String>> genre;
+  final String? studio;
+  final List<Map<String, String>>? genre;
   final int? timeRelease;
 
-  const AnimeDataDTO({
+  const AnimeDataResponseDTO({
     required this.path,
     required this.image,
     required this.name,
     required this.chap,
-    required this.rate,
-    required this.views,
+    this.rate,
+    this.views,
     required this.quality,
-    required this.process,
+    this.process,
     required this.year,
     required this.description,
-    required this.studio,
-    required this.genre,
+    this.studio,
+    this.genre,
     this.timeRelease,
   });
 
@@ -75,8 +75,8 @@ class AnimeDataDTO extends BaseDTO<AnimeDataEntity> {
     );
   }
 
-  factory AnimeDataDTO.fromJson(Map<String, dynamic> json) =>
-      _$AnimeDataDTOFromJson(json);
+  factory AnimeDataResponseDTO.fromJson(Map<String, dynamic> json) =>
+      _$AnimeDataResponseDTOFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AnimeDataDTOToJson(this);
+  Map<String, dynamic> toJson() => _$AnimeDataResponseDTOToJson(this);
 }
