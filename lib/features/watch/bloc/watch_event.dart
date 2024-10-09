@@ -10,6 +10,13 @@ class LoadWatch extends WatchEvent with _$LoadWatch {
 }
 
 @freezed
+class ChangeChap extends WatchEvent with _$ChangeChap {
+  const factory ChangeChap({
+    required ChapDataEntity chap,
+  }) = _ChangeChap;
+}
+
+@freezed
 class ErrorWatch extends WatchEvent with _$ErrorWatch {
   const factory ErrorWatch() = _ErrorWatch;
 }

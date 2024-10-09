@@ -1,4 +1,5 @@
 import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:anivsub/features/watch/view/chewie_player.dart';
 import 'package:flutter/material.dart';
@@ -54,14 +55,55 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
   }
 
   Widget _buildBody(BuildContext context, WatchLoaded state) {
-    return Container(
-      margin: const EdgeInsets.all(12),
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        color: Colors.black87,
-        borderRadius: BorderRadius.circular(12),
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                color: Colors.black87,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ChewiePlayer(
+                key: ValueKey(state.link),
+                url: state.link,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              children: state.chaps
+                  .map(
+                    (chap) => GestureDetector(
+                      onTap: () {
+                        bloc.add(ChangeChap(chap: chap));
+                      },
+                      child: SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: Card(
+                          color: state.playingId == chap.id
+                              ? context.theme.colorScheme.primary
+                                  .withOpacity(0.1)
+                              : null,
+                          child: Center(
+                              child: Text(
+                            chap.name,
+                            style: context.textTheme.bodySmall!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ],
+        ),
       ),
-      child: ChewiePlayer(url: state.link),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:anivsub/features/bottom_navigation/bottom_navigation.dart';
 import 'package:anivsub/features/watch/watch.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:anivsub/features/home/home.dart';
@@ -51,7 +52,10 @@ final goRouter = GoRouter(
     GoRoute(
       name: ScreenNames.login,
       path: ScreenPaths.login,
-      builder: (context, state) => const LoginScreen(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => LoginCubit(authUseCases),
+        child: const LoginScreen(),
+      ),
     ),
     GoRoute(
       name: ScreenNames.watch,
@@ -90,7 +94,10 @@ final goRouter = GoRouter(
             GoRoute(
               name: ScreenNames.profile,
               path: ScreenPaths.profile,
-              builder: (context, state) => const ProfilePage(),
+              builder: (context, state) => BlocProvider(
+                create: (context) => ProfileCubit(profileUseCases),
+                child: const ProfilePage(),
+              ),
             ),
           ],
         ),
@@ -99,7 +106,10 @@ final goRouter = GoRouter(
             GoRoute(
               name: ScreenNames.settings,
               path: ScreenPaths.settings,
-              builder: (context, state) => const SettingsPage(),
+              builder: (context, state) => BlocProvider(
+                create: (context) => SettingsCubit(),
+                child: const SettingsPage(),
+              ),
             ),
           ],
         ),

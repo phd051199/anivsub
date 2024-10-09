@@ -129,58 +129,64 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
     HomeLoaded state, {
     required List<AnimeDataEntity> movies,
   }) {
+    int itemCount = movies.length;
+    int missingItems = (3 - (itemCount % 3)) % 3;
+
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: IntrinsicWidth(
         child: Wrap(
           runSpacing: 24,
-          alignment: WrapAlignment.start,
-          children: movies.map((item) {
-            return GestureDetector(
-              onTap: () => context.pushNamed(
-                ScreenNames.watch,
-                pathParameters: {
-                  'path': item.path,
-                },
-              ),
-              child: SizedBox(
-                width: 120,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildMovieThumbnail(
-                      context,
-                      item,
-                      height: 160,
-                    ),
-                    const Gap(8),
-                    Text(
-                      item.name,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.textTheme.titleSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
+          alignment: WrapAlignment.spaceBetween,
+          children: [
+            ...movies.map((item) {
+              return GestureDetector(
+                onTap: () => context.pushNamed(
+                  ScreenNames.watch,
+                  pathParameters: {
+                    'path': item.path,
+                  },
+                ),
+                child: SizedBox(
+                  width: 120,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildMovieThumbnail(
+                        context,
+                        item,
+                        height: 160,
                       ),
-                    ),
-                    if (item.views != 0) ...[
-                      const Gap(4),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: Text(
-                          '${context.l10n.views}: ${item.views?.formatNumber()}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: context.textTheme.labelSmall!.copyWith(
-                            color: context.theme.colorScheme.secondary,
-                          ),
+                      const SizedBox(height: 8),
+                      Text(
+                        item.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.titleSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ]
-                  ],
+                      if (item.views != 0) ...[
+                        const SizedBox(height: 4),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: Text(
+                            '${context.l10n.views}: ${item.views?.formatNumber()}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.textTheme.labelSmall!.copyWith(
+                              color: context.theme.colorScheme.secondary,
+                            ),
+                          ),
+                        ),
+                      ]
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }).toList(),
+              );
+            }),
+            for (int i = 0; i < missingItems; i++) const SizedBox(width: 120),
+          ],
         ),
       ),
     );

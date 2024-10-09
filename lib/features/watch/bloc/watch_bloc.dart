@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/domain/usecases/decrypt_hls_usecase.dart';
@@ -18,6 +20,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     this._decryptHlsUseCase,
   ) : super(WatchInitial()) {
     on<LoadWatch>(_onLoadWatch);
+    on<ChangeChap>(_onChangeChap);
   }
 
   final GetPlayDataUseCase _getPlayDataUseCase;
@@ -32,6 +35,29 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     );
 
     final ChapDataEntity chap = playDataOutput.result.chaps.first;
+    final link = await _getChap(chap);
+
+    emit(WatchLoaded(
+      link: link,
+      playingId: chap.id,
+      chaps: playDataOutput.result.chaps,
+    ));
+  }
+
+  void _onChangeChap(ChangeChap event, Emitter<WatchState> emit) async {
+    final currentState = state;
+    if (currentState is! WatchLoaded) {
+      return;
+    }
+    final newLink = await _getChap(event.chap);
+
+    emit(currentState.copyWith(
+      link: newLink,
+      playingId: event.chap.id,
+    ));
+  }
+
+  Future<String> _getChap(ChapDataEntity chap) async {
     final hlsOutput = await _getEncryptedHlsUseCase.send(
       GetEncryptedHlsUseCaseInput(
         data: GetEncryptedHlsRequestEntity(
@@ -49,6 +75,6 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       ),
     );
 
-    emit(WatchLoaded(link: decryptOutput.result));
+    return decryptOutput.result;
   }
 }

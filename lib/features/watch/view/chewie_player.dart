@@ -18,29 +18,28 @@ class _ChewiePlayerState extends State<ChewiePlayer> {
   @override
   void initState() {
     super.initState();
-
-    _initialize();
+    _initializeChewie();
   }
 
-  void _initialize() async {
-    _videoPlayerController =
-        VideoPlayerController.networkUrl(Uri.parse(widget.url));
+  void _initializeChewie() async {
+    _videoPlayerController = VideoPlayerController.networkUrl(
+      Uri.parse(widget.url),
+    );
 
     _chewieController = ChewieController(
       aspectRatio: 16 / 9,
       videoPlayerController: _videoPlayerController,
-      autoPlay: false,
-      autoInitialize: true,
+      autoPlay: true,
+      showControlsOnInitialize: false,
+      hideControlsTimer: const Duration(seconds: 2),
     );
   }
 
   @override
-  void dispose() async {
-    super.dispose();
-
-    await _chewieController.pause();
-    _chewieController.dispose();
+  void dispose() {
     _videoPlayerController.dispose();
+    _chewieController.dispose();
+    super.dispose();
   }
 
   @override
