@@ -79,9 +79,9 @@ extension GetItInjectableX on _i174.GetIt {
     final registerModule = _$RegisterModule();
     gh.factory<_i185.SettingsCubit>(() => _i185.SettingsCubit());
     gh.factory<_i607.SearchCubit>(() => _i607.SearchCubit());
+    gh.factory<_i597.VideoPlayerCubit>(() => _i597.VideoPlayerCubit());
     gh.singleton<_i595.SharedPreferenceService>(
         () => _i595.SharedPreferenceService());
-    gh.singleton<_i597.VideoPlayerCubit>(() => _i597.VideoPlayerCubit());
     gh.lazySingleton<_i558.AndroidOptions>(() => registerModule.androidOptions);
     gh.lazySingleton<_i558.IOSOptions>(() => registerModule.iosOptions);
     gh.lazySingleton<_i260.LocationService>(() => _i260.LocationService());

@@ -35,12 +35,14 @@ class _VideoPlayerState extends CubitState<VideoPlayer, VideoPlayerCubit> {
         fit: BoxFit.contain,
         controlsConfiguration: BetterPlayerControlsConfiguration(
           showControlsOnInitialize: false,
-          controlBarColor: Color.fromARGB(255, 70, 70, 70).withOpacity(0.9),
+          controlBarColor: Color(0xFF464646).withOpacity(0.9),
           playIcon: Icons.play_arrow,
         ),
       ),
       betterPlayerDataSource: dataSource,
     );
+
+    cubit.initializePlayer(controller: _betterPlayerController);
   }
 
   @override

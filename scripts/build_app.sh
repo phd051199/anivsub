@@ -3,7 +3,7 @@
 # Function to build IPA file
 build_ipa() {
     # Build the Flutter app without code signing
-    flutter build ipa --no-codesign
+    flutter build ipa --no-codesign --release
 
     # Navigate to the output directory
     cd ../build/ios/archive/Runner.xcarchive/Products || { echo "Failed to navigate to the output directory"; exit 1; }

@@ -10,7 +10,6 @@ import 'video_player.dart';
 
 class WatchPage extends StatefulWidget {
   const WatchPage({super.key, required this.path});
-
   final String path;
 
   @override
@@ -37,10 +36,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
     return BlocBuilder<WatchBloc, WatchState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Watch'),
-            centerTitle: true,
-          ),
+          appBar: AppBar(),
           body: SafeArea(
             child: switch (state) {
               WatchInitial() || WatchLoading() => const LoadingWidget(

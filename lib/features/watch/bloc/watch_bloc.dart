@@ -33,7 +33,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     );
 
     final ChapDataEntity chap = playDataOutput.result.chaps.first;
-    final link = await _getChap(chap);
+    final link = await _getChapter(chap);
 
     emit(
       WatchLoaded(
@@ -57,7 +57,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       ),
     );
 
-    final newLink = await _getChap(event.chap);
+    final newLink = await _getChapter(event.chap);
 
     emit(
       currentState.copyWith(
@@ -67,7 +67,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     );
   }
 
-  Future<String> _getChap(ChapDataEntity chap) async {
+  Future<String> _getChapter(ChapDataEntity chap) async {
     final hlsOutput = await _getEncryptedHlsUseCase.send(
       GetEncryptedHlsUseCaseInput(
         data: GetEncryptedHlsRequestEntity(
