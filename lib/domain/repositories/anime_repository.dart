@@ -7,4 +7,6 @@ abstract class AnimeRepository {
     GetEncryptedHlsRequestEntity body,
   );
   Future<String> decryptHls(String hash);
+  Future<ListEpisodeResponseEntity> listEpisodes(String name);
+  Future<EpisodeSkipResponseEntity> skipEpisode(String id);
 }

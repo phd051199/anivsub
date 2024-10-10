@@ -17,6 +17,11 @@ class ChangeChap extends WatchEvent with _$ChangeChap {
 }
 
 @freezed
+class ToggleSkipIntro extends WatchEvent with _$ToggleSkipIntro {
+  const factory ToggleSkipIntro() = _ToggleSkipIntro;
+}
+
+@freezed
 class ErrorWatch extends WatchEvent with _$ErrorWatch {
   const factory ErrorWatch() = _ErrorWatch;
 }

@@ -1,5 +1,4 @@
 import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/data/dto/anime/decrypt_hls_request_dto.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: DecryptHlsService)

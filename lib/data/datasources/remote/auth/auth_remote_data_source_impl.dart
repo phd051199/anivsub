@@ -9,19 +9,20 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-
   AuthRemoteDataSourceImpl({required this.client});
   final AuthApiClient client;
 
   @override
   Future<UserSessionResponseDTO> getUserSession(
-      UserSessionRequestDTO authRequestModel,) {
+    UserSessionRequestDTO authRequestModel,
+  ) {
     return client.getUserSession(authRequestModel);
   }
 
   @override
   Future<RefreshUserSessionResponseDTO> refreshUserSession(
-      RefreshUserSessionRequestDTO refreshTokenRequestModel,) {
+    RefreshUserSessionRequestDTO refreshTokenRequestModel,
+  ) {
     return client.refreshUserSession(refreshTokenRequestModel);
   }
 

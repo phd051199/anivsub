@@ -59,6 +59,8 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
           VideoPlayer(
             key: ValueKey(state.link),
             url: state.link,
+            episodeSkip: state.episodeSkip,
+            skipIntro: state.skipIntro,
           ),
           const SizedBox(height: 12),
           Wrap(
@@ -78,6 +80,21 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
                 )
                 .toList(),
           ),
+          SwitchListTile(
+            title: Text('Auto skip intro/outro'),
+            value: state.skipIntro,
+            onChanged: (_) {
+              bloc.add(ToggleSkipIntro());
+            },
+          ),
+          if (state.episodeSkip != null) ...[
+            Text(
+              'Intro: ${state.episodeSkip!.intro.start} - ${state.episodeSkip!.intro.end}',
+            ),
+            Text(
+              'Outro: ${state.episodeSkip!.outro.start} - ${state.episodeSkip!.outro.end}',
+            ),
+          ],
         ],
       ),
     );

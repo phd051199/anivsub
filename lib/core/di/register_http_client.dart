@@ -29,4 +29,13 @@ void registerHttpClient(GetIt getIt, Environment environment) {
       ),
     ),
   );
+
+  getIt.registerSingleton<OpenDApiClient>(
+    OpenDApiClient(
+      NetworkClient.getDio(
+        isAuthenticated: false,
+        baseUrl: 'https://opend-9animetv.animevsub.eu.org',
+      ),
+    ),
+  );
 }

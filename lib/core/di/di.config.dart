@@ -31,6 +31,8 @@ import 'package:anivsub/data/datasources/remote/auth/auth_remote_data_source_imp
     as _i254;
 import 'package:anivsub/data/datasources/remote/cf_worker/decrypt_hls_service_impl.dart'
     as _i689;
+import 'package:anivsub/data/datasources/remote/open_d/open_d_remote_data_source_impl.dart'
+    as _i897;
 import 'package:anivsub/data/datasources/remote/scraping/anime_remote_data_source_impl.dart'
     as _i603;
 import 'package:anivsub/data/repositories/anime_repository_impl.dart' as _i728;
@@ -50,7 +52,9 @@ import 'package:anivsub/domain/usecases/auth_use_cases.dart' as _i336;
 import 'package:anivsub/domain/usecases/decrypt_hls_usecase.dart' as _i743;
 import 'package:anivsub/domain/usecases/get_encrypted_hls_usecase.dart'
     as _i407;
+import 'package:anivsub/domain/usecases/get_episode_skip_usecase.dart' as _i611;
 import 'package:anivsub/domain/usecases/get_home_data_usecase.dart' as _i68;
+import 'package:anivsub/domain/usecases/get_list_episode_usecase.dart' as _i72;
 import 'package:anivsub/domain/usecases/get_play_data_usecase.dart' as _i539;
 import 'package:anivsub/domain/usecases/home_usecases.dart' as _i179;
 import 'package:anivsub/domain/usecases/profile_use_cases.dart' as _i826;
@@ -87,6 +91,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i260.LocationService>(() => _i260.LocationService());
     gh.lazySingleton<_i987.AnimeRemoteDataSource>(() =>
         _i603.AnimeRemoteDataSourceImpl(client: gh<_i987.ScrapingClient>()));
+    gh.lazySingleton<_i987.OpenDRemoteDataSource>(
+        () => _i897.OpenDRemoteDataSourceImpl(gh<_i987.OpenDApiClient>()));
     gh.lazySingleton<_i723.FlutterSecureStorageService>(
         () => _i723.FlutterSecureStorageService(
               externalAndroidOptions: gh<_i558.AndroidOptions>(),
@@ -103,10 +109,6 @@ extension GetItInjectableX on _i174.GetIt {
         authRemoteDataSource: gh<_i540.AuthRemoteDataSource>()));
     gh.singleton<_i826.ProfileUseCases>(
         () => _i826.ProfileUseCases(gh<_i772.AuthRepository>()));
-    gh.lazySingleton<_i772.AnimeRepository>(() => _i728.AnimeRepositoryImpl(
-          gh<_i987.AnimeRemoteDataSource>(),
-          gh<_i987.DecryptHlsService>(),
-        ));
     gh.lazySingleton<_i833.AuthLocalDataSource>(() =>
         _i278.AuthLocalDataSourceImpl(
             flutterSecureStorageService:
@@ -114,6 +116,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1060.AuthLocalRepository>(() =>
         _i954.AuthLocalRepositoryImpl(
             authLocalDataSource: gh<_i833.AuthLocalDataSource>()));
+    gh.lazySingleton<_i772.AnimeRepository>(() => _i728.AnimeRepositoryImpl(
+          gh<_i987.AnimeRemoteDataSource>(),
+          gh<_i987.DecryptHlsService>(),
+          gh<_i987.OpenDRemoteDataSource>(),
+        ));
     gh.lazySingleton<_i104.AppSettingsLocalRepository>(() =>
         _i200.AppSettingsLocalRepositoryImpl(
             appSettingsLocalDataSource:
@@ -130,23 +137,29 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i179.HomeUseCases(gh<_i772.AuthLocalRepository>()));
     gh.factory<_i407.GetEncryptedHlsUseCase>(
         () => _i407.GetEncryptedHlsUseCase(gh<_i772.AnimeRepository>()));
+    gh.factory<_i72.GetListEpisodeUseCase>(
+        () => _i72.GetListEpisodeUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i68.GetHomeDataUseCase>(
         () => _i68.GetHomeDataUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i539.GetPlayDataUseCase>(
         () => _i539.GetPlayDataUseCase(gh<_i772.AnimeRepository>()));
+    gh.factory<_i611.GetEpisodeSkipUsecase>(
+        () => _i611.GetEpisodeSkipUsecase(gh<_i772.AnimeRepository>()));
     gh.factory<_i743.DecryptHlsUseCase>(
         () => _i743.DecryptHlsUseCase(gh<_i772.AnimeRepository>()));
     gh.singleton<_i910.AuthNotifier>(
         () => _i910.AuthNotifier(authUseCases: gh<_i772.AuthUseCases>()));
-    gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
-          gh<_i772.GetPlayDataUseCase>(),
-          gh<_i407.GetEncryptedHlsUseCase>(),
-          gh<_i743.DecryptHlsUseCase>(),
-        ));
     gh.factory<_i187.HomeBloc>(
         () => _i187.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
     gh.factory<_i30.LoginCubit>(
         () => _i30.LoginCubit(gh<_i772.AuthUseCases>()));
+    gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
+          gh<_i772.GetPlayDataUseCase>(),
+          gh<_i772.GetEncryptedHlsUseCase>(),
+          gh<_i772.DecryptHlsUseCase>(),
+          gh<_i72.GetListEpisodeUseCase>(),
+          gh<_i611.GetEpisodeSkipUsecase>(),
+        ));
     return this;
   }
 }

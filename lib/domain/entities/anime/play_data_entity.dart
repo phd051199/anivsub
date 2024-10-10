@@ -2,7 +2,6 @@ import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class PlayDataEntity extends BaseEntity<PlayDataDTO> {
-
   const PlayDataEntity({
     required this.chaps,
     this.update,

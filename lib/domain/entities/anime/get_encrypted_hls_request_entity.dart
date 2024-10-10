@@ -3,7 +3,6 @@ import 'package:anivsub/domain/domain_exports.dart';
 
 class GetEncryptedHlsRequestEntity
     extends BaseEntity<GetEncryptedHlsRequestDTO> {
-
   const GetEncryptedHlsRequestEntity({
     required this.id,
     required this.play,

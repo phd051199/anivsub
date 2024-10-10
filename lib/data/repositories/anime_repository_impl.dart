@@ -1,13 +1,17 @@
 import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/data/dto/anime/decrypt_hls_request_dto.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AnimeRepository)
 class AnimeRepositoryImpl implements AnimeRepository {
-  AnimeRepositoryImpl(this._animeRemoteDataSource, this._decryptHlsService);
+  AnimeRepositoryImpl(
+    this._animeRemoteDataSource,
+    this._decryptHlsService,
+    this._openDRemoteDataSource,
+  );
   final AnimeRemoteDataSource _animeRemoteDataSource;
   final DecryptHlsService _decryptHlsService;
+  final OpenDRemoteDataSource _openDRemoteDataSource;
 
   @override
   Future<HomeDataCategoriesEntity> fetchHomeData() async {
@@ -37,5 +41,17 @@ class AnimeRepositoryImpl implements AnimeRepository {
       DecryptHlsRequestDTO(hash: hash),
     );
     return link;
+  }
+
+  @override
+  Future<ListEpisodeResponseEntity> listEpisodes(String name) async {
+    final response = await _openDRemoteDataSource.listEpisodes(name);
+    return response.toEntity();
+  }
+
+  @override
+  Future<EpisodeSkipResponseEntity> skipEpisode(String id) async {
+    final response = await _openDRemoteDataSource.skipEpisode(id);
+    return response.toEntity();
   }
 }
