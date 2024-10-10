@@ -35,6 +35,7 @@ dependencies:
   html: ^0.15.4
   cached_network_image: ^3.4.1
   shimmer: ^3.0.0
+  better_player: ^0.0.84
 
 dev_dependencies:
   flutter_test:

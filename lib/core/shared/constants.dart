@@ -1,6 +1,7 @@
 const kSPUserToken = 'kUserToken';
 const kSPThemeMode = 'kThemeMode';
 
+final decryptHlsUrl = 'https://decrypt-hls.dph.workers.dev';
 final hostCurl = String.fromCharCodes([
   104,
   116,

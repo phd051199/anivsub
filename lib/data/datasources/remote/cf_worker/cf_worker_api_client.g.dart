@@ -22,7 +22,7 @@ class _CFWorkerApiClient implements CFWorkerApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<String> decryptHls(RequestDTO body) async {
+  Future<String> decryptHls(DecryptHlsRequestDTO body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};

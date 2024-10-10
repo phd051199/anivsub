@@ -14,6 +14,7 @@ void registerHttpClient(GetIt getIt, Environment environment) {
   getIt.registerSingleton<ScrapingClient>(
     ScrapingClient(
       NetworkClient.getDio(
+        isAuthenticated: false,
         baseUrl: hostCurl,
         headers: headers,
       ),
@@ -22,7 +23,10 @@ void registerHttpClient(GetIt getIt, Environment environment) {
 
   getIt.registerSingleton<CFWorkerApiClient>(
     CFWorkerApiClient(
-      NetworkClient.getDio(baseUrl: 'https://decrypt-hls.dph.workers.dev'),
+      NetworkClient.getDio(
+        isAuthenticated: false,
+        baseUrl: decryptHlsUrl,
+      ),
     ),
   );
 }

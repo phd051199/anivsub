@@ -1,5 +1,5 @@
-import 'cf_worker_api_client.dart';
+import 'package:anivsub/data/dto/anime/decrypt_hls_request_dto.dart';
 
 abstract class DecryptHlsService {
-  Future<String> decryptHls(RequestDTO hash);
+  Future<String> decryptHls(DecryptHlsRequestDTO hash);
 }

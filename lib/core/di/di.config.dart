@@ -60,7 +60,7 @@ import 'package:anivsub/features/profile/cubit/profile_cubit.dart' as _i132;
 import 'package:anivsub/features/search/cubit/search_cubit.dart' as _i607;
 import 'package:anivsub/features/settings/cubit/settings_cubit.dart' as _i185;
 import 'package:anivsub/features/watch/bloc/watch_bloc.dart' as _i451;
-import 'package:anivsub/features/watch/cubit/chewie_player_cubit.dart' as _i353;
+import 'package:anivsub/features/watch/cubit/video_player_cubit.dart' as _i597;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -79,9 +79,9 @@ extension GetItInjectableX on _i174.GetIt {
     final registerModule = _$RegisterModule();
     gh.factory<_i185.SettingsCubit>(() => _i185.SettingsCubit());
     gh.factory<_i607.SearchCubit>(() => _i607.SearchCubit());
-    gh.factory<_i353.ChewiePlayerCubit>(() => _i353.ChewiePlayerCubit());
     gh.singleton<_i595.SharedPreferenceService>(
         () => _i595.SharedPreferenceService());
+    gh.singleton<_i597.VideoPlayerCubit>(() => _i597.VideoPlayerCubit());
     gh.lazySingleton<_i558.AndroidOptions>(() => registerModule.androidOptions);
     gh.lazySingleton<_i558.IOSOptions>(() => registerModule.iosOptions);
     gh.lazySingleton<_i260.LocationService>(() => _i260.LocationService());
@@ -128,12 +128,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i132.ProfileCubit(gh<_i772.ProfileUseCases>()));
     gh.singleton<_i179.HomeUseCases>(
         () => _i179.HomeUseCases(gh<_i772.AuthLocalRepository>()));
+    gh.factory<_i407.GetEncryptedHlsUseCase>(
+        () => _i407.GetEncryptedHlsUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i68.GetHomeDataUseCase>(
         () => _i68.GetHomeDataUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i539.GetPlayDataUseCase>(
         () => _i539.GetPlayDataUseCase(gh<_i772.AnimeRepository>()));
-    gh.factory<_i407.GetEncryptedHlsUseCase>(
-        () => _i407.GetEncryptedHlsUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i743.DecryptHlsUseCase>(
         () => _i743.DecryptHlsUseCase(gh<_i772.AnimeRepository>()));
     gh.singleton<_i910.AuthNotifier>(

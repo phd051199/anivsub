@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'chewie_player_cubit.dart';
+part of 'video_player_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$ChewiePlayerState {
+mixin _$VideoPlayerState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -43,86 +43,85 @@ mixin _$ChewiePlayerState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ChewiePlayerInitial value) initial,
-    required TResult Function(ChewiePlayerLoading value) loading,
-    required TResult Function(ChewiePlayerLoaded value) loaded,
-    required TResult Function(ChewiePlayerError value) error,
+    required TResult Function(VideoPlayerInitial value) initial,
+    required TResult Function(VideoPlayerLoading value) loading,
+    required TResult Function(VideoPlayerLoaded value) loaded,
+    required TResult Function(VideoPlayerError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ChewiePlayerInitial value)? initial,
-    TResult? Function(ChewiePlayerLoading value)? loading,
-    TResult? Function(ChewiePlayerLoaded value)? loaded,
-    TResult? Function(ChewiePlayerError value)? error,
+    TResult? Function(VideoPlayerInitial value)? initial,
+    TResult? Function(VideoPlayerLoading value)? loading,
+    TResult? Function(VideoPlayerLoaded value)? loaded,
+    TResult? Function(VideoPlayerError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ChewiePlayerInitial value)? initial,
-    TResult Function(ChewiePlayerLoading value)? loading,
-    TResult Function(ChewiePlayerLoaded value)? loaded,
-    TResult Function(ChewiePlayerError value)? error,
+    TResult Function(VideoPlayerInitial value)? initial,
+    TResult Function(VideoPlayerLoading value)? loading,
+    TResult Function(VideoPlayerLoaded value)? loaded,
+    TResult Function(VideoPlayerError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ChewiePlayerStateCopyWith<$Res> {
-  factory $ChewiePlayerStateCopyWith(
-          ChewiePlayerState value, $Res Function(ChewiePlayerState) then) =
-      _$ChewiePlayerStateCopyWithImpl<$Res, ChewiePlayerState>;
+abstract class $VideoPlayerStateCopyWith<$Res> {
+  factory $VideoPlayerStateCopyWith(
+          VideoPlayerState value, $Res Function(VideoPlayerState) then) =
+      _$VideoPlayerStateCopyWithImpl<$Res, VideoPlayerState>;
 }
 
 /// @nodoc
-class _$ChewiePlayerStateCopyWithImpl<$Res, $Val extends ChewiePlayerState>
-    implements $ChewiePlayerStateCopyWith<$Res> {
-  _$ChewiePlayerStateCopyWithImpl(this._value, this._then);
+class _$VideoPlayerStateCopyWithImpl<$Res, $Val extends VideoPlayerState>
+    implements $VideoPlayerStateCopyWith<$Res> {
+  _$VideoPlayerStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ChewiePlayerState
+  /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
-abstract class _$$ChewiePlayerInitialImplCopyWith<$Res> {
-  factory _$$ChewiePlayerInitialImplCopyWith(_$ChewiePlayerInitialImpl value,
-          $Res Function(_$ChewiePlayerInitialImpl) then) =
-      __$$ChewiePlayerInitialImplCopyWithImpl<$Res>;
+abstract class _$$VideoPlayerInitialImplCopyWith<$Res> {
+  factory _$$VideoPlayerInitialImplCopyWith(_$VideoPlayerInitialImpl value,
+          $Res Function(_$VideoPlayerInitialImpl) then) =
+      __$$VideoPlayerInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ChewiePlayerInitialImplCopyWithImpl<$Res>
-    extends _$ChewiePlayerStateCopyWithImpl<$Res, _$ChewiePlayerInitialImpl>
-    implements _$$ChewiePlayerInitialImplCopyWith<$Res> {
-  __$$ChewiePlayerInitialImplCopyWithImpl(_$ChewiePlayerInitialImpl _value,
-      $Res Function(_$ChewiePlayerInitialImpl) _then)
+class __$$VideoPlayerInitialImplCopyWithImpl<$Res>
+    extends _$VideoPlayerStateCopyWithImpl<$Res, _$VideoPlayerInitialImpl>
+    implements _$$VideoPlayerInitialImplCopyWith<$Res> {
+  __$$VideoPlayerInitialImplCopyWithImpl(_$VideoPlayerInitialImpl _value,
+      $Res Function(_$VideoPlayerInitialImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ChewiePlayerState
+  /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$ChewiePlayerInitialImpl implements ChewiePlayerInitial {
-  const _$ChewiePlayerInitialImpl();
+class _$VideoPlayerInitialImpl implements VideoPlayerInitial {
+  const _$VideoPlayerInitialImpl();
 
   @override
   String toString() {
-    return 'ChewiePlayerState.initial()';
+    return 'VideoPlayerState.initial()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChewiePlayerInitialImpl);
+        (other.runtimeType == runtimeType && other is _$VideoPlayerInitialImpl);
   }
 
   @override
@@ -168,10 +167,10 @@ class _$ChewiePlayerInitialImpl implements ChewiePlayerInitial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ChewiePlayerInitial value) initial,
-    required TResult Function(ChewiePlayerLoading value) loading,
-    required TResult Function(ChewiePlayerLoaded value) loaded,
-    required TResult Function(ChewiePlayerError value) error,
+    required TResult Function(VideoPlayerInitial value) initial,
+    required TResult Function(VideoPlayerLoading value) loading,
+    required TResult Function(VideoPlayerLoaded value) loaded,
+    required TResult Function(VideoPlayerError value) error,
   }) {
     return initial(this);
   }
@@ -179,10 +178,10 @@ class _$ChewiePlayerInitialImpl implements ChewiePlayerInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ChewiePlayerInitial value)? initial,
-    TResult? Function(ChewiePlayerLoading value)? loading,
-    TResult? Function(ChewiePlayerLoaded value)? loaded,
-    TResult? Function(ChewiePlayerError value)? error,
+    TResult? Function(VideoPlayerInitial value)? initial,
+    TResult? Function(VideoPlayerLoading value)? loading,
+    TResult? Function(VideoPlayerLoaded value)? loaded,
+    TResult? Function(VideoPlayerError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -190,10 +189,10 @@ class _$ChewiePlayerInitialImpl implements ChewiePlayerInitial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ChewiePlayerInitial value)? initial,
-    TResult Function(ChewiePlayerLoading value)? loading,
-    TResult Function(ChewiePlayerLoaded value)? loaded,
-    TResult Function(ChewiePlayerError value)? error,
+    TResult Function(VideoPlayerInitial value)? initial,
+    TResult Function(VideoPlayerLoading value)? loading,
+    TResult Function(VideoPlayerLoaded value)? loaded,
+    TResult Function(VideoPlayerError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -203,44 +202,43 @@ class _$ChewiePlayerInitialImpl implements ChewiePlayerInitial {
   }
 }
 
-abstract class ChewiePlayerInitial implements ChewiePlayerState {
-  const factory ChewiePlayerInitial() = _$ChewiePlayerInitialImpl;
+abstract class VideoPlayerInitial implements VideoPlayerState {
+  const factory VideoPlayerInitial() = _$VideoPlayerInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$ChewiePlayerLoadingImplCopyWith<$Res> {
-  factory _$$ChewiePlayerLoadingImplCopyWith(_$ChewiePlayerLoadingImpl value,
-          $Res Function(_$ChewiePlayerLoadingImpl) then) =
-      __$$ChewiePlayerLoadingImplCopyWithImpl<$Res>;
+abstract class _$$VideoPlayerLoadingImplCopyWith<$Res> {
+  factory _$$VideoPlayerLoadingImplCopyWith(_$VideoPlayerLoadingImpl value,
+          $Res Function(_$VideoPlayerLoadingImpl) then) =
+      __$$VideoPlayerLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ChewiePlayerLoadingImplCopyWithImpl<$Res>
-    extends _$ChewiePlayerStateCopyWithImpl<$Res, _$ChewiePlayerLoadingImpl>
-    implements _$$ChewiePlayerLoadingImplCopyWith<$Res> {
-  __$$ChewiePlayerLoadingImplCopyWithImpl(_$ChewiePlayerLoadingImpl _value,
-      $Res Function(_$ChewiePlayerLoadingImpl) _then)
+class __$$VideoPlayerLoadingImplCopyWithImpl<$Res>
+    extends _$VideoPlayerStateCopyWithImpl<$Res, _$VideoPlayerLoadingImpl>
+    implements _$$VideoPlayerLoadingImplCopyWith<$Res> {
+  __$$VideoPlayerLoadingImplCopyWithImpl(_$VideoPlayerLoadingImpl _value,
+      $Res Function(_$VideoPlayerLoadingImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ChewiePlayerState
+  /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$ChewiePlayerLoadingImpl implements ChewiePlayerLoading {
-  const _$ChewiePlayerLoadingImpl();
+class _$VideoPlayerLoadingImpl implements VideoPlayerLoading {
+  const _$VideoPlayerLoadingImpl();
 
   @override
   String toString() {
-    return 'ChewiePlayerState.loading()';
+    return 'VideoPlayerState.loading()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ChewiePlayerLoadingImpl);
+        (other.runtimeType == runtimeType && other is _$VideoPlayerLoadingImpl);
   }
 
   @override
@@ -286,10 +284,10 @@ class _$ChewiePlayerLoadingImpl implements ChewiePlayerLoading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ChewiePlayerInitial value) initial,
-    required TResult Function(ChewiePlayerLoading value) loading,
-    required TResult Function(ChewiePlayerLoaded value) loaded,
-    required TResult Function(ChewiePlayerError value) error,
+    required TResult Function(VideoPlayerInitial value) initial,
+    required TResult Function(VideoPlayerLoading value) loading,
+    required TResult Function(VideoPlayerLoaded value) loaded,
+    required TResult Function(VideoPlayerError value) error,
   }) {
     return loading(this);
   }
@@ -297,10 +295,10 @@ class _$ChewiePlayerLoadingImpl implements ChewiePlayerLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ChewiePlayerInitial value)? initial,
-    TResult? Function(ChewiePlayerLoading value)? loading,
-    TResult? Function(ChewiePlayerLoaded value)? loaded,
-    TResult? Function(ChewiePlayerError value)? error,
+    TResult? Function(VideoPlayerInitial value)? initial,
+    TResult? Function(VideoPlayerLoading value)? loading,
+    TResult? Function(VideoPlayerLoaded value)? loaded,
+    TResult? Function(VideoPlayerError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -308,10 +306,10 @@ class _$ChewiePlayerLoadingImpl implements ChewiePlayerLoading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ChewiePlayerInitial value)? initial,
-    TResult Function(ChewiePlayerLoading value)? loading,
-    TResult Function(ChewiePlayerLoaded value)? loaded,
-    TResult Function(ChewiePlayerError value)? error,
+    TResult Function(VideoPlayerInitial value)? initial,
+    TResult Function(VideoPlayerLoading value)? loading,
+    TResult Function(VideoPlayerLoaded value)? loaded,
+    TResult Function(VideoPlayerError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -321,43 +319,43 @@ class _$ChewiePlayerLoadingImpl implements ChewiePlayerLoading {
   }
 }
 
-abstract class ChewiePlayerLoading implements ChewiePlayerState {
-  const factory ChewiePlayerLoading() = _$ChewiePlayerLoadingImpl;
+abstract class VideoPlayerLoading implements VideoPlayerState {
+  const factory VideoPlayerLoading() = _$VideoPlayerLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$ChewiePlayerLoadedImplCopyWith<$Res> {
-  factory _$$ChewiePlayerLoadedImplCopyWith(_$ChewiePlayerLoadedImpl value,
-          $Res Function(_$ChewiePlayerLoadedImpl) then) =
-      __$$ChewiePlayerLoadedImplCopyWithImpl<$Res>;
+abstract class _$$VideoPlayerLoadedImplCopyWith<$Res> {
+  factory _$$VideoPlayerLoadedImplCopyWith(_$VideoPlayerLoadedImpl value,
+          $Res Function(_$VideoPlayerLoadedImpl) then) =
+      __$$VideoPlayerLoadedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ChewiePlayerLoadedImplCopyWithImpl<$Res>
-    extends _$ChewiePlayerStateCopyWithImpl<$Res, _$ChewiePlayerLoadedImpl>
-    implements _$$ChewiePlayerLoadedImplCopyWith<$Res> {
-  __$$ChewiePlayerLoadedImplCopyWithImpl(_$ChewiePlayerLoadedImpl _value,
-      $Res Function(_$ChewiePlayerLoadedImpl) _then)
+class __$$VideoPlayerLoadedImplCopyWithImpl<$Res>
+    extends _$VideoPlayerStateCopyWithImpl<$Res, _$VideoPlayerLoadedImpl>
+    implements _$$VideoPlayerLoadedImplCopyWith<$Res> {
+  __$$VideoPlayerLoadedImplCopyWithImpl(_$VideoPlayerLoadedImpl _value,
+      $Res Function(_$VideoPlayerLoadedImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ChewiePlayerState
+  /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$ChewiePlayerLoadedImpl implements ChewiePlayerLoaded {
-  const _$ChewiePlayerLoadedImpl();
+class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
+  const _$VideoPlayerLoadedImpl();
 
   @override
   String toString() {
-    return 'ChewiePlayerState.loaded()';
+    return 'VideoPlayerState.loaded()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ChewiePlayerLoadedImpl);
+        (other.runtimeType == runtimeType && other is _$VideoPlayerLoadedImpl);
   }
 
   @override
@@ -403,10 +401,10 @@ class _$ChewiePlayerLoadedImpl implements ChewiePlayerLoaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ChewiePlayerInitial value) initial,
-    required TResult Function(ChewiePlayerLoading value) loading,
-    required TResult Function(ChewiePlayerLoaded value) loaded,
-    required TResult Function(ChewiePlayerError value) error,
+    required TResult Function(VideoPlayerInitial value) initial,
+    required TResult Function(VideoPlayerLoading value) loading,
+    required TResult Function(VideoPlayerLoaded value) loaded,
+    required TResult Function(VideoPlayerError value) error,
   }) {
     return loaded(this);
   }
@@ -414,10 +412,10 @@ class _$ChewiePlayerLoadedImpl implements ChewiePlayerLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ChewiePlayerInitial value)? initial,
-    TResult? Function(ChewiePlayerLoading value)? loading,
-    TResult? Function(ChewiePlayerLoaded value)? loaded,
-    TResult? Function(ChewiePlayerError value)? error,
+    TResult? Function(VideoPlayerInitial value)? initial,
+    TResult? Function(VideoPlayerLoading value)? loading,
+    TResult? Function(VideoPlayerLoaded value)? loaded,
+    TResult? Function(VideoPlayerError value)? error,
   }) {
     return loaded?.call(this);
   }
@@ -425,10 +423,10 @@ class _$ChewiePlayerLoadedImpl implements ChewiePlayerLoaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ChewiePlayerInitial value)? initial,
-    TResult Function(ChewiePlayerLoading value)? loading,
-    TResult Function(ChewiePlayerLoaded value)? loaded,
-    TResult Function(ChewiePlayerError value)? error,
+    TResult Function(VideoPlayerInitial value)? initial,
+    TResult Function(VideoPlayerLoading value)? loading,
+    TResult Function(VideoPlayerLoaded value)? loaded,
+    TResult Function(VideoPlayerError value)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -438,35 +436,35 @@ class _$ChewiePlayerLoadedImpl implements ChewiePlayerLoaded {
   }
 }
 
-abstract class ChewiePlayerLoaded implements ChewiePlayerState {
-  const factory ChewiePlayerLoaded() = _$ChewiePlayerLoadedImpl;
+abstract class VideoPlayerLoaded implements VideoPlayerState {
+  const factory VideoPlayerLoaded() = _$VideoPlayerLoadedImpl;
 }
 
 /// @nodoc
-abstract class _$$ChewiePlayerErrorImplCopyWith<$Res> {
-  factory _$$ChewiePlayerErrorImplCopyWith(_$ChewiePlayerErrorImpl value,
-          $Res Function(_$ChewiePlayerErrorImpl) then) =
-      __$$ChewiePlayerErrorImplCopyWithImpl<$Res>;
+abstract class _$$VideoPlayerErrorImplCopyWith<$Res> {
+  factory _$$VideoPlayerErrorImplCopyWith(_$VideoPlayerErrorImpl value,
+          $Res Function(_$VideoPlayerErrorImpl) then) =
+      __$$VideoPlayerErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$ChewiePlayerErrorImplCopyWithImpl<$Res>
-    extends _$ChewiePlayerStateCopyWithImpl<$Res, _$ChewiePlayerErrorImpl>
-    implements _$$ChewiePlayerErrorImplCopyWith<$Res> {
-  __$$ChewiePlayerErrorImplCopyWithImpl(_$ChewiePlayerErrorImpl _value,
-      $Res Function(_$ChewiePlayerErrorImpl) _then)
+class __$$VideoPlayerErrorImplCopyWithImpl<$Res>
+    extends _$VideoPlayerStateCopyWithImpl<$Res, _$VideoPlayerErrorImpl>
+    implements _$$VideoPlayerErrorImplCopyWith<$Res> {
+  __$$VideoPlayerErrorImplCopyWithImpl(_$VideoPlayerErrorImpl _value,
+      $Res Function(_$VideoPlayerErrorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ChewiePlayerState
+  /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = null,
   }) {
-    return _then(_$ChewiePlayerErrorImpl(
+    return _then(_$VideoPlayerErrorImpl(
       null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -477,35 +475,35 @@ class __$$ChewiePlayerErrorImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ChewiePlayerErrorImpl implements ChewiePlayerError {
-  const _$ChewiePlayerErrorImpl(this.message);
+class _$VideoPlayerErrorImpl implements VideoPlayerError {
+  const _$VideoPlayerErrorImpl(this.message);
 
   @override
   final String message;
 
   @override
   String toString() {
-    return 'ChewiePlayerState.error(message: $message)';
+    return 'VideoPlayerState.error(message: $message)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ChewiePlayerErrorImpl &&
+            other is _$VideoPlayerErrorImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  /// Create a copy of ChewiePlayerState
+  /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ChewiePlayerErrorImplCopyWith<_$ChewiePlayerErrorImpl> get copyWith =>
-      __$$ChewiePlayerErrorImplCopyWithImpl<_$ChewiePlayerErrorImpl>(
+  _$$VideoPlayerErrorImplCopyWith<_$VideoPlayerErrorImpl> get copyWith =>
+      __$$VideoPlayerErrorImplCopyWithImpl<_$VideoPlayerErrorImpl>(
           this, _$identity);
 
   @override
@@ -548,10 +546,10 @@ class _$ChewiePlayerErrorImpl implements ChewiePlayerError {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ChewiePlayerInitial value) initial,
-    required TResult Function(ChewiePlayerLoading value) loading,
-    required TResult Function(ChewiePlayerLoaded value) loaded,
-    required TResult Function(ChewiePlayerError value) error,
+    required TResult Function(VideoPlayerInitial value) initial,
+    required TResult Function(VideoPlayerLoading value) loading,
+    required TResult Function(VideoPlayerLoaded value) loaded,
+    required TResult Function(VideoPlayerError value) error,
   }) {
     return error(this);
   }
@@ -559,10 +557,10 @@ class _$ChewiePlayerErrorImpl implements ChewiePlayerError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ChewiePlayerInitial value)? initial,
-    TResult? Function(ChewiePlayerLoading value)? loading,
-    TResult? Function(ChewiePlayerLoaded value)? loaded,
-    TResult? Function(ChewiePlayerError value)? error,
+    TResult? Function(VideoPlayerInitial value)? initial,
+    TResult? Function(VideoPlayerLoading value)? loading,
+    TResult? Function(VideoPlayerLoaded value)? loaded,
+    TResult? Function(VideoPlayerError value)? error,
   }) {
     return error?.call(this);
   }
@@ -570,10 +568,10 @@ class _$ChewiePlayerErrorImpl implements ChewiePlayerError {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ChewiePlayerInitial value)? initial,
-    TResult Function(ChewiePlayerLoading value)? loading,
-    TResult Function(ChewiePlayerLoaded value)? loaded,
-    TResult Function(ChewiePlayerError value)? error,
+    TResult Function(VideoPlayerInitial value)? initial,
+    TResult Function(VideoPlayerLoading value)? loading,
+    TResult Function(VideoPlayerLoaded value)? loaded,
+    TResult Function(VideoPlayerError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -583,15 +581,14 @@ class _$ChewiePlayerErrorImpl implements ChewiePlayerError {
   }
 }
 
-abstract class ChewiePlayerError implements ChewiePlayerState {
-  const factory ChewiePlayerError(final String message) =
-      _$ChewiePlayerErrorImpl;
+abstract class VideoPlayerError implements VideoPlayerState {
+  const factory VideoPlayerError(final String message) = _$VideoPlayerErrorImpl;
 
   String get message;
 
-  /// Create a copy of ChewiePlayerState
+  /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChewiePlayerErrorImplCopyWith<_$ChewiePlayerErrorImpl> get copyWith =>
+  _$$VideoPlayerErrorImplCopyWith<_$VideoPlayerErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

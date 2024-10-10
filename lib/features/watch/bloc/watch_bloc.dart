@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/domain/usecases/decrypt_hls_usecase.dart';
@@ -47,10 +45,18 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   }
 
   void _onChangeChap(ChangeChap event, Emitter<WatchState> emit) async {
-    final currentState = state;
+    final WatchState currentState = state;
     if (currentState is! WatchLoaded) {
       return;
     }
+
+    emit(
+      currentState.copyWith(
+        link: '',
+        playingId: event.chap.id,
+      ),
+    );
+
     final newLink = await _getChap(event.chap);
 
     emit(
