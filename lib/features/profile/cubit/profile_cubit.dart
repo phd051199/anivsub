@@ -8,14 +8,14 @@ part 'profile_state.dart';
 
 @injectable
 class ProfileCubit extends BaseCubit<ProfileState> {
-  ProfileCubit(this.profileUseCases) : super(ProfileInitial()) {
+  ProfileCubit(this.profileUseCases) : super(const ProfileInitial()) {
     getUser();
   }
 
   final ProfileUseCases profileUseCases;
 
   Future<void> getUser() async {
-    emit(ProfileLoading());
+    emit(const ProfileLoading());
     final response = await profileUseCases.getUser();
     response.when(
       (data) {

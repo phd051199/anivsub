@@ -34,7 +34,7 @@ void registerHttpClient(GetIt getIt, Environment environment) {
     OpenDApiClient(
       NetworkClient.getDio(
         isAuthenticated: false,
-        baseUrl: 'https://opend-9animetv.animevsub.eu.org',
+        baseUrl: opendUrl,
       ),
     ),
   );

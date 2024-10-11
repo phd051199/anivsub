@@ -8,21 +8,21 @@ part 'video_player_state.dart';
 
 @injectable
 class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
-  VideoPlayerCubit() : super(VideoPlayerInitial());
+  VideoPlayerCubit() : super(const VideoPlayerInitial());
   BetterPlayerController? betterPlayerController;
 
   void initializePlayer({required BetterPlayerController controller}) {
     betterPlayerController = controller;
-    emit(VideoPlayerLoaded());
+    emit(const VideoPlayerLoaded());
   }
 
   void load() {
-    emit(VideoPlayerLoading());
+    emit(const VideoPlayerLoading());
     // Add your loading logic here
-    emit(VideoPlayerLoaded());
+    emit(const VideoPlayerLoaded());
   }
 
   void error() {
-    emit(VideoPlayerError('An error occurred'));
+    emit(const VideoPlayerError('An error occurred'));
   }
 }

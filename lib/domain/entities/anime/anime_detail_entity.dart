@@ -2,7 +2,6 @@ import 'package:anivsub/data/dto/anime/anime_detail_dto.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
-
   const AnimeDetailEntity({
     required this.name,
     required this.othername,

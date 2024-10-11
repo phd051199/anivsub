@@ -9,7 +9,6 @@ part 'anime_detail_dto.g.dart';
   explicitToJson: true,
 )
 class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> {
-
   const AnimeDetailDTO({
     required this.name,
     required this.othername,

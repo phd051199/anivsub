@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class AuthNotifier with ChangeNotifier {
-
   AuthNotifier({required this.authUseCases});
   final AuthUseCases authUseCases;
   var _status = AuthStatus.notAuthenticated;

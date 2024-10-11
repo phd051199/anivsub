@@ -1,4 +1,6 @@
 import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/shared/string_extension.dart';
+import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/domain/usecases/get_episode_skip_usecase.dart';
 import 'package:anivsub/domain/usecases/get_list_episode_usecase.dart';
@@ -18,7 +20,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     this._decryptHlsUseCase,
     this._getListEpisodeUseCase,
     this._getEpisodeSkipUsecase,
-  ) : super(WatchInitial()) {
+  ) : super(const WatchInitial()) {
     on<LoadWatch>(_onLoadWatch);
     on<ChangeChap>(_onChangeChap);
     on<ToggleSkipIntro>(_onToggleSkipIntro);
@@ -31,45 +33,48 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   final GetEpisodeSkipUsecase _getEpisodeSkipUsecase;
 
   void _onLoadWatch(LoadWatch event, Emitter<WatchState> emit) async {
-    emit(WatchLoading());
-
-    final playDataOutput = await _getPlayDataUseCase.send(
-      GetPlayDataUseCaseInput(id: event.id),
-    );
-    final ChapDataEntity chap = playDataOutput.result.chaps.first;
-    final link = await _getChapter(chap);
-
-    emit(
-      WatchLoaded(
-        link: link,
-        playingId: chap.id,
-        chaps: playDataOutput.result.chaps,
-      ),
-    );
-
-    final WatchState currentState = state;
-    if (currentState is! WatchLoaded) {
-      return;
-    }
+    emit(const WatchLoading());
 
     try {
-      final getListEpisodeOutput = await _getListEpisodeUseCase.send(
-        GetListEpisodeUseCaseInput(
-          animeName: _cleanPath(event.id),
+      final playDataOutput = await _getPlayDataUseCase.send(
+        GetPlayDataUseCaseInput(id: event.id),
+      );
+      final chap = playDataOutput.result.chaps.first;
+      final link = await _getChapter(chap);
+
+      emit(
+        WatchLoaded(
+          link: link,
+          playingId: chap.id,
+          chaps: playDataOutput.result.chaps,
+          poster: playDataOutput.result.poster,
         ),
       );
-      final String currentId = getListEpisodeOutput.result.list
-          .where(
-            (element) =>
-                int.tryParse(element.name) ==
-                int.tryParse(currentState.playingChap!),
-          )
-          .first
-          .id;
+
+      await _loadAdditionalData(event.id, chap.name, emit);
+    } catch (e) {
+      emit(WatchError(e.toString()));
+    }
+  }
+
+  Future<void> _loadAdditionalData(
+    String id,
+    String chapName,
+    Emitter<WatchState> emit,
+  ) async {
+    final currentState = state as WatchLoaded;
+    try {
+      final getListEpisodeOutput = await _getListEpisodeUseCase.send(
+        GetListEpisodeUseCaseInput(animeName: _cleanPath(id)),
+      );
+
+      final currentId = _findMatchingEpisodeId(
+        getListEpisodeOutput.result.list,
+        currentState.playingChap!,
+      );
+
       final getEpisodeSkipOutput = await _getEpisodeSkipUsecase.send(
-        GetEpisodeSkipUsecaseInput(
-          id: currentId,
-        ),
+        GetEpisodeSkipUsecaseInput(id: currentId),
       );
 
       emit(
@@ -78,63 +83,44 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
           episodeSkip: getEpisodeSkipOutput.result,
         ),
       );
-    } catch (e) {
-      emit(
-        currentState.copyWith(
-          listEpisode: null,
-          episodeSkip: null,
-        ),
-      );
+    } catch (_) {
+      emit(currentState.copyWith(listEpisode: null, episodeSkip: null));
     }
-  }
-
-  void _onToggleSkipIntro(ToggleSkipIntro event, Emitter<WatchState> emit) {
-    final WatchState currentState = state;
-    if (currentState is! WatchLoaded) {
-      return;
-    }
-    emit(
-      currentState.copyWith(
-        skipIntro: !currentState.skipIntro,
-      ),
-    );
   }
 
   void _onChangeChap(ChangeChap event, Emitter<WatchState> emit) async {
-    final WatchState currentState = state;
-    if (currentState is! WatchLoaded) {
-      return;
-    }
+    final currentState = state as WatchLoaded;
+
+    if (event.chap.id == currentState.playingId) return;
 
     emit(
       currentState.copyWith(
         link: '',
         playingId: event.chap.id,
         playingChap: event.chap.name,
+        chapLoading: true,
       ),
     );
 
     final newLink = await _getChapter(event.chap);
+
     emit(
       currentState.copyWith(
         link: newLink,
         playingId: event.chap.id,
         playingChap: event.chap.name,
+        chapLoading: false,
       ),
     );
 
     try {
-      final String currentId = currentState.listEpisode!.list
-          .where(
-            (element) =>
-                int.tryParse(element.name) == int.tryParse(event.chap.name),
-          )
-          .first
-          .id;
+      final currentId = _findMatchingEpisodeId(
+        currentState.listEpisode!.list,
+        event.chap.name,
+      );
+
       final getEpisodeSkipOutput = await _getEpisodeSkipUsecase.send(
-        GetEpisodeSkipUsecaseInput(
-          id: currentId,
-        ),
+        GetEpisodeSkipUsecaseInput(id: currentId),
       );
 
       emit(
@@ -143,18 +129,25 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
           playingId: event.chap.id,
           playingChap: event.chap.name,
           episodeSkip: getEpisodeSkipOutput.result,
+          chapLoading: false,
         ),
       );
-    } catch (e) {
+    } catch (_) {
       emit(
         currentState.copyWith(
           link: newLink,
           playingId: event.chap.id,
           playingChap: event.chap.name,
           episodeSkip: null,
+          chapLoading: false,
         ),
       );
     }
+  }
+
+  void _onToggleSkipIntro(ToggleSkipIntro event, Emitter<WatchState> emit) {
+    final currentState = state as WatchLoaded;
+    emit(currentState.copyWith(skipIntro: !currentState.skipIntro));
   }
 
   Future<String> _getChapter(ChapDataEntity chap) async {
@@ -170,22 +163,24 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     );
 
     final decryptOutput = await _decryptHlsUseCase.send(
-      DecryptHlsUseCaseInput(
-        hash: hlsOutput.result.link.first.file,
-      ),
+      DecryptHlsUseCaseInput(hash: hlsOutput.result.link.first.file),
     );
 
     return decryptOutput.result;
   }
 
   String _cleanPath(String url) {
-    String cleaned = url.replaceAll('/phim/', '');
+    final cleaned = url.replaceAll('/phim/', '');
+    final lastDashIndex = cleaned.lastIndexOf('-');
+    return lastDashIndex != -1 ? cleaned.substring(0, lastDashIndex) : cleaned;
+  }
 
-    int lastDashIndex = cleaned.lastIndexOf('-');
-    if (lastDashIndex != -1) {
-      cleaned = cleaned.substring(0, lastDashIndex);
-    }
-
-    return cleaned;
+  String _findMatchingEpisodeId(List<Episode> episodes, String chapName) {
+    return episodes
+        .firstWhere(
+          (element) =>
+              element.name.extractFirstInt() == chapName.extractFirstInt(),
+        )
+        .id;
   }
 }

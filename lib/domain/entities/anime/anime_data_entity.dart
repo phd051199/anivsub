@@ -3,7 +3,6 @@ import 'package:anivsub/data/data_exports.dart';
 import '../base_entity.dart';
 
 class AnimeDataEntity extends BaseEntity {
-
   const AnimeDataEntity({
     required this.path,
     required this.image,

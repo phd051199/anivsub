@@ -11,8 +11,8 @@ void configureInjection() => GetIt.I.init();
 abstract class RegisterModule {
   @lazySingleton
   AndroidOptions get androidOptions =>
-      AndroidOptions(encryptedSharedPreferences: true);
+      const AndroidOptions(encryptedSharedPreferences: true);
 
   @lazySingleton
-  IOSOptions get iosOptions => IOSOptions();
+  IOSOptions get iosOptions => const IOSOptions();
 }

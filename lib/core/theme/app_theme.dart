@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-
   AppTheme.fromBrightness({
     required this.brightness,
     required this.seedColor,

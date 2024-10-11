@@ -413,11 +413,13 @@ mixin _$WatchState {
     required TResult Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)
+            bool skipIntro,
+            bool chapLoading)
         loaded,
     required TResult Function(String message) error,
   }) =>
@@ -429,11 +431,13 @@ mixin _$WatchState {
     TResult? Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)?
+            bool skipIntro,
+            bool chapLoading)?
         loaded,
     TResult? Function(String message)? error,
   }) =>
@@ -445,11 +449,13 @@ mixin _$WatchState {
     TResult Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)?
+            bool skipIntro,
+            bool chapLoading)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -549,11 +555,13 @@ class _$WatchInitialImpl implements WatchInitial {
     required TResult Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)
+            bool skipIntro,
+            bool chapLoading)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -568,11 +576,13 @@ class _$WatchInitialImpl implements WatchInitial {
     TResult? Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)?
+            bool skipIntro,
+            bool chapLoading)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -587,11 +597,13 @@ class _$WatchInitialImpl implements WatchInitial {
     TResult Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)?
+            bool skipIntro,
+            bool chapLoading)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -690,11 +702,13 @@ class _$WatchLoadingImpl implements WatchLoading {
     required TResult Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)
+            bool skipIntro,
+            bool chapLoading)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -709,11 +723,13 @@ class _$WatchLoadingImpl implements WatchLoading {
     TResult? Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)?
+            bool skipIntro,
+            bool chapLoading)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -728,11 +744,13 @@ class _$WatchLoadingImpl implements WatchLoading {
     TResult Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)?
+            bool skipIntro,
+            bool chapLoading)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -794,11 +812,13 @@ abstract class _$$WatchLoadedImplCopyWith<$Res> {
   $Res call(
       {String link,
       List<ChapDataEntity> chaps,
+      String poster,
       String? playingId,
       String? playingChap,
       ListEpisodeResponseEntity? listEpisode,
       EpisodeSkipResponseEntity? episodeSkip,
-      bool skipIntro});
+      bool skipIntro,
+      bool chapLoading});
 }
 
 /// @nodoc
@@ -816,11 +836,13 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
   $Res call({
     Object? link = null,
     Object? chaps = null,
+    Object? poster = null,
     Object? playingId = freezed,
     Object? playingChap = freezed,
     Object? listEpisode = freezed,
     Object? episodeSkip = freezed,
     Object? skipIntro = null,
+    Object? chapLoading = null,
   }) {
     return _then(_$WatchLoadedImpl(
       link: null == link
@@ -831,6 +853,10 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
           ? _value._chaps
           : chaps // ignore: cast_nullable_to_non_nullable
               as List<ChapDataEntity>,
+      poster: null == poster
+          ? _value.poster
+          : poster // ignore: cast_nullable_to_non_nullable
+              as String,
       playingId: freezed == playingId
           ? _value.playingId
           : playingId // ignore: cast_nullable_to_non_nullable
@@ -851,6 +877,10 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
           ? _value.skipIntro
           : skipIntro // ignore: cast_nullable_to_non_nullable
               as bool,
+      chapLoading: null == chapLoading
+          ? _value.chapLoading
+          : chapLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -861,11 +891,13 @@ class _$WatchLoadedImpl implements WatchLoaded {
   const _$WatchLoadedImpl(
       {required this.link,
       required final List<ChapDataEntity> chaps,
+      this.poster = '',
       this.playingId = '',
       this.playingChap = '1',
       this.listEpisode,
       this.episodeSkip,
-      this.skipIntro = false})
+      this.skipIntro = false,
+      this.chapLoading = false})
       : _chaps = chaps;
 
   @override
@@ -880,6 +912,9 @@ class _$WatchLoadedImpl implements WatchLoaded {
 
   @override
   @JsonKey()
+  final String poster;
+  @override
+  @JsonKey()
   final String? playingId;
   @override
   @JsonKey()
@@ -891,10 +926,13 @@ class _$WatchLoadedImpl implements WatchLoaded {
   @override
   @JsonKey()
   final bool skipIntro;
+  @override
+  @JsonKey()
+  final bool chapLoading;
 
   @override
   String toString() {
-    return 'WatchState.loaded(link: $link, chaps: $chaps, playingId: $playingId, playingChap: $playingChap, listEpisode: $listEpisode, episodeSkip: $episodeSkip, skipIntro: $skipIntro)';
+    return 'WatchState.loaded(link: $link, chaps: $chaps, poster: $poster, playingId: $playingId, playingChap: $playingChap, listEpisode: $listEpisode, episodeSkip: $episodeSkip, skipIntro: $skipIntro, chapLoading: $chapLoading)';
   }
 
   @override
@@ -904,6 +942,7 @@ class _$WatchLoadedImpl implements WatchLoaded {
             other is _$WatchLoadedImpl &&
             (identical(other.link, link) || other.link == link) &&
             const DeepCollectionEquality().equals(other._chaps, _chaps) &&
+            (identical(other.poster, poster) || other.poster == poster) &&
             (identical(other.playingId, playingId) ||
                 other.playingId == playingId) &&
             (identical(other.playingChap, playingChap) ||
@@ -913,7 +952,9 @@ class _$WatchLoadedImpl implements WatchLoaded {
             (identical(other.episodeSkip, episodeSkip) ||
                 other.episodeSkip == episodeSkip) &&
             (identical(other.skipIntro, skipIntro) ||
-                other.skipIntro == skipIntro));
+                other.skipIntro == skipIntro) &&
+            (identical(other.chapLoading, chapLoading) ||
+                other.chapLoading == chapLoading));
   }
 
   @override
@@ -921,11 +962,13 @@ class _$WatchLoadedImpl implements WatchLoaded {
       runtimeType,
       link,
       const DeepCollectionEquality().hash(_chaps),
+      poster,
       playingId,
       playingChap,
       listEpisode,
       episodeSkip,
-      skipIntro);
+      skipIntro,
+      chapLoading);
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -943,16 +986,18 @@ class _$WatchLoadedImpl implements WatchLoaded {
     required TResult Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)
+            bool skipIntro,
+            bool chapLoading)
         loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(link, chaps, playingId, playingChap, listEpisode, episodeSkip,
-        skipIntro);
+    return loaded(link, chaps, poster, playingId, playingChap, listEpisode,
+        episodeSkip, skipIntro, chapLoading);
   }
 
   @override
@@ -963,16 +1008,18 @@ class _$WatchLoadedImpl implements WatchLoaded {
     TResult? Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)?
+            bool skipIntro,
+            bool chapLoading)?
         loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(link, chaps, playingId, playingChap, listEpisode,
-        episodeSkip, skipIntro);
+    return loaded?.call(link, chaps, poster, playingId, playingChap,
+        listEpisode, episodeSkip, skipIntro, chapLoading);
   }
 
   @override
@@ -983,18 +1030,20 @@ class _$WatchLoadedImpl implements WatchLoaded {
     TResult Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)?
+            bool skipIntro,
+            bool chapLoading)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(link, chaps, playingId, playingChap, listEpisode,
-          episodeSkip, skipIntro);
+      return loaded(link, chaps, poster, playingId, playingChap, listEpisode,
+          episodeSkip, skipIntro, chapLoading);
     }
     return orElse();
   }
@@ -1041,19 +1090,23 @@ abstract class WatchLoaded implements WatchState {
   const factory WatchLoaded(
       {required final String link,
       required final List<ChapDataEntity> chaps,
+      final String poster,
       final String? playingId,
       final String? playingChap,
       final ListEpisodeResponseEntity? listEpisode,
       final EpisodeSkipResponseEntity? episodeSkip,
-      final bool skipIntro}) = _$WatchLoadedImpl;
+      final bool skipIntro,
+      final bool chapLoading}) = _$WatchLoadedImpl;
 
   String get link;
   List<ChapDataEntity> get chaps;
+  String get poster;
   String? get playingId;
   String? get playingChap;
   ListEpisodeResponseEntity? get listEpisode;
   EpisodeSkipResponseEntity? get episodeSkip;
   bool get skipIntro;
+  bool get chapLoading;
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -1135,11 +1188,13 @@ class _$WatchErrorImpl implements WatchError {
     required TResult Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)
+            bool skipIntro,
+            bool chapLoading)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -1154,11 +1209,13 @@ class _$WatchErrorImpl implements WatchError {
     TResult? Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)?
+            bool skipIntro,
+            bool chapLoading)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -1173,11 +1230,13 @@ class _$WatchErrorImpl implements WatchError {
     TResult Function(
             String link,
             List<ChapDataEntity> chaps,
+            String poster,
             String? playingId,
             String? playingChap,
             ListEpisodeResponseEntity? listEpisode,
             EpisodeSkipResponseEntity? episodeSkip,
-            bool skipIntro)?
+            bool skipIntro,
+            bool chapLoading)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),

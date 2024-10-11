@@ -92,7 +92,7 @@ class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
                                   controller: _emailController,
                                   decoration: InputDecoration(
                                     labelText: context.l10n.email,
-                                    prefixIcon: Icon(Icons.email),
+                                    prefixIcon: const Icon(Icons.email),
                                   ),
                                   validator: emailValidator.validate,
                                 ),
@@ -102,7 +102,7 @@ class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
                                   obscureText: state.isPasswordObscured,
                                   decoration: InputDecoration(
                                     labelText: context.l10n.password,
-                                    prefixIcon: Icon(Icons.lock),
+                                    prefixIcon: const Icon(Icons.lock),
                                     suffixIcon: IconButton(
                                       icon: Icon(
                                         state.isPasswordObscured

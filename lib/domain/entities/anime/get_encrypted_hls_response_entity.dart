@@ -11,7 +11,6 @@ class Link {
 
 class GetEncryptedHlsResponseEntity
     extends BaseEntity<GetEncryptedHlsResponseDTO> {
-
   const GetEncryptedHlsResponseEntity({
     required this.success,
     required this.title,

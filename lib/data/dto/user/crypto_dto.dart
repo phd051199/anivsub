@@ -9,7 +9,6 @@ part 'crypto_dto.g.dart';
   explicitToJson: true,
 )
 class CryptoDTO extends BaseDTO<CryptoEntity> {
-
   const CryptoDTO({
     this.coin,
     this.wallet,

@@ -7,7 +7,6 @@ part 'get_list_episode_usecase.freezed.dart';
 @injectable
 class GetListEpisodeUseCase extends BaseFutureUseCase<
     GetListEpisodeUseCaseInput, GetListEpisodeUseCaseOutput> {
-
   const GetListEpisodeUseCase(this._repository);
   final AnimeRepository _repository;
 

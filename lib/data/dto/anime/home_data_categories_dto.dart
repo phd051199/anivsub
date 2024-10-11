@@ -9,7 +9,6 @@ part 'home_data_categories_dto.g.dart';
   explicitToJson: true,
 )
 class HomeDataCategoriesDTO extends BaseDTO<HomeDataCategoriesEntity> {
-
   const HomeDataCategoriesDTO({
     required this.topMovies,
     required this.sliderMovies,

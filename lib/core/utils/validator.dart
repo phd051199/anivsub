@@ -1,5 +1,4 @@
 class Validator<T> {
-
   Validator(this._validators);
   final List<String? Function(T)> _validators;
 

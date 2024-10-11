@@ -6,7 +6,6 @@ part 'user_session_response_dto.g.dart';
 
 @JsonSerializable()
 class UserSessionResponseDTO extends BaseDTO<UserSessionResponseEntity> {
-
   const UserSessionResponseDTO({
     this.accessToken,
     this.refreshToken,

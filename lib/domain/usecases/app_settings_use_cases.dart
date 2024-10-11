@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class AppSettingsUseCases {
-
   const AppSettingsUseCases(this.appSettingsLocalRepository);
   final AppSettingsLocalRepository appSettingsLocalRepository;
 

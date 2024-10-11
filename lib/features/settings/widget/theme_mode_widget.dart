@@ -17,9 +17,11 @@ class ThemeModeWidget extends StatelessWidget {
       ),
       trailing: ToggleButtons(
         isSelected: ThemeMode.values
-            .map((mode) =>
-                mode ==
-                context.read<ThemeCubit>().state.appSettings.themeModeEnum,)
+            .map(
+              (mode) =>
+                  mode ==
+                  context.read<ThemeCubit>().state.appSettings.themeModeEnum,
+            )
             .toList(),
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         onPressed: (index) {

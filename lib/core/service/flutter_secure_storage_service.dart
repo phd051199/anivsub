@@ -16,7 +16,7 @@ class FlutterSecureStorageService {
               accessibility: KeychainAccessibility.unlocked,
             );
 
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   final AndroidOptions androidOptions;
   final IOSOptions iosOptions;
 
@@ -60,7 +60,10 @@ class FlutterSecureStorageService {
 
   Future<void> removeValue(String key) async {
     await storage.delete(
-        key: key, iOptions: iosOptions, aOptions: androidOptions,);
+      key: key,
+      iOptions: iosOptions,
+      aOptions: androidOptions,
+    );
   }
 
   Future<void> clearAllData() async {

@@ -3,7 +3,6 @@ import 'package:anivsub/domain/entities/base_entity.dart';
 
 class RefreshUserSessionRequestEntity
     extends BaseEntity<RefreshUserSessionRequestDTO> {
-
   const RefreshUserSessionRequestEntity({
     required this.refreshToken,
     this.expiresInMins,

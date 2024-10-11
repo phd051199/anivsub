@@ -10,7 +10,6 @@ part 'refresh_user_session_response_dto.g.dart';
 )
 class RefreshUserSessionResponseDTO
     extends BaseDTO<RefreshUserSessionResponseEntity> {
-
   const RefreshUserSessionResponseDTO({
     required this.accessToken,
     required this.refreshToken,

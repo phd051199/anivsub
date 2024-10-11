@@ -53,9 +53,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
 
   Widget _buildPageContent(BuildContext context, HomeState state) {
     return switch (state) {
-      HomeInitial() ||
-      HomeLoading() =>
-        const LoadingWidget(isTransparent: true),
+      HomeInitial() || HomeLoading() => const LoadingWidget(),
       HomeLoaded() => _buildHomeSection(context, state),
       _ => Container(),
     };
@@ -83,8 +81,11 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
           context,
           title: context.l10n.hotUpdates,
           showSeeAllButton: true,
-          child: _buildAnimeList(context, state,
-              movies: state.homeData.hotUpdates,),
+          child: _buildAnimeList(
+            context,
+            state,
+            movies: state.homeData.hotUpdates,
+          ),
         ),
         const Divider(height: 32),
         _buildSectionHeader(
@@ -99,16 +100,22 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
           context,
           title: context.l10n.latestUpdates,
           showSeeAllButton: true,
-          child: _buildAnimeList(context, state,
-              movies: state.homeData.latestUpdates,),
+          child: _buildAnimeList(
+            context,
+            state,
+            movies: state.homeData.latestUpdates,
+          ),
         ),
         const Divider(height: 32),
         _buildSectionHeader(
           context,
           title: context.l10n.preRelease,
           showSeeAllButton: true,
-          child: _buildAnimeList(context, state,
-              movies: state.homeData.preRelease,),
+          child: _buildAnimeList(
+            context,
+            state,
+            movies: state.homeData.preRelease,
+          ),
         ),
       ],
     );
@@ -186,7 +193,10 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
                 ),
               );
             }),
-            for (int i = 0; i < missingItems; i++) const SizedBox(width: 120),
+            ...List.generate(
+              missingItems,
+              (_) => const SizedBox(width: 120),
+            ),
           ],
         ),
       ),
@@ -262,8 +272,12 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
     );
   }
 
-  Stack _buildMovieThumbnail(BuildContext context, AnimeDataEntity movie,
-      {double? height = 180, double? width = 120,}) {
+  Stack _buildMovieThumbnail(
+    BuildContext context,
+    AnimeDataEntity movie, {
+    double? height = 180,
+    double? width = 120,
+  }) {
     return Stack(
       children: [
         Card(

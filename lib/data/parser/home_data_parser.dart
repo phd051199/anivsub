@@ -8,11 +8,17 @@ class HomeDataParser {
     final int now = DateTime.now().millisecondsSinceEpoch;
 
     final List<AnimeDataEntity> thisSeason = _extractHomeData(
-        document.querySelectorAll('.MovieListTopCn .TPostMv'), now,);
+      document.querySelectorAll('.MovieListTopCn .TPostMv'),
+      now,
+    );
     final List<AnimeDataEntity> sliderMovies = _extractHomeData(
-        document.querySelectorAll('.MovieListSldCn .TPostMv'), now,);
+      document.querySelectorAll('.MovieListSldCn .TPostMv'),
+      now,
+    );
     final List<AnimeDataEntity> latestUpdates = _extractHomeData(
-        document.querySelectorAll('#single-home .TPostMv'), now,);
+      document.querySelectorAll('#single-home .TPostMv'),
+      now,
+    );
     final List<AnimeDataEntity> preRelease =
         _extractHomeData(document.querySelectorAll('#new-home .TPostMv'), now);
     final List<AnimeDataEntity> hotUpdates =
@@ -31,7 +37,9 @@ class HomeDataParser {
   }
 
   static List<AnimeDataEntity> _extractHomeData(
-      Iterable<dom.Element> elements, int now,) {
+    Iterable<dom.Element> elements,
+    int now,
+  ) {
     return elements.map((element) {
       final String path =
           _getPathName(element.querySelector('a')?.attributes['href'] ?? '');

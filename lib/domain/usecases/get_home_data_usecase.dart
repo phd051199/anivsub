@@ -7,7 +7,6 @@ part 'get_home_data_usecase.freezed.dart';
 @injectable
 class GetHomeDataUseCase extends BaseFutureUseCase<GetHomeDataUseCaseInput,
     GetHomeDataUseCaseOutput> {
-
   const GetHomeDataUseCase(this._repository);
   final AnimeRepository _repository;
 

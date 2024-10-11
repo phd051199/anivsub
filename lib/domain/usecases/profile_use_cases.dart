@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class ProfileUseCases {
-
   const ProfileUseCases(this.authRepository);
   final AuthRepository authRepository;
 

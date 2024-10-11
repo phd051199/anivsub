@@ -9,7 +9,6 @@ part 'get_encrypted_hls_request_dto.g.dart';
   explicitToJson: true,
 )
 class GetEncryptedHlsRequestDTO extends BaseDTO<GetEncryptedHlsRequestEntity> {
-
   const GetEncryptedHlsRequestDTO({
     required this.id,
     required this.play,

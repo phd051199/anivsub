@@ -9,7 +9,6 @@ part 'user_session_request_dto.g.dart';
   explicitToJson: true,
 )
 class UserSessionRequestDTO extends BaseDTO<UserSessionRequestEntity> {
-
   const UserSessionRequestDTO({
     required this.username,
     required this.password,

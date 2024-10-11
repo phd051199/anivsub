@@ -41,9 +41,15 @@ class _ThemeColorWidgetState extends State<ThemeColorWidget>
                   physics: const ClampingScrollPhysics(),
                   child: ToggleButtons(
                     isSelected: kThemeColors
-                        .map((color) =>
-                            color.value ==
-                            context.read<ThemeCubit>().state.appSettings.color,)
+                        .map(
+                          (color) =>
+                              color.value ==
+                              context
+                                  .read<ThemeCubit>()
+                                  .state
+                                  .appSettings
+                                  .color,
+                        )
                         .toList(),
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
                     onPressed: (index) {

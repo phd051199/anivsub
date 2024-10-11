@@ -2,7 +2,6 @@ import 'package:anivsub/data/dto/user/company_dto.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class CompanyEntity extends BaseEntity<CompanyDTO> {
-
   const CompanyEntity({
     this.department,
     this.name,

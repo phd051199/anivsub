@@ -10,17 +10,17 @@ part 'home_state.dart';
 
 @injectable
 class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
-  HomeBloc(this._getHomeDataUseCase) : super(HomeInitial()) {
+  HomeBloc(this._getHomeDataUseCase) : super(const HomeInitial()) {
     on<LoadHome>(_onLoadHome);
   }
 
   final GetHomeDataUseCase _getHomeDataUseCase;
 
   void _onLoadHome(LoadHome event, Emitter<HomeState> emit) async {
-    emit(HomeLoading());
+    emit(const HomeLoading());
 
     final GetHomeDataUseCaseOutput output = await _getHomeDataUseCase.send(
-      GetHomeDataUseCaseInput(),
+      const GetHomeDataUseCaseInput(),
     );
 
     emit(HomeLoaded(homeData: output.result));

@@ -9,7 +9,6 @@ part 'play_data_dto.g.dart';
   explicitToJson: true,
 )
 class PlayDataDTO extends BaseDTO<PlayDataEntity> {
-
   const PlayDataDTO({
     required this.chaps,
     this.update,

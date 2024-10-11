@@ -3,7 +3,6 @@ import 'package:anivsub/domain/domain_exports.dart';
 import 'package:flutter/material.dart';
 
 class AppSettingsEntity extends BaseEntity<AppSettingsDTO> {
-
   const AppSettingsEntity({
     required this.themeMode,
     required this.color,

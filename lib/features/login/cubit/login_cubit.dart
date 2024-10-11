@@ -11,9 +11,7 @@ part 'login_state.dart';
 class LoginCubit extends BaseCubit<LoginState> {
   LoginCubit(this.authUseCases)
       : super(
-          LoginInitial(
-            isPasswordObscured: true,
-          ),
+          const LoginInitial(isPasswordObscured: true),
         );
 
   final AuthUseCases authUseCases;

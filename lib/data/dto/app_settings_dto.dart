@@ -10,7 +10,6 @@ part 'app_settings_dto.g.dart';
   explicitToJson: true,
 )
 class AppSettingsDTO extends BaseDTO<AppSettingsEntity> {
-
   const AppSettingsDTO({
     required this.themeMode,
     required this.color,

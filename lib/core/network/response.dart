@@ -13,13 +13,11 @@ sealed class ResponseWrapper<T> {
 }
 
 class Success<T> extends ResponseWrapper<T> {
-
   Success(this.data);
   final T data;
 }
 
 class Error<T> extends ResponseWrapper<T> {
-
   Error(this.error);
   final String error;
 }

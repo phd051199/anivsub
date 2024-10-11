@@ -9,7 +9,6 @@ part 'anime_data_response_dto.g.dart';
   explicitToJson: true,
 )
 class AnimeDataResponseDTO extends BaseDTO<AnimeDataEntity> {
-
   const AnimeDataResponseDTO({
     required this.path,
     required this.image,

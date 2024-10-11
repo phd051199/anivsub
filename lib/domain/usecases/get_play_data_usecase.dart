@@ -7,7 +7,6 @@ part 'get_play_data_usecase.freezed.dart';
 @injectable
 class GetPlayDataUseCase extends BaseFutureUseCase<GetPlayDataUseCaseInput,
     GetPlayDataUseCaseOutput> {
-
   const GetPlayDataUseCase(this._repository);
   final AnimeRepository _repository;
 

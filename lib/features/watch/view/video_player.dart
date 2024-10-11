@@ -11,10 +11,12 @@ class VideoPlayer extends StatefulWidget {
     required this.url,
     this.episodeSkip,
     this.skipIntro = false,
+    required this.poster,
   });
   final String url;
   final EpisodeSkipResponseEntity? episodeSkip;
   final bool? skipIntro;
+  final String poster;
 
   @override
   State<VideoPlayer> createState() => _VideoPlayerState();
@@ -27,9 +29,7 @@ class _VideoPlayerState extends CubitState<VideoPlayer, VideoPlayerCubit> {
   @override
   void initState() {
     super.initState();
-    if (widget.url.isNotEmpty) {
-      _initializeBetterPlayer();
-    }
+    _initializeBetterPlayer();
   }
 
   void _initializeBetterPlayer() {
@@ -39,43 +39,46 @@ class _VideoPlayerState extends CubitState<VideoPlayer, VideoPlayerCubit> {
     );
 
     _betterPlayerController = BetterPlayerController(
-      BetterPlayerConfiguration(
+      const BetterPlayerConfiguration(
         autoPlay: true,
         fit: BoxFit.contain,
+        autoDetectFullscreenAspectRatio: true,
+        autoDetectFullscreenDeviceOrientation: true,
         controlsConfiguration: BetterPlayerControlsConfiguration(
-          showControlsOnInitialize: false,
-          controlBarColor: Color(0xFF464646).withOpacity(0.9),
+          controlBarColor: Color.fromRGBO(41, 41, 41, 0.8),
           playIcon: Icons.play_arrow,
+          controlBarHeight: 42,
+          loadingColor: Colors.transparent,
         ),
       ),
       betterPlayerDataSource: dataSource,
     );
 
-    _betterPlayerController.videoPlayerController?.addListener(() {
-      if (widget.episodeSkip == null ||
-          _eventTriggered ||
-          widget.skipIntro == false) {
-        return;
-      }
-      final position =
-          _betterPlayerController.videoPlayerController!.value.position;
-      // Handle intro skip
-      handleSkip(
-        position: position,
-        start: widget.episodeSkip!.intro.start,
-        end: widget.episodeSkip!.intro.end,
-      );
-      // Handle outro skip
-      handleSkip(
-        position: position,
-        start: widget.episodeSkip!.outro.start,
-        end: widget.episodeSkip!.outro.end,
-      );
-    });
+    _betterPlayerController.videoPlayerController?.addListener(_skipIntroOutro);
     cubit.initializePlayer(controller: _betterPlayerController);
   }
 
-  void handleSkip({
+  void _skipIntroOutro() {
+    if (_eventTriggered ||
+        widget.episodeSkip == null ||
+        widget.skipIntro == false) {
+      return;
+    }
+    final position =
+        _betterPlayerController.videoPlayerController!.value.position;
+    _handleSkip(
+      position: position,
+      start: widget.episodeSkip!.intro.start,
+      end: widget.episodeSkip!.intro.end,
+    );
+    _handleSkip(
+      position: position,
+      start: widget.episodeSkip!.outro.start,
+      end: widget.episodeSkip!.outro.end,
+    );
+  }
+
+  void _handleSkip({
     required Duration position,
     required int start,
     required int end,
@@ -89,13 +92,8 @@ class _VideoPlayerState extends CubitState<VideoPlayer, VideoPlayerCubit> {
 
   @override
   Widget buildPage(BuildContext context) {
-    if (widget.url.isNotEmpty) {
-      return BetterPlayer(controller: _betterPlayerController);
-    } else {
-      return AspectRatio(
-        aspectRatio: 16 / 9,
-        child: ColoredBox(color: Colors.black),
-      );
-    }
+    return SafeArea(
+      child: BetterPlayer(controller: _betterPlayerController),
+    );
   }
 }

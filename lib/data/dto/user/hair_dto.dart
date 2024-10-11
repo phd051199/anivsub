@@ -9,7 +9,6 @@ part 'hair_dto.g.dart';
   explicitToJson: true,
 )
 class HairDTO extends BaseDTO<HairEntity> {
-
   const HairDTO({
     this.color,
     this.type,

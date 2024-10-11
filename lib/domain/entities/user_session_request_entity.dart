@@ -2,7 +2,6 @@ import 'package:anivsub/data/dto/user_session_request_dto.dart';
 import 'package:anivsub/domain/entities/base_entity.dart';
 
 class UserSessionRequestEntity extends BaseEntity<UserSessionRequestDTO> {
-
   const UserSessionRequestEntity({
     required this.username,
     required this.password,

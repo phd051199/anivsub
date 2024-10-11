@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthLocalRepository)
 class AuthLocalRepositoryImpl implements AuthLocalRepository {
-
   AuthLocalRepositoryImpl({required AuthLocalDataSource authLocalDataSource})
       : _authLocalDataSource = authLocalDataSource;
   final AuthLocalDataSource _authLocalDataSource;

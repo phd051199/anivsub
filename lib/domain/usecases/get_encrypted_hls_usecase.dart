@@ -7,7 +7,6 @@ part 'get_encrypted_hls_usecase.freezed.dart';
 @injectable
 class GetEncryptedHlsUseCase extends BaseFutureUseCase<
     GetEncryptedHlsUseCaseInput, GetEncryptedHlsUseCaseOutput> {
-
   const GetEncryptedHlsUseCase(this._repository);
   final AnimeRepository _repository;
 

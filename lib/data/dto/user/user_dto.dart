@@ -9,7 +9,6 @@ part 'user_dto.g.dart';
   explicitToJson: true,
 )
 class UserDTO extends BaseDTO<UserEntity> {
-
   const UserDTO({
     this.id,
     this.firstName,

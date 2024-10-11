@@ -6,8 +6,10 @@ import 'package:anivsub/data/dto/user_session_response_dto.dart';
 
 abstract class AuthRemoteDataSource {
   Future<UserSessionResponseDTO> getUserSession(
-      UserSessionRequestDTO authRequestModel,);
+    UserSessionRequestDTO authRequestModel,
+  );
   Future<RefreshUserSessionResponseDTO> refreshUserSession(
-      RefreshUserSessionRequestDTO refreshTokenRequestModel,);
+    RefreshUserSessionRequestDTO refreshTokenRequestModel,
+  );
   Future<UserDTO> getUser();
 }

@@ -9,7 +9,6 @@ part 'coordinates_dto.g.dart';
   explicitToJson: true,
 )
 class CoordinatesDTO extends BaseDTO<CoordinatesEntity> {
-
   const CoordinatesDTO({
     this.lat,
     this.lng,

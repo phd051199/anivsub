@@ -2,7 +2,6 @@ import 'package:anivsub/data/dto/user/user_dto.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class UserEntity extends BaseEntity<UserDTO> {
-
   const UserEntity({
     this.id,
     this.firstName,

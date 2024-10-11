@@ -9,7 +9,6 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class AuthUseCases {
-
   const AuthUseCases(this._authRepository, this._authLocalRepository);
   final AuthRepository _authRepository;
   final AuthLocalRepository _authLocalRepository;

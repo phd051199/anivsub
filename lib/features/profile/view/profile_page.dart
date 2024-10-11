@@ -21,7 +21,10 @@ class _ProfilePageState extends CubitState<ProfilePage, ProfileCubit> {
       listener: (context, state) {
         if (state is ProfileError) {
           ErrorDialog.showErrorDialog(
-              context: context, title: 'Error', message: state.message,);
+            context: context,
+            title: 'Error',
+            message: state.message,
+          );
         }
       },
       builder: (context, state) => SafeArea(
@@ -31,9 +34,7 @@ class _ProfilePageState extends CubitState<ProfilePage, ProfileCubit> {
             return Future.value();
           },
           child: switch (state) {
-            ProfileInitial() || ProfileLoading() => const LoadingWidget(
-                isTransparent: true,
-              ),
+            ProfileInitial() || ProfileLoading() => const LoadingWidget(),
             ProfileLoaded() => CustomScrollView(
                 slivers: [
                   SliverFillRemaining(
@@ -69,7 +70,8 @@ class _ProfilePageState extends CubitState<ProfilePage, ProfileCubit> {
                             contentPadding: EdgeInsets.zero,
                             title: Text(
                               context.l10n.contacts,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

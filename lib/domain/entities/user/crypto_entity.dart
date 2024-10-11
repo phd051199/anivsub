@@ -2,7 +2,6 @@ import 'package:anivsub/data/dto/user/crypto_dto.dart';
 import 'package:anivsub/domain/entities/base_entity.dart';
 
 class CryptoEntity extends BaseEntity<CryptoDTO> {
-
   const CryptoEntity({
     this.coin,
     this.wallet,

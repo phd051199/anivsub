@@ -2,7 +2,6 @@ import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class ChapDataEntity extends BaseEntity<ChapDataDTO> {
-
   const ChapDataEntity({
     required this.id,
     required this.play,

@@ -9,7 +9,6 @@ part 'chap_data_dto.g.dart';
   explicitToJson: true,
 )
 class ChapDataDTO extends BaseDTO<ChapDataEntity> {
-
   const ChapDataDTO({
     required this.id,
     required this.play,

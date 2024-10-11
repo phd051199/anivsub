@@ -7,7 +7,7 @@ part 'settings_state.dart';
 
 @injectable
 class SettingsCubit extends BaseCubit<SettingsState> {
-  SettingsCubit() : super(SettingsInitial(isHintVisible: true));
+  SettingsCubit() : super(const SettingsInitial(isHintVisible: true));
 
   void toggleHintVisibility() =>
       emit(SettingsChanged(isHintVisible: !state.isHintVisible));

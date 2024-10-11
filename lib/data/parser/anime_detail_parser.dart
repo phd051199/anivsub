@@ -18,7 +18,8 @@ class AnimeDetailParser {
             null
         ? _getPathName(
             document.querySelector('.watch_button_more')?.attributes['href'] ??
-                '',)
+                '',
+          )
         : null;
     final String description =
         document.querySelector('.Description')?.text.trim() ?? '';
@@ -30,7 +31,8 @@ class AnimeDetailParser {
     final String duration =
         document.querySelector('.AAIco-access_time')?.text ?? '';
     final int yearOf = int.tryParse(
-            document.querySelector('.AAIco-date_range a')?.text ?? '0',) ??
+          document.querySelector('.AAIco-date_range a')?.text ?? '0',
+        ) ??
         0;
     final int views = int.tryParse(
           document
@@ -105,7 +107,8 @@ class AnimeDetailParser {
             .trim() ??
         '';
     final Map<String, String> seasonOf = _getInfoAnchor(
-        _findInfo(document, infoListRight, 'season')?.querySelector('a'),);
+      _findInfo(document, infoListRight, 'season')?.querySelector('a'),
+    );
 
     final String? trailer =
         document.querySelector('#Opt1 iframe')?.attributes['src'];
@@ -159,7 +162,10 @@ class AnimeDetailParser {
   }
 
   static dom.Element? _findInfo(
-      dom.Document document, dom.Element? listElement, String keyword,) {
+    dom.Document document,
+    dom.Element? listElement,
+    String keyword,
+  ) {
     return listElement?.querySelectorAll('.AAIco-adjust').firstWhere(
           (element) =>
               element.text.toLowerCase().contains(keyword.toLowerCase()),
@@ -178,7 +184,8 @@ class AnimeDetailParser {
         element.querySelector('.mli-eps > i')?.text.trim() ?? '';
     final String quality = element.querySelector('.Qlty')?.text.trim() ?? '';
     final int year = int.tryParse(
-            element.querySelector('.AAIco-date_range')?.text.trim() ?? '0',) ??
+          element.querySelector('.AAIco-date_range')?.text.trim() ?? '0',
+        ) ??
         0;
     final String description =
         element.querySelector('.Description > p')?.text.trim() ?? '';

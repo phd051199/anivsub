@@ -2,7 +2,6 @@ import 'package:anivsub/data/dto/user/bank_dto.dart';
 import 'package:anivsub/domain/entities/base_entity.dart';
 
 class BankEntity extends BaseEntity<BankDTO> {
-
   const BankEntity({
     this.cardExpire,
     this.cardNumber,

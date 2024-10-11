@@ -39,9 +39,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
           appBar: AppBar(),
           body: SafeArea(
             child: switch (state) {
-              WatchInitial() || WatchLoading() => const LoadingWidget(
-                  isTransparent: true,
-                ),
+              WatchInitial() || WatchLoading() => const LoadingWidget(),
               WatchLoaded() => _buildBody(context, state),
               _ => Container(),
             },
@@ -56,20 +54,39 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          VideoPlayer(
-            key: ValueKey(state.link),
-            url: state.link,
-            episodeSkip: state.episodeSkip,
-            skipIntro: state.skipIntro,
-          ),
+          state.chapLoading
+              ? AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Container(
+                    color: Colors.black,
+                    child: const LoadingWidget(),
+                  ),
+                )
+              : VideoPlayer(
+                  key: ValueKey(state.link),
+                  url: state.link,
+                  episodeSkip: state.episodeSkip,
+                  skipIntro: state.skipIntro,
+                  poster: state.poster,
+                ),
+          const SizedBox(height: 12),
+          if (state.episodeSkip != null)
+            SwitchListTile(
+              title: Text(
+                'Skip intro (${state.episodeSkip!.intro.start} - ${state.episodeSkip!.intro.end}), outro (${state.episodeSkip!.outro.start} - ${state.episodeSkip!.outro.end})',
+                style: context.textTheme.bodyMedium,
+              ),
+              value: state.skipIntro,
+              onChanged: (_) {
+                bloc.add(const ToggleSkipIntro());
+              },
+            ),
           const SizedBox(height: 12),
           Wrap(
             children: state.chaps
                 .map(
                   (chap) => GestureDetector(
-                    onTap: () {
-                      bloc.add(ChangeChap(chap: chap));
-                    },
+                    onTap: () => bloc.add(ChangeChap(chap: chap)),
                     child: SizedBox(
                       height: 60,
                       width: 62,
@@ -80,21 +97,6 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
                 )
                 .toList(),
           ),
-          SwitchListTile(
-            title: Text('Auto skip intro/outro'),
-            value: state.skipIntro,
-            onChanged: (_) {
-              bloc.add(ToggleSkipIntro());
-            },
-          ),
-          if (state.episodeSkip != null) ...[
-            Text(
-              'Intro: ${state.episodeSkip!.intro.start} - ${state.episodeSkip!.intro.end}',
-            ),
-            Text(
-              'Outro: ${state.episodeSkip!.outro.start} - ${state.episodeSkip!.outro.end}',
-            ),
-          ],
         ],
       ),
     );

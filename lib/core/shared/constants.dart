@@ -2,6 +2,7 @@ const kSPUserToken = 'kUserToken';
 const kSPThemeMode = 'kThemeMode';
 
 final decryptHlsUrl = 'https://decrypt-hls.dph.workers.dev';
+final opendUrl = 'https://opend-9animetv.animevsub.eu.org';
 final hostCurl = String.fromCharCodes([
   104,
   116,

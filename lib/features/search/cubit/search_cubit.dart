@@ -7,15 +7,15 @@ part 'search_state.dart';
 
 @injectable
 class SearchCubit extends BaseCubit<SearchState> {
-  SearchCubit() : super(SearchInitial());
+  SearchCubit() : super(const SearchInitial());
 
   void load() {
-    emit(SearchLoading());
+    emit(const SearchLoading());
     // Add your loading logic here
-    emit(SearchLoaded());
+    emit(const SearchLoaded());
   }
 
   void error() {
-    emit(SearchError('An error occurred'));
+    emit(const SearchError('An error occurred'));
   }
 }

@@ -10,14 +10,14 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-
   AuthRepositoryImpl({required AuthRemoteDataSource authRemoteDataSource})
       : _authRemoteDataSource = authRemoteDataSource;
   final AuthRemoteDataSource _authRemoteDataSource;
 
   @override
   Future<ResponseWrapper<UserSessionResponseEntity>> getUserSession(
-      UserSessionRequestEntity authRequestEntity,) {
+    UserSessionRequestEntity authRequestEntity,
+  ) {
     return execute(() async {
       final response =
           await _authRemoteDataSource.getUserSession(authRequestEntity.toDTO());

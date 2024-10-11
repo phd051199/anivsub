@@ -2,7 +2,6 @@ import 'package:anivsub/data/dto/user/address_dto.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class AddressEntity extends BaseEntity<AddressDTO> {
-
   const AddressEntity({
     this.address,
     this.city,

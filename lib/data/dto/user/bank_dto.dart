@@ -9,7 +9,6 @@ part 'bank_dto.g.dart';
   explicitToJson: true,
 )
 class BankDTO extends BaseDTO<BankEntity> {
-
   const BankDTO({
     this.cardExpire,
     this.cardNumber,

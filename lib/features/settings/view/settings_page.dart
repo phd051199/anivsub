@@ -15,9 +15,9 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends CubitState<SettingsPage, SettingsCubit> {
   @override
   Widget buildPage(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
         child: Column(
           children: [
             ThemeModeWidget(),

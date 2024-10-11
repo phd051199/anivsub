@@ -1,22 +1,20 @@
+import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({super.key, this.isTransparent = false});
-
-  final bool isTransparent;
+  const LoadingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox.expand(
-      child: Container(
-        color:
-            isTransparent ? Colors.transparent : Colors.white.withOpacity(0.5),
-        alignment: Alignment.center,
-        child: Lottie.asset(
-          'assets/json/loading.json',
-          width: 240,
-          height: 240,
+      child: Center(
+        // child: Lottie.asset(
+        //   'assets/json/loading.json',
+        //   width: 240,
+        //   height: 240,
+        // ),
+        child: CircularProgressIndicator(
+          color: context.theme.colorScheme.primary,
         ),
       ),
     );

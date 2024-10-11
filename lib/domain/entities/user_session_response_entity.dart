@@ -2,7 +2,6 @@ import 'package:anivsub/data/dto/user_session_response_dto.dart';
 import 'package:anivsub/domain/entities/base_entity.dart';
 
 class UserSessionResponseEntity extends BaseEntity {
-
   const UserSessionResponseEntity({
     this.accessToken,
     this.refreshToken,

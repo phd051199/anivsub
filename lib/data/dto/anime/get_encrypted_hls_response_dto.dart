@@ -10,7 +10,6 @@ part 'get_encrypted_hls_response_dto.g.dart';
 )
 class GetEncryptedHlsResponseDTO
     extends BaseDTO<GetEncryptedHlsResponseEntity> {
-
   const GetEncryptedHlsResponseDTO({
     required this.success,
     required this.title,

@@ -10,7 +10,6 @@ part 'address_dto.g.dart';
   explicitToJson: true,
 )
 class AddressDTO extends BaseDTO<AddressEntity> {
-
   const AddressDTO({
     this.address,
     this.city,

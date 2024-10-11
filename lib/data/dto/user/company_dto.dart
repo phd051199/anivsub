@@ -8,7 +8,6 @@ part 'company_dto.g.dart';
   explicitToJson: true,
 )
 class CompanyDTO extends BaseDTO<CompanyEntity> {
-
   const CompanyDTO({
     this.department,
     this.name,

@@ -25,9 +25,11 @@ linter:
     prefer_is_empty: true
     prefer_is_not_empty: true
     prefer_mixin: true
+    prefer_const_constructors: true
     sort_constructors_first: true
     package_names: true
     use_to_and_as_if_applicable: true
+    null_closures: true
 
 analyzer:
   exclude:
