@@ -58,10 +58,11 @@ import 'package:anivsub/domain/usecases/get_list_episode_usecase.dart' as _i72;
 import 'package:anivsub/domain/usecases/get_play_data_usecase.dart' as _i539;
 import 'package:anivsub/domain/usecases/home_usecases.dart' as _i179;
 import 'package:anivsub/domain/usecases/profile_use_cases.dart' as _i826;
+import 'package:anivsub/domain/usecases/search_anime_usecase.dart' as _i125;
 import 'package:anivsub/features/home/bloc/home_bloc.dart' as _i187;
 import 'package:anivsub/features/login/cubit/login_cubit.dart' as _i30;
 import 'package:anivsub/features/profile/cubit/profile_cubit.dart' as _i132;
-import 'package:anivsub/features/search/cubit/search_cubit.dart' as _i607;
+import 'package:anivsub/features/search/bloc/search_bloc.dart' as _i785;
 import 'package:anivsub/features/settings/cubit/settings_cubit.dart' as _i185;
 import 'package:anivsub/features/watch/bloc/watch_bloc.dart' as _i451;
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart' as _i597;
@@ -82,7 +83,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final registerModule = _$RegisterModule();
     gh.factory<_i185.SettingsCubit>(() => _i185.SettingsCubit());
-    gh.factory<_i607.SearchCubit>(() => _i607.SearchCubit());
     gh.factory<_i597.VideoPlayerCubit>(() => _i597.VideoPlayerCubit());
     gh.singleton<_i595.SharedPreferenceService>(
         () => _i595.SharedPreferenceService());
@@ -135,6 +135,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i132.ProfileCubit(gh<_i772.ProfileUseCases>()));
     gh.singleton<_i179.HomeUseCases>(
         () => _i179.HomeUseCases(gh<_i772.AuthLocalRepository>()));
+    gh.factory<_i125.SearchAnimeUseCase>(
+        () => _i125.SearchAnimeUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i407.GetEncryptedHlsUseCase>(
         () => _i407.GetEncryptedHlsUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i72.GetListEpisodeUseCase>(
@@ -149,17 +151,19 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i743.DecryptHlsUseCase(gh<_i772.AnimeRepository>()));
     gh.singleton<_i910.AuthNotifier>(
         () => _i910.AuthNotifier(authUseCases: gh<_i772.AuthUseCases>()));
-    gh.factory<_i187.HomeBloc>(
-        () => _i187.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
-    gh.factory<_i30.LoginCubit>(
-        () => _i30.LoginCubit(gh<_i772.AuthUseCases>()));
     gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
           gh<_i772.GetPlayDataUseCase>(),
           gh<_i772.GetEncryptedHlsUseCase>(),
           gh<_i772.DecryptHlsUseCase>(),
-          gh<_i72.GetListEpisodeUseCase>(),
-          gh<_i611.GetEpisodeSkipUsecase>(),
+          gh<_i772.GetListEpisodeUseCase>(),
+          gh<_i772.GetEpisodeSkipUsecase>(),
         ));
+    gh.factory<_i785.SearchBloc>(
+        () => _i785.SearchBloc(gh<_i772.SearchAnimeUseCase>()));
+    gh.factory<_i187.HomeBloc>(
+        () => _i187.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
+    gh.factory<_i30.LoginCubit>(
+        () => _i30.LoginCubit(gh<_i772.AuthUseCases>()));
     return this;
   }
 }

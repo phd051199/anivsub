@@ -36,7 +36,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
     return BlocBuilder<WatchBloc, WatchState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(forceMaterialTransparency: true),
           body: SafeArea(
             child: switch (state) {
               WatchInitial() || WatchLoading() => const LoadingWidget(),

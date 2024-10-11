@@ -9,4 +9,5 @@ abstract class AnimeRepository {
   Future<String> decryptHls(String hash);
   Future<ListEpisodeResponseEntity> listEpisodes(String name);
   Future<EpisodeSkipResponseEntity> skipEpisode(String id);
+  Future<SearchResultEntity> search({required String keyword, int? page});
 }

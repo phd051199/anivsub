@@ -36,6 +36,12 @@ class _VideoPlayerState extends CubitState<VideoPlayer, VideoPlayerCubit> {
     BetterPlayerDataSource dataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
       widget.url,
+      notificationConfiguration: BetterPlayerNotificationConfiguration(
+        showNotification: true,
+        title: 'AniVSub',
+        author: 'Flutter',
+        imageUrl: widget.poster,
+      ),
     );
 
     _betterPlayerController = BetterPlayerController(
@@ -83,7 +89,8 @@ class _VideoPlayerState extends CubitState<VideoPlayer, VideoPlayerCubit> {
     required int start,
     required int end,
   }) {
-    if (position.inSeconds == start && end > start) {
+    final skipSection = position.inSeconds >= start && position.inSeconds < end;
+    if (skipSection && end > start) {
       _eventTriggered = true;
       _betterPlayerController.seekTo(Duration(seconds: end));
       _eventTriggered = false;

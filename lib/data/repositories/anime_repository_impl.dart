@@ -15,13 +15,13 @@ class AnimeRepositoryImpl implements AnimeRepository {
 
   @override
   Future<HomeDataCategoriesEntity> fetchHomeData() async {
-    final String html = await _animeRemoteDataSource.getHomeData();
+    final html = await _animeRemoteDataSource.getHomeData();
     return HomeDataParser.parse(html);
   }
 
   @override
   Future<PlayDataEntity> fetchPlayData(String id) async {
-    final String html = await _animeRemoteDataSource.getPlayData(id);
+    final html = await _animeRemoteDataSource.getPlayData(id);
     return PlayDataParser.parse(html);
   }
 
@@ -53,5 +53,17 @@ class AnimeRepositoryImpl implements AnimeRepository {
   Future<EpisodeSkipResponseEntity> skipEpisode(String id) async {
     final response = await _openDRemoteDataSource.skipEpisode(id);
     return response.toEntity();
+  }
+
+  @override
+  Future<SearchResultEntity> search({
+    required String keyword,
+    int? page,
+  }) async {
+    final html = await _animeRemoteDataSource.search(
+      keyword: keyword,
+      page: page ?? 1,
+    );
+    return SearchResultParser.parse(html);
   }
 }

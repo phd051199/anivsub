@@ -2,8 +2,6 @@ import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/shared/string_extension.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/domain/usecases/get_episode_skip_usecase.dart';
-import 'package:anivsub/domain/usecases/get_list_episode_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -47,7 +45,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
           link: link,
           playingId: chap.id,
           chaps: playDataOutput.result.chaps,
-          poster: playDataOutput.result.poster,
+          poster: playDataOutput.result.image,
         ),
       );
 

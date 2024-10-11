@@ -17,6 +17,12 @@ abstract class ScrapingClient {
   @GET('/{id}/xem-phim.html')
   Future<String> getPlayData(@Path('id') String id);
 
+  @GET('/tim-kiem/{keyword}/trang-{page}.html')
+  Future<String> search(
+    @Path('keyword') String keyword,
+    @Path('page') int page,
+  );
+
   @POST('/ajax/player?v=2019a')
   @FormUrlEncoded()
   Future<GetEncryptedHlsResponseDTO> getEncryptedHls(

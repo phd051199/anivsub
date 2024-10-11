@@ -18,8 +18,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _emailController = TextEditingController(text: 'sophiab');
+  final _passwordController = TextEditingController(text: 'sophiabpass');
   late Validator emailValidator;
   late Validator passwordValidator;
 
@@ -128,7 +128,8 @@ class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
                   ),
                 ),
               ),
-              if (state is LoginLoading) const LoadingWidget(),
+              if (state is LoginLoading)
+                const LoadingWidget(isTransparent: false),
             ],
           );
         },

@@ -34,7 +34,12 @@ dependencies:
   html: ^0.15.4
   cached_network_image: ^3.4.1
   shimmer: ^3.0.0
-  better_player: ^0.0.84
+  # better_player: ^0.0.84
+  better_player:
+    git:
+      url: https://github.com/phd051199/betterplayer.git
+      ref: fix
+  infinite_scroll_pagination: ^4.0.0
 
 dev_dependencies:
   flutter_test:

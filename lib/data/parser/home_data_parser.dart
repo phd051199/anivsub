@@ -7,24 +7,24 @@ class HomeDataParser {
     final dom.Document document = parser.parse(html);
     final int now = DateTime.now().millisecondsSinceEpoch;
 
-    final List<AnimeDataEntity> thisSeason = _extractHomeData(
+    final List<AnimeDataEntity> thisSeason = getInfoTPost(
       document.querySelectorAll('.MovieListTopCn .TPostMv'),
       now,
     );
-    final List<AnimeDataEntity> sliderMovies = _extractHomeData(
+    final List<AnimeDataEntity> sliderMovies = getInfoTPost(
       document.querySelectorAll('.MovieListSldCn .TPostMv'),
       now,
     );
-    final List<AnimeDataEntity> latestUpdates = _extractHomeData(
+    final List<AnimeDataEntity> latestUpdates = getInfoTPost(
       document.querySelectorAll('#single-home .TPostMv'),
       now,
     );
     final List<AnimeDataEntity> preRelease =
-        _extractHomeData(document.querySelectorAll('#new-home .TPostMv'), now);
+        getInfoTPost(document.querySelectorAll('#new-home .TPostMv'), now);
     final List<AnimeDataEntity> hotUpdates =
-        _extractHomeData(document.querySelectorAll('#hot-home .TPostMv'), now);
+        getInfoTPost(document.querySelectorAll('#hot-home .TPostMv'), now);
     final List<AnimeDataEntity> topMovies =
-        _extractHomeData(document.querySelectorAll('#showTopPhim .TPost'), now);
+        getInfoTPost(document.querySelectorAll('#showTopPhim .TPost'), now);
 
     return HomeDataCategoriesEntity(
       topMovies: topMovies,
@@ -36,7 +36,7 @@ class HomeDataParser {
     );
   }
 
-  static List<AnimeDataEntity> _extractHomeData(
+  static List<AnimeDataEntity> getInfoTPost(
     Iterable<dom.Element> elements,
     int now,
   ) {

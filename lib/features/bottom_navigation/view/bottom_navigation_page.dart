@@ -13,6 +13,7 @@ class BottomNavigationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         title: Text(
           _getScreenTitle(context, navigationShell.currentIndex),
           style: context.textTheme.headlineLarge!.copyWith(

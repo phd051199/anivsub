@@ -32,4 +32,9 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
       body.backuplinks,
     );
   }
+
+  @override
+  Future<String> search({required String keyword, int page = 1}) {
+    return client.search(keyword, page);
+  }
 }
