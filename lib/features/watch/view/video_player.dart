@@ -2,6 +2,7 @@ import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/domain/entities/anime/episode_skip_response_entity.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../cubit/video_player_cubit.dart';
 
@@ -13,9 +14,10 @@ class VideoPlayer extends StatefulWidget {
     this.skipIntro = false,
     required this.poster,
   });
+
   final String url;
   final EpisodeSkipResponseEntity? episodeSkip;
-  final bool? skipIntro;
+  final bool skipIntro;
   final String poster;
 
   @override
@@ -23,17 +25,34 @@ class VideoPlayer extends StatefulWidget {
 }
 
 class _VideoPlayerState extends CubitState<VideoPlayer, VideoPlayerCubit> {
-  late BetterPlayerController _betterPlayerController;
+  late final BetterPlayerController _betterPlayerController;
   bool _eventTriggered = false;
 
   @override
   void initState() {
     super.initState();
+    _setPreferredOrientations();
     _initializeBetterPlayer();
   }
 
+  void _setPreferredOrientations() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+  }
+
   void _initializeBetterPlayer() {
-    BetterPlayerDataSource dataSource = BetterPlayerDataSource(
+    final dataSource = _createDataSource();
+    _betterPlayerController = _createPlayerController(dataSource);
+    _betterPlayerController.videoPlayerController?.addListener(_skipIntroOutro);
+    cubit.initializePlayer(controller: _betterPlayerController);
+  }
+
+  BetterPlayerDataSource _createDataSource() {
+    return BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
       widget.url,
       notificationConfiguration: BetterPlayerNotificationConfiguration(
@@ -43,8 +62,12 @@ class _VideoPlayerState extends CubitState<VideoPlayer, VideoPlayerCubit> {
         imageUrl: widget.poster,
       ),
     );
+  }
 
-    _betterPlayerController = BetterPlayerController(
+  BetterPlayerController _createPlayerController(
+    BetterPlayerDataSource dataSource,
+  ) {
+    return BetterPlayerController(
       const BetterPlayerConfiguration(
         autoPlay: true,
         fit: BoxFit.contain,
@@ -59,36 +82,30 @@ class _VideoPlayerState extends CubitState<VideoPlayer, VideoPlayerCubit> {
       ),
       betterPlayerDataSource: dataSource,
     );
-
-    _betterPlayerController.videoPlayerController?.addListener(_skipIntroOutro);
-    cubit.initializePlayer(controller: _betterPlayerController);
   }
 
   void _skipIntroOutro() {
-    if (_eventTriggered ||
-        widget.episodeSkip == null ||
-        widget.skipIntro == false) {
-      return;
+    if (_shouldSkip()) {
+      final position =
+          _betterPlayerController.videoPlayerController!.value.position;
+      _trySkipSection(
+        position,
+        widget.episodeSkip!.intro.start,
+        widget.episodeSkip!.intro.end,
+      );
+      _trySkipSection(
+        position,
+        widget.episodeSkip!.outro.start,
+        widget.episodeSkip!.outro.end,
+      );
     }
-    final position =
-        _betterPlayerController.videoPlayerController!.value.position;
-    _handleSkip(
-      position: position,
-      start: widget.episodeSkip!.intro.start,
-      end: widget.episodeSkip!.intro.end,
-    );
-    _handleSkip(
-      position: position,
-      start: widget.episodeSkip!.outro.start,
-      end: widget.episodeSkip!.outro.end,
-    );
   }
 
-  void _handleSkip({
-    required Duration position,
-    required int start,
-    required int end,
-  }) {
+  bool _shouldSkip() {
+    return !_eventTriggered && widget.episodeSkip != null && widget.skipIntro;
+  }
+
+  void _trySkipSection(Duration position, int start, int end) {
     final skipSection = position.inSeconds >= start && position.inSeconds < end;
     if (skipSection && end > start) {
       _eventTriggered = true;
@@ -102,5 +119,11 @@ class _VideoPlayerState extends CubitState<VideoPlayer, VideoPlayerCubit> {
     return SafeArea(
       child: BetterPlayer(controller: _betterPlayerController),
     );
+  }
+
+  @override
+  void dispose() {
+    _betterPlayerController.dispose();
+    super.dispose();
   }
 }

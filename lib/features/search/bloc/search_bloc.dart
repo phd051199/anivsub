@@ -40,6 +40,7 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
           SearchLoaded(
             result: output.result,
             hasReachedMax: output.result.items.length < _pageSize,
+            currentPage: event.page,
           ),
         );
       } else {
@@ -51,7 +52,7 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
         );
       }
     } catch (e) {
-      emit(const SearchError('An error occurred'));
+      add(const ErrorSearch());
     }
   }
 

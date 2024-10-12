@@ -10,10 +10,12 @@ AppSettingsDTO _$AppSettingsDTOFromJson(Map<String, dynamic> json) =>
     AppSettingsDTO(
       themeMode: (json['themeMode'] as num).toInt(),
       color: (json['color'] as num).toInt(),
+      skipIntro: json['skipIntro'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$AppSettingsDTOToJson(AppSettingsDTO instance) =>
     <String, dynamic>{
       'themeMode': instance.themeMode,
       'color': instance.color,
+      'skipIntro': instance.skipIntro,
     };

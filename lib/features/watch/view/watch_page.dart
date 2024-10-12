@@ -20,29 +20,26 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
   @override
   void initState() {
     super.initState();
-    bloc.add(
-      LoadWatch(id: widget.path),
-    );
+    bloc.add(LoadWatch(id: widget.path));
   }
 
   @override
-  void dispose() async {
+  void dispose() {
+    bloc.close();
     super.dispose();
-    await bloc.close();
   }
 
   @override
   Widget buildPage(BuildContext context) {
-    return BlocBuilder<WatchBloc, WatchState>(
+    return BlocSelector<WatchBloc, WatchState, WatchLoaded?>(
+      selector: (state) => state is WatchLoaded ? state : null,
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(forceMaterialTransparency: true),
           body: SafeArea(
-            child: switch (state) {
-              WatchInitial() || WatchLoading() => const LoadingWidget(),
-              WatchLoaded() => _buildBody(context, state),
-              _ => Container(),
-            },
+            child: state == null
+                ? const LoadingWidget()
+                : _buildBody(context, state),
           ),
         );
       },
@@ -50,54 +47,62 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
   }
 
   Widget _buildBody(BuildContext context, WatchLoaded state) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          state.chapLoading
-              ? AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Container(
-                    color: Colors.black,
-                    child: const LoadingWidget(),
-                  ),
-                )
-              : VideoPlayer(
-                  key: ValueKey(state.link),
-                  url: state.link,
-                  episodeSkip: state.episodeSkip,
-                  skipIntro: state.skipIntro,
-                  poster: state.poster,
-                ),
-          const SizedBox(height: 12),
-          if (state.episodeSkip != null)
-            SwitchListTile(
-              title: Text(
-                'Skip intro (${state.episodeSkip!.intro.start} - ${state.episodeSkip!.intro.end}), outro (${state.episodeSkip!.outro.start} - ${state.episodeSkip!.outro.end})',
-                style: context.textTheme.bodyMedium,
-              ),
-              value: state.skipIntro,
-              onChanged: (_) {
-                bloc.add(const ToggleSkipIntro());
-              },
+    return ListView(
+      children: [
+        if (state.chapLoading)
+          AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Container(
+              color: Colors.black,
+              child: const LoadingWidget(),
             ),
-          const SizedBox(height: 12),
-          Wrap(
-            children: state.chaps
-                .map(
-                  (chap) => GestureDetector(
-                    onTap: () => bloc.add(ChangeChap(chap: chap)),
-                    child: SizedBox(
-                      height: 60,
-                      width: 62,
-                      key: ValueKey(chap.id),
-                      child: _buildChapCard(context, state, chap),
-                    ),
-                  ),
-                )
-                .toList(),
+          )
+        else
+          VideoPlayer(
+            key: ValueKey(state.link),
+            url: state.link,
+            episodeSkip: state.episodeSkip,
+            skipIntro: state.skipIntro,
+            poster: state.poster,
           ),
-        ],
+        const SizedBox(height: 12),
+        if (state.episodeSkip != null)
+          SwitchListTile(
+            title: Text(
+              'Skip intro (${state.episodeSkip!.intro.start} - ${state.episodeSkip!.intro.end}), outro (${state.episodeSkip!.outro.start} - ${state.episodeSkip!.outro.end})',
+              style: context.textTheme.bodyMedium,
+            ),
+            value: state.skipIntro,
+            onChanged: (value) {
+              bloc.add(const ToggleSkipIntro());
+            },
+          ),
+        const SizedBox(height: 12),
+        _buildChaptersGrid(context, state),
+      ],
+    );
+  }
+
+  Widget _buildChaptersGrid(BuildContext context, WatchLoaded state) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: state.chaps.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 6,
+          mainAxisSpacing: 4,
+          crossAxisSpacing: 4,
+          childAspectRatio: 62 / 60,
+        ),
+        itemBuilder: (context, index) {
+          final chap = state.chaps[index];
+          return GestureDetector(
+            onTap: () => bloc.add(ChangeChap(chap: chap)),
+            child: _buildChapCard(context, state, chap),
+          );
+        },
       ),
     );
   }

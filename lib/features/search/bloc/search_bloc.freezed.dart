@@ -378,7 +378,8 @@ mixin _$SearchState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(SearchResultEntity result, bool hasReachedMax)
+    required TResult Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)
         loaded,
     required TResult Function(String message) error,
   }) =>
@@ -387,7 +388,9 @@ mixin _$SearchState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(SearchResultEntity result, bool hasReachedMax)? loaded,
+    TResult? Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+        loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -395,7 +398,9 @@ mixin _$SearchState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(SearchResultEntity result, bool hasReachedMax)? loaded,
+    TResult Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -491,7 +496,8 @@ class _$SearchInitialImpl implements SearchInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(SearchResultEntity result, bool hasReachedMax)
+    required TResult Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -503,7 +509,9 @@ class _$SearchInitialImpl implements SearchInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(SearchResultEntity result, bool hasReachedMax)? loaded,
+    TResult? Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -514,7 +522,9 @@ class _$SearchInitialImpl implements SearchInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(SearchResultEntity result, bool hasReachedMax)? loaded,
+    TResult Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -609,7 +619,8 @@ class _$SearchLoadingImpl implements SearchLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(SearchResultEntity result, bool hasReachedMax)
+    required TResult Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -621,7 +632,9 @@ class _$SearchLoadingImpl implements SearchLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(SearchResultEntity result, bool hasReachedMax)? loaded,
+    TResult? Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -632,7 +645,9 @@ class _$SearchLoadingImpl implements SearchLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(SearchResultEntity result, bool hasReachedMax)? loaded,
+    TResult Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -690,7 +705,7 @@ abstract class _$$SearchLoadedImplCopyWith<$Res> {
           _$SearchLoadedImpl value, $Res Function(_$SearchLoadedImpl) then) =
       __$$SearchLoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({SearchResultEntity result, bool hasReachedMax});
+  $Res call({SearchResultEntity result, bool hasReachedMax, int currentPage});
 }
 
 /// @nodoc
@@ -708,6 +723,7 @@ class __$$SearchLoadedImplCopyWithImpl<$Res>
   $Res call({
     Object? result = null,
     Object? hasReachedMax = null,
+    Object? currentPage = null,
   }) {
     return _then(_$SearchLoadedImpl(
       result: null == result
@@ -718,6 +734,10 @@ class __$$SearchLoadedImplCopyWithImpl<$Res>
           ? _value.hasReachedMax
           : hasReachedMax // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -725,16 +745,22 @@ class __$$SearchLoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SearchLoadedImpl implements SearchLoaded {
-  const _$SearchLoadedImpl({required this.result, required this.hasReachedMax});
+  const _$SearchLoadedImpl(
+      {required this.result,
+      required this.hasReachedMax,
+      this.currentPage = 1});
 
   @override
   final SearchResultEntity result;
   @override
   final bool hasReachedMax;
+  @override
+  @JsonKey()
+  final int currentPage;
 
   @override
   String toString() {
-    return 'SearchState.loaded(result: $result, hasReachedMax: $hasReachedMax)';
+    return 'SearchState.loaded(result: $result, hasReachedMax: $hasReachedMax, currentPage: $currentPage)';
   }
 
   @override
@@ -744,11 +770,14 @@ class _$SearchLoadedImpl implements SearchLoaded {
             other is _$SearchLoadedImpl &&
             (identical(other.result, result) || other.result == result) &&
             (identical(other.hasReachedMax, hasReachedMax) ||
-                other.hasReachedMax == hasReachedMax));
+                other.hasReachedMax == hasReachedMax) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, result, hasReachedMax);
+  int get hashCode =>
+      Object.hash(runtimeType, result, hasReachedMax, currentPage);
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -763,11 +792,12 @@ class _$SearchLoadedImpl implements SearchLoaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(SearchResultEntity result, bool hasReachedMax)
+    required TResult Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)
         loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(result, hasReachedMax);
+    return loaded(result, hasReachedMax, currentPage);
   }
 
   @override
@@ -775,10 +805,12 @@ class _$SearchLoadedImpl implements SearchLoaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(SearchResultEntity result, bool hasReachedMax)? loaded,
+    TResult? Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(result, hasReachedMax);
+    return loaded?.call(result, hasReachedMax, currentPage);
   }
 
   @override
@@ -786,12 +818,14 @@ class _$SearchLoadedImpl implements SearchLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(SearchResultEntity result, bool hasReachedMax)? loaded,
+    TResult Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(result, hasReachedMax);
+      return loaded(result, hasReachedMax, currentPage);
     }
     return orElse();
   }
@@ -837,10 +871,12 @@ class _$SearchLoadedImpl implements SearchLoaded {
 abstract class SearchLoaded implements SearchState {
   const factory SearchLoaded(
       {required final SearchResultEntity result,
-      required final bool hasReachedMax}) = _$SearchLoadedImpl;
+      required final bool hasReachedMax,
+      final int currentPage}) = _$SearchLoadedImpl;
 
   SearchResultEntity get result;
   bool get hasReachedMax;
+  int get currentPage;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -919,7 +955,8 @@ class _$SearchErrorImpl implements SearchError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(SearchResultEntity result, bool hasReachedMax)
+    required TResult Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -931,7 +968,9 @@ class _$SearchErrorImpl implements SearchError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(SearchResultEntity result, bool hasReachedMax)? loaded,
+    TResult? Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -942,7 +981,9 @@ class _$SearchErrorImpl implements SearchError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(SearchResultEntity result, bool hasReachedMax)? loaded,
+    TResult Function(
+            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

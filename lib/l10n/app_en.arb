@@ -30,5 +30,6 @@
   "hotUpdates": "Hot updates",
   "preRelease": "Pre-release",
   "topMovies": "Top movies",
-  "latestUpdates": "Latest updates"
+  "latestUpdates": "Latest updates",
+  "searchHint": "Keyword: name in jp, en or vi"
 }

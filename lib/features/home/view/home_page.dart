@@ -3,9 +3,9 @@ import 'package:anivsub/core/routes/go_router_config.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/home/home.dart';
-import 'package:anivsub/features/shared/anime_description.dart';
-import 'package:anivsub/features/shared/anime_list.dart';
-import 'package:anivsub/features/shared/anime_thumbnail.dart';
+import 'package:anivsub/features/shared/anime/anime_description.dart';
+import 'package:anivsub/features/shared/anime/anime_list.dart';
+import 'package:anivsub/features/shared/anime/anime_thumbnail.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,81 +26,80 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
   }
 
   @override
-  void dispose() async {
+  void dispose() {
+    bloc.close();
     super.dispose();
-    await bloc.close();
   }
 
   @override
   Widget buildPage(BuildContext context) {
     return BlocConsumer<HomeBloc, HomeState>(
       listener: (context, state) {
-        if (state is HomeError) {
-          onErrorListener(context, state);
-        }
+        if (state is HomeError) onErrorListener(context, state);
       },
       builder: (context, state) => SafeArea(
         child: switch (state) {
           HomeInitial() || HomeLoading() => const LoadingWidget(),
-          HomeLoaded() => _buildHomeSection(context, state),
+          HomeLoaded() => _buildHomeContent(context, state),
           _ => Container(),
         },
       ),
     );
   }
 
-  Widget _buildHomeSection(BuildContext context, HomeLoaded state) {
+  Widget _buildHomeContent(BuildContext context, HomeLoaded state) {
     return RefreshIndicator(
       onRefresh: () {
         bloc.add(const LoadHome());
         return Future.value();
       },
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          children: [
-            _buildAiringList(context, state),
-            const Divider(height: 32),
-            _buildSectionHeader(
-              context,
-              title: context.l10n.hotUpdates,
-              showSeeAllButton: true,
-              child: AnimeList(movies: state.homeData.hotUpdates),
+      child: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.all(12),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                _buildAiringList(context, state.homeData.sliderMovies),
+                const Divider(height: 32),
+                _buildAnimeSection(
+                  context,
+                  context.l10n.hotUpdates,
+                  state.homeData.hotUpdates,
+                ),
+                const Divider(height: 32),
+                _buildAnimeSection(
+                  context,
+                  context.l10n.topMovies,
+                  state.homeData.topMovies,
+                ),
+                const Divider(height: 32),
+                _buildAnimeSection(
+                  context,
+                  context.l10n.latestUpdates,
+                  state.homeData.latestUpdates,
+                ),
+                const Divider(height: 32),
+                _buildAnimeSection(
+                  context,
+                  context.l10n.preRelease,
+                  state.homeData.preRelease,
+                ),
+              ]),
             ),
-            const Divider(height: 32),
-            _buildSectionHeader(
-              context,
-              title: context.l10n.topMovies,
-              showSeeAllButton: true,
-              child: AnimeList(movies: state.homeData.topMovies),
-            ),
-            const Divider(height: 32),
-            _buildSectionHeader(
-              context,
-              title: context.l10n.latestUpdates,
-              showSeeAllButton: true,
-              child: AnimeList(movies: state.homeData.latestUpdates),
-            ),
-            const Divider(height: 32),
-            _buildSectionHeader(
-              context,
-              title: context.l10n.preRelease,
-              showSeeAllButton: true,
-              child: AnimeList(movies: state.homeData.preRelease),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildAiringList(BuildContext context, HomeLoaded state) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: state.homeData.sliderMovies
-            .map((movie) => _buildMovieCard(context, movie))
-            .toList(),
+  Widget _buildAiringList(BuildContext context, List<AnimeDataEntity> movies) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.2,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: movies.length,
+        itemBuilder: (context, index) =>
+            _buildMovieCard(context, movies[index]),
       ),
     );
   }
@@ -109,9 +108,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
     return GestureDetector(
       onTap: () => context.pushNamed(
         ScreenNames.watch,
-        pathParameters: {
-          'path': movie.path,
-        },
+        pathParameters: {'path': movie.path},
       ),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.85,
@@ -125,36 +122,38 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
     );
   }
 
-  Column _buildSectionHeader(
-    BuildContext context, {
-    bool showSeeAllButton = false,
-    required String title,
-    required Widget child,
-  }) {
+  Widget _buildAnimeSection(
+    BuildContext context,
+    String title,
+    List<AnimeDataEntity> movies,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: context.textTheme.titleLarge!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            if (showSeeAllButton)
-              Text(
-                'See all',
-                style: context.textTheme.titleMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: context.theme.colorScheme.secondary,
-                ),
-              ),
-          ],
+        _buildSectionHeader(context, title),
+        AnimeList(movies: movies),
+      ],
+    );
+  }
+
+  Widget _buildSectionHeader(BuildContext context, String title) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: context.textTheme.titleLarge!.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        child,
+        Text(
+          'See all',
+          style: context.textTheme.titleMedium!.copyWith(
+            fontWeight: FontWeight.bold,
+            color: context.theme.colorScheme.secondary,
+          ),
+        ),
       ],
     );
   }

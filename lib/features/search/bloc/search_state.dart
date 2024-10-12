@@ -7,6 +7,7 @@ class SearchState extends BaseBlocState with _$SearchState {
   const factory SearchState.loaded({
     required SearchResultEntity result,
     required bool hasReachedMax,
+    @Default(1) int currentPage,
   }) = SearchLoaded;
   const factory SearchState.error(String message) = SearchError;
 }

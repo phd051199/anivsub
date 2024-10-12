@@ -151,19 +151,20 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i743.DecryptHlsUseCase(gh<_i772.AnimeRepository>()));
     gh.singleton<_i910.AuthNotifier>(
         () => _i910.AuthNotifier(authUseCases: gh<_i772.AuthUseCases>()));
-    gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
-          gh<_i772.GetPlayDataUseCase>(),
-          gh<_i772.GetEncryptedHlsUseCase>(),
-          gh<_i772.DecryptHlsUseCase>(),
-          gh<_i772.GetListEpisodeUseCase>(),
-          gh<_i772.GetEpisodeSkipUsecase>(),
-        ));
     gh.factory<_i785.SearchBloc>(
         () => _i785.SearchBloc(gh<_i772.SearchAnimeUseCase>()));
     gh.factory<_i187.HomeBloc>(
         () => _i187.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
     gh.factory<_i30.LoginCubit>(
         () => _i30.LoginCubit(gh<_i772.AuthUseCases>()));
+    gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
+          gh<_i772.GetPlayDataUseCase>(),
+          gh<_i772.GetEncryptedHlsUseCase>(),
+          gh<_i772.DecryptHlsUseCase>(),
+          gh<_i772.GetListEpisodeUseCase>(),
+          gh<_i772.GetEpisodeSkipUsecase>(),
+          gh<_i772.AppSettingsUseCases>(),
+        ));
     return this;
   }
 }

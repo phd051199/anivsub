@@ -13,12 +13,14 @@ class AppSettingsDTO extends BaseDTO<AppSettingsEntity> {
   const AppSettingsDTO({
     required this.themeMode,
     required this.color,
+    this.skipIntro = false,
   });
 
   factory AppSettingsDTO.initial() {
     return AppSettingsDTO(
       themeMode: ThemeMode.system.index,
       color: Colors.blueAccent.value,
+      skipIntro: false,
     );
   }
 
@@ -26,11 +28,13 @@ class AppSettingsDTO extends BaseDTO<AppSettingsEntity> {
       _$AppSettingsDTOFromJson(json);
   final int themeMode;
   final int color;
+  final bool skipIntro;
 
   @override
   List<Object?> get props => [
         themeMode,
         color,
+        skipIntro,
       ];
 
   @override
@@ -38,6 +42,7 @@ class AppSettingsDTO extends BaseDTO<AppSettingsEntity> {
     return AppSettingsEntity(
       themeMode: themeMode,
       color: color,
+      skipIntro: skipIntro,
     );
   }
 

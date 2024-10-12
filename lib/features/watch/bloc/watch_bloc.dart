@@ -18,6 +18,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     this._decryptHlsUseCase,
     this._getListEpisodeUseCase,
     this._getEpisodeSkipUsecase,
+    this._appSettingsUseCases,
   ) : super(const WatchInitial()) {
     on<LoadWatch>(_onLoadWatch);
     on<ChangeChap>(_onChangeChap);
@@ -29,16 +30,18 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   final DecryptHlsUseCase _decryptHlsUseCase;
   final GetListEpisodeUseCase _getListEpisodeUseCase;
   final GetEpisodeSkipUsecase _getEpisodeSkipUsecase;
+  final AppSettingsUseCases _appSettingsUseCases;
 
-  void _onLoadWatch(LoadWatch event, Emitter<WatchState> emit) async {
+  Future<void> _onLoadWatch(LoadWatch event, Emitter<WatchState> emit) async {
     emit(const WatchLoading());
 
     try {
+      final currentAppSettings = await _appSettingsUseCases.getAppSettings();
       final playDataOutput = await _getPlayDataUseCase.send(
         GetPlayDataUseCaseInput(id: event.id),
       );
       final chap = playDataOutput.result.chaps.first;
-      final link = await _getChapter(chap);
+      final link = await _getChapterLink(chap);
 
       emit(
         WatchLoaded(
@@ -46,6 +49,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
           playingId: chap.id,
           chaps: playDataOutput.result.chaps,
           poster: playDataOutput.result.image,
+          skipIntro: currentAppSettings.skipIntro,
         ),
       );
 
@@ -62,23 +66,23 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   ) async {
     final currentState = state as WatchLoaded;
     try {
-      final getListEpisodeOutput = await _getListEpisodeUseCase.send(
+      final listEpisodeOutput = await _getListEpisodeUseCase.send(
         GetListEpisodeUseCaseInput(animeName: _cleanPath(id)),
       );
 
       final currentId = _findMatchingEpisodeId(
-        getListEpisodeOutput.result.list,
+        listEpisodeOutput.result.list,
         currentState.playingChap!,
       );
 
-      final getEpisodeSkipOutput = await _getEpisodeSkipUsecase.send(
+      final episodeSkipOutput = await _getEpisodeSkipUsecase.send(
         GetEpisodeSkipUsecaseInput(id: currentId),
       );
 
       emit(
         currentState.copyWith(
-          listEpisode: getListEpisodeOutput.result,
-          episodeSkip: getEpisodeSkipOutput.result,
+          listEpisode: listEpisodeOutput.result,
+          episodeSkip: episodeSkipOutput.result,
         ),
       );
     } catch (_) {
@@ -86,9 +90,8 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     }
   }
 
-  void _onChangeChap(ChangeChap event, Emitter<WatchState> emit) async {
+  Future<void> _onChangeChap(ChangeChap event, Emitter<WatchState> emit) async {
     final currentState = state as WatchLoaded;
-
     if (event.chap.id == currentState.playingId) return;
 
     emit(
@@ -100,33 +103,32 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       ),
     );
 
-    final newLink = await _getChapter(event.chap);
+    final newLink = await _getChapterLink(event.chap);
+    await _updateStateWithNewChapter(currentState, event.chap, newLink, emit);
+  }
 
-    emit(
-      currentState.copyWith(
-        link: newLink,
-        playingId: event.chap.id,
-        playingChap: event.chap.name,
-        chapLoading: false,
-      ),
-    );
-
+  Future<void> _updateStateWithNewChapter(
+    WatchLoaded currentState,
+    ChapDataEntity chap,
+    String newLink,
+    Emitter<WatchState> emit,
+  ) async {
     try {
       final currentId = _findMatchingEpisodeId(
         currentState.listEpisode!.list,
-        event.chap.name,
+        chap.name,
       );
 
-      final getEpisodeSkipOutput = await _getEpisodeSkipUsecase.send(
+      final episodeSkipOutput = await _getEpisodeSkipUsecase.send(
         GetEpisodeSkipUsecaseInput(id: currentId),
       );
 
       emit(
         currentState.copyWith(
           link: newLink,
-          playingId: event.chap.id,
-          playingChap: event.chap.name,
-          episodeSkip: getEpisodeSkipOutput.result,
+          playingId: chap.id,
+          playingChap: chap.name,
+          episodeSkip: episodeSkipOutput.result,
           chapLoading: false,
         ),
       );
@@ -134,8 +136,8 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       emit(
         currentState.copyWith(
           link: newLink,
-          playingId: event.chap.id,
-          playingChap: event.chap.name,
+          playingId: chap.id,
+          playingChap: chap.name,
           episodeSkip: null,
           chapLoading: false,
         ),
@@ -143,12 +145,21 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     }
   }
 
-  void _onToggleSkipIntro(ToggleSkipIntro event, Emitter<WatchState> emit) {
+  Future<void> _onToggleSkipIntro(
+    ToggleSkipIntro event,
+    Emitter<WatchState> emit,
+  ) async {
     final currentState = state as WatchLoaded;
+    final currentAppSettings = await _appSettingsUseCases.getAppSettings();
+
+    await _appSettingsUseCases.setAppSettings(
+      currentAppSettings.copyWith(skipIntro: !currentState.skipIntro),
+    );
+
     emit(currentState.copyWith(skipIntro: !currentState.skipIntro));
   }
 
-  Future<String> _getChapter(ChapDataEntity chap) async {
+  Future<String> _getChapterLink(ChapDataEntity chap) async {
     final hlsOutput = await _getEncryptedHlsUseCase.send(
       GetEncryptedHlsUseCaseInput(
         data: GetEncryptedHlsRequestEntity(
