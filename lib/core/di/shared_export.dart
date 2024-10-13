@@ -45,6 +45,13 @@ AppSettingsUseCases get appSettingsUseCases => GetIt.I<AppSettingsUseCases>();
 HomeUseCases get homeUseCases => GetIt.I<HomeUseCases>();
 GetHomeDataUseCase get getHomeDataUseCase => GetIt.I<GetHomeDataUseCase>();
 GetPlayDataUseCase get getPlayDataUseCase => GetIt.I<GetPlayDataUseCase>();
+GetEncryptedHlsUseCase get getEncryptedHlsUseCase =>
+    GetIt.I<GetEncryptedHlsUseCase>();
+DecryptHlsUseCase get decryptHlsUseCase => GetIt.I<DecryptHlsUseCase>();
+GetListEpisodeUseCase get getListEpisodeUseCase =>
+    GetIt.I<GetListEpisodeUseCase>();
+GetEpisodeSkipUsecase get getEpisodeSkipUsecase =>
+    GetIt.I<GetEpisodeSkipUsecase>();
 
 // Cubits
 VideoPlayerCubit get videoPlayerCubit => GetIt.I<VideoPlayerCubit>();

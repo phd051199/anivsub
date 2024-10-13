@@ -1,7 +1,9 @@
 import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
+import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
 import 'package:anivsub/features/watch/watch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,13 +26,14 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
   }
 
   @override
-  void dispose() {
-    bloc.close();
-    super.dispose();
+  Widget buildPage(BuildContext context) {
+    return BlocProvider<VideoPlayerCubit>.value(
+      value: videoPlayerCubit,
+      child: _buildPageContent(),
+    );
   }
 
-  @override
-  Widget buildPage(BuildContext context) {
+  Widget _buildPageContent() {
     return BlocSelector<WatchBloc, WatchState, WatchLoaded?>(
       selector: (state) => state is WatchLoaded ? state : null,
       builder: (context, state) {
@@ -47,39 +50,45 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
   }
 
   Widget _buildBody(BuildContext context, WatchLoaded state) {
-    return ListView(
+    return Column(
       children: [
-        if (state.chapLoading)
-          AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Container(
-              color: Colors.black,
-              child: const LoadingWidget(),
-            ),
-          )
-        else
-          VideoPlayer(
-            key: ValueKey(state.link),
-            url: state.link,
-            episodeSkip: state.episodeSkip,
-            skipIntro: state.skipIntro,
-            poster: state.poster,
-          ),
+        _buildPinnedVideoPlayer(state),
         const SizedBox(height: 12),
-        if (state.episodeSkip != null)
-          SwitchListTile(
-            title: Text(
-              'Skip intro (${state.episodeSkip!.intro.start} - ${state.episodeSkip!.intro.end}), outro (${state.episodeSkip!.outro.start} - ${state.episodeSkip!.outro.end})',
-              style: context.textTheme.bodyMedium,
-            ),
-            value: state.skipIntro,
-            onChanged: (value) {
-              bloc.add(const ToggleSkipIntro());
-            },
-          ),
-        const SizedBox(height: 12),
-        _buildChaptersGrid(context, state),
+        _buildScrollableContent(context, state),
       ],
+    );
+  }
+
+  Widget _buildPinnedVideoPlayer(WatchLoaded state) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.275,
+      ),
+      child: EnhancedVideoPlayer(
+        path: widget.path,
+        chaps: state.chaps,
+        skipIntro: state.skipIntro,
+      ),
+    );
+  }
+
+  Widget _buildScrollableContent(BuildContext context, WatchLoaded state) {
+    return Expanded(
+      child: ListView(
+        children: [
+          _buildSkipIntroSwitch(context, state),
+          const SizedBox(height: 12),
+          _buildChaptersGrid(context, state),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSkipIntroSwitch(BuildContext context, WatchLoaded state) {
+    return SwitchListTile(
+      title: Text('Skip intro', style: context.textTheme.bodyMedium),
+      value: state.skipIntro,
+      onChanged: (_) => bloc.add(const ToggleSkipIntro()),
     );
   }
 
@@ -96,33 +105,37 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
           crossAxisSpacing: 4,
           childAspectRatio: 62 / 60,
         ),
-        itemBuilder: (context, index) {
-          final chap = state.chaps[index];
-          return GestureDetector(
-            onTap: () => bloc.add(ChangeChap(chap: chap)),
-            child: _buildChapCard(context, state, chap),
-          );
-        },
+        itemBuilder: (context, index) =>
+            _buildChapItem(context, state.chaps[index]),
       ),
     );
   }
 
-  Widget _buildChapCard(
-    BuildContext context,
-    WatchLoaded state,
-    ChapDataEntity chap,
-  ) {
-    final isPlaying = state.playingId == chap.id;
+  Widget _buildChapItem(BuildContext context, ChapDataEntity chap) {
+    return BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
+      builder: (context, videoPlayerState) {
+        final isPlaying = videoPlayerState is VideoPlayerLoaded &&
+            videoPlayerState.currentChap.id == chap.id;
+        return GestureDetector(
+          onTap: () {
+            if (isPlaying) return;
 
-    final child = Center(
-      child: Text(
-        chap.name,
-        style: context.textTheme.bodySmall!.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+            videoPlayerCubit.loadChapter(chap);
+          },
+          child: Card(
+            color: isPlaying
+                ? Theme.of(context).colorScheme.primaryContainer
+                : null,
+            child: Center(
+              child: Text(
+                chap.name,
+                style: context.textTheme.bodySmall!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        );
+      },
     );
-
-    return isPlaying ? Card.filled(child: child) : Card(child: child);
   }
 }

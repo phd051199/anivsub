@@ -10,13 +10,6 @@ class LoadWatch extends WatchEvent with _$LoadWatch {
 }
 
 @freezed
-class ChangeChap extends WatchEvent with _$ChangeChap {
-  const factory ChangeChap({
-    required ChapDataEntity chap,
-  }) = _ChangeChap;
-}
-
-@freezed
 class ToggleSkipIntro extends WatchEvent with _$ToggleSkipIntro {
   const factory ToggleSkipIntro() = _ToggleSkipIntro;
 }

@@ -1,73 +1,44 @@
 import 'package:anivsub/core/base/base.dart';
-import 'package:anivsub/domain/entities/anime/episode_skip_response_entity.dart';
-import 'package:better_player/better_player.dart';
+import 'package:anivsub/domain/domain_exports.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:river_player/river_player.dart';
 
 import '../cubit/video_player_cubit.dart';
 
-class VideoPlayer extends StatefulWidget {
-  const VideoPlayer({
+class EnhancedVideoPlayer extends StatefulWidget {
+  const EnhancedVideoPlayer({
     super.key,
-    required this.url,
-    this.episodeSkip,
-    this.skipIntro = false,
-    required this.poster,
+    required this.chaps,
+    required this.path,
+    required this.skipIntro,
   });
-
-  final String url;
-  final EpisodeSkipResponseEntity? episodeSkip;
+  final List<ChapDataEntity> chaps;
+  final String path;
   final bool skipIntro;
-  final String poster;
 
   @override
-  State<VideoPlayer> createState() => _VideoPlayerState();
+  State<EnhancedVideoPlayer> createState() => _EnhancedVideoPlayerState();
 }
 
-class _VideoPlayerState extends CubitState<VideoPlayer, VideoPlayerCubit> {
-  late final BetterPlayerController _betterPlayerController;
-  bool _eventTriggered = false;
+class _EnhancedVideoPlayerState
+    extends CubitState<EnhancedVideoPlayer, VideoPlayerCubit> {
+  late BetterPlayerController _betterPlayerController;
 
   @override
   void initState() {
     super.initState();
-    _setPreferredOrientations();
-    _initializeBetterPlayer();
-  }
+    _initializeVideoPlayer();
 
-  void _setPreferredOrientations() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-  }
-
-  void _initializeBetterPlayer() {
-    final dataSource = _createDataSource();
-    _betterPlayerController = _createPlayerController(dataSource);
-    _betterPlayerController.videoPlayerController?.addListener(_skipIntroOutro);
-    cubit.initializePlayer(controller: _betterPlayerController);
-  }
-
-  BetterPlayerDataSource _createDataSource() {
-    return BetterPlayerDataSource(
-      BetterPlayerDataSourceType.network,
-      widget.url,
-      notificationConfiguration: BetterPlayerNotificationConfiguration(
-        showNotification: true,
-        title: 'AniVSub',
-        author: 'Flutter',
-        imageUrl: widget.poster,
-      ),
+    cubit.initialize(
+      path: widget.path,
+      chaps: widget.chaps,
+      controller: _betterPlayerController,
+      skipIntro: widget.skipIntro,
     );
   }
 
-  BetterPlayerController _createPlayerController(
-    BetterPlayerDataSource dataSource,
-  ) {
-    return BetterPlayerController(
+  void _initializeVideoPlayer() {
+    _betterPlayerController = BetterPlayerController(
       const BetterPlayerConfiguration(
         autoPlay: true,
         fit: BoxFit.contain,
@@ -77,53 +48,19 @@ class _VideoPlayerState extends CubitState<VideoPlayer, VideoPlayerCubit> {
           controlBarColor: Color.fromRGBO(41, 41, 41, 0.8),
           playIcon: Icons.play_arrow,
           controlBarHeight: 42,
-          loadingColor: Colors.transparent,
         ),
       ),
-      betterPlayerDataSource: dataSource,
     );
-  }
-
-  void _skipIntroOutro() {
-    if (_shouldSkip()) {
-      final position =
-          _betterPlayerController.videoPlayerController!.value.position;
-      _trySkipSection(
-        position,
-        widget.episodeSkip!.intro.start,
-        widget.episodeSkip!.intro.end,
-      );
-      _trySkipSection(
-        position,
-        widget.episodeSkip!.outro.start,
-        widget.episodeSkip!.outro.end,
-      );
-    }
-  }
-
-  bool _shouldSkip() {
-    return !_eventTriggered && widget.episodeSkip != null && widget.skipIntro;
-  }
-
-  void _trySkipSection(Duration position, int start, int end) {
-    final skipSection = position.inSeconds >= start && position.inSeconds < end;
-    if (skipSection && end > start) {
-      _eventTriggered = true;
-      _betterPlayerController.seekTo(Duration(seconds: end));
-      _eventTriggered = false;
-    }
   }
 
   @override
   Widget buildPage(BuildContext context) {
-    return SafeArea(
-      child: BetterPlayer(controller: _betterPlayerController),
-    );
+    return BetterPlayer(controller: _betterPlayerController);
   }
 
   @override
   void dispose() {
-    _betterPlayerController.dispose();
+    cubit.dispose();
     super.dispose();
   }
 }

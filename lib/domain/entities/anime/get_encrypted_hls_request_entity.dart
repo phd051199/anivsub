@@ -7,7 +7,7 @@ class GetEncryptedHlsRequestEntity
     required this.id,
     required this.play,
     required this.link,
-    required this.backuplinks,
+    this.backuplinks = '1',
   });
   final String id;
   final String play;

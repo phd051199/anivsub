@@ -18,8 +18,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController(text: 'sophiab');
-  final _passwordController = TextEditingController(text: 'sophiabpass');
+  final _emailController = TextEditingController(text: 'jamesd');
+  final _passwordController = TextEditingController(text: 'jamesdpass');
   late Validator emailValidator;
   late Validator passwordValidator;
 

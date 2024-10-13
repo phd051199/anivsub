@@ -18,7 +18,8 @@ class NetworkClient {
         headers: headers,
       ),
     )..interceptors.addAll([
-        if (kDebugMode) PrettyDioLogger(requestBody: true, responseBody: false),
+        if (kDebugMode)
+          PrettyDioLogger(requestBody: false, responseBody: false),
         if (isAuthenticated) AuthInterceptor(),
         ParseJsonInterceptor(),
       ]);
