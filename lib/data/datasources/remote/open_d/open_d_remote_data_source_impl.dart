@@ -12,7 +12,11 @@ class OpenDRemoteDataSourceImpl implements OpenDRemoteDataSource {
   }
 
   @override
-  Future<EpisodeSkipResponseDTO> skipEpisode(String id) {
-    return client.skipEpisode(id);
+  Future<EpisodeSkipResponseDTO> skipEpisode(String id) async {
+    final result = await Future.any([
+      client.skipEpisodeHianime(id),
+      client.skipEpisode9animetv(id),
+    ]);
+    return result;
   }
 }

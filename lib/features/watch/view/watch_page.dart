@@ -4,11 +4,10 @@ import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
+import 'package:anivsub/features/watch/view/video_player.dart';
 import 'package:anivsub/features/watch/watch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'video_player.dart';
 
 class WatchPage extends StatefulWidget {
   const WatchPage({super.key, required this.path});
@@ -38,7 +37,6 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
       selector: (state) => state is WatchLoaded ? state : null,
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(forceMaterialTransparency: true),
           body: SafeArea(
             child: state == null
                 ? const LoadingWidget()
@@ -61,8 +59,8 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
 
   Widget _buildPinnedVideoPlayer(WatchLoaded state) {
     return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.275,
+      constraints: const BoxConstraints(
+        maxHeight: 240,
       ),
       child: EnhancedVideoPlayer(
         path: widget.path,
@@ -86,7 +84,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
 
   Widget _buildSkipIntroSwitch(BuildContext context, WatchLoaded state) {
     return SwitchListTile(
-      title: Text('Skip intro', style: context.textTheme.bodyMedium),
+      title: Text('Skip intro / outro', style: context.textTheme.bodyMedium),
       value: state.skipIntro,
       onChanged: (_) => bloc.add(const ToggleSkipIntro()),
     );
@@ -119,7 +117,6 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
         return GestureDetector(
           onTap: () {
             if (isPlaying) return;
-
             videoPlayerCubit.loadChapter(chap);
           },
           child: Card(

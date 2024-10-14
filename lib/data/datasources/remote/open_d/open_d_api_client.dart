@@ -1,3 +1,4 @@
+import 'package:anivsub/core/shared/constants.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -11,6 +12,9 @@ abstract class OpenDApiClient {
   @GET('/list-episodes')
   Future<ListEpisodeResponseDTO> listEpisodes(@Query('name') String name);
 
-  @GET('/episode-skip/{id}')
-  Future<EpisodeSkipResponseDTO> skipEpisode(@Path('id') String id);
+  @GET('$skApiUrl1/episode-skip/{id}')
+  Future<EpisodeSkipResponseDTO> skipEpisode9animetv(@Path('id') String id);
+
+  @GET('$skApiUrl2/episode-skip/{id}')
+  Future<EpisodeSkipResponseDTO> skipEpisodeHianime(@Path('id') String id);
 }

@@ -24,6 +24,8 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
 
     try {
       final watchData = await _fetchWatchData(event.id);
+      _fetchDetailData();
+
       emit(
         WatchLoaded(
           chaps: watchData.chaps,
@@ -33,6 +35,10 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     } catch (e) {
       emit(WatchError(e.toString()));
     }
+  }
+
+  void _fetchDetailData() {
+    // TODO: implement _fetchDetailData
   }
 
   Future<void> _onToggleSkipIntro(

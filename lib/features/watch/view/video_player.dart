@@ -1,6 +1,8 @@
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/features/shared/custom/better_player_material_controls.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:river_player/river_player.dart';
 
 import '../cubit/video_player_cubit.dart';
@@ -23,6 +25,7 @@ class EnhancedVideoPlayer extends StatefulWidget {
 class _EnhancedVideoPlayerState
     extends CubitState<EnhancedVideoPlayer, VideoPlayerCubit> {
   late BetterPlayerController _betterPlayerController;
+  late bool _skipIntro = widget.skipIntro;
 
   @override
   void initState() {
@@ -33,22 +36,53 @@ class _EnhancedVideoPlayerState
       path: widget.path,
       chaps: widget.chaps,
       controller: _betterPlayerController,
-      skipIntro: widget.skipIntro,
+      skipIntro: _skipIntro,
     );
+  }
+
+  @override
+  void didUpdateWidget(EnhancedVideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.skipIntro != _skipIntro) {
+      _skipIntro = widget.skipIntro;
+      cubit.updateSkipIntro(_skipIntro);
+    }
   }
 
   void _initializeVideoPlayer() {
     _betterPlayerController = BetterPlayerController(
-      const BetterPlayerConfiguration(
+      BetterPlayerConfiguration(
         autoPlay: true,
         fit: BoxFit.contain,
         autoDetectFullscreenAspectRatio: true,
         autoDetectFullscreenDeviceOrientation: true,
         controlsConfiguration: BetterPlayerControlsConfiguration(
-          controlBarColor: Color.fromRGBO(41, 41, 41, 0.8),
-          playIcon: Icons.play_arrow,
-          controlBarHeight: 42,
+          playerTheme: BetterPlayerTheme.custom,
+          customControlsBuilder: (controller, onControlsVisibilityChanged) {
+            return BetterPlayerCustomMaterialControls(
+              onControlsVisibilityChanged: onControlsVisibilityChanged,
+              controlsConfiguration: const BetterPlayerControlsConfiguration(
+                playIcon: Icons.play_arrow,
+                enableMute: false,
+                enablePlayPause: false,
+                enableAudioTracks: false,
+                enableSubtitles: false,
+                enablePlaybackSpeed: false,
+                enableQualities: false,
+                progressBarPlayedColor: Colors.red,
+                progressBarHandleColor: Colors.red,
+              ),
+            );
+          },
         ),
+        deviceOrientationsOnFullScreen: [
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.landscapeRight,
+        ],
+        deviceOrientationsAfterFullScreen: [
+          DeviceOrientation.portraitUp,
+        ],
       ),
     );
   }

@@ -55,7 +55,7 @@ class _OpenDApiClient implements OpenDApiClient {
   }
 
   @override
-  Future<EpisodeSkipResponseDTO> skipEpisode(String id) async {
+  Future<EpisodeSkipResponseDTO> skipEpisode9animetv(String id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -67,7 +67,40 @@ class _OpenDApiClient implements OpenDApiClient {
     )
         .compose(
           _dio.options,
-          '/episode-skip/${id}',
+          'https://opend-9animetv.animevsub.eu.org/episode-skip/${id}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late EpisodeSkipResponseDTO _value;
+    try {
+      _value = EpisodeSkipResponseDTO.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<EpisodeSkipResponseDTO> skipEpisodeHianime(String id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<EpisodeSkipResponseDTO>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'https://sk-hianime.animevsub.eu.org/episode-skip/${id}',
           queryParameters: queryParameters,
           data: _data,
         )

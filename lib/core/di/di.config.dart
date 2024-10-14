@@ -47,8 +47,8 @@ import 'package:anivsub/domain/repositories/app_settings_local_repository.dart'
 import 'package:anivsub/domain/repositories/auth_local_repository.dart'
     as _i1060;
 import 'package:anivsub/domain/repositories/auth_repository.dart' as _i870;
-import 'package:anivsub/domain/usecases/app_settings_use_cases.dart' as _i531;
-import 'package:anivsub/domain/usecases/auth_use_cases.dart' as _i336;
+import 'package:anivsub/domain/usecases/app_settings_usecase.dart' as _i268;
+import 'package:anivsub/domain/usecases/auth_usecase.dart' as _i586;
 import 'package:anivsub/domain/usecases/decrypt_hls_usecase.dart' as _i743;
 import 'package:anivsub/domain/usecases/get_encrypted_hls_usecase.dart'
     as _i407;
@@ -57,7 +57,7 @@ import 'package:anivsub/domain/usecases/get_home_data_usecase.dart' as _i68;
 import 'package:anivsub/domain/usecases/get_list_episode_usecase.dart' as _i72;
 import 'package:anivsub/domain/usecases/get_play_data_usecase.dart' as _i539;
 import 'package:anivsub/domain/usecases/home_usecases.dart' as _i179;
-import 'package:anivsub/domain/usecases/profile_use_cases.dart' as _i826;
+import 'package:anivsub/domain/usecases/profile_usecase.dart' as _i107;
 import 'package:anivsub/domain/usecases/search_anime_usecase.dart' as _i125;
 import 'package:anivsub/features/home/bloc/home_bloc.dart' as _i187;
 import 'package:anivsub/features/login/cubit/login_cubit.dart' as _i30;
@@ -106,8 +106,8 @@ extension GetItInjectableX on _i174.GetIt {
         _i689.DecryptHlsServiceImpl(client: gh<_i987.CFWorkerApiClient>()));
     gh.lazySingleton<_i870.AuthRepository>(() => _i792.AuthRepositoryImpl(
         authRemoteDataSource: gh<_i540.AuthRemoteDataSource>()));
-    gh.singleton<_i826.ProfileUseCases>(
-        () => _i826.ProfileUseCases(gh<_i772.AuthRepository>()));
+    gh.singleton<_i107.ProfileUseCases>(
+        () => _i107.ProfileUseCases(gh<_i772.AuthRepository>()));
     gh.lazySingleton<_i833.AuthLocalDataSource>(() =>
         _i278.AuthLocalDataSourceImpl(
             flutterSecureStorageService:
@@ -124,14 +124,12 @@ extension GetItInjectableX on _i174.GetIt {
         _i200.AppSettingsLocalRepositoryImpl(
             appSettingsLocalDataSource:
                 gh<_i306.AppSettingsLocalDataSource>()));
-    gh.singleton<_i336.AuthUseCases>(() => _i336.AuthUseCases(
+    gh.singleton<_i586.AuthUseCases>(() => _i586.AuthUseCases(
           gh<_i870.AuthRepository>(),
           gh<_i1060.AuthLocalRepository>(),
         ));
-    gh.singleton<_i531.AppSettingsUseCases>(() =>
-        _i531.AppSettingsUseCases(gh<_i104.AppSettingsLocalRepository>()));
-    gh.factory<_i132.ProfileCubit>(
-        () => _i132.ProfileCubit(gh<_i772.ProfileUseCases>()));
+    gh.singleton<_i268.AppSettingsUseCases>(() =>
+        _i268.AppSettingsUseCases(gh<_i104.AppSettingsLocalRepository>()));
     gh.singleton<_i179.HomeUseCases>(
         () => _i179.HomeUseCases(gh<_i772.AuthLocalRepository>()));
     gh.factory<_i125.SearchAnimeUseCase>(
@@ -156,16 +154,18 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i772.GetListEpisodeUseCase>(),
           gh<_i772.GetEpisodeSkipUsecase>(),
         ));
+    gh.factory<_i132.ProfileCubit>(
+        () => _i132.ProfileCubit(gh<_i772.ProfileUseCases>()));
     gh.factory<_i785.SearchBloc>(
         () => _i785.SearchBloc(gh<_i772.SearchAnimeUseCase>()));
     gh.factory<_i187.HomeBloc>(
         () => _i187.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
+    gh.factory<_i30.LoginCubit>(
+        () => _i30.LoginCubit(gh<_i772.AuthUseCases>()));
     gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
           gh<_i772.GetPlayDataUseCase>(),
           gh<_i772.AppSettingsUseCases>(),
         ));
-    gh.factory<_i30.LoginCubit>(
-        () => _i30.LoginCubit(gh<_i772.AuthUseCases>()));
     return this;
   }
 }

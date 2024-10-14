@@ -1,8 +1,9 @@
 import 'package:anivsub/domain/domain_exports.dart';
 
 abstract class AnimeRepository {
-  Future<HomeDataCategoriesEntity> fetchHomeData();
-  Future<PlayDataEntity> fetchPlayData(String id);
+  Future<HomeDataCategoriesEntity> getHomeData();
+  Future<PlayDataEntity> getPlayData(String id);
+  Future<AnimeDetailEntity> getAnimeDetail(String id);
   Future<GetEncryptedHlsResponseEntity> getEncryptedHls(
     GetEncryptedHlsRequestEntity body,
   );

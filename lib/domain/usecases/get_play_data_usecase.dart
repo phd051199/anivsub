@@ -15,7 +15,7 @@ class GetPlayDataUseCase extends BaseFutureUseCase<GetPlayDataUseCaseInput,
   Future<GetPlayDataUseCaseOutput> buildUseCase(
     GetPlayDataUseCaseInput input,
   ) async {
-    final result = await _repository.fetchPlayData(input.id);
+    final result = await _repository.getPlayData(input.id);
     return GetPlayDataUseCaseOutput(result: result);
   }
 }

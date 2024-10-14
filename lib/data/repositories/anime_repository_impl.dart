@@ -14,15 +14,21 @@ class AnimeRepositoryImpl implements AnimeRepository {
   final OpenDRemoteDataSource _openDRemoteDataSource;
 
   @override
-  Future<HomeDataCategoriesEntity> fetchHomeData() async {
+  Future<HomeDataCategoriesEntity> getHomeData() async {
     final html = await _animeRemoteDataSource.getHomeData();
     return HomeDataParser.parse(html);
   }
 
   @override
-  Future<PlayDataEntity> fetchPlayData(String id) async {
+  Future<PlayDataEntity> getPlayData(String id) async {
     final html = await _animeRemoteDataSource.getPlayData(id);
     return PlayDataParser.parse(html);
+  }
+
+  @override
+  Future<AnimeDetailEntity> getAnimeDetail(String id) async {
+    final html = await _animeRemoteDataSource.getAnimeDetail(id);
+    return AnimeDetailParser.parse(html);
   }
 
   @override

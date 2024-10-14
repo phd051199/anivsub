@@ -6,9 +6,9 @@ import 'package:flutter/services.dart';
 
 Future<void> bootstrap(Environment environment) async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
   ]);
   registerDependencies(environment);
   await authNotifier.checkToken();

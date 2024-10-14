@@ -11,4 +11,11 @@ extension StringExtension on String {
   String unTranslated() {
     return this;
   }
+
+  String cleanPath() {
+    final string = this;
+    final cleaned = string.replaceAll('/phim/', '');
+    final lastDashIndex = cleaned.lastIndexOf('-');
+    return lastDashIndex != -1 ? cleaned.substring(0, lastDashIndex) : cleaned;
+  }
 }

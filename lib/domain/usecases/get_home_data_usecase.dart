@@ -15,7 +15,7 @@ class GetHomeDataUseCase extends BaseFutureUseCase<GetHomeDataUseCaseInput,
   Future<GetHomeDataUseCaseOutput> buildUseCase(
     GetHomeDataUseCaseInput input,
   ) async {
-    final result = await _repository.fetchHomeData();
+    final result = await _repository.getHomeData();
     return GetHomeDataUseCaseOutput(
       result: result,
     );

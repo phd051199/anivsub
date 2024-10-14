@@ -29,6 +29,8 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   bool _isSkipEventTriggered = false;
   bool _isNextChapterTriggered = false;
 
+  void updateSkipIntro(bool skipIntro) => _skipIntro = skipIntro;
+
   Future<void> initialize({
     required String path,
     required List<ChapDataEntity> chaps,
@@ -39,8 +41,9 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
       emit(const VideoPlayerLoading());
       _path = path;
       _playerController = controller;
-      _skipIntro = skipIntro;
       _isNextChapterTriggered = false;
+      updateSkipIntro(skipIntro);
+
       await _initializeChapter(chaps.first, chaps);
     } catch (e) {
       emit(VideoPlayerError('Failed to initialize: $e'));
@@ -48,8 +51,8 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }
 
   Future<void> loadChapter(ChapDataEntity chap) async {
-    final currentState = state;
-    if (currentState is! VideoPlayerLoaded) return;
+    if (state is! VideoPlayerLoaded) return;
+    final currentState = state as VideoPlayerLoaded;
 
     try {
       await _pauseAndRemoveEventListener();
@@ -63,27 +66,8 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     }
   }
 
-  Future<void> nextChapter() async {
-    if (_isNextChapterTriggered) return;
-    _isNextChapterTriggered = true;
-    _isSkipEventTriggered = false;
-
-    try {
-      await _changeChapter(next: true);
-    } catch (e) {
-      emit(VideoPlayerError('Failed to load next chapter: $e'));
-    } finally {
-      _isNextChapterTriggered = false;
-    }
-  }
-
-  Future<void> previousChapter() async {
-    try {
-      await _changeChapter(next: false);
-    } catch (e) {
-      emit(VideoPlayerError('Failed to load previous chapter: $e'));
-    }
-  }
+  Future<void> nextChapter() => _changeChapter(next: true);
+  Future<void> previousChapter() => _changeChapter(next: false);
 
   void dispose() {
     _pauseAndRemoveEventListener();
@@ -111,37 +95,47 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }
 
   Future<void> _changeChapter({required bool next}) async {
-    final currentState = state;
-    if (currentState is! VideoPlayerLoaded) return;
+    if (_isNextChapterTriggered && next) return;
+    _isNextChapterTriggered = next;
+    _isSkipEventTriggered = false;
 
-    final adjacentChap = _getAdjacentChapter(
-      currentState.chaps,
-      currentState.currentChap,
-      next: next,
-    );
-    if (adjacentChap != null) {
-      await loadChapter(adjacentChap);
-    } else {
+    try {
+      if (state is! VideoPlayerLoaded) return;
+      final currentState = state as VideoPlayerLoaded;
+
+      final adjacentChap = _getAdjacentChapter(
+        currentState.chaps,
+        currentState.currentChap,
+        next: next,
+      );
+      if (adjacentChap != null) {
+        await loadChapter(adjacentChap);
+      }
+    } catch (e) {
+      emit(
+        VideoPlayerError(
+          'Failed to load ${next ? "next" : "previous"} chapter: $e',
+        ),
+      );
+    } finally {
       _isNextChapterTriggered = false;
     }
   }
 
   void _handleVideoProgress() {
-    final currentState = state;
-    if (currentState is! VideoPlayerLoaded ||
-        !_skipIntro ||
-        _isSkipEventTriggered ||
-        currentState.episodeSkip == null) {
+    if (state is! VideoPlayerLoaded || !_skipIntro || _isSkipEventTriggered) {
       return;
     }
+    final currentState = state as VideoPlayerLoaded;
+    final episodeSkip = currentState.episodeSkip;
+    if (episodeSkip == null) return;
 
     final currentPosition =
         _playerController?.videoPlayerController?.value.position;
-
     if (currentPosition == null) return;
 
-    _attemptSkipSection(currentPosition, currentState.episodeSkip!.intro);
-    _attemptSkipSection(currentPosition, currentState.episodeSkip!.outro);
+    _attemptSkipSection(currentPosition, episodeSkip.intro);
+    _attemptSkipSection(currentPosition, episodeSkip.outro);
   }
 
   void _attemptSkipSection(Duration position, InOutro section) {
@@ -180,28 +174,27 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   Future<void> _loadAdditionalData() async {
     try {
       final listEpisodeOutput = await _getListEpisodeUseCase
-          .send(GetListEpisodeUseCaseInput(animeName: _cleanPath(_path)));
-      final currentState = state;
-      if (currentState is VideoPlayerLoaded) {
-        emit(currentState.copyWith(listEpisode: listEpisodeOutput.result));
+          .send(GetListEpisodeUseCaseInput(animeName: _path.cleanPath()));
+      if (state is VideoPlayerLoaded) {
+        emit(
+          (state as VideoPlayerLoaded)
+              .copyWith(listEpisode: listEpisodeOutput.result),
+        );
       }
-    } catch (_) {
-      return;
-    }
+    } catch (_) {}
   }
 
   Future<void> _loadEpisodeSkip(ChapDataEntity chap) async {
+    if (state is! VideoPlayerLoaded) return;
+    final currentState = state as VideoPlayerLoaded;
+
     try {
-      final currentState = state;
-      if (currentState is! VideoPlayerLoaded) return;
       final currentId =
           _findMatchingEpisodeId(currentState.listEpisode?.list ?? [], chap);
       final episodeSkipOutput = await _getEpisodeSkipUsecase
           .send(GetEpisodeSkipUsecaseInput(id: currentId));
       emit(currentState.copyWith(episodeSkip: episodeSkipOutput.result));
-    } catch (_) {
-      return;
-    }
+    } catch (_) {}
   }
 
   ChapDataEntity? _getAdjacentChapter(
@@ -214,12 +207,6 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     return (adjacentIndex >= 0 && adjacentIndex < chaps.length)
         ? chaps[adjacentIndex]
         : null;
-  }
-
-  String _cleanPath(String url) {
-    final cleaned = url.replaceAll('/phim/', '');
-    final lastDashIndex = cleaned.lastIndexOf('-');
-    return lastDashIndex != -1 ? cleaned.substring(0, lastDashIndex) : cleaned;
   }
 
   String _findMatchingEpisodeId(List<Episode> episodes, ChapDataEntity chap) {

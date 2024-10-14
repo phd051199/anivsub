@@ -55,7 +55,7 @@ analyzer:
     camel_case_extensions: error
     camel_case_types: error
     file_names: error
-    implementation_imports: error
+    implementation_imports: ignore
     library_names: error
     library_prefixes: error
     prefer_is_empty: error

@@ -34,7 +34,7 @@ void registerHttpClient(GetIt getIt, Environment environment) {
     OpenDApiClient(
       NetworkClient.getDio(
         isAuthenticated: false,
-        baseUrl: opendUrl,
+        baseUrl: skApiUrl1,
       ),
     ),
   );
