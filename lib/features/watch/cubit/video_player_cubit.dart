@@ -32,6 +32,13 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
 
   void updateSkipIntro(bool skipIntro) => _skipIntro = skipIntro;
 
+  void updateChapterList(List<ChapDataEntity>? chaps) {
+    if (state is! VideoPlayerLoaded || chaps == null) return;
+    final currentState = state as VideoPlayerLoaded;
+
+    emit(currentState.copyWith(chaps: chaps));
+  }
+
   Future<void> initialize({
     required List<ChapDataEntity> chaps,
     required BetterPlayerController controller,
@@ -292,6 +299,8 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }
 
   Future<void> _pauseAndRemoveEventListener() async {
+    if (_playerController == null) return;
+
     await _playerController?.pause();
     _playerController?.removeEventsListener(_onPlayEvent);
   }

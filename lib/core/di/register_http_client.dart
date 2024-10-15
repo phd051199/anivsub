@@ -7,7 +7,9 @@ import 'package:get_it/get_it.dart';
 void registerHttpClient(GetIt getIt, Environment environment) {
   getIt.registerSingleton<AuthApiClient>(
     AuthApiClient(
-      NetworkClient.getDio(baseUrl: environment.baseUrl),
+      NetworkClient.getDio(
+        baseUrl: environment.baseUrl,
+      ),
     ),
   );
 

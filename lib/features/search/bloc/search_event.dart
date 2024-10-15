@@ -11,11 +11,10 @@ class LoadSearch extends SearchEvent with _$LoadSearch {
 }
 
 @freezed
-class SubmitSearch extends SearchEvent with _$SubmitSearch {
-  const factory SubmitSearch({
+class PreSearch extends SearchEvent with _$PreSearch {
+  const factory PreSearch({
     required String keyword,
-    int? page,
-  }) = _SubmitSearch;
+  }) = _PreSearch;
 }
 
 @freezed

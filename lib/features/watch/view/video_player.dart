@@ -4,6 +4,7 @@ import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/custom/better_player_material_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:river_player/river_player.dart';
 
 import '../cubit/video_player_cubit.dart';
@@ -31,6 +32,8 @@ class _EnhancedVideoPlayerState
   @override
   void initState() {
     super.initState();
+    if (widget.chaps.isEmpty) return;
+
     _initializeVideoPlayer();
 
     cubit.initialize(
@@ -89,7 +92,38 @@ class _EnhancedVideoPlayerState
 
   @override
   Widget buildPage(BuildContext context) {
-    return BetterPlayer(controller: _betterPlayerController);
+    return widget.chaps.isNotEmpty
+        ? BetterPlayer(controller: _betterPlayerController)
+        : _buildEmptyPlayer(context);
+  }
+
+  Stack _buildEmptyPlayer(BuildContext context) {
+    return Stack(
+      children: [
+        Container(color: Colors.black),
+        Center(
+          child: Text(
+            'No chapters found',
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 10,
+          left: 6,
+          child: IconButton(
+            onPressed: () => context.pop(),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+              size: 28,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   @override

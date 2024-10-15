@@ -37,4 +37,9 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
   Future<String> search({required String keyword, int page = 1}) {
     return client.search(keyword, page);
   }
+
+  @override
+  Future<String> preSearch({required String keyword, int ajaxSearch = 1}) {
+    return client.preSearch(keyword, ajaxSearch);
+  }
 }

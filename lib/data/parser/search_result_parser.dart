@@ -1,4 +1,4 @@
-import 'package:anivsub/data/data_exports.dart';
+import 'package:anivsub/data/parser/common_parser.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
@@ -12,7 +12,7 @@ class SearchResultParser {
     List<AnimeDataEntity> items = [];
 
     if (movieList.isNotEmpty) {
-      items = HomeDataParser.getInfoTPost(
+      items = CommonParser.getInfoTPost(
         movieList.first.querySelectorAll('.TPostMv'),
         now,
       );

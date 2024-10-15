@@ -11,4 +11,5 @@ abstract class AnimeRepository {
   Future<ListEpisodeResponseEntity> listEpisodes(List<String> name);
   Future<EpisodeSkipResponseEntity> skipEpisode(String id);
   Future<SearchResultEntity> search({required String keyword, int? page});
+  Future<List<PreSearchItemEntity>> preSearch({required String keyword});
 }

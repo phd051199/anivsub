@@ -161,147 +161,129 @@ abstract class _LoadSearch implements LoadSearch {
 }
 
 /// @nodoc
-mixin _$SubmitSearch {
+mixin _$PreSearch {
   String get keyword => throw _privateConstructorUsedError;
-  int? get page => throw _privateConstructorUsedError;
 
-  /// Create a copy of SubmitSearch
+  /// Create a copy of PreSearch
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SubmitSearchCopyWith<SubmitSearch> get copyWith =>
+  $PreSearchCopyWith<PreSearch> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SubmitSearchCopyWith<$Res> {
-  factory $SubmitSearchCopyWith(
-          SubmitSearch value, $Res Function(SubmitSearch) then) =
-      _$SubmitSearchCopyWithImpl<$Res, SubmitSearch>;
+abstract class $PreSearchCopyWith<$Res> {
+  factory $PreSearchCopyWith(PreSearch value, $Res Function(PreSearch) then) =
+      _$PreSearchCopyWithImpl<$Res, PreSearch>;
   @useResult
-  $Res call({String keyword, int? page});
+  $Res call({String keyword});
 }
 
 /// @nodoc
-class _$SubmitSearchCopyWithImpl<$Res, $Val extends SubmitSearch>
-    implements $SubmitSearchCopyWith<$Res> {
-  _$SubmitSearchCopyWithImpl(this._value, this._then);
+class _$PreSearchCopyWithImpl<$Res, $Val extends PreSearch>
+    implements $PreSearchCopyWith<$Res> {
+  _$PreSearchCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SubmitSearch
+  /// Create a copy of PreSearch
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? keyword = null,
-    Object? page = freezed,
   }) {
     return _then(_value.copyWith(
       keyword: null == keyword
           ? _value.keyword
           : keyword // ignore: cast_nullable_to_non_nullable
               as String,
-      page: freezed == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int?,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$SubmitSearchImplCopyWith<$Res>
-    implements $SubmitSearchCopyWith<$Res> {
-  factory _$$SubmitSearchImplCopyWith(
-          _$SubmitSearchImpl value, $Res Function(_$SubmitSearchImpl) then) =
-      __$$SubmitSearchImplCopyWithImpl<$Res>;
+abstract class _$$PreSearchImplCopyWith<$Res>
+    implements $PreSearchCopyWith<$Res> {
+  factory _$$PreSearchImplCopyWith(
+          _$PreSearchImpl value, $Res Function(_$PreSearchImpl) then) =
+      __$$PreSearchImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String keyword, int? page});
+  $Res call({String keyword});
 }
 
 /// @nodoc
-class __$$SubmitSearchImplCopyWithImpl<$Res>
-    extends _$SubmitSearchCopyWithImpl<$Res, _$SubmitSearchImpl>
-    implements _$$SubmitSearchImplCopyWith<$Res> {
-  __$$SubmitSearchImplCopyWithImpl(
-      _$SubmitSearchImpl _value, $Res Function(_$SubmitSearchImpl) _then)
+class __$$PreSearchImplCopyWithImpl<$Res>
+    extends _$PreSearchCopyWithImpl<$Res, _$PreSearchImpl>
+    implements _$$PreSearchImplCopyWith<$Res> {
+  __$$PreSearchImplCopyWithImpl(
+      _$PreSearchImpl _value, $Res Function(_$PreSearchImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SubmitSearch
+  /// Create a copy of PreSearch
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? keyword = null,
-    Object? page = freezed,
   }) {
-    return _then(_$SubmitSearchImpl(
+    return _then(_$PreSearchImpl(
       keyword: null == keyword
           ? _value.keyword
           : keyword // ignore: cast_nullable_to_non_nullable
               as String,
-      page: freezed == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$SubmitSearchImpl implements _SubmitSearch {
-  const _$SubmitSearchImpl({required this.keyword, this.page});
+class _$PreSearchImpl implements _PreSearch {
+  const _$PreSearchImpl({required this.keyword});
 
   @override
   final String keyword;
-  @override
-  final int? page;
 
   @override
   String toString() {
-    return 'SubmitSearch(keyword: $keyword, page: $page)';
+    return 'PreSearch(keyword: $keyword)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SubmitSearchImpl &&
-            (identical(other.keyword, keyword) || other.keyword == keyword) &&
-            (identical(other.page, page) || other.page == page));
+            other is _$PreSearchImpl &&
+            (identical(other.keyword, keyword) || other.keyword == keyword));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, keyword, page);
+  int get hashCode => Object.hash(runtimeType, keyword);
 
-  /// Create a copy of SubmitSearch
+  /// Create a copy of PreSearch
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SubmitSearchImplCopyWith<_$SubmitSearchImpl> get copyWith =>
-      __$$SubmitSearchImplCopyWithImpl<_$SubmitSearchImpl>(this, _$identity);
+  _$$PreSearchImplCopyWith<_$PreSearchImpl> get copyWith =>
+      __$$PreSearchImplCopyWithImpl<_$PreSearchImpl>(this, _$identity);
 }
 
-abstract class _SubmitSearch implements SubmitSearch {
-  const factory _SubmitSearch(
-      {required final String keyword, final int? page}) = _$SubmitSearchImpl;
+abstract class _PreSearch implements PreSearch {
+  const factory _PreSearch({required final String keyword}) = _$PreSearchImpl;
 
   @override
   String get keyword;
-  @override
-  int? get page;
 
-  /// Create a copy of SubmitSearch
+  /// Create a copy of PreSearch
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SubmitSearchImplCopyWith<_$SubmitSearchImpl> get copyWith =>
+  _$$PreSearchImplCopyWith<_$PreSearchImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -378,8 +360,8 @@ mixin _$SearchState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)
+    required TResult Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)
         loaded,
     required TResult Function(String message) error,
   }) =>
@@ -388,8 +370,8 @@ mixin _$SearchState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+    TResult? Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
     TResult? Function(String message)? error,
   }) =>
@@ -398,8 +380,8 @@ mixin _$SearchState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+    TResult Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -496,8 +478,8 @@ class _$SearchInitialImpl implements SearchInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)
+    required TResult Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -509,8 +491,8 @@ class _$SearchInitialImpl implements SearchInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+    TResult? Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -522,8 +504,8 @@ class _$SearchInitialImpl implements SearchInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+    TResult Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -619,8 +601,8 @@ class _$SearchLoadingImpl implements SearchLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)
+    required TResult Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -632,8 +614,8 @@ class _$SearchLoadingImpl implements SearchLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+    TResult? Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -645,8 +627,8 @@ class _$SearchLoadingImpl implements SearchLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+    TResult Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -705,7 +687,11 @@ abstract class _$$SearchLoadedImplCopyWith<$Res> {
           _$SearchLoadedImpl value, $Res Function(_$SearchLoadedImpl) then) =
       __$$SearchLoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({SearchResultEntity result, bool hasReachedMax, int currentPage});
+  $Res call(
+      {SearchResultEntity result,
+      bool hasReachedMax,
+      int currentPage,
+      List<PreSearchItemEntity>? preSearchItems});
 }
 
 /// @nodoc
@@ -724,6 +710,7 @@ class __$$SearchLoadedImplCopyWithImpl<$Res>
     Object? result = null,
     Object? hasReachedMax = null,
     Object? currentPage = null,
+    Object? preSearchItems = freezed,
   }) {
     return _then(_$SearchLoadedImpl(
       result: null == result
@@ -738,6 +725,10 @@ class __$$SearchLoadedImplCopyWithImpl<$Res>
           ? _value.currentPage
           : currentPage // ignore: cast_nullable_to_non_nullable
               as int,
+      preSearchItems: freezed == preSearchItems
+          ? _value._preSearchItems
+          : preSearchItems // ignore: cast_nullable_to_non_nullable
+              as List<PreSearchItemEntity>?,
     ));
   }
 }
@@ -748,7 +739,9 @@ class _$SearchLoadedImpl implements SearchLoaded {
   const _$SearchLoadedImpl(
       {required this.result,
       required this.hasReachedMax,
-      this.currentPage = 1});
+      this.currentPage = 1,
+      final List<PreSearchItemEntity>? preSearchItems})
+      : _preSearchItems = preSearchItems;
 
   @override
   final SearchResultEntity result;
@@ -757,10 +750,19 @@ class _$SearchLoadedImpl implements SearchLoaded {
   @override
   @JsonKey()
   final int currentPage;
+  final List<PreSearchItemEntity>? _preSearchItems;
+  @override
+  List<PreSearchItemEntity>? get preSearchItems {
+    final value = _preSearchItems;
+    if (value == null) return null;
+    if (_preSearchItems is EqualUnmodifiableListView) return _preSearchItems;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'SearchState.loaded(result: $result, hasReachedMax: $hasReachedMax, currentPage: $currentPage)';
+    return 'SearchState.loaded(result: $result, hasReachedMax: $hasReachedMax, currentPage: $currentPage, preSearchItems: $preSearchItems)';
   }
 
   @override
@@ -772,12 +774,14 @@ class _$SearchLoadedImpl implements SearchLoaded {
             (identical(other.hasReachedMax, hasReachedMax) ||
                 other.hasReachedMax == hasReachedMax) &&
             (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage));
+                other.currentPage == currentPage) &&
+            const DeepCollectionEquality()
+                .equals(other._preSearchItems, _preSearchItems));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, result, hasReachedMax, currentPage);
+  int get hashCode => Object.hash(runtimeType, result, hasReachedMax,
+      currentPage, const DeepCollectionEquality().hash(_preSearchItems));
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -792,12 +796,12 @@ class _$SearchLoadedImpl implements SearchLoaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)
+    required TResult Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)
         loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(result, hasReachedMax, currentPage);
+    return loaded(result, hasReachedMax, currentPage, preSearchItems);
   }
 
   @override
@@ -805,12 +809,12 @@ class _$SearchLoadedImpl implements SearchLoaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+    TResult? Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(result, hasReachedMax, currentPage);
+    return loaded?.call(result, hasReachedMax, currentPage, preSearchItems);
   }
 
   @override
@@ -818,14 +822,14 @@ class _$SearchLoadedImpl implements SearchLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+    TResult Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(result, hasReachedMax, currentPage);
+      return loaded(result, hasReachedMax, currentPage, preSearchItems);
     }
     return orElse();
   }
@@ -872,11 +876,13 @@ abstract class SearchLoaded implements SearchState {
   const factory SearchLoaded(
       {required final SearchResultEntity result,
       required final bool hasReachedMax,
-      final int currentPage}) = _$SearchLoadedImpl;
+      final int currentPage,
+      final List<PreSearchItemEntity>? preSearchItems}) = _$SearchLoadedImpl;
 
   SearchResultEntity get result;
   bool get hasReachedMax;
   int get currentPage;
+  List<PreSearchItemEntity>? get preSearchItems;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -955,8 +961,8 @@ class _$SearchErrorImpl implements SearchError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)
+    required TResult Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -968,8 +974,8 @@ class _$SearchErrorImpl implements SearchError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+    TResult? Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -981,8 +987,8 @@ class _$SearchErrorImpl implements SearchError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(
-            SearchResultEntity result, bool hasReachedMax, int currentPage)?
+    TResult Function(SearchResultEntity result, bool hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),

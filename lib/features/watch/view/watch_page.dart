@@ -122,7 +122,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
                 children: state.tabViewItems!.map((chaps) {
                   return chaps == null
                       ? const Center(child: CircularProgressIndicator())
-                      : _buildChaptersGrid(context, chaps);
+                      : _buildChaptersGrid(context, chaps, state);
                 }).toList(),
               ),
             ),
@@ -130,7 +130,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
             Container(
               padding: const EdgeInsets.symmetric(vertical: 12),
               height: 210,
-              child: _buildChaptersGrid(context, state.chaps),
+              child: _buildChaptersGrid(context, state.chaps, state),
             ),
         ],
       ),
@@ -177,7 +177,11 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     );
   }
 
-  Widget _buildChaptersGrid(BuildContext context, List<ChapDataEntity> chaps) {
+  Widget _buildChaptersGrid(
+    BuildContext context,
+    List<ChapDataEntity> chaps,
+    WatchLoaded state,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: GridView.builder(
@@ -189,27 +193,37 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
           crossAxisSpacing: 4,
           childAspectRatio: 62 / 60,
         ),
-        itemBuilder: (context, index) =>
-            _buildChapterItem(context, chaps[index]),
+        itemBuilder: (context, index) => _buildChapterItem(
+          context,
+          chaps[index],
+          state,
+        ),
       ),
     );
   }
 
-  Widget _buildChapterItem(BuildContext context, ChapDataEntity chap) {
+  Widget _buildChapterItem(
+    BuildContext context,
+    ChapDataEntity chap,
+    WatchLoaded state,
+  ) {
     return BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
       builder: (context, videoPlayerState) {
         final isPlaying = videoPlayerState is VideoPlayerLoaded &&
             videoPlayerState.currentChap.id == chap.id;
         return GestureDetector(
-          onTap: () => _onChapTap(isPlaying, chap),
+          onTap: () => _onChapTap(isPlaying, chap, state),
           child: _buildChapCard(context, isPlaying, chap),
         );
       },
     );
   }
 
-  void _onChapTap(bool isPlaying, ChapDataEntity chap) {
+  void _onChapTap(bool isPlaying, ChapDataEntity chap, WatchLoaded state) {
     if (!isPlaying) {
+      final currentChaps = state.tabViewItems?[_currentTabIndex];
+
+      videoPlayerCubit.updateChapterList(currentChaps);
       videoPlayerCubit.loadChapter(chap);
     }
   }

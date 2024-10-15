@@ -58,6 +58,7 @@ import 'package:anivsub/domain/usecases/get_episode_skip_usecase.dart' as _i611;
 import 'package:anivsub/domain/usecases/get_home_data_usecase.dart' as _i68;
 import 'package:anivsub/domain/usecases/get_list_episode_usecase.dart' as _i72;
 import 'package:anivsub/domain/usecases/get_play_data_usecase.dart' as _i539;
+import 'package:anivsub/domain/usecases/get_pre_search_usecase.dart' as _i32;
 import 'package:anivsub/domain/usecases/home_usecases.dart' as _i179;
 import 'package:anivsub/domain/usecases/profile_usecase.dart' as _i107;
 import 'package:anivsub/domain/usecases/search_anime_usecase.dart' as _i125;
@@ -140,16 +141,18 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i407.GetEncryptedHlsUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i72.GetListEpisodeUseCase>(
         () => _i72.GetListEpisodeUseCase(gh<_i772.AnimeRepository>()));
+    gh.factory<_i1040.GetAnimeDetailUseCase>(
+        () => _i1040.GetAnimeDetailUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i68.GetHomeDataUseCase>(
         () => _i68.GetHomeDataUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i539.GetPlayDataUseCase>(
         () => _i539.GetPlayDataUseCase(gh<_i772.AnimeRepository>()));
+    gh.factory<_i32.GetPreSearchUseCase>(
+        () => _i32.GetPreSearchUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i611.GetEpisodeSkipUsecase>(
         () => _i611.GetEpisodeSkipUsecase(gh<_i772.AnimeRepository>()));
     gh.factory<_i743.DecryptHlsUseCase>(
         () => _i743.DecryptHlsUseCase(gh<_i772.AnimeRepository>()));
-    gh.factory<_i1040.GetAnimeDetailUseCase>(
-        () => _i1040.GetAnimeDetailUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
           gh<_i772.GetPlayDataUseCase>(),
           gh<_i772.AppSettingsUseCases>(),
@@ -165,12 +168,14 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i132.ProfileCubit>(
         () => _i132.ProfileCubit(gh<_i772.ProfileUseCases>()));
-    gh.factory<_i785.SearchBloc>(
-        () => _i785.SearchBloc(gh<_i772.SearchAnimeUseCase>()));
     gh.factory<_i187.HomeBloc>(
         () => _i187.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
     gh.factory<_i30.LoginCubit>(
         () => _i30.LoginCubit(gh<_i772.AuthUseCases>()));
+    gh.factory<_i785.SearchBloc>(() => _i785.SearchBloc(
+          gh<_i772.SearchAnimeUseCase>(),
+          gh<_i772.GetPreSearchUseCase>(),
+        ));
     return this;
   }
 }

@@ -8,4 +8,5 @@ abstract class AnimeRemoteDataSource {
   Future<GetEncryptedHlsResponseDTO> getEncryptedHls(
     GetEncryptedHlsRequestDTO body,
   );
+  Future<String> preSearch({required String keyword, int ajaxSearch});
 }

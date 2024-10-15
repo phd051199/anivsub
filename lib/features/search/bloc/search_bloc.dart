@@ -12,13 +12,16 @@ part 'search_state.dart';
 class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
   SearchBloc(
     this._searchAnimeUseCase,
+    this._getPreSearchUseCase,
   ) : super(const SearchInitial()) {
     on<LoadSearch>(_onLoadSearch);
     on<ErrorSearch>(_onErrorSearch);
-    on<SubmitSearch>(_onSubmitSearch);
+    on<PreSearch>(_onPreSearch);
   }
 
   final SearchAnimeUseCase _searchAnimeUseCase;
+  final GetPreSearchUseCase _getPreSearchUseCase;
+
   static const _pageSize = 30;
 
   Future<void> _onLoadSearch(
@@ -51,13 +54,26 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
           ),
         );
       }
-    } catch (e) {
+    } catch (_) {
       add(const ErrorSearch());
     }
   }
 
-  void _onSubmitSearch(SubmitSearch event, Emitter<SearchState> emit) {
-    add(LoadSearch(keyword: event.keyword, page: 1));
+  void _onPreSearch(PreSearch event, Emitter<SearchState> emit) async {
+    final currentState = state;
+    if (currentState is! SearchLoaded) return;
+
+    final output = await _getPreSearchUseCase.send(
+      GetPreSearchUseCaseInput(
+        keyword: event.keyword,
+      ),
+    );
+
+    emit(
+      currentState.copyWith(
+        preSearchItems: output.result,
+      ),
+    );
   }
 
   void _onErrorSearch(ErrorSearch event, Emitter<SearchState> emit) {

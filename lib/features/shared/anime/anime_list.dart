@@ -46,10 +46,17 @@ class AnimeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.pushNamed(
-        ScreenNames.watch,
-        pathParameters: {'path': item.path},
-      ),
+      onTap: () {
+        if (context.focusScope.hasFocus) {
+          context.focusScope.unfocus();
+          return;
+        }
+
+        context.pushNamed(
+          ScreenNames.watch,
+          pathParameters: {'path': item.path},
+        );
+      },
       child: SizedBox(
         width: 120,
         child: Column(

@@ -31,4 +31,11 @@ abstract class ScrapingClient {
     @Field('link') String link,
     @Field('backuplinks') String backuplinks,
   );
+
+  @POST('/ajax/suggest')
+  @FormUrlEncoded()
+  Future<String> preSearch(
+    @Field('keysearch') String keyword,
+    @Field('ajaxSearch') int ajaxSearch,
+  );
 }

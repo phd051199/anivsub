@@ -72,4 +72,12 @@ class AnimeRepositoryImpl implements AnimeRepository {
     );
     return SearchResultParser.parse(html);
   }
+
+  @override
+  Future<List<PreSearchItemEntity>> preSearch({required String keyword}) async {
+    final html = await _animeRemoteDataSource.preSearch(
+      keyword: keyword,
+    );
+    return PreSearchParser.parse(html);
+  }
 }

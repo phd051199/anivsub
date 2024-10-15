@@ -100,6 +100,7 @@ class _BetterPlayerCustomMaterialControlsState
         absorbing: controlsNotVisible,
         child: Stack(
           fit: StackFit.expand,
+          clipBehavior: Clip.hardEdge,
           children: [
             if (_wasLoading)
               Center(child: _buildLoadingWidget())
@@ -291,7 +292,7 @@ class _BetterPlayerCustomMaterialControlsState
   Widget _buildMoreButton() {
     return BetterPlayerMaterialClickableWidget(
       onTap: () {
-        onShowMoreClicked();
+        // onShowMoreClicked();
       },
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -416,15 +417,15 @@ class _BetterPlayerCustomMaterialControlsState
       child: _betterPlayerController?.isLiveStream() == true
           ? const SizedBox()
           : Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (_controlsConfiguration.enableSkips)
-                  Expanded(child: _buildSkipButton())
+                  _buildSkipButton()
                 else
                   const SizedBox(),
-                Expanded(child: _buildReplayButton(_controller!)),
+                _buildReplayButton(_controller!),
                 if (_controlsConfiguration.enableSkips)
-                  Expanded(child: _buildForwardButton())
+                  _buildForwardButton()
                 else
                   const SizedBox(),
               ],
@@ -436,25 +437,11 @@ class _BetterPlayerCustomMaterialControlsState
     Widget? icon,
     required void Function() onClicked,
   }) {
-    return Container(
-      constraints: const BoxConstraints(maxHeight: 80.0, maxWidth: 80.0),
-      child: BetterPlayerMaterialClickableWidget(
-        onTap: onClicked,
-        child: Align(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(48),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Stack(
-                children: [icon!],
-              ),
-            ),
-          ),
-        ),
-      ),
+    return MaterialButton(
+      onPressed: onClicked,
+      padding: const EdgeInsets.all(8),
+      shape: const CircleBorder(),
+      child: icon,
     );
   }
 
@@ -486,14 +473,14 @@ class _BetterPlayerCustomMaterialControlsState
       icon: isFinished
           ? Icon(
               Icons.replay,
-              size: 56,
+              size: 62,
               color: _controlsConfiguration.iconsColor,
             )
           : Icon(
               controller.value.isPlaying
                   ? _controlsConfiguration.pauseIcon
                   : _controlsConfiguration.playIcon,
-              size: 56,
+              size: 62,
               color: _controlsConfiguration.iconsColor,
             ),
       onClicked: () {
