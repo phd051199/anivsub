@@ -24,7 +24,7 @@ class GetListEpisodeUseCase extends BaseFutureUseCase<
 class GetListEpisodeUseCaseInput extends BaseInput
     with _$GetListEpisodeUseCaseInput {
   const factory GetListEpisodeUseCaseInput({
-    required String animeName,
+    required List<String> animeName,
   }) = _GetListEpisodeUseCaseInput;
 }
 

@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$GetListEpisodeUseCaseInput {
-  String get animeName => throw _privateConstructorUsedError;
+  List<String> get animeName => throw _privateConstructorUsedError;
 
   /// Create a copy of GetListEpisodeUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +32,7 @@ abstract class $GetListEpisodeUseCaseInputCopyWith<$Res> {
       _$GetListEpisodeUseCaseInputCopyWithImpl<$Res,
           GetListEpisodeUseCaseInput>;
   @useResult
-  $Res call({String animeName});
+  $Res call({List<String> animeName});
 }
 
 /// @nodoc
@@ -57,7 +57,7 @@ class _$GetListEpisodeUseCaseInputCopyWithImpl<$Res,
       animeName: null == animeName
           ? _value.animeName
           : animeName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as List<String>,
     ) as $Val);
   }
 }
@@ -71,7 +71,7 @@ abstract class _$$GetListEpisodeUseCaseInputImplCopyWith<$Res>
       __$$GetListEpisodeUseCaseInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String animeName});
+  $Res call({List<String> animeName});
 }
 
 /// @nodoc
@@ -93,9 +93,9 @@ class __$$GetListEpisodeUseCaseInputImplCopyWithImpl<$Res>
   }) {
     return _then(_$GetListEpisodeUseCaseInputImpl(
       animeName: null == animeName
-          ? _value.animeName
+          ? _value._animeName
           : animeName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as List<String>,
     ));
   }
 }
@@ -103,10 +103,17 @@ class __$$GetListEpisodeUseCaseInputImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GetListEpisodeUseCaseInputImpl implements _GetListEpisodeUseCaseInput {
-  const _$GetListEpisodeUseCaseInputImpl({required this.animeName});
+  const _$GetListEpisodeUseCaseInputImpl(
+      {required final List<String> animeName})
+      : _animeName = animeName;
 
+  final List<String> _animeName;
   @override
-  final String animeName;
+  List<String> get animeName {
+    if (_animeName is EqualUnmodifiableListView) return _animeName;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_animeName);
+  }
 
   @override
   String toString() {
@@ -118,12 +125,13 @@ class _$GetListEpisodeUseCaseInputImpl implements _GetListEpisodeUseCaseInput {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetListEpisodeUseCaseInputImpl &&
-            (identical(other.animeName, animeName) ||
-                other.animeName == animeName));
+            const DeepCollectionEquality()
+                .equals(other._animeName, _animeName));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, animeName);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_animeName));
 
   /// Create a copy of GetListEpisodeUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -137,11 +145,12 @@ class _$GetListEpisodeUseCaseInputImpl implements _GetListEpisodeUseCaseInput {
 
 abstract class _GetListEpisodeUseCaseInput
     implements GetListEpisodeUseCaseInput {
-  const factory _GetListEpisodeUseCaseInput({required final String animeName}) =
+  const factory _GetListEpisodeUseCaseInput(
+          {required final List<String> animeName}) =
       _$GetListEpisodeUseCaseInputImpl;
 
   @override
-  String get animeName;
+  List<String> get animeName;
 
   /// Create a copy of GetListEpisodeUseCaseInput
   /// with the given fields replaced by the non-null parameter values.

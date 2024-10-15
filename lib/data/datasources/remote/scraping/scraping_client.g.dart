@@ -67,7 +67,7 @@ class _ScrapingClient implements ScrapingClient {
     )
         .compose(
           _dio.options,
-          '/phim/${id}',
+          '/${id}',
           queryParameters: queryParameters,
           data: _data,
         )

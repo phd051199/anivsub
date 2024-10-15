@@ -1,4 +1,4 @@
-import 'package:anivsub/data/dto/anime/anime_detail_dto.dart';
+import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 
 class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
@@ -38,16 +38,16 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
   final String duration;
   final int yearOf;
   final int views;
-  final List<Map<String, String>> season;
-  final List<Map<String, String>> genre;
+  final List<Anchor> season;
+  final List<Anchor> genre;
   final String quality;
   final String status;
-  final List<Map<String, String>> authors;
-  final List<Map<String, String>> countries;
+  final List<Anchor> authors;
+  final List<Anchor> countries;
   final int follows;
   final String language;
   final String studio;
-  final Map<String, String>? seasonOf;
+  final Anchor? seasonOf;
   final String? trailer;
   final List<AnimeDataEntity> toPut;
 
@@ -63,16 +63,16 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
     String? duration,
     int? yearOf,
     int? views,
-    List<Map<String, String>>? season,
-    List<Map<String, String>>? genre,
+    List<Anchor>? season,
+    List<Anchor>? genre,
     String? quality,
     String? status,
-    List<Map<String, String>>? authors,
-    List<Map<String, String>>? countries,
+    List<Anchor>? authors,
+    List<Anchor>? countries,
     int? follows,
     String? language,
     String? studio,
-    Map<String, String>? seasonOf,
+    Anchor? seasonOf,
     String? trailer,
     List<AnimeDataEntity>? toPut,
   }) {

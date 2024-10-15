@@ -19,6 +19,7 @@ export 'datasources/remote/open_d/open_d_remote_data_source_impl.dart';
 export 'datasources/remote/scraping/anime_remote_data_source.dart';
 export 'datasources/remote/scraping/anime_remote_data_source_impl.dart';
 export 'datasources/remote/scraping/scraping_client.dart';
+export 'dto/anime/anchor_dto.dart';
 export 'dto/anime/anime_data_response_dto.dart';
 export 'dto/anime/anime_detail_dto.dart';
 export 'dto/anime/chap_data_dto.dart';

@@ -2,8 +2,8 @@ const kSPUserToken = 'kUserToken';
 const kSPThemeMode = 'kThemeMode';
 
 final decryptHlsUrl = 'https://decrypt-hls.dph.workers.dev';
-const skApiUrl1 = 'https://opend-9animetv.animevsub.eu.org';
-const skApiUrl2 = 'https://sk-hianime.animevsub.eu.org';
+const skApiUrl1 = 'https://sk-9animetv.dph.workers.dev';
+const skApiUrl2 = 'https://sk-hianime.dph.workers.dev';
 final hostCurl = String.fromCharCodes([
   104,
   116,

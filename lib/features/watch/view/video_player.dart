@@ -1,4 +1,5 @@
 import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/custom/better_player_material_controls.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +12,12 @@ class EnhancedVideoPlayer extends StatefulWidget {
   const EnhancedVideoPlayer({
     super.key,
     required this.chaps,
-    required this.path,
     required this.skipIntro,
+    required this.detail,
   });
   final List<ChapDataEntity> chaps;
-  final String path;
   final bool skipIntro;
+  final AnimeDetailEntity detail;
 
   @override
   State<EnhancedVideoPlayer> createState() => _EnhancedVideoPlayerState();
@@ -33,8 +34,8 @@ class _EnhancedVideoPlayerState
     _initializeVideoPlayer();
 
     cubit.initialize(
-      path: widget.path,
       chaps: widget.chaps,
+      detail: widget.detail,
       controller: _betterPlayerController,
       skipIntro: _skipIntro,
     );
@@ -52,7 +53,6 @@ class _EnhancedVideoPlayerState
   void _initializeVideoPlayer() {
     _betterPlayerController = BetterPlayerController(
       BetterPlayerConfiguration(
-        autoPlay: true,
         fit: BoxFit.contain,
         autoDetectFullscreenAspectRatio: true,
         autoDetectFullscreenDeviceOrientation: true,
@@ -61,7 +61,7 @@ class _EnhancedVideoPlayerState
           customControlsBuilder: (controller, onControlsVisibilityChanged) {
             return BetterPlayerCustomMaterialControls(
               onControlsVisibilityChanged: onControlsVisibilityChanged,
-              controlsConfiguration: const BetterPlayerControlsConfiguration(
+              controlsConfiguration: BetterPlayerControlsConfiguration(
                 playIcon: Icons.play_arrow,
                 enableMute: false,
                 enablePlayPause: false,
@@ -69,8 +69,8 @@ class _EnhancedVideoPlayerState
                 enableSubtitles: false,
                 enablePlaybackSpeed: false,
                 enableQualities: false,
-                progressBarPlayedColor: Colors.red,
-                progressBarHandleColor: Colors.red,
+                progressBarPlayedColor: context.theme.colorScheme.primary,
+                progressBarHandleColor: context.theme.colorScheme.primary,
               ),
             );
           },

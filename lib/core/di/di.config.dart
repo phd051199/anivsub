@@ -50,6 +50,8 @@ import 'package:anivsub/domain/repositories/auth_repository.dart' as _i870;
 import 'package:anivsub/domain/usecases/app_settings_usecase.dart' as _i268;
 import 'package:anivsub/domain/usecases/auth_usecase.dart' as _i586;
 import 'package:anivsub/domain/usecases/decrypt_hls_usecase.dart' as _i743;
+import 'package:anivsub/domain/usecases/get_anime_detail_usecase.dart'
+    as _i1040;
 import 'package:anivsub/domain/usecases/get_encrypted_hls_usecase.dart'
     as _i407;
 import 'package:anivsub/domain/usecases/get_episode_skip_usecase.dart' as _i611;
@@ -146,6 +148,13 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i611.GetEpisodeSkipUsecase(gh<_i772.AnimeRepository>()));
     gh.factory<_i743.DecryptHlsUseCase>(
         () => _i743.DecryptHlsUseCase(gh<_i772.AnimeRepository>()));
+    gh.factory<_i1040.GetAnimeDetailUseCase>(
+        () => _i1040.GetAnimeDetailUseCase(gh<_i772.AnimeRepository>()));
+    gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
+          gh<_i772.GetPlayDataUseCase>(),
+          gh<_i772.AppSettingsUseCases>(),
+          gh<_i772.GetAnimeDetailUseCase>(),
+        ));
     gh.singleton<_i910.AuthNotifier>(
         () => _i910.AuthNotifier(authUseCases: gh<_i772.AuthUseCases>()));
     gh.singleton<_i597.VideoPlayerCubit>(() => _i597.VideoPlayerCubit(
@@ -162,10 +171,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i187.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
     gh.factory<_i30.LoginCubit>(
         () => _i30.LoginCubit(gh<_i772.AuthUseCases>()));
-    gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
-          gh<_i772.GetPlayDataUseCase>(),
-          gh<_i772.AppSettingsUseCases>(),
-        ));
     return this;
   }
 }

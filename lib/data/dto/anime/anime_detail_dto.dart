@@ -48,16 +48,16 @@ class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> {
   final String duration;
   final int yearOf;
   final int views;
-  final List<Map<String, String>> season;
-  final List<Map<String, String>> genre;
+  final List<Anchor> season;
+  final List<Anchor> genre;
   final String quality;
   final String status;
-  final List<Map<String, String>> authors;
-  final List<Map<String, String>> countries;
+  final List<Anchor> authors;
+  final List<Anchor> countries;
   final int follows;
   final String language;
   final String studio;
-  final Map<String, String>? seasonOf;
+  final Anchor? seasonOf;
   final String? trailer;
   final List<AnimeDataResponseDTO> toPut;
 

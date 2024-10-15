@@ -7,7 +7,7 @@ class OpenDRemoteDataSourceImpl implements OpenDRemoteDataSource {
   final OpenDApiClient client;
 
   @override
-  Future<ListEpisodeResponseDTO> listEpisodes(String name) {
+  Future<ListEpisodeResponseDTO> listEpisodes(List<String> name) {
     return client.listEpisodes(name);
   }
 

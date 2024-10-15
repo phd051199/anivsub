@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:anivsub/core/di/shared_export.dart';
+import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,166 +10,163 @@ import 'package:river_player/src/video_player/video_player.dart';
 import 'package:river_player/src/video_player/video_player_platform_interface.dart';
 
 class BetterPlayerMaterialVideoProgressBar extends StatefulWidget {
-  BetterPlayerMaterialVideoProgressBar(
-    this.controller,
-    this.betterPlayerController, {
-    BetterPlayerProgressColors? colors,
+  const BetterPlayerMaterialVideoProgressBar({
+    super.key,
+    required this.controller,
+    required this.betterPlayerController,
+    this.colors,
     this.onDragEnd,
     this.onDragStart,
     this.onDragUpdate,
     this.onTapDown,
-    super.key,
-  }) : colors = colors ?? BetterPlayerProgressColors();
+  });
 
   final VideoPlayerController? controller;
   final BetterPlayerController? betterPlayerController;
-  final BetterPlayerProgressColors colors;
-  final Function()? onDragStart;
-  final Function()? onDragEnd;
-  final Function()? onDragUpdate;
-  final Function()? onTapDown;
+  final BetterPlayerProgressColors? colors;
+  final VoidCallback? onDragStart;
+  final VoidCallback? onDragEnd;
+  final VoidCallback? onDragUpdate;
+  final VoidCallback? onTapDown;
 
   @override
-  State<StatefulWidget> createState() {
-    return _VideoProgressBarState();
-  }
+  State<BetterPlayerMaterialVideoProgressBar> createState() =>
+      _VideoProgressBarState();
 }
 
 class _VideoProgressBarState
     extends State<BetterPlayerMaterialVideoProgressBar> {
-  _VideoProgressBarState() {
-    listener = () {
-      if (mounted) setState(() {});
-    };
-  }
-
-  late VoidCallback listener;
+  late VoidCallback _listener;
   bool _controllerWasPlaying = false;
-
-  VideoPlayerController? get controller => widget.controller;
-
-  BetterPlayerController? get betterPlayerController =>
-      widget.betterPlayerController;
-
-  bool shouldPlayAfterDragEnd = false;
-  Duration? lastSeek;
+  bool _shouldPlayAfterDragEnd = false;
+  Duration? _lastSeek;
   Timer? _updateBlockTimer;
+
+  VideoPlayerController? get _controller => widget.controller;
+  BetterPlayerController? get _betterPlayerController =>
+      widget.betterPlayerController;
 
   @override
   void initState() {
     super.initState();
-    controller!.addListener(listener);
+    _listener = () {
+      if (mounted) setState(() {});
+    };
+    _controller?.addListener(_listener);
   }
 
   @override
   void deactivate() {
-    controller!.removeListener(listener);
+    _controller?.removeListener(_listener);
     _cancelUpdateBlockTimer();
     super.deactivate();
   }
 
   @override
   Widget build(BuildContext context) {
-    final bool enableProgressBarDrag = betterPlayerController!
-        .betterPlayerConfiguration.controlsConfiguration.enableProgressBarDrag;
-
     return GestureDetector(
-      onHorizontalDragStart: (DragStartDetails details) {
-        if (!controller!.value.initialized || !enableProgressBarDrag) {
-          return;
-        }
-
-        _controllerWasPlaying = controller!.value.isPlaying;
-        if (_controllerWasPlaying) {
-          controller!.pause();
-        }
-
-        if (widget.onDragStart != null) {
-          widget.onDragStart!();
-        }
-      },
-      onHorizontalDragUpdate: (DragUpdateDetails details) {
-        if (!controller!.value.initialized || !enableProgressBarDrag) {
-          return;
-        }
-
-        seekToRelativePosition(details.globalPosition);
-
-        if (widget.onDragUpdate != null) {
-          widget.onDragUpdate!();
-        }
-      },
-      onHorizontalDragEnd: (DragEndDetails details) {
-        if (!enableProgressBarDrag) {
-          return;
-        }
-
-        if (_controllerWasPlaying) {
-          betterPlayerController?.play();
-          shouldPlayAfterDragEnd = true;
-        }
-        _setupUpdateBlockTimer();
-
-        if (widget.onDragEnd != null) {
-          widget.onDragEnd!();
-        }
-      },
-      onTapDown: (TapDownDetails details) {
-        if (!controller!.value.initialized || !enableProgressBarDrag) {
-          return;
-        }
-        seekToRelativePosition(details.globalPosition);
-        _setupUpdateBlockTimer();
-        if (widget.onTapDown != null) {
-          widget.onTapDown!();
-        }
-      },
+      onHorizontalDragStart: _onDragStart,
+      onHorizontalDragUpdate: _onDragUpdate,
+      onHorizontalDragEnd: _onDragEnd,
+      onTapDown: _onTapDown,
       child: BlocProvider<VideoPlayerCubit>.value(
         value: videoPlayerCubit,
         child: BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
-          builder: (context, state) {
-            final currentState = state;
-            if (currentState is! VideoPlayerLoaded) {
-              return const SizedBox.shrink();
-            }
-            final duration = betterPlayerController
-                    ?.videoPlayerController?.value.duration?.inSeconds ??
-                1;
-            final introStart =
-                (currentState.episodeSkip?.intro.start ?? 0) / duration;
-            final introEnd =
-                (currentState.episodeSkip?.intro.end ?? duration) / duration;
-            final outroStart =
-                (currentState.episodeSkip?.outro.start ?? 0) / duration;
-            final outroEnd =
-                (currentState.episodeSkip?.outro.end ?? duration) / duration;
-
-            return Center(
-              child: Container(
-                height: MediaQuery.of(context).size.height / 2,
-                width: MediaQuery.of(context).size.width,
-                color: Colors.transparent,
-                child: CustomPaint(
-                  painter: _ProgressBarPainter(
-                    _getValue(),
-                    widget.colors,
-                    IntroOutroSegment(
-                      intro: IntroOutro(introStart, introEnd),
-                      outro: IntroOutro(outroStart, outroEnd),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
+          builder: _buildProgressBar,
         ),
       ),
     );
   }
 
+  Widget _buildProgressBar(BuildContext context, VideoPlayerState state) {
+    if (state is! VideoPlayerLoaded) {
+      return const SizedBox.shrink();
+    }
+
+    final duration = _betterPlayerController
+            ?.videoPlayerController?.value.duration?.inSeconds ??
+        1;
+    final introOutroSegment =
+        _calculateIntroOutroSegment(state.episodeSkip, duration);
+
+    return Center(
+      child: Container(
+        height: MediaQuery.of(context).size.height / 2,
+        width: MediaQuery.of(context).size.width,
+        color: Colors.transparent,
+        child: CustomPaint(
+          painter: _ProgressBarPainter(
+            _getValue(),
+            widget.colors ?? BetterPlayerProgressColors(),
+            introOutroSegment,
+          ),
+        ),
+      ),
+    );
+  }
+
+  IntroOutroSegment _calculateIntroOutroSegment(
+    EpisodeSkipResponseEntity? episodeSkip,
+    int duration,
+  ) {
+    return IntroOutroSegment(
+      intro: IntroOutro(
+        (episodeSkip?.intro.start ?? 0) / duration,
+        (episodeSkip?.intro.end ?? 0) / duration,
+      ),
+      outro: IntroOutro(
+        (episodeSkip?.outro.start ?? 0) / duration,
+        (episodeSkip?.outro.end ?? 0) / duration,
+      ),
+    );
+  }
+
+  void _onDragStart(DragStartDetails details) {
+    if (!_isProgressBarDragEnabled()) return;
+
+    _controllerWasPlaying = _controller!.value.isPlaying;
+    if (_controllerWasPlaying) {
+      _controller!.pause();
+    }
+
+    widget.onDragStart?.call();
+  }
+
+  void _onDragUpdate(DragUpdateDetails details) {
+    if (!_isProgressBarDragEnabled()) return;
+
+    _seekToRelativePosition(details.globalPosition);
+    widget.onDragUpdate?.call();
+  }
+
+  void _onDragEnd(DragEndDetails details) {
+    if (!_isProgressBarDragEnabled()) return;
+
+    if (_controllerWasPlaying) {
+      _betterPlayerController?.play();
+      _shouldPlayAfterDragEnd = true;
+    }
+    _setupUpdateBlockTimer();
+    widget.onDragEnd?.call();
+  }
+
+  void _onTapDown(TapDownDetails details) {
+    if (!_isProgressBarDragEnabled()) return;
+
+    _seekToRelativePosition(details.globalPosition);
+    _setupUpdateBlockTimer();
+    widget.onTapDown?.call();
+  }
+
+  bool _isProgressBarDragEnabled() {
+    return _controller!.value.initialized &&
+        _betterPlayerController!.betterPlayerConfiguration.controlsConfiguration
+            .enableProgressBarDrag;
+  }
+
   void _setupUpdateBlockTimer() {
     _updateBlockTimer = Timer(const Duration(milliseconds: 1000), () {
-      lastSeek = null;
+      _lastSeek = null;
       _cancelUpdateBlockTimer();
     });
   }
@@ -179,164 +177,191 @@ class _VideoProgressBarState
   }
 
   VideoPlayerValue _getValue() {
-    if (lastSeek != null) {
-      return controller!.value.copyWith(position: lastSeek);
-    } else {
-      return controller!.value;
+    return _lastSeek != null
+        ? _controller!.value.copyWith(position: _lastSeek)
+        : _controller!.value;
+  }
+
+  void _seekToRelativePosition(Offset globalPosition) async {
+    final box = context.findRenderObject() as RenderBox;
+    final Offset tapPos = box.globalToLocal(globalPosition);
+    final double relative = tapPos.dx / box.size.width;
+    if (relative <= 0) return;
+
+    final Duration position = _controller!.value.duration! * relative;
+    _lastSeek = position;
+    await _betterPlayerController!.seekTo(position);
+    _onFinishedLastSeek();
+
+    if (relative >= 1) {
+      _lastSeek = _controller!.value.duration;
+      await _betterPlayerController!.seekTo(_controller!.value.duration!);
+      _onFinishedLastSeek();
     }
   }
 
-  void seekToRelativePosition(Offset globalPosition) async {
-    final RenderObject? renderObject = context.findRenderObject();
-    if (renderObject != null) {
-      final box = renderObject as RenderBox;
-      final Offset tapPos = box.globalToLocal(globalPosition);
-      final double relative = tapPos.dx / box.size.width;
-      if (relative > 0) {
-        final Duration position = controller!.value.duration! * relative;
-        lastSeek = position;
-        await betterPlayerController!.seekTo(position);
-        onFinishedLastSeek();
-        if (relative >= 1) {
-          lastSeek = controller!.value.duration;
-          await betterPlayerController!.seekTo(controller!.value.duration!);
-          onFinishedLastSeek();
-        }
-      }
-    }
-  }
-
-  void onFinishedLastSeek() {
-    if (shouldPlayAfterDragEnd) {
-      shouldPlayAfterDragEnd = false;
-      betterPlayerController?.play();
+  void _onFinishedLastSeek() {
+    if (_shouldPlayAfterDragEnd) {
+      _shouldPlayAfterDragEnd = false;
+      _betterPlayerController?.play();
     }
   }
 }
 
 class IntroOutro {
-  IntroOutro(this.start, this.end);
+  const IntroOutro(this.start, this.end);
   final double start;
   final double end;
 }
 
 class IntroOutroSegment {
-  IntroOutroSegment({this.intro, this.outro});
-  final IntroOutro? intro;
-  final IntroOutro? outro;
+  const IntroOutroSegment({required this.intro, required this.outro});
+  final IntroOutro intro;
+  final IntroOutro outro;
 }
 
 class _ProgressBarPainter extends CustomPainter {
   _ProgressBarPainter(this.value, this.colors, this.introOutroSegment);
 
-  VideoPlayerValue value;
-  BetterPlayerProgressColors colors;
-  IntroOutroSegment? introOutroSegment;
+  final VideoPlayerValue value;
+  final BetterPlayerProgressColors colors;
+  final IntroOutroSegment introOutroSegment;
 
   @override
-  bool shouldRepaint(CustomPainter painter) {
-    return true;
-  }
+  bool shouldRepaint(CustomPainter oldPainter) => true;
 
   @override
   void paint(Canvas canvas, Size size) {
     const height = 3.0;
+    final baseOffset = Offset(0.0, size.height / 2);
 
+    _drawBackground(canvas, size, baseOffset, height);
+    if (!value.initialized) return;
+
+    _drawBufferedRanges(canvas, size, baseOffset, height);
+    _drawPlayedPart(canvas, size, baseOffset, height);
+    _drawIntroOutroSections(canvas, size, baseOffset, height);
+    _drawHandle(canvas, size, baseOffset, height);
+  }
+
+  void _drawBackground(
+    Canvas canvas,
+    Size size,
+    Offset baseOffset,
+    double height,
+  ) {
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromPoints(
-          Offset(0.0, size.height / 2),
-          Offset(size.width, size.height / 2 + height),
-        ),
+        Rect.fromPoints(baseOffset, Offset(size.width, baseOffset.dy + height)),
         const Radius.circular(4.0),
       ),
       colors.backgroundPaint,
     );
-    if (!value.initialized) {
-      return;
-    }
-    double playedPartPercent =
-        value.position.inMilliseconds / value.duration!.inMilliseconds;
-    if (playedPartPercent.isNaN) {
-      playedPartPercent = 0;
-    }
-    final double playedPart =
-        playedPartPercent > 1 ? size.width : playedPartPercent * size.width;
+  }
+
+  void _drawBufferedRanges(
+    Canvas canvas,
+    Size size,
+    Offset baseOffset,
+    double height,
+  ) {
     for (final DurationRange range in value.buffered) {
-      double start = range.startFraction(value.duration!) * size.width;
-      if (start.isNaN) {
-        start = 0;
-      }
-      double end = range.endFraction(value.duration!) * size.width;
-      if (end.isNaN) {
-        end = 0;
-      }
+      final double start =
+          _fractionToOffset(range.startFraction(value.duration!), size.width);
+      final double end =
+          _fractionToOffset(range.endFraction(value.duration!), size.width);
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           Rect.fromPoints(
-            Offset(start, size.height / 2),
-            Offset(end, size.height / 2 + height),
+            Offset(start, baseOffset.dy),
+            Offset(end, baseOffset.dy + height),
           ),
           const Radius.circular(4.0),
         ),
         colors.bufferedPaint,
       );
     }
+  }
+
+  void _drawPlayedPart(
+    Canvas canvas,
+    Size size,
+    Offset baseOffset,
+    double height,
+  ) {
+    final double playedPart = _fractionToOffset(
+      value.position.inMilliseconds / value.duration!.inMilliseconds,
+      size.width,
+    );
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromPoints(
-          Offset(0.0, size.height / 2),
-          Offset(playedPart, size.height / 2 + height),
-        ),
+        Rect.fromPoints(baseOffset, Offset(playedPart, baseOffset.dy + height)),
         const Radius.circular(4.0),
       ),
       colors.playedPaint,
     );
+  }
 
-    // draw intro section
-    if (playedPart > .5 && introOutroSegment!.intro?.start != null) {
+  void _drawIntroOutroSections(
+    Canvas canvas,
+    Size size,
+    Offset baseOffset,
+    double height,
+  ) {
+    final introOutroPaint = Paint()..color = Colors.blue;
+    _drawSection(
+      canvas,
+      size,
+      baseOffset,
+      height,
+      introOutroSegment.intro,
+      introOutroPaint,
+    );
+    _drawSection(
+      canvas,
+      size,
+      baseOffset,
+      height,
+      introOutroSegment.outro,
+      introOutroPaint,
+    );
+  }
+
+  void _drawSection(
+    Canvas canvas,
+    Size size,
+    Offset baseOffset,
+    double height,
+    IntroOutro section,
+    Paint paint,
+  ) {
+    if (section.start > 0 || section.end > 0) {
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           Rect.fromPoints(
-            Offset(
-              (introOutroSegment!.intro?.start ?? 0) * size.width,
-              size.height / 2,
-            ),
-            Offset(
-              (introOutroSegment!.intro?.end ?? 0) * size.width,
-              size.height / 2 + height,
-            ),
+            Offset(section.start * size.width, baseOffset.dy),
+            Offset(section.end * size.width, baseOffset.dy + height),
           ),
           const Radius.circular(4.0),
         ),
-        Paint()..color = Colors.blue,
+        paint,
       );
     }
+  }
 
-    // draw outro section
-    if (playedPart > .5 && introOutroSegment!.outro?.start != null) {
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(
-          Rect.fromPoints(
-            Offset(
-              (introOutroSegment!.outro?.start ?? 0) * size.width,
-              size.height / 2,
-            ),
-            Offset(
-              (introOutroSegment!.outro?.end ?? 0) * size.width,
-              size.height / 2 + height,
-            ),
-          ),
-          const Radius.circular(4.0),
-        ),
-        Paint()..color = Colors.blue,
-      );
-    }
-
+  void _drawHandle(Canvas canvas, Size size, Offset baseOffset, double height) {
+    final double playedPart = _fractionToOffset(
+      value.position.inMilliseconds / value.duration!.inMilliseconds,
+      size.width,
+    );
     canvas.drawCircle(
-      Offset(playedPart, size.height / 2 + height / 2),
+      Offset(playedPart, baseOffset.dy + height / 2),
       height * 2,
       colors.handlePaint,
     );
+  }
+
+  double _fractionToOffset(double fraction, double width) {
+    return (fraction.isNaN || fraction > 1) ? width : fraction * width;
   }
 }

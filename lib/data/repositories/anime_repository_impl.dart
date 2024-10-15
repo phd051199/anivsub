@@ -50,7 +50,7 @@ class AnimeRepositoryImpl implements AnimeRepository {
   }
 
   @override
-  Future<ListEpisodeResponseEntity> listEpisodes(String name) async {
+  Future<ListEpisodeResponseEntity> listEpisodes(List<String> name) async {
     final response = await _openDRemoteDataSource.listEpisodes(name);
     return response.toEntity();
   }

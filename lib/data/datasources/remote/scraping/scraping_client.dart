@@ -11,7 +11,7 @@ abstract class ScrapingClient {
   @GET('/')
   Future<String> getHomeData();
 
-  @GET('/phim/{id}')
+  @GET('/{id}')
   Future<String> getAnimeDetail(@Path('id') String id);
 
   @GET('/{id}/xem-phim.html')

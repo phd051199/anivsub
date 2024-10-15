@@ -37,6 +37,7 @@ export 'usecases/base/base_output.dart';
 export 'usecases/base/base_sync_usecase.dart';
 export 'usecases/base/base_usecase.dart';
 export 'usecases/decrypt_hls_usecase.dart';
+export 'usecases/get_anime_detail_usecase.dart';
 export 'usecases/get_encrypted_hls_usecase.dart';
 export 'usecases/get_episode_skip_usecase.dart';
 export 'usecases/get_home_data_usecase.dart';

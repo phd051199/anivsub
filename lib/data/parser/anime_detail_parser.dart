@@ -1,3 +1,4 @@
+import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
@@ -43,12 +44,12 @@ class AnimeDetailParser {
         ) ??
         0;
 
-    final List<Map<String, String>> season = document
+    final List<Anchor> season = document
         .querySelectorAll('.season_item > a')
         .map((item) => _getInfoAnchor(item))
         .toList();
 
-    final List<Map<String, String>> genre = document
+    final List<Anchor> genre = document
         .querySelectorAll('.breadcrumb > li > a')
         .skip(1)
         .take(document.querySelectorAll('.breadcrumb > li > a').length - 2)
@@ -69,19 +70,17 @@ class AnimeDetailParser {
             .last
             .trim() ??
         '';
-    final List<Map<String, String>> authors =
-        _findInfo(document, infoListLeft, 'đạo diễn')
-                ?.querySelectorAll('a')
-                .map((item) => _getInfoAnchor(item))
-                .toList() ??
-            [];
+    final List<Anchor> authors = _findInfo(document, infoListLeft, 'đạo diễn')
+            ?.querySelectorAll('a')
+            .map((item) => _getInfoAnchor(item))
+            .toList() ??
+        [];
 
-    final List<Map<String, String>> countries =
-        _findInfo(document, infoListLeft, 'quốc gia')
-                ?.querySelectorAll('a')
-                .map((item) => _getInfoAnchor(item))
-                .toList() ??
-            [];
+    final List<Anchor> countries = _findInfo(document, infoListLeft, 'quốc gia')
+            ?.querySelectorAll('a')
+            .map((item) => _getInfoAnchor(item))
+            .toList() ??
+        [];
 
     final int follows = int.tryParse(
           _findInfo(document, infoListLeft, 'số người theo dõi')
@@ -106,7 +105,7 @@ class AnimeDetailParser {
             .last
             .trim() ??
         '';
-    final Map<String, String> seasonOf = _getInfoAnchor(
+    final Anchor seasonOf = _getInfoAnchor(
       _findInfo(document, infoListRight, 'season')?.querySelector('a'),
     );
 
@@ -155,10 +154,11 @@ class AnimeDetailParser {
     }
   }
 
-  static Map<String, String> _getInfoAnchor(dom.Element? anchor) {
+  static Anchor _getInfoAnchor(dom.Element? anchor) {
     final path = _getPathName(anchor?.attributes['href']);
     final name = anchor?.text.trim() ?? '';
-    return {'path': path, 'name': name};
+
+    return Anchor(name: name, path: path);
   }
 
   static dom.Element? _findInfo(

@@ -740,8 +740,8 @@ class _BetterPlayerCustomMaterialControlsState
         alignment: Alignment.bottomCenter,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: BetterPlayerMaterialVideoProgressBar(
-          _controller,
-          _betterPlayerController,
+          controller: _controller,
+          betterPlayerController: _betterPlayerController,
           onDragStart: () {
             _hideTimer?.cancel();
           },

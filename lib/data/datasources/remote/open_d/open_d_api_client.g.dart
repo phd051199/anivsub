@@ -22,7 +22,7 @@ class _OpenDApiClient implements OpenDApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ListEpisodeResponseDTO> listEpisodes(String name) async {
+  Future<ListEpisodeResponseDTO> listEpisodes(List<String> name) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'name': name};
     final _headers = <String, dynamic>{};
@@ -67,7 +67,7 @@ class _OpenDApiClient implements OpenDApiClient {
     )
         .compose(
           _dio.options,
-          'https://opend-9animetv.animevsub.eu.org/episode-skip/${id}',
+          'https://sk-9animetv.dph.workers.dev/episode-skip/${id}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -100,7 +100,7 @@ class _OpenDApiClient implements OpenDApiClient {
     )
         .compose(
           _dio.options,
-          'https://sk-hianime.animevsub.eu.org/episode-skip/${id}',
+          'https://sk-hianime.dph.workers.dev/episode-skip/${id}',
           queryParameters: queryParameters,
           data: _data,
         )

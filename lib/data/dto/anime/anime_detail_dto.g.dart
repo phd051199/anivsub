@@ -20,25 +20,25 @@ AnimeDetailDTO _$AnimeDetailDTOFromJson(Map<String, dynamic> json) =>
       yearOf: (json['yearOf'] as num).toInt(),
       views: (json['views'] as num).toInt(),
       season: (json['season'] as List<dynamic>)
-          .map((e) => Map<String, String>.from(e as Map))
+          .map((e) => Anchor.fromJson(e as Map<String, dynamic>))
           .toList(),
       genre: (json['genre'] as List<dynamic>)
-          .map((e) => Map<String, String>.from(e as Map))
+          .map((e) => Anchor.fromJson(e as Map<String, dynamic>))
           .toList(),
       quality: json['quality'] as String,
       status: json['status'] as String,
       authors: (json['authors'] as List<dynamic>)
-          .map((e) => Map<String, String>.from(e as Map))
+          .map((e) => Anchor.fromJson(e as Map<String, dynamic>))
           .toList(),
       countries: (json['countries'] as List<dynamic>)
-          .map((e) => Map<String, String>.from(e as Map))
+          .map((e) => Anchor.fromJson(e as Map<String, dynamic>))
           .toList(),
       follows: (json['follows'] as num).toInt(),
       language: json['language'] as String,
       studio: json['studio'] as String,
-      seasonOf: (json['seasonOf'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ),
+      seasonOf: json['seasonOf'] == null
+          ? null
+          : Anchor.fromJson(json['seasonOf'] as Map<String, dynamic>),
       trailer: json['trailer'] as String?,
       toPut: (json['toPut'] as List<dynamic>)
           .map((e) => AnimeDataResponseDTO.fromJson(e as Map<String, dynamic>))
@@ -58,16 +58,16 @@ Map<String, dynamic> _$AnimeDetailDTOToJson(AnimeDetailDTO instance) =>
       'duration': instance.duration,
       'yearOf': instance.yearOf,
       'views': instance.views,
-      'season': instance.season,
-      'genre': instance.genre,
+      'season': instance.season.map((e) => e.toJson()).toList(),
+      'genre': instance.genre.map((e) => e.toJson()).toList(),
       'quality': instance.quality,
       'status': instance.status,
-      'authors': instance.authors,
-      'countries': instance.countries,
+      'authors': instance.authors.map((e) => e.toJson()).toList(),
+      'countries': instance.countries.map((e) => e.toJson()).toList(),
       'follows': instance.follows,
       'language': instance.language,
       'studio': instance.studio,
-      'seasonOf': instance.seasonOf,
+      'seasonOf': instance.seasonOf?.toJson(),
       'trailer': instance.trailer,
       'toPut': instance.toPut.map((e) => e.toJson()).toList(),
     };

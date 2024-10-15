@@ -1,6 +1,7 @@
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/shared/number_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
@@ -17,7 +18,11 @@ class WatchPage extends StatefulWidget {
   State<WatchPage> createState() => _WatchPageState();
 }
 
-class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
+class _WatchPageState extends BlocState<WatchPage, WatchBloc>
+    with SingleTickerProviderStateMixin {
+  TabController? _tabController;
+  late int _currentTabIndex;
+
   @override
   void initState() {
     super.initState();
@@ -25,61 +30,134 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
   }
 
   @override
+  void dispose() {
+    _tabController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget buildPage(BuildContext context) {
     return BlocProvider<VideoPlayerCubit>.value(
       value: videoPlayerCubit,
-      child: _buildPageContent(),
+      child: BlocSelector<WatchBloc, WatchState, WatchLoaded?>(
+        selector: (state) => state is WatchLoaded ? state : null,
+        builder: (context, state) {
+          return Scaffold(
+            body: SafeArea(
+              child: state == null
+                  ? const LoadingWidget()
+                  : _buildContent(context, state),
+            ),
+          );
+        },
+      ),
     );
   }
 
-  Widget _buildPageContent() {
-    return BlocSelector<WatchBloc, WatchState, WatchLoaded?>(
-      selector: (state) => state is WatchLoaded ? state : null,
-      builder: (context, state) {
-        return Scaffold(
-          body: SafeArea(
-            child: state == null
-                ? const LoadingWidget()
-                : _buildBody(context, state),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildBody(BuildContext context, WatchLoaded state) {
+  Widget _buildContent(BuildContext context, WatchLoaded state) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildPinnedVideoPlayer(state),
-        const SizedBox(height: 12),
-        _buildScrollableContent(context, state),
+        _buildVideoPlayer(state),
+        const SizedBox(height: 4),
+        _buildDetail(state, context),
+        _buildSkipIntroSwitch(context, state),
+        Expanded(child: _buildScrollableContent(context, state)),
       ],
     );
   }
 
-  Widget _buildPinnedVideoPlayer(WatchLoaded state) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        maxHeight: 240,
+  Padding _buildDetail(WatchLoaded state, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            state.detail.name,
+            style: context.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            '${state.detail.views.formatNumber()} views',
+            style: context.textTheme.titleSmall?.copyWith(
+              color: context.theme.colorScheme.secondary,
+            ),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget _buildVideoPlayer(WatchLoaded state) {
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxHeight: 240),
       child: EnhancedVideoPlayer(
-        path: widget.path,
         chaps: state.chaps,
+        detail: state.detail,
         skipIntro: state.skipIntro,
       ),
     );
   }
 
   Widget _buildScrollableContent(BuildContext context, WatchLoaded state) {
-    return Expanded(
-      child: ListView(
+    if (state.detail.season.isNotEmpty) {
+      _initializeTabController(state);
+    }
+
+    return SingleChildScrollView(
+      child: Column(
         children: [
-          _buildSkipIntroSwitch(context, state),
-          const SizedBox(height: 12),
-          _buildChaptersGrid(context, state),
+          if (state.detail.season.isNotEmpty) ...[
+            _buildTabBar(state),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              height: 210,
+              child: TabBarView(
+                controller: _tabController,
+                children: state.tabViewItems!.map((chaps) {
+                  return chaps == null
+                      ? const Center(child: CircularProgressIndicator())
+                      : _buildChaptersGrid(context, chaps);
+                }).toList(),
+              ),
+            ),
+          ] else
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              height: 210,
+              child: _buildChaptersGrid(context, state.chaps),
+            ),
         ],
       ),
     );
+  }
+
+  void _initializeTabController(WatchLoaded state) {
+    if (_tabController == null && state.detail.season.isNotEmpty) {
+      final initialIndex =
+          state.detail.season.indexWhere((item) => item.path == widget.path);
+      _currentTabIndex = initialIndex;
+
+      _tabController = TabController(
+        length: state.detail.season.length,
+        vsync: this,
+        initialIndex: initialIndex,
+      )..addListener(() {
+          if (_currentTabIndex != _tabController!.index) {
+            _currentTabIndex = _tabController!.index;
+            bloc.add(
+              ChangeSeasonTab(
+                id: state.detail.season[_tabController!.index].path,
+              ),
+            );
+          }
+        });
+    }
   }
 
   Widget _buildSkipIntroSwitch(BuildContext context, WatchLoaded state) {
@@ -90,13 +168,21 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
     );
   }
 
-  Widget _buildChaptersGrid(BuildContext context, WatchLoaded state) {
+  Widget _buildTabBar(WatchLoaded state) {
+    return TabBar(
+      tabAlignment: TabAlignment.start,
+      controller: _tabController,
+      isScrollable: true,
+      tabs: state.detail.season.map((item) => Tab(text: item.name)).toList(),
+    );
+  }
+
+  Widget _buildChaptersGrid(BuildContext context, List<ChapDataEntity> chaps) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: GridView.builder(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: state.chaps.length,
+        itemCount: chaps.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 6,
           mainAxisSpacing: 4,
@@ -104,35 +190,45 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc> {
           childAspectRatio: 62 / 60,
         ),
         itemBuilder: (context, index) =>
-            _buildChapItem(context, state.chaps[index]),
+            _buildChapterItem(context, chaps[index]),
       ),
     );
   }
 
-  Widget _buildChapItem(BuildContext context, ChapDataEntity chap) {
+  Widget _buildChapterItem(BuildContext context, ChapDataEntity chap) {
     return BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
       builder: (context, videoPlayerState) {
         final isPlaying = videoPlayerState is VideoPlayerLoaded &&
             videoPlayerState.currentChap.id == chap.id;
         return GestureDetector(
-          onTap: () {
-            if (isPlaying) return;
-            videoPlayerCubit.loadChapter(chap);
-          },
-          child: Card(
-            color: isPlaying
-                ? Theme.of(context).colorScheme.primaryContainer
-                : null,
-            child: Center(
-              child: Text(
-                chap.name,
-                style: context.textTheme.bodySmall!
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
+          onTap: () => _onChapTap(isPlaying, chap),
+          child: _buildChapCard(context, isPlaying, chap),
         );
       },
+    );
+  }
+
+  void _onChapTap(bool isPlaying, ChapDataEntity chap) {
+    if (!isPlaying) {
+      videoPlayerCubit.loadChapter(chap);
+    }
+  }
+
+  Widget _buildChapCard(
+    BuildContext context,
+    bool isPlaying,
+    ChapDataEntity chap,
+  ) {
+    return Card(
+      color: isPlaying ? context.theme.colorScheme.primaryContainer : null,
+      child: Center(
+        child: Text(
+          chap.name,
+          style: context.textTheme.bodySmall!.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
     );
   }
 }
