@@ -728,7 +728,7 @@ class _BetterPlayerCustomMaterialControlsState
       child: Container(
         alignment: Alignment.bottomCenter,
         padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: BetterPlayerMaterialVideoProgressBar(
+        child: BetterPlayerCustomMaterialVideoProgressBar(
           controller: _controller,
           betterPlayerController: _betterPlayerController,
           onDragStart: () {

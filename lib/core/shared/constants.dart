@@ -26,10 +26,9 @@ final hostCurl = String.fromCharCodes([
   117,
   98,
   46,
-  116,
+  114,
   117,
-  98,
-  101,
+  110,
 ]);
 
 final headers = {

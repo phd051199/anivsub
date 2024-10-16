@@ -60,30 +60,18 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 _buildAiringList(context, state.homeData.sliderMovies),
-                const Divider(height: 32),
-                _buildAnimeSection(
-                  context,
-                  context.l10n.hotUpdates,
-                  state.homeData.hotUpdates,
-                ),
-                const Divider(height: 32),
-                _buildAnimeSection(
-                  context,
-                  context.l10n.topMovies,
-                  state.homeData.topMovies,
-                ),
-                const Divider(height: 32),
-                _buildAnimeSection(
-                  context,
-                  context.l10n.latestUpdates,
-                  state.homeData.latestUpdates,
-                ),
-                const Divider(height: 32),
-                _buildAnimeSection(
-                  context,
-                  context.l10n.preRelease,
-                  state.homeData.preRelease,
-                ),
+                ...state.homeData.toMap().keys.map((key) {
+                  return Column(
+                    children: [
+                      const SizedBox(height: 16),
+                      _buildAnimeSection(
+                        context,
+                        state.homeData.toMapLocalized(context)[key]!,
+                        state.homeData.toMap()[key],
+                      ),
+                    ],
+                  );
+                }),
               ]),
             ),
           ),
@@ -94,7 +82,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
 
   Widget _buildAiringList(BuildContext context, List<AnimeDataEntity> movies) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.2,
+      height: context.screenSize.height * 0.2,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: movies.length,
@@ -111,7 +99,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
         pathParameters: {'path': movie.path},
       ),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.85,
+        width: context.screenSize.width * 0.85,
         child: Row(
           children: [
             AnimeThumbnail(movie: movie),
@@ -137,24 +125,15 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
   }
 
   Widget _buildSectionHeader(BuildContext context, String title) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: context.textTheme.titleLarge!.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+      leading: Text(
+        title,
+        style: context.textTheme.titleLarge!.copyWith(
+          fontWeight: FontWeight.bold,
         ),
-        Text(
-          'See all',
-          style: context.textTheme.titleMedium!.copyWith(
-            fontWeight: FontWeight.bold,
-            color: context.theme.colorScheme.secondary,
-          ),
-        ),
-      ],
+      ),
+      trailing: const Icon(Icons.chevron_right),
     );
   }
 }

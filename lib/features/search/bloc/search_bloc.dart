@@ -64,8 +64,10 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
           ),
         );
       }
-    } catch (_) {
-      add(const ErrorSearch());
+    } catch (e) {
+      emit(
+        SearchError('An error occurred: $e'),
+      );
     }
   }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:anivsub/core/di/shared_export.dart';
+import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,8 @@ import 'package:river_player/river_player.dart';
 import 'package:river_player/src/video_player/video_player.dart';
 import 'package:river_player/src/video_player/video_player_platform_interface.dart';
 
-class BetterPlayerMaterialVideoProgressBar extends StatefulWidget {
-  const BetterPlayerMaterialVideoProgressBar({
+class BetterPlayerCustomMaterialVideoProgressBar extends StatefulWidget {
+  const BetterPlayerCustomMaterialVideoProgressBar({
     super.key,
     required this.controller,
     required this.betterPlayerController,
@@ -30,12 +31,12 @@ class BetterPlayerMaterialVideoProgressBar extends StatefulWidget {
   final VoidCallback? onTapDown;
 
   @override
-  State<BetterPlayerMaterialVideoProgressBar> createState() =>
+  State<BetterPlayerCustomMaterialVideoProgressBar> createState() =>
       _VideoProgressBarState();
 }
 
 class _VideoProgressBarState
-    extends State<BetterPlayerMaterialVideoProgressBar> {
+    extends State<BetterPlayerCustomMaterialVideoProgressBar> {
   late VoidCallback _listener;
   bool _controllerWasPlaying = false;
   bool _shouldPlayAfterDragEnd = false;
@@ -91,8 +92,8 @@ class _VideoProgressBarState
 
     return Center(
       child: Container(
-        height: MediaQuery.of(context).size.height / 2,
-        width: MediaQuery.of(context).size.width,
+        height: context.screenSize.height / 2,
+        width: context.screenSize.width,
         color: Colors.transparent,
         child: CustomPaint(
           painter: _ProgressBarPainter(

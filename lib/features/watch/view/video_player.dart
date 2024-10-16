@@ -2,12 +2,12 @@ import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/custom/better_player_material_controls.dart';
+import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:river_player/river_player.dart';
-
-import '../cubit/video_player_cubit.dart';
 
 class EnhancedVideoPlayer extends StatefulWidget {
   const EnhancedVideoPlayer({
@@ -16,6 +16,7 @@ class EnhancedVideoPlayer extends StatefulWidget {
     required this.skipIntro,
     required this.detail,
   });
+
   final List<ChapDataEntity> chaps;
   final bool skipIntro;
   final AnimeDetailEntity detail;
@@ -27,31 +28,16 @@ class EnhancedVideoPlayer extends StatefulWidget {
 class _EnhancedVideoPlayerState
     extends CubitState<EnhancedVideoPlayer, VideoPlayerCubit> {
   late BetterPlayerController _betterPlayerController;
-  late bool _skipIntro = widget.skipIntro;
-  final GlobalKey _betterPlayerGlobalKey = GlobalKey();
+  late bool _skipIntro;
+  late List<ChapDataEntity> _chaps;
 
   @override
   void initState() {
     super.initState();
-    if (widget.chaps.isEmpty) return;
-
+    _skipIntro = widget.skipIntro;
+    _chaps = widget.chaps;
     _initializeVideoPlayer();
-
-    cubit.initialize(
-      chaps: widget.chaps,
-      detail: widget.detail,
-      controller: _betterPlayerController,
-      skipIntro: _skipIntro,
-    );
-  }
-
-  @override
-  void didUpdateWidget(EnhancedVideoPlayer oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.skipIntro != _skipIntro) {
-      _skipIntro = widget.skipIntro;
-      cubit.updateSkipIntro(_skipIntro);
-    }
+    _initializeCubit();
   }
 
   void _initializeVideoPlayer() {
@@ -60,46 +46,93 @@ class _EnhancedVideoPlayerState
         fit: BoxFit.contain,
         autoDetectFullscreenAspectRatio: true,
         autoDetectFullscreenDeviceOrientation: true,
-        controlsConfiguration: BetterPlayerControlsConfiguration(
-          playerTheme: BetterPlayerTheme.custom,
-          customControlsBuilder: (controller, onControlsVisibilityChanged) {
-            return BetterPlayerCustomMaterialControls(
-              onControlsVisibilityChanged: onControlsVisibilityChanged,
-              controlsConfiguration: BetterPlayerControlsConfiguration(
-                playIcon: Icons.play_arrow,
-                enableMute: false,
-                enablePlayPause: false,
-                enableAudioTracks: false,
-                enableSubtitles: false,
-                enablePlaybackSpeed: false,
-                enableQualities: false,
-                progressBarPlayedColor: context.theme.colorScheme.primary,
-                progressBarHandleColor: context.theme.colorScheme.primary,
-              ),
-              betterPlayerGlobalKey: _betterPlayerGlobalKey,
-            );
-          },
-        ),
+        controlsConfiguration: _createControlsConfiguration(),
         deviceOrientationsOnFullScreen: [
           DeviceOrientation.portraitUp,
           DeviceOrientation.landscapeLeft,
           DeviceOrientation.landscapeRight,
         ],
-        deviceOrientationsAfterFullScreen: [
-          DeviceOrientation.portraitUp,
-        ],
+        deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
       ),
     );
   }
 
-  @override
-  Widget buildPage(BuildContext context) {
-    return widget.chaps.isNotEmpty
-        ? BetterPlayer(controller: _betterPlayerController)
-        : _buildEmptyPlayer(context);
+  BetterPlayerControlsConfiguration _createControlsConfiguration() {
+    return BetterPlayerControlsConfiguration(
+      playerTheme: BetterPlayerTheme.custom,
+      customControlsBuilder: (controller, onControlsVisibilityChanged) {
+        return BetterPlayerCustomMaterialControls(
+          onControlsVisibilityChanged: onControlsVisibilityChanged,
+          controlsConfiguration: _createCustomControlsConfiguration(),
+          betterPlayerGlobalKey: GlobalKey(),
+        );
+      },
+    );
   }
 
-  Stack _buildEmptyPlayer(BuildContext context) {
+  BetterPlayerControlsConfiguration _createCustomControlsConfiguration() {
+    return BetterPlayerControlsConfiguration(
+      playIcon: Icons.play_arrow,
+      enableMute: false,
+      enablePlayPause: false,
+      enableAudioTracks: false,
+      enableSubtitles: false,
+      enablePlaybackSpeed: false,
+      enableQualities: false,
+      enablePip: false,
+      progressBarPlayedColor: context.theme.colorScheme.primary,
+      progressBarHandleColor: context.theme.colorScheme.primary,
+    );
+  }
+
+  void _initializeCubit() {
+    if (_chaps.isNotEmpty) {
+      cubit.initialize(
+        chaps: _chaps,
+        detail: widget.detail,
+        controller: _betterPlayerController,
+        skipIntro: _skipIntro,
+      );
+    }
+  }
+
+  @override
+  void didUpdateWidget(EnhancedVideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _updateSkipIntro();
+    _updateChapterList();
+  }
+
+  void _updateSkipIntro() {
+    if (widget.skipIntro != _skipIntro) {
+      _skipIntro = widget.skipIntro;
+      cubit.updateSkipIntro(_skipIntro);
+    }
+  }
+
+  void _updateChapterList() {
+    if (_chaps.isEmpty && widget.chaps != _chaps) {
+      _chaps = widget.chaps;
+      cubit.updateChapterList(_chaps);
+      _initializeCubit();
+    }
+  }
+
+  @override
+  Widget buildPage(BuildContext context) {
+    return BlocConsumer<VideoPlayerCubit, VideoPlayerState>(
+      listener: (context, state) {
+        if (state is VideoPlayerError) {
+          context.showSnackBar(state.message);
+        }
+      },
+      builder: (context, state) => _chaps.isNotEmpty
+          ? BetterPlayer(controller: _betterPlayerController)
+          : _buildEmptyPlayer(context),
+    );
+  }
+
+  Widget _buildEmptyPlayer(BuildContext context) {
     return Stack(
       children: [
         Container(color: Colors.black),
@@ -117,11 +150,7 @@ class _EnhancedVideoPlayerState
           left: 6,
           child: IconButton(
             onPressed: () => context.pop(),
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-              size: 28,
-            ),
+            icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
           ),
         ),
       ],
