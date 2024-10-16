@@ -28,6 +28,7 @@ class _EnhancedVideoPlayerState
     extends CubitState<EnhancedVideoPlayer, VideoPlayerCubit> {
   late BetterPlayerController _betterPlayerController;
   late bool _skipIntro = widget.skipIntro;
+  final GlobalKey _betterPlayerGlobalKey = GlobalKey();
 
   @override
   void initState() {
@@ -75,6 +76,7 @@ class _EnhancedVideoPlayerState
                 progressBarPlayedColor: context.theme.colorScheme.primary,
                 progressBarHandleColor: context.theme.colorScheme.primary,
               ),
+              betterPlayerGlobalKey: _betterPlayerGlobalKey,
             );
           },
         ),

@@ -1,7 +1,6 @@
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/routes/go_router_config.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
-import 'package:anivsub/core/utils/log_utils.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/anime/anime_list.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -28,66 +27,50 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
   void initState() {
     super.initState();
     _initPagingController();
-    _setupBlocListener();
   }
 
   void _initPagingController() {
     _pagingController = PagingController(
       firstPageKey: 1,
       invisibleItemsThreshold: 12,
-    );
-    _pagingController.addPageRequestListener(_onPageRequest);
+    )..addPageRequestListener(_onPageRequest);
   }
 
   void _onPageRequest(int pageKey) {
-    bloc.add(
-      LoadSearch(
-        keyword: _searchInputController.text,
-        page: pageKey,
-      ),
-    );
-  }
-
-  void _setupBlocListener() {
-    bloc.stream.listen((state) {
-      if (state is SearchLoaded) {
-        _updatePagingController(state);
-      }
-    });
-  }
-
-  void _updatePagingController(SearchLoaded state) {
-    final isLastPage = state.hasReachedMax;
-    final newItems = state.result.items;
-
-    if (isLastPage) {
-      _pagingController.appendLastPage(newItems);
-    } else {
-      _pagingController.appendPage(newItems, state.currentPage + 1);
-    }
+    bloc.add(LoadSearch(keyword: _searchInputController.text, page: pageKey));
   }
 
   @override
   void dispose() {
     _pagingController.dispose();
     _searchInputController.dispose();
-    bloc.close();
     super.dispose();
   }
 
   @override
   Widget buildPage(BuildContext context) {
-    return BlocBuilder<SearchBloc, SearchState>(
+    return BlocConsumer<SearchBloc, SearchState>(
+      listener: (context, state) {
+        if (state is SearchLoaded) {
+          _updatePagingController(state);
+        }
+        if (state is SearchError) {
+          onErrorListener(context, state);
+        }
+      },
       builder: (context, state) {
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              children: [
-                _buildSearchForm(state),
-                const SizedBox(height: 16),
-                Expanded(child: _buildSearchResults()),
-              ],
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                children: [
+                  _buildSearchForm(),
+                  const SizedBox(height: 16),
+                  Expanded(child: _buildSearchResults()),
+                ],
+              ),
             ),
           ),
         );
@@ -95,58 +78,73 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
     );
   }
 
-  Widget _buildSearchForm(SearchState state) {
+  Widget _buildSearchForm() {
     return TypeAheadField<PreSearchItemEntity>(
       debounceDuration: const Duration(milliseconds: 500),
       controller: _searchInputController,
       suggestionsCallback: bloc.suggestionsCallback,
-      builder: (context, controller, focusNode) {
-        return TextFormField(
-          focusNode: focusNode,
-          controller: controller,
-          decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.search),
-            hintText: context.l10n.searchHint,
-            suffixIcon: _buildClearButton(),
-          ),
-          onFieldSubmitted: (_) {
-            context.focusScope.unfocus();
-            _pagingController.refresh();
-          },
-        );
-      },
-      itemBuilder: (context, item) {
-        return ListTile(
-          leading: Container(
-            width: 40,
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: CachedNetworkImage(imageUrl: item.image),
-          ),
-          title: Text(item.name),
-          subtitle: Text(item.status),
-        );
-      },
-      onSelected: (item) {
-        Log.debug(item);
-        context.pushNamed(
-          ScreenNames.watch,
-          pathParameters: {'path': item.path},
-        );
-      },
+      builder: _buildSearchInput,
+      itemBuilder: _buildSuggestionItem,
+      onSelected: _onSuggestionSelected,
+    );
+  }
+
+  Widget _buildSearchInput(
+    BuildContext context,
+    TextEditingController controller,
+    FocusNode focusNode,
+  ) {
+    return TextFormField(
+      focusNode: focusNode,
+      controller: controller,
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.search),
+        hintText: context.l10n.searchHint,
+        suffixIcon: _buildClearButton(),
+      ),
+      onFieldSubmitted: (_) => _onSearch(context),
     );
   }
 
   Widget _buildClearButton() {
-    return GestureDetector(
-      onTap: () {
+    return IconButton(
+      icon: const Icon(Icons.clear),
+      onPressed: () {
         _searchInputController.clear();
         _pagingController.refresh();
       },
-      child: const Icon(Icons.clear),
     );
+  }
+
+  Widget _buildSuggestionItem(BuildContext context, PreSearchItemEntity item) {
+    return ListTile(
+      leading: _buildSuggestionImage(item.image),
+      title: Text(item.name),
+      subtitle: Text(item.status),
+    );
+  }
+
+  Widget _buildSuggestionImage(String imageUrl) {
+    return Container(
+      width: 40,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: CachedNetworkImage(imageUrl: imageUrl),
+    );
+  }
+
+  void _onSuggestionSelected(PreSearchItemEntity item) {
+    context.pushNamed(
+      ScreenNames.watch,
+      pathParameters: {'path': item.path},
+    );
+  }
+
+  void _onSearch(BuildContext context) {
+    context.focusScope.unfocus();
+    _pagingController.refresh();
   }
 
   Widget _buildSearchResults() {
@@ -165,5 +163,16 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
       showNewPageErrorIndicatorAsGridChild: false,
       showNoMoreItemsIndicatorAsGridChild: false,
     );
+  }
+
+  void _updatePagingController(SearchLoaded state) {
+    final isLastPage = state.hasReachedMax;
+    final newItems = state.result.items;
+
+    if (isLastPage) {
+      _pagingController.appendLastPage(newItems);
+    } else {
+      _pagingController.appendPage(newItems, state.currentPage + 1);
+    }
   }
 }
