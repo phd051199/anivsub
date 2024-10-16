@@ -39,14 +39,23 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   Widget buildPage(BuildContext context) {
     return BlocProvider<VideoPlayerCubit>.value(
       value: videoPlayerCubit,
-      child: BlocSelector<WatchBloc, WatchState, WatchLoaded?>(
-        selector: (state) => state is WatchLoaded ? state : null,
+      child: BlocConsumer<WatchBloc, WatchState>(
+        listener: (context, state) {
+          if (state is WatchLoaded) {
+            _initializeTabController(state);
+          }
+          if (state is WatchError) {
+            onErrorListener(context, state);
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             body: SafeArea(
-              child: state == null
-                  ? const LoadingWidget()
-                  : _buildContent(context, state),
+              child: switch (state) {
+                WatchInitial() || WatchLoading() => const LoadingWidget(),
+                WatchLoaded() => _buildContent(context, state),
+                _ => Container(),
+              },
             ),
           );
         },
@@ -105,10 +114,6 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   }
 
   Widget _buildScrollableContent(BuildContext context, WatchLoaded state) {
-    if (state.detail.season.isNotEmpty) {
-      _initializeTabController(state);
-    }
-
     return SingleChildScrollView(
       child: Column(
         children: [

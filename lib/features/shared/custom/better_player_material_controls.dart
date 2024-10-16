@@ -18,6 +18,7 @@ class BetterPlayerCustomMaterialControls extends StatefulWidget {
     super.key,
     required this.onControlsVisibilityChanged,
     required this.controlsConfiguration,
+    required this.betterPlayerGlobalKey,
   });
 
   ///Callback used to send information if player bar is hidden or not
@@ -25,6 +26,8 @@ class BetterPlayerCustomMaterialControls extends StatefulWidget {
 
   ///Controls config
   final BetterPlayerControlsConfiguration controlsConfiguration;
+
+  final GlobalKey? betterPlayerGlobalKey;
 
   @override
   State<StatefulWidget> createState() {
@@ -245,7 +248,7 @@ class _BetterPlayerCustomMaterialControlsState
     return BetterPlayerMaterialClickableWidget(
       onTap: () {
         betterPlayerController!.enablePictureInPicture(
-          betterPlayerController!.betterPlayerGlobalKey!,
+          widget.betterPlayerGlobalKey!,
         );
       },
       child: Padding(
@@ -266,8 +269,7 @@ class _BetterPlayerCustomMaterialControlsState
       future: betterPlayerController!.isPictureInPictureSupported(),
       builder: (context, snapshot) {
         final bool isPipSupported = snapshot.data ?? false;
-        if (isPipSupported &&
-            _betterPlayerController!.betterPlayerGlobalKey != null) {
+        if (isPipSupported && widget.betterPlayerGlobalKey != null) {
           return AnimatedOpacity(
             opacity: hideStuff ? 0.0 : 1.0,
             duration: betterPlayerControlsConfiguration.controlsHideTime,

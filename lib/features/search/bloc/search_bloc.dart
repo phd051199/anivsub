@@ -24,8 +24,7 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
   static const _pageSize = 30;
 
   Future<List<PreSearchItemEntity>?> suggestionsCallback(String keyword) async {
-    final currentState = state;
-    if (currentState is! SearchLoaded || keyword.isEmpty) return null;
+    if (keyword.isEmpty) return null;
 
     final output = await _getPreSearchUseCase.send(
       GetPreSearchUseCaseInput(
