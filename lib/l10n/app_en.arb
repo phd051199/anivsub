@@ -31,5 +31,7 @@
   "preRelease": "Pre-release",
   "topMovies": "Top movies",
   "latestUpdates": "Latest updates",
+  "thisSeason": "This season",
+  "sliderMovies": "Slider movies",
   "searchHint": "Keyword: name in jp, en or vi"
 }

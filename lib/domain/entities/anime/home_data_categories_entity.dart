@@ -1,5 +1,7 @@
+import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:flutter/material.dart';
 
 class HomeDataCategoriesEntity extends BaseEntity {
   const HomeDataCategoriesEntity({
@@ -26,6 +28,26 @@ class HomeDataCategoriesEntity extends BaseEntity {
         hotUpdates,
         thisSeason,
       ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'hotUpdates': hotUpdates,
+      'thisSeason': thisSeason,
+      'topMovies': topMovies,
+      'latestUpdates': latestUpdates,
+      'preRelease': preRelease,
+    };
+  }
+
+  Map<String, String> toMapLocalized(BuildContext context) {
+    return {
+      'topMovies': context.l10n.topMovies,
+      'latestUpdates': context.l10n.latestUpdates,
+      'preRelease': context.l10n.preRelease,
+      'hotUpdates': context.l10n.hotUpdates,
+      'thisSeason': context.l10n.thisSeason,
+    };
+  }
 
   @override
   HomeDataCategoriesDTO toDTO() => HomeDataCategoriesDTO(

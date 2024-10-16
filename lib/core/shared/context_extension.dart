@@ -9,4 +9,12 @@ extension ContextExtension on BuildContext {
   TextTheme get textTheme => theme.textTheme;
 
   FocusScopeNode get focusScope => FocusScope.of(this);
+
+  Size get screenSize => MediaQuery.of(this).size;
+
+  void showSnackBar(String message) {
+    ScaffoldMessenger.of(this).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
 }

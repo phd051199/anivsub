@@ -2,6 +2,7 @@ import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/routes/go_router_config.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/features/search/bloc/search_bloc.dart';
 import 'package:anivsub/features/shared/anime/anime_list.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-
-import '../bloc/search_bloc.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -63,7 +62,7 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
               child: Column(
                 children: [
                   _buildSearchForm(),
@@ -80,7 +79,7 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
 
   Widget _buildSearchForm() {
     return TypeAheadField<PreSearchItemEntity>(
-      debounceDuration: const Duration(milliseconds: 500),
+      constraints: const BoxConstraints(maxHeight: 320),
       controller: _searchInputController,
       suggestionsCallback: bloc.suggestionsCallback,
       builder: _buildSearchInput,
@@ -111,22 +110,23 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
       icon: const Icon(Icons.clear),
       onPressed: () {
         _searchInputController.clear();
-        _pagingController.refresh();
       },
     );
   }
 
   Widget _buildSuggestionItem(BuildContext context, PreSearchItemEntity item) {
     return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
       leading: _buildSuggestionImage(item.image),
       title: Text(item.name),
       subtitle: Text(item.status),
+      trailing: const Icon(Icons.chevron_right),
     );
   }
 
   Widget _buildSuggestionImage(String imageUrl) {
     return Container(
-      width: 40,
+      width: 42,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
