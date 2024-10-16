@@ -16,13 +16,24 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
   ) : super(const SearchInitial()) {
     on<LoadSearch>(_onLoadSearch);
     on<ErrorSearch>(_onErrorSearch);
-    on<PreSearch>(_onPreSearch);
   }
 
   final SearchAnimeUseCase _searchAnimeUseCase;
   final GetPreSearchUseCase _getPreSearchUseCase;
 
   static const _pageSize = 30;
+
+  Future<List<PreSearchItemEntity>?> suggestionsCallback(String keyword) async {
+    final currentState = state;
+    if (currentState is! SearchLoaded || keyword.isEmpty) return null;
+
+    final output = await _getPreSearchUseCase.send(
+      GetPreSearchUseCaseInput(
+        keyword: keyword,
+      ),
+    );
+    return output.result;
+  }
 
   Future<void> _onLoadSearch(
     LoadSearch event,
@@ -57,23 +68,6 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
     } catch (_) {
       add(const ErrorSearch());
     }
-  }
-
-  void _onPreSearch(PreSearch event, Emitter<SearchState> emit) async {
-    final currentState = state;
-    if (currentState is! SearchLoaded) return;
-
-    final output = await _getPreSearchUseCase.send(
-      GetPreSearchUseCaseInput(
-        keyword: event.keyword,
-      ),
-    );
-
-    emit(
-      currentState.copyWith(
-        preSearchItems: output.result,
-      ),
-    );
   }
 
   void _onErrorSearch(ErrorSearch event, Emitter<SearchState> emit) {

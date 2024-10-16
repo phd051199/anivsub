@@ -99,13 +99,7 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
     return TypeAheadField<PreSearchItemEntity>(
       debounceDuration: const Duration(milliseconds: 500),
       controller: _searchInputController,
-      suggestionsCallback: (keyword) {
-        if (state is! SearchLoaded) return null;
-        bloc.add(
-          PreSearch(keyword: keyword),
-        );
-        return state.preSearchItems;
-      },
+      suggestionsCallback: bloc.suggestionsCallback,
       builder: (context, controller, focusNode) {
         return TextFormField(
           focusNode: focusNode,
