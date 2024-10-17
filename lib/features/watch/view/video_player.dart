@@ -9,8 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:river_player/river_player.dart';
 
-class EnhancedVideoPlayer extends StatefulWidget {
-  const EnhancedVideoPlayer({
+class VideoPlayerWidget extends StatefulWidget {
+  const VideoPlayerWidget({
     super.key,
     required this.chaps,
     required this.skipIntro,
@@ -22,12 +22,12 @@ class EnhancedVideoPlayer extends StatefulWidget {
   final AnimeDetailEntity detail;
 
   @override
-  State<EnhancedVideoPlayer> createState() => _EnhancedVideoPlayerState();
+  State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
 }
 
-class _EnhancedVideoPlayerState
-    extends CubitState<EnhancedVideoPlayer, VideoPlayerCubit> {
-  late BetterPlayerController _betterPlayerController;
+class _VideoPlayerWidgetState
+    extends CubitState<VideoPlayerWidget, VideoPlayerCubit> {
+  late final BetterPlayerController _betterPlayerController;
   late bool _skipIntro;
   late List<ChapDataEntity> _chaps;
 
@@ -80,6 +80,7 @@ class _EnhancedVideoPlayerState
       enablePlaybackSpeed: false,
       enableQualities: false,
       enablePip: false,
+      loadingWidget: const SizedBox.shrink(),
       progressBarPlayedColor: context.theme.colorScheme.primary,
       progressBarHandleColor: context.theme.colorScheme.primary,
     );
@@ -97,7 +98,7 @@ class _EnhancedVideoPlayerState
   }
 
   @override
-  void didUpdateWidget(EnhancedVideoPlayer oldWidget) {
+  void didUpdateWidget(VideoPlayerWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     _updateSkipIntro();
     _updateChapterList();
@@ -135,11 +136,11 @@ class _EnhancedVideoPlayerState
   Widget _buildEmptyPlayer(BuildContext context) {
     return Stack(
       children: [
-        Container(color: Colors.black),
+        const ColoredBox(color: Colors.black),
         Center(
           child: Text(
             'No chapters found',
-            style: context.textTheme.bodyMedium!.copyWith(
+            style: context.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -149,17 +150,11 @@ class _EnhancedVideoPlayerState
           top: 10,
           left: 6,
           child: IconButton(
-            onPressed: () => context.pop(),
+            onPressed: context.pop,
             icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
           ),
         ),
       ],
     );
-  }
-
-  @override
-  void dispose() {
-    cubit.dispose();
-    super.dispose();
   }
 }

@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$GetEpisodeSkipUsecaseInput {
   String get id => throw _privateConstructorUsedError;
+  CancelToken? get cancelToken => throw _privateConstructorUsedError;
 
   /// Create a copy of GetEpisodeSkipUsecaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +33,7 @@ abstract class $GetEpisodeSkipUsecaseInputCopyWith<$Res> {
       _$GetEpisodeSkipUsecaseInputCopyWithImpl<$Res,
           GetEpisodeSkipUsecaseInput>;
   @useResult
-  $Res call({String id});
+  $Res call({String id, CancelToken? cancelToken});
 }
 
 /// @nodoc
@@ -52,12 +53,17 @@ class _$GetEpisodeSkipUsecaseInputCopyWithImpl<$Res,
   @override
   $Res call({
     Object? id = null,
+    Object? cancelToken = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      cancelToken: freezed == cancelToken
+          ? _value.cancelToken
+          : cancelToken // ignore: cast_nullable_to_non_nullable
+              as CancelToken?,
     ) as $Val);
   }
 }
@@ -71,7 +77,7 @@ abstract class _$$GetEpisodeSkipUsecaseInputImplCopyWith<$Res>
       __$$GetEpisodeSkipUsecaseInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id});
+  $Res call({String id, CancelToken? cancelToken});
 }
 
 /// @nodoc
@@ -90,12 +96,17 @@ class __$$GetEpisodeSkipUsecaseInputImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? cancelToken = freezed,
   }) {
     return _then(_$GetEpisodeSkipUsecaseInputImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      cancelToken: freezed == cancelToken
+          ? _value.cancelToken
+          : cancelToken // ignore: cast_nullable_to_non_nullable
+              as CancelToken?,
     ));
   }
 }
@@ -103,14 +114,16 @@ class __$$GetEpisodeSkipUsecaseInputImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GetEpisodeSkipUsecaseInputImpl implements _GetEpisodeSkipUsecaseInput {
-  const _$GetEpisodeSkipUsecaseInputImpl({required this.id});
+  const _$GetEpisodeSkipUsecaseInputImpl({required this.id, this.cancelToken});
 
   @override
   final String id;
+  @override
+  final CancelToken? cancelToken;
 
   @override
   String toString() {
-    return 'GetEpisodeSkipUsecaseInput(id: $id)';
+    return 'GetEpisodeSkipUsecaseInput(id: $id, cancelToken: $cancelToken)';
   }
 
   @override
@@ -118,11 +131,13 @@ class _$GetEpisodeSkipUsecaseInputImpl implements _GetEpisodeSkipUsecaseInput {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetEpisodeSkipUsecaseInputImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.cancelToken, cancelToken) ||
+                other.cancelToken == cancelToken));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, cancelToken);
 
   /// Create a copy of GetEpisodeSkipUsecaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -136,11 +151,14 @@ class _$GetEpisodeSkipUsecaseInputImpl implements _GetEpisodeSkipUsecaseInput {
 
 abstract class _GetEpisodeSkipUsecaseInput
     implements GetEpisodeSkipUsecaseInput {
-  const factory _GetEpisodeSkipUsecaseInput({required final String id}) =
-      _$GetEpisodeSkipUsecaseInputImpl;
+  const factory _GetEpisodeSkipUsecaseInput(
+      {required final String id,
+      final CancelToken? cancelToken}) = _$GetEpisodeSkipUsecaseInputImpl;
 
   @override
   String get id;
+  @override
+  CancelToken? get cancelToken;
 
   /// Create a copy of GetEpisodeSkipUsecaseInput
   /// with the given fields replaced by the non-null parameter values.

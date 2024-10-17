@@ -88,9 +88,13 @@ class _ScrapingClient implements ScrapingClient {
   }
 
   @override
-  Future<String> getPlayData(String id) async {
+  Future<String> getPlayData(
+    String id, {
+    CancelToken? cancelToken,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<String>(Options(
@@ -103,6 +107,7 @@ class _ScrapingClient implements ScrapingClient {
           '/${id}/xem-phim.html',
           queryParameters: queryParameters,
           data: _data,
+          cancelToken: cancelToken,
         )
         .copyWith(
             baseUrl: _combineBaseUrls(
@@ -161,10 +166,12 @@ class _ScrapingClient implements ScrapingClient {
     String id,
     String play,
     String link,
-    String backuplinks,
-  ) async {
+    String backuplinks, {
+    CancelToken? cancelToken,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = {
       'id': id,
@@ -183,6 +190,7 @@ class _ScrapingClient implements ScrapingClient {
           '/ajax/player?v=2019a',
           queryParameters: queryParameters,
           data: _data,
+          cancelToken: cancelToken,
         )
         .copyWith(
             baseUrl: _combineBaseUrls(

@@ -1,4 +1,5 @@
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -15,7 +16,10 @@ class GetListEpisodeUseCase extends BaseFutureUseCase<
   Future<GetListEpisodeUseCaseOutput> buildUseCase(
     GetListEpisodeUseCaseInput input,
   ) async {
-    final result = await _repository.listEpisodes(input.animeName);
+    final result = await _repository.listEpisodes(
+      input.animeName,
+      cancelToken: input.cancelToken,
+    );
     return GetListEpisodeUseCaseOutput(result: result);
   }
 }
@@ -25,6 +29,7 @@ class GetListEpisodeUseCaseInput extends BaseInput
     with _$GetListEpisodeUseCaseInput {
   const factory GetListEpisodeUseCaseInput({
     required List<String> animeName,
+    CancelToken? cancelToken,
   }) = _GetListEpisodeUseCaseInput;
 }
 

@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$GetPlayDataUseCaseInput {
   String get id => throw _privateConstructorUsedError;
+  CancelToken? get cancelToken => throw _privateConstructorUsedError;
 
   /// Create a copy of GetPlayDataUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -31,7 +32,7 @@ abstract class $GetPlayDataUseCaseInputCopyWith<$Res> {
           $Res Function(GetPlayDataUseCaseInput) then) =
       _$GetPlayDataUseCaseInputCopyWithImpl<$Res, GetPlayDataUseCaseInput>;
   @useResult
-  $Res call({String id});
+  $Res call({String id, CancelToken? cancelToken});
 }
 
 /// @nodoc
@@ -51,12 +52,17 @@ class _$GetPlayDataUseCaseInputCopyWithImpl<$Res,
   @override
   $Res call({
     Object? id = null,
+    Object? cancelToken = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      cancelToken: freezed == cancelToken
+          ? _value.cancelToken
+          : cancelToken // ignore: cast_nullable_to_non_nullable
+              as CancelToken?,
     ) as $Val);
   }
 }
@@ -70,7 +76,7 @@ abstract class _$$GetPlayDataUseCaseInputImplCopyWith<$Res>
       __$$GetPlayDataUseCaseInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id});
+  $Res call({String id, CancelToken? cancelToken});
 }
 
 /// @nodoc
@@ -89,12 +95,17 @@ class __$$GetPlayDataUseCaseInputImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? cancelToken = freezed,
   }) {
     return _then(_$GetPlayDataUseCaseInputImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      cancelToken: freezed == cancelToken
+          ? _value.cancelToken
+          : cancelToken // ignore: cast_nullable_to_non_nullable
+              as CancelToken?,
     ));
   }
 }
@@ -102,14 +113,16 @@ class __$$GetPlayDataUseCaseInputImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GetPlayDataUseCaseInputImpl implements _GetPlayDataUseCaseInput {
-  const _$GetPlayDataUseCaseInputImpl({required this.id});
+  const _$GetPlayDataUseCaseInputImpl({required this.id, this.cancelToken});
 
   @override
   final String id;
+  @override
+  final CancelToken? cancelToken;
 
   @override
   String toString() {
-    return 'GetPlayDataUseCaseInput(id: $id)';
+    return 'GetPlayDataUseCaseInput(id: $id, cancelToken: $cancelToken)';
   }
 
   @override
@@ -117,11 +130,13 @@ class _$GetPlayDataUseCaseInputImpl implements _GetPlayDataUseCaseInput {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetPlayDataUseCaseInputImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.cancelToken, cancelToken) ||
+                other.cancelToken == cancelToken));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, cancelToken);
 
   /// Create a copy of GetPlayDataUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -134,11 +149,14 @@ class _$GetPlayDataUseCaseInputImpl implements _GetPlayDataUseCaseInput {
 }
 
 abstract class _GetPlayDataUseCaseInput implements GetPlayDataUseCaseInput {
-  const factory _GetPlayDataUseCaseInput({required final String id}) =
-      _$GetPlayDataUseCaseInputImpl;
+  const factory _GetPlayDataUseCaseInput(
+      {required final String id,
+      final CancelToken? cancelToken}) = _$GetPlayDataUseCaseInputImpl;
 
   @override
   String get id;
+  @override
+  CancelToken? get cancelToken;
 
   /// Create a copy of GetPlayDataUseCaseInput
   /// with the given fields replaced by the non-null parameter values.

@@ -57,7 +57,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
 
     final newIndex =
         currentState.detail.season.indexWhere((item) => item.path == event.id);
-    if (currentState.tabViewItems![newIndex] != null) return;
+    if (newIndex == -1 || currentState.tabViewItems![newIndex] != null) return;
 
     try {
       final watchData = await _fetchWatchData(event.id);
@@ -99,10 +99,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   ) {
     final updatedTabViewItems =
         List<List<ChapDataEntity>?>.from(currentState.tabViewItems!);
-    if (newIndex != -1) {
-      updatedTabViewItems[newIndex] = newChaps;
-    }
-
+    updatedTabViewItems[newIndex] = newChaps;
     return updatedTabViewItems;
   }
 
@@ -117,10 +114,8 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   }
 
   Future<AnimeDetailEntity> _fetchDetailData(String id) async {
-    final output = await _getAnimeDetailUseCase.send(
-      GetAnimeDetailUseCaseInput(id: id),
-    );
-
+    final output =
+        await _getAnimeDetailUseCase.send(GetAnimeDetailUseCaseInput(id: id));
     return output.result;
   }
 
@@ -138,9 +133,8 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
 
   Future<_WatchData> _fetchWatchData(String id) async {
     final currentAppSettings = await _appSettingsUseCases.getAppSettings();
-    final playDataOutput = await _getPlayDataUseCase.send(
-      GetPlayDataUseCaseInput(id: id),
-    );
+    final playDataOutput =
+        await _getPlayDataUseCase.send(GetPlayDataUseCaseInput(id: id));
 
     return _WatchData(
       chaps: playDataOutput.result.chaps,
@@ -155,13 +149,13 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     );
   }
 
-  String _formatErrorMessage(dynamic error) {
-    return 'An error occurred: ${error.toString()}';
-  }
+  String _formatErrorMessage(dynamic error) =>
+      'An error occurred: ${error.toString()}';
 }
 
 class _WatchData {
-  _WatchData({required this.chaps, required this.skipIntro});
+  const _WatchData({required this.chaps, required this.skipIntro});
+
   final List<ChapDataEntity> chaps;
   final bool skipIntro;
 }

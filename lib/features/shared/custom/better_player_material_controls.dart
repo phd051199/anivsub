@@ -602,7 +602,7 @@ class _BetterPlayerCustomMaterialControlsState
     return Padding(
       padding: _controlsConfiguration.enablePlayPause
           ? const EdgeInsets.only(right: 24)
-          : const EdgeInsets.symmetric(horizontal: 22),
+          : const EdgeInsets.only(left: 24),
       child: RichText(
         text: TextSpan(
           text: BetterPlayerUtils.formatDuration(position),

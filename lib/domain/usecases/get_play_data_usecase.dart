@@ -1,4 +1,5 @@
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -15,7 +16,10 @@ class GetPlayDataUseCase extends BaseFutureUseCase<GetPlayDataUseCaseInput,
   Future<GetPlayDataUseCaseOutput> buildUseCase(
     GetPlayDataUseCaseInput input,
   ) async {
-    final result = await _repository.getPlayData(input.id);
+    final result = await _repository.getPlayData(
+      input.id,
+      cancelToken: input.cancelToken,
+    );
     return GetPlayDataUseCaseOutput(result: result);
   }
 }
@@ -24,6 +28,7 @@ class GetPlayDataUseCase extends BaseFutureUseCase<GetPlayDataUseCaseInput,
 class GetPlayDataUseCaseInput extends BaseInput with _$GetPlayDataUseCaseInput {
   const factory GetPlayDataUseCaseInput({
     required String id,
+    CancelToken? cancelToken,
   }) = _GetPlayDataUseCaseInput;
 }
 

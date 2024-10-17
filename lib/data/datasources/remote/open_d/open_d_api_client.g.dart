@@ -22,9 +22,13 @@ class _OpenDApiClient implements OpenDApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ListEpisodeResponseDTO> listEpisodes(List<String> name) async {
+  Future<ListEpisodeResponseDTO> listEpisodes(
+    List<String> name, {
+    CancelToken? cancelToken,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'name': name};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<ListEpisodeResponseDTO>(Options(
@@ -37,6 +41,7 @@ class _OpenDApiClient implements OpenDApiClient {
           '/list-episodes',
           queryParameters: queryParameters,
           data: _data,
+          cancelToken: cancelToken,
         )
         .copyWith(
             baseUrl: _combineBaseUrls(
@@ -55,9 +60,13 @@ class _OpenDApiClient implements OpenDApiClient {
   }
 
   @override
-  Future<EpisodeSkipResponseDTO> skipEpisode9animetv(String id) async {
+  Future<EpisodeSkipResponseDTO> skipEpisode9animetv(
+    String id, {
+    CancelToken? cancelToken,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<EpisodeSkipResponseDTO>(Options(
@@ -70,6 +79,7 @@ class _OpenDApiClient implements OpenDApiClient {
           'https://sk-9animetv.dph.workers.dev/episode-skip/${id}',
           queryParameters: queryParameters,
           data: _data,
+          cancelToken: cancelToken,
         )
         .copyWith(
             baseUrl: _combineBaseUrls(
@@ -88,9 +98,13 @@ class _OpenDApiClient implements OpenDApiClient {
   }
 
   @override
-  Future<EpisodeSkipResponseDTO> skipEpisodeHianime(String id) async {
+  Future<EpisodeSkipResponseDTO> skipEpisodeHianime(
+    String id, {
+    CancelToken? cancelToken,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<EpisodeSkipResponseDTO>(Options(
@@ -103,6 +117,7 @@ class _OpenDApiClient implements OpenDApiClient {
           'https://sk-hianime.dph.workers.dev/episode-skip/${id}',
           queryParameters: queryParameters,
           data: _data,
+          cancelToken: cancelToken,
         )
         .copyWith(
             baseUrl: _combineBaseUrls(

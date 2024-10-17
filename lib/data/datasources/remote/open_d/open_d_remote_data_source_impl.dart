@@ -1,4 +1,5 @@
 import 'package:anivsub/data/data_exports.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: OpenDRemoteDataSource)
@@ -7,15 +8,21 @@ class OpenDRemoteDataSourceImpl implements OpenDRemoteDataSource {
   final OpenDApiClient client;
 
   @override
-  Future<ListEpisodeResponseDTO> listEpisodes(List<String> name) {
-    return client.listEpisodes(name);
+  Future<ListEpisodeResponseDTO> listEpisodes(
+    List<String> name, {
+    CancelToken? cancelToken,
+  }) {
+    return client.listEpisodes(name, cancelToken: cancelToken);
   }
 
   @override
-  Future<EpisodeSkipResponseDTO> skipEpisode(String id) async {
+  Future<EpisodeSkipResponseDTO> skipEpisode(
+    String id, {
+    CancelToken? cancelToken,
+  }) async {
     final result = await Future.any([
-      client.skipEpisodeHianime(id),
-      client.skipEpisode9animetv(id),
+      client.skipEpisodeHianime(id, cancelToken: cancelToken),
+      client.skipEpisode9animetv(id, cancelToken: cancelToken),
     ]);
     return result;
   }

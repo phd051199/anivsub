@@ -64,3 +64,4 @@ analyzer:
     sort_constructors_first: error
     package_names: error
     use_to_and_as_if_applicable: error
+    must_call_super: ignore

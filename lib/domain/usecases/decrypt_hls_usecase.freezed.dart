@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$DecryptHlsUseCaseInput {
   String get hash => throw _privateConstructorUsedError;
+  CancelToken? get cancelToken => throw _privateConstructorUsedError;
 
   /// Create a copy of DecryptHlsUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -31,7 +32,7 @@ abstract class $DecryptHlsUseCaseInputCopyWith<$Res> {
           $Res Function(DecryptHlsUseCaseInput) then) =
       _$DecryptHlsUseCaseInputCopyWithImpl<$Res, DecryptHlsUseCaseInput>;
   @useResult
-  $Res call({String hash});
+  $Res call({String hash, CancelToken? cancelToken});
 }
 
 /// @nodoc
@@ -51,12 +52,17 @@ class _$DecryptHlsUseCaseInputCopyWithImpl<$Res,
   @override
   $Res call({
     Object? hash = null,
+    Object? cancelToken = freezed,
   }) {
     return _then(_value.copyWith(
       hash: null == hash
           ? _value.hash
           : hash // ignore: cast_nullable_to_non_nullable
               as String,
+      cancelToken: freezed == cancelToken
+          ? _value.cancelToken
+          : cancelToken // ignore: cast_nullable_to_non_nullable
+              as CancelToken?,
     ) as $Val);
   }
 }
@@ -70,7 +76,7 @@ abstract class _$$DecryptHlsUseCaseInputImplCopyWith<$Res>
       __$$DecryptHlsUseCaseInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String hash});
+  $Res call({String hash, CancelToken? cancelToken});
 }
 
 /// @nodoc
@@ -89,12 +95,17 @@ class __$$DecryptHlsUseCaseInputImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? hash = null,
+    Object? cancelToken = freezed,
   }) {
     return _then(_$DecryptHlsUseCaseInputImpl(
       hash: null == hash
           ? _value.hash
           : hash // ignore: cast_nullable_to_non_nullable
               as String,
+      cancelToken: freezed == cancelToken
+          ? _value.cancelToken
+          : cancelToken // ignore: cast_nullable_to_non_nullable
+              as CancelToken?,
     ));
   }
 }
@@ -102,14 +113,16 @@ class __$$DecryptHlsUseCaseInputImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DecryptHlsUseCaseInputImpl implements _DecryptHlsUseCaseInput {
-  const _$DecryptHlsUseCaseInputImpl({required this.hash});
+  const _$DecryptHlsUseCaseInputImpl({required this.hash, this.cancelToken});
 
   @override
   final String hash;
+  @override
+  final CancelToken? cancelToken;
 
   @override
   String toString() {
-    return 'DecryptHlsUseCaseInput(hash: $hash)';
+    return 'DecryptHlsUseCaseInput(hash: $hash, cancelToken: $cancelToken)';
   }
 
   @override
@@ -117,11 +130,13 @@ class _$DecryptHlsUseCaseInputImpl implements _DecryptHlsUseCaseInput {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DecryptHlsUseCaseInputImpl &&
-            (identical(other.hash, hash) || other.hash == hash));
+            (identical(other.hash, hash) || other.hash == hash) &&
+            (identical(other.cancelToken, cancelToken) ||
+                other.cancelToken == cancelToken));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, hash);
+  int get hashCode => Object.hash(runtimeType, hash, cancelToken);
 
   /// Create a copy of DecryptHlsUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -134,11 +149,14 @@ class _$DecryptHlsUseCaseInputImpl implements _DecryptHlsUseCaseInput {
 }
 
 abstract class _DecryptHlsUseCaseInput implements DecryptHlsUseCaseInput {
-  const factory _DecryptHlsUseCaseInput({required final String hash}) =
-      _$DecryptHlsUseCaseInputImpl;
+  const factory _DecryptHlsUseCaseInput(
+      {required final String hash,
+      final CancelToken? cancelToken}) = _$DecryptHlsUseCaseInputImpl;
 
   @override
   String get hash;
+  @override
+  CancelToken? get cancelToken;
 
   /// Create a copy of DecryptHlsUseCaseInput
   /// with the given fields replaced by the non-null parameter values.

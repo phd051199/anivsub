@@ -10,11 +10,20 @@ abstract class OpenDApiClient {
   factory OpenDApiClient(Dio dio) = _OpenDApiClient;
 
   @GET('/list-episodes')
-  Future<ListEpisodeResponseDTO> listEpisodes(@Query('name') List<String> name);
+  Future<ListEpisodeResponseDTO> listEpisodes(
+    @Query('name') List<String> name, {
+    @CancelRequest() CancelToken? cancelToken,
+  });
 
   @GET('$skApiUrl1/episode-skip/{id}')
-  Future<EpisodeSkipResponseDTO> skipEpisode9animetv(@Path('id') String id);
+  Future<EpisodeSkipResponseDTO> skipEpisode9animetv(
+    @Path('id') String id, {
+    @CancelRequest() CancelToken? cancelToken,
+  });
 
   @GET('$skApiUrl2/episode-skip/{id}')
-  Future<EpisodeSkipResponseDTO> skipEpisodeHianime(@Path('id') String id);
+  Future<EpisodeSkipResponseDTO> skipEpisodeHianime(
+    @Path('id') String id, {
+    @CancelRequest() CancelToken? cancelToken,
+  });
 }

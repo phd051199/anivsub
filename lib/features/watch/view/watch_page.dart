@@ -21,7 +21,7 @@ class WatchPage extends StatefulWidget {
 class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
-  late int _currentTabIndex;
+  int _currentTabIndex = 0;
 
   @override
   void initState() {
@@ -37,29 +37,26 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
 
   @override
   Widget buildPage(BuildContext context) {
-    return BlocProvider<VideoPlayerCubit>.value(
-      value: videoPlayerCubit,
-      child: BlocConsumer<WatchBloc, WatchState>(
-        listener: (context, state) {
-          if (state is WatchLoaded) {
-            _initializeTabController(state);
-          }
-          if (state is WatchError) {
-            onErrorListener(context, state);
-          }
-        },
-        builder: (context, state) {
-          return Scaffold(
-            body: SafeArea(
-              child: switch (state) {
-                WatchInitial() || WatchLoading() => const LoadingWidget(),
-                WatchLoaded() => _buildContent(context, state),
-                _ => Container(),
-              },
-            ),
-          );
-        },
-      ),
+    return BlocConsumer<WatchBloc, WatchState>(
+      listener: (context, state) {
+        if (state is WatchLoaded) {
+          _initializeTabController(state);
+        }
+        if (state is WatchError) {
+          onErrorListener(context, state);
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: SafeArea(
+            child: switch (state) {
+              WatchInitial() || WatchLoading() => const LoadingWidget(),
+              WatchLoaded() => _buildContent(context, state),
+              _ => Container(),
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -105,7 +102,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   Widget _buildVideoPlayer(WatchLoaded state) {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxHeight: 240),
-      child: EnhancedVideoPlayer(
+      child: VideoPlayerWidget(
         chaps: state.chaps,
         detail: state.detail,
         skipIntro: state.skipIntro,
@@ -201,6 +198,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
         itemBuilder: (context, index) => _buildChapterItem(
           context,
           chaps[index],
+          index,
           state,
         ),
       ),
@@ -210,25 +208,33 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   Widget _buildChapterItem(
     BuildContext context,
     ChapDataEntity chap,
+    int index,
     WatchLoaded state,
   ) {
-    return BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
-      builder: (context, videoPlayerState) {
-        final isPlaying = videoPlayerState is VideoPlayerLoaded &&
-            videoPlayerState.currentChap.id == chap.id;
-        return GestureDetector(
-          onTap: () => _onChapTap(isPlaying, chap, state),
-          child: _buildChapCard(context, isPlaying, chap),
-        );
-      },
+    return BlocProvider<VideoPlayerCubit>.value(
+      value: videoPlayerCubit,
+      child: BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
+        builder: (context, videoPlayerState) {
+          final isPlaying = (videoPlayerState is VideoPlayerLoaded &&
+                  videoPlayerState.currentChap.id == chap.id) ||
+              (videoPlayerState is VideoPlayerLoading && index == 0);
+
+          return GestureDetector(
+            onTap: () => _onChapTap(isPlaying, chap, state),
+            child: _buildChapCard(context, isPlaying, chap),
+          );
+        },
+      ),
     );
   }
 
   void _onChapTap(bool isPlaying, ChapDataEntity chap, WatchLoaded state) {
     if (!isPlaying) {
-      final currentChaps = state.tabViewItems?[_currentTabIndex];
+      if (state.tabViewItems?.isNotEmpty ?? false) {
+        final currentChaps = state.tabViewItems?[_currentTabIndex];
+        videoPlayerCubit.updateChapterList(currentChaps);
+      }
 
-      videoPlayerCubit.updateChapterList(currentChaps);
       videoPlayerCubit.loadChapter(chap);
     }
   }
