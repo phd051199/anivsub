@@ -15,7 +15,10 @@ abstract class ScrapingClient {
   Future<String> getAnimeDetail(@Path('id') String id);
 
   @GET('/{id}/xem-phim.html')
-  Future<String> getPlayData(@Path('id') String id);
+  Future<String> getPlayData(
+    @Path('id') String id, {
+    @CancelRequest() CancelToken? cancelToken,
+  });
 
   @GET('/tim-kiem/{keyword}/trang-{page}.html')
   Future<String> search(
@@ -29,8 +32,9 @@ abstract class ScrapingClient {
     @Field('id') String id,
     @Field('play') String play,
     @Field('link') String link,
-    @Field('backuplinks') String backuplinks,
-  );
+    @Field('backuplinks') String backuplinks, {
+    @CancelRequest() CancelToken? cancelToken,
+  });
 
   @POST('/ajax/suggest')
   @FormUrlEncoded()

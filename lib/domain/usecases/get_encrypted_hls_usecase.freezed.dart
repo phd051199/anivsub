@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$GetEncryptedHlsUseCaseInput {
   GetEncryptedHlsRequestEntity get data => throw _privateConstructorUsedError;
+  CancelToken? get cancelToken => throw _privateConstructorUsedError;
 
   /// Create a copy of GetEncryptedHlsUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +34,7 @@ abstract class $GetEncryptedHlsUseCaseInputCopyWith<$Res> {
       _$GetEncryptedHlsUseCaseInputCopyWithImpl<$Res,
           GetEncryptedHlsUseCaseInput>;
   @useResult
-  $Res call({GetEncryptedHlsRequestEntity data});
+  $Res call({GetEncryptedHlsRequestEntity data, CancelToken? cancelToken});
 }
 
 /// @nodoc
@@ -53,12 +54,17 @@ class _$GetEncryptedHlsUseCaseInputCopyWithImpl<$Res,
   @override
   $Res call({
     Object? data = null,
+    Object? cancelToken = freezed,
   }) {
     return _then(_value.copyWith(
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as GetEncryptedHlsRequestEntity,
+      cancelToken: freezed == cancelToken
+          ? _value.cancelToken
+          : cancelToken // ignore: cast_nullable_to_non_nullable
+              as CancelToken?,
     ) as $Val);
   }
 }
@@ -72,7 +78,7 @@ abstract class _$$GetEncryptedHlsUseCaseInputImplCopyWith<$Res>
       __$$GetEncryptedHlsUseCaseInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({GetEncryptedHlsRequestEntity data});
+  $Res call({GetEncryptedHlsRequestEntity data, CancelToken? cancelToken});
 }
 
 /// @nodoc
@@ -91,12 +97,17 @@ class __$$GetEncryptedHlsUseCaseInputImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? data = null,
+    Object? cancelToken = freezed,
   }) {
     return _then(_$GetEncryptedHlsUseCaseInputImpl(
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as GetEncryptedHlsRequestEntity,
+      cancelToken: freezed == cancelToken
+          ? _value.cancelToken
+          : cancelToken // ignore: cast_nullable_to_non_nullable
+              as CancelToken?,
     ));
   }
 }
@@ -105,14 +116,17 @@ class __$$GetEncryptedHlsUseCaseInputImplCopyWithImpl<$Res>
 
 class _$GetEncryptedHlsUseCaseInputImpl
     implements _GetEncryptedHlsUseCaseInput {
-  const _$GetEncryptedHlsUseCaseInputImpl({required this.data});
+  const _$GetEncryptedHlsUseCaseInputImpl(
+      {required this.data, this.cancelToken});
 
   @override
   final GetEncryptedHlsRequestEntity data;
+  @override
+  final CancelToken? cancelToken;
 
   @override
   String toString() {
-    return 'GetEncryptedHlsUseCaseInput(data: $data)';
+    return 'GetEncryptedHlsUseCaseInput(data: $data, cancelToken: $cancelToken)';
   }
 
   @override
@@ -120,11 +134,13 @@ class _$GetEncryptedHlsUseCaseInputImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetEncryptedHlsUseCaseInputImpl &&
-            (identical(other.data, data) || other.data == data));
+            (identical(other.data, data) || other.data == data) &&
+            (identical(other.cancelToken, cancelToken) ||
+                other.cancelToken == cancelToken));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, data);
+  int get hashCode => Object.hash(runtimeType, data, cancelToken);
 
   /// Create a copy of GetEncryptedHlsUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -139,11 +155,13 @@ class _$GetEncryptedHlsUseCaseInputImpl
 abstract class _GetEncryptedHlsUseCaseInput
     implements GetEncryptedHlsUseCaseInput {
   const factory _GetEncryptedHlsUseCaseInput(
-          {required final GetEncryptedHlsRequestEntity data}) =
-      _$GetEncryptedHlsUseCaseInputImpl;
+      {required final GetEncryptedHlsRequestEntity data,
+      final CancelToken? cancelToken}) = _$GetEncryptedHlsUseCaseInputImpl;
 
   @override
   GetEncryptedHlsRequestEntity get data;
+  @override
+  CancelToken? get cancelToken;
 
   /// Create a copy of GetEncryptedHlsUseCaseInput
   /// with the given fields replaced by the non-null parameter values.

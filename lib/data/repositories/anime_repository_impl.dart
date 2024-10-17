@@ -1,5 +1,6 @@
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AnimeRepository)
@@ -20,8 +21,14 @@ class AnimeRepositoryImpl implements AnimeRepository {
   }
 
   @override
-  Future<PlayDataEntity> getPlayData(String id) async {
-    final html = await _animeRemoteDataSource.getPlayData(id);
+  Future<PlayDataEntity> getPlayData(
+    String id, {
+    CancelToken? cancelToken,
+  }) async {
+    final html = await _animeRemoteDataSource.getPlayData(
+      id,
+      cancelToken: cancelToken,
+    );
     return PlayDataParser.parse(html);
   }
 
@@ -33,31 +40,49 @@ class AnimeRepositoryImpl implements AnimeRepository {
 
   @override
   Future<GetEncryptedHlsResponseEntity> getEncryptedHls(
-    GetEncryptedHlsRequestEntity bodyRequestEntity,
-  ) async {
+    GetEncryptedHlsRequestEntity bodyRequestEntity, {
+    CancelToken? cancelToken,
+  }) async {
     final response = await _animeRemoteDataSource.getEncryptedHls(
       bodyRequestEntity.toDTO(),
+      cancelToken: cancelToken,
     );
     return response.toEntity();
   }
 
   @override
-  Future<String> decryptHls(String hash) async {
+  Future<String> decryptHls(
+    String hash, {
+    CancelToken? cancelToken,
+  }) async {
     final link = await _decryptHlsService.decryptHls(
       DecryptHlsRequestDTO(hash: hash),
+      cancelToken: cancelToken,
     );
     return link;
   }
 
   @override
-  Future<ListEpisodeResponseEntity> listEpisodes(List<String> name) async {
-    final response = await _openDRemoteDataSource.listEpisodes(name);
+  Future<ListEpisodeResponseEntity> listEpisodes(
+    List<String> name, {
+    CancelToken? cancelToken,
+  }) async {
+    final response = await _openDRemoteDataSource.listEpisodes(
+      name,
+      cancelToken: cancelToken,
+    );
     return response.toEntity();
   }
 
   @override
-  Future<EpisodeSkipResponseEntity> skipEpisode(String id) async {
-    final response = await _openDRemoteDataSource.skipEpisode(id);
+  Future<EpisodeSkipResponseEntity> skipEpisode(
+    String id, {
+    CancelToken? cancelToken,
+  }) async {
+    final response = await _openDRemoteDataSource.skipEpisode(
+      id,
+      cancelToken: cancelToken,
+    );
     return response.toEntity();
   }
 

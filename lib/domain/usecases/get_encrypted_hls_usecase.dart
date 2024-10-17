@@ -1,4 +1,5 @@
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -15,7 +16,10 @@ class GetEncryptedHlsUseCase extends BaseFutureUseCase<
   Future<GetEncryptedHlsUseCaseOutput> buildUseCase(
     GetEncryptedHlsUseCaseInput input,
   ) async {
-    final result = await _repository.getEncryptedHls(input.data);
+    final result = await _repository.getEncryptedHls(
+      input.data,
+      cancelToken: input.cancelToken,
+    );
     return GetEncryptedHlsUseCaseOutput(result: result);
   }
 }
@@ -25,6 +29,7 @@ class GetEncryptedHlsUseCaseInput extends BaseInput
     with _$GetEncryptedHlsUseCaseInput {
   const factory GetEncryptedHlsUseCaseInput({
     required GetEncryptedHlsRequestEntity data,
+    CancelToken? cancelToken,
   }) = _GetEncryptedHlsUseCaseInput;
 }
 

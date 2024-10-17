@@ -1,4 +1,5 @@
 import 'package:anivsub/data/data_exports.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AnimeRemoteDataSource)
@@ -17,19 +18,21 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
   }
 
   @override
-  Future<String> getPlayData(String id) {
-    return client.getPlayData(id);
+  Future<String> getPlayData(String id, {CancelToken? cancelToken}) {
+    return client.getPlayData(id, cancelToken: cancelToken);
   }
 
   @override
   Future<GetEncryptedHlsResponseDTO> getEncryptedHls(
-    GetEncryptedHlsRequestDTO body,
-  ) {
+    GetEncryptedHlsRequestDTO body, {
+    CancelToken? cancelToken,
+  }) {
     return client.getEncryptedHls(
       body.id,
       body.play,
       body.link,
       body.backuplinks,
+      cancelToken: cancelToken,
     );
   }
 

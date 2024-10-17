@@ -22,9 +22,13 @@ class _CFWorkerApiClient implements CFWorkerApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<String> decryptHls(DecryptHlsRequestDTO body) async {
+  Future<String> decryptHls(
+    DecryptHlsRequestDTO body, {
+    CancelToken? cancelToken,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
@@ -38,6 +42,7 @@ class _CFWorkerApiClient implements CFWorkerApiClient {
           '/',
           queryParameters: queryParameters,
           data: _data,
+          cancelToken: cancelToken,
         )
         .copyWith(
             baseUrl: _combineBaseUrls(

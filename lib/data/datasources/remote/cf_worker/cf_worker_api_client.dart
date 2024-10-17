@@ -9,5 +9,8 @@ abstract class CFWorkerApiClient {
   factory CFWorkerApiClient(Dio dio) = _CFWorkerApiClient;
 
   @POST('/')
-  Future<String> decryptHls(@Body() DecryptHlsRequestDTO body);
+  Future<String> decryptHls(
+    @Body() DecryptHlsRequestDTO body, {
+    @CancelRequest() CancelToken? cancelToken,
+  });
 }

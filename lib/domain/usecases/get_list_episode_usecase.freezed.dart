@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$GetListEpisodeUseCaseInput {
   List<String> get animeName => throw _privateConstructorUsedError;
+  CancelToken? get cancelToken => throw _privateConstructorUsedError;
 
   /// Create a copy of GetListEpisodeUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +33,7 @@ abstract class $GetListEpisodeUseCaseInputCopyWith<$Res> {
       _$GetListEpisodeUseCaseInputCopyWithImpl<$Res,
           GetListEpisodeUseCaseInput>;
   @useResult
-  $Res call({List<String> animeName});
+  $Res call({List<String> animeName, CancelToken? cancelToken});
 }
 
 /// @nodoc
@@ -52,12 +53,17 @@ class _$GetListEpisodeUseCaseInputCopyWithImpl<$Res,
   @override
   $Res call({
     Object? animeName = null,
+    Object? cancelToken = freezed,
   }) {
     return _then(_value.copyWith(
       animeName: null == animeName
           ? _value.animeName
           : animeName // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      cancelToken: freezed == cancelToken
+          ? _value.cancelToken
+          : cancelToken // ignore: cast_nullable_to_non_nullable
+              as CancelToken?,
     ) as $Val);
   }
 }
@@ -71,7 +77,7 @@ abstract class _$$GetListEpisodeUseCaseInputImplCopyWith<$Res>
       __$$GetListEpisodeUseCaseInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> animeName});
+  $Res call({List<String> animeName, CancelToken? cancelToken});
 }
 
 /// @nodoc
@@ -90,12 +96,17 @@ class __$$GetListEpisodeUseCaseInputImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? animeName = null,
+    Object? cancelToken = freezed,
   }) {
     return _then(_$GetListEpisodeUseCaseInputImpl(
       animeName: null == animeName
           ? _value._animeName
           : animeName // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      cancelToken: freezed == cancelToken
+          ? _value.cancelToken
+          : cancelToken // ignore: cast_nullable_to_non_nullable
+              as CancelToken?,
     ));
   }
 }
@@ -104,7 +115,7 @@ class __$$GetListEpisodeUseCaseInputImplCopyWithImpl<$Res>
 
 class _$GetListEpisodeUseCaseInputImpl implements _GetListEpisodeUseCaseInput {
   const _$GetListEpisodeUseCaseInputImpl(
-      {required final List<String> animeName})
+      {required final List<String> animeName, this.cancelToken})
       : _animeName = animeName;
 
   final List<String> _animeName;
@@ -116,8 +127,11 @@ class _$GetListEpisodeUseCaseInputImpl implements _GetListEpisodeUseCaseInput {
   }
 
   @override
+  final CancelToken? cancelToken;
+
+  @override
   String toString() {
-    return 'GetListEpisodeUseCaseInput(animeName: $animeName)';
+    return 'GetListEpisodeUseCaseInput(animeName: $animeName, cancelToken: $cancelToken)';
   }
 
   @override
@@ -126,12 +140,14 @@ class _$GetListEpisodeUseCaseInputImpl implements _GetListEpisodeUseCaseInput {
         (other.runtimeType == runtimeType &&
             other is _$GetListEpisodeUseCaseInputImpl &&
             const DeepCollectionEquality()
-                .equals(other._animeName, _animeName));
+                .equals(other._animeName, _animeName) &&
+            (identical(other.cancelToken, cancelToken) ||
+                other.cancelToken == cancelToken));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_animeName));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_animeName), cancelToken);
 
   /// Create a copy of GetListEpisodeUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -146,11 +162,13 @@ class _$GetListEpisodeUseCaseInputImpl implements _GetListEpisodeUseCaseInput {
 abstract class _GetListEpisodeUseCaseInput
     implements GetListEpisodeUseCaseInput {
   const factory _GetListEpisodeUseCaseInput(
-          {required final List<String> animeName}) =
-      _$GetListEpisodeUseCaseInputImpl;
+      {required final List<String> animeName,
+      final CancelToken? cancelToken}) = _$GetListEpisodeUseCaseInputImpl;
 
   @override
   List<String> get animeName;
+  @override
+  CancelToken? get cancelToken;
 
   /// Create a copy of GetListEpisodeUseCaseInput
   /// with the given fields replaced by the non-null parameter values.

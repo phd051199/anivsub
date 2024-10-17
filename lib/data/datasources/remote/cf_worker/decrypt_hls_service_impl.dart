@@ -1,4 +1,5 @@
 import 'package:anivsub/data/data_exports.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: DecryptHlsService)
@@ -7,7 +8,10 @@ class DecryptHlsServiceImpl implements DecryptHlsService {
   final CFWorkerApiClient client;
 
   @override
-  Future<String> decryptHls(DecryptHlsRequestDTO body) {
-    return client.decryptHls(body);
+  Future<String> decryptHls(
+    DecryptHlsRequestDTO body, {
+    CancelToken? cancelToken,
+  }) {
+    return client.decryptHls(body, cancelToken: cancelToken);
   }
 }
