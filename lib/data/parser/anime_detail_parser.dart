@@ -100,9 +100,8 @@ class AnimeDetailParser {
             .trim() ??
         '';
     final String studio = _findInfo(document, infoListRight, 'studio')
+            ?.querySelector('a')
             ?.text
-            .split(':')
-            .last
             .trim() ??
         '';
     final Anchor seasonOf = _getInfoAnchor(
@@ -166,11 +165,10 @@ class AnimeDetailParser {
     dom.Element? listElement,
     String keyword,
   ) {
-    return listElement?.querySelectorAll('.AAIco-adjust').firstWhere(
-          (element) =>
-              element.text.toLowerCase().contains(keyword.toLowerCase()),
-          orElse: () => dom.Element.tag(''),
-        );
+    return listElement?.children.firstWhere(
+      (element) => element.text.toLowerCase().contains(keyword.toLowerCase()),
+      orElse: () => dom.Element.tag(''),
+    );
   }
 
   static AnimeDataEntity _getInfoTPost(dom.Element element, int now) {

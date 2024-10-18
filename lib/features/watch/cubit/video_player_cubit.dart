@@ -204,39 +204,64 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }
 
   Future<void> _setupPlayerDataSource(ChapDataEntity chap) async {
-    final chapterLink = await _getChapterLink(chap);
-    if (_playerController == null) {
-      throw Exception('Player controller is not initialized');
+    try {
+      final chapterLink = await _getChapterLink(chap);
+      Log.debug('Chapter link: $chapterLink');
+
+      if (_playerController == null) {
+        throw Exception('Player controller is not initialized');
+      }
+
+      if (chapterLink.isEmpty) {
+        throw Exception('Invalid chapter link: URL is empty');
+      }
+
+      Log.debug('Setting up data source with URL: $chapterLink');
+
+      await _playerController!.setupDataSource(
+        BetterPlayerDataSource(BetterPlayerDataSourceType.network, chapterLink),
+      );
+
+      Log.debug('Data source setup completed successfully');
+    } catch (e) {
+      Log.error('Error setting up player data source: $e');
+      if (e is DioException) {
+        Log.error('DioException details: ${e.message}, ${e.response}');
+      }
+      emit(VideoPlayerError('Failed to set up video source: $e'));
     }
-    await _playerController!.setupDataSource(
-      BetterPlayerDataSource(BetterPlayerDataSourceType.network, chapterLink),
-    );
   }
 
   Future<String> _getChapterLink(ChapDataEntity chap) async {
     if (_cancelToken == null) {
       throw Exception('Cancel token is not initialized');
     }
-    final hlsOutput = await _getEncryptedHlsUseCase.send(
-      GetEncryptedHlsUseCaseInput(
-        data: GetEncryptedHlsRequestEntity(
-          id: chap.id,
-          link: chap.hash,
-          play: chap.play,
+    try {
+      final hlsOutput = await _getEncryptedHlsUseCase.send(
+        GetEncryptedHlsUseCaseInput(
+          data: GetEncryptedHlsRequestEntity(
+            id: chap.id,
+            link: chap.hash,
+            play: chap.play,
+          ),
+          cancelToken: _cancelToken!,
         ),
-        cancelToken: _cancelToken!,
-      ),
-    );
-    if (hlsOutput.result.link.isEmpty) {
-      throw Exception('No HLS link available');
+      );
+      if (hlsOutput.result.link.isEmpty) {
+        throw Exception('No HLS link available');
+      }
+      Log.debug('HLS link: ${hlsOutput.result.link.first.file}');
+      final decryptOutput = await _decryptHlsUseCase.send(
+        DecryptHlsUseCaseInput(
+          hash: hlsOutput.result.link.first.file,
+          cancelToken: _cancelToken!,
+        ),
+      );
+      return decryptOutput.result;
+    } catch (e) {
+      Log.error('Error getting chapter link: $e');
+      rethrow;
     }
-    final decryptOutput = await _decryptHlsUseCase.send(
-      DecryptHlsUseCaseInput(
-        hash: hlsOutput.result.link.first.file,
-        cancelToken: _cancelToken!,
-      ),
-    );
-    return decryptOutput.result;
   }
 
   Future<void> loadAdditionalData(AnimeDetailEntity detail) async {
@@ -372,6 +397,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
 
   @override
   Future<void> close() async {
-    return dispose();
+    await dispose();
+    // Does not call super.close() to keep the singleton instance
   }
 }

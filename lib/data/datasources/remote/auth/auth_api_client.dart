@@ -1,6 +1,5 @@
 import 'package:anivsub/data/dto/refresh_user_session_request_dto.dart';
 import 'package:anivsub/data/dto/refresh_user_session_response_dto.dart';
-import 'package:anivsub/data/dto/user/user_dto.dart';
 import 'package:anivsub/data/dto/user_session_request_dto.dart';
 import 'package:anivsub/data/dto/user_session_response_dto.dart';
 import 'package:dio/dio.dart';
@@ -22,6 +21,16 @@ abstract class AuthApiClient {
     @Body() RefreshUserSessionRequestDTO refreshTokenRequestModel,
   );
 
-  @GET('/auth/me')
-  Future<UserDTO> getUser();
+  @GET('https://animevietsub.run/account/info')
+  Future<String> getUser();
+
+  @POST('https://animevietsub.run/account/login')
+  @FormUrlEncoded()
+  Future<String> loginWithUsernameAndPassword(
+    @Field('email') String email,
+    @Field('password') String password,
+    @Field('password_md5') String passwordMd5,
+    @Field('save_password') String savePassword,
+    @Field('submit') String submit,
+  );
 }

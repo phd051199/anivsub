@@ -10,7 +10,8 @@ abstract class CFWorkerApiClient {
 
   @POST('/')
   Future<String> decryptHls(
-    @Body() DecryptHlsRequestDTO body, {
+    @Body() DecryptHlsRequestDTO body,
+    @Query('platform') String platform, {
     @CancelRequest() CancelToken? cancelToken,
   });
 }

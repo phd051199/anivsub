@@ -105,10 +105,10 @@ extension GetItInjectableX on _i174.GetIt {
             sharedPreferenceService: gh<_i595.SharedPreferenceService>()));
     gh.lazySingleton<_i540.AuthRemoteDataSource>(() =>
         _i254.AuthRemoteDataSourceImpl(client: gh<_i502.AuthApiClient>()));
+    gh.lazySingleton<_i772.AuthRepository>(() => _i792.AuthRepositoryImpl(
+        authRemoteDataSource: gh<_i987.AuthRemoteDataSource>()));
     gh.lazySingleton<_i987.DecryptHlsService>(() =>
         _i689.DecryptHlsServiceImpl(client: gh<_i987.CFWorkerApiClient>()));
-    gh.lazySingleton<_i870.AuthRepository>(() => _i792.AuthRepositoryImpl(
-        authRemoteDataSource: gh<_i540.AuthRemoteDataSource>()));
     gh.singleton<_i107.ProfileUseCases>(
         () => _i107.ProfileUseCases(gh<_i772.AuthRepository>()));
     gh.lazySingleton<_i833.AuthLocalDataSource>(() =>

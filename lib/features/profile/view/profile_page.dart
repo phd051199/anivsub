@@ -51,7 +51,7 @@ class _ProfilePageState extends CubitState<ProfilePage, ProfileCubit> {
                           ),
                           const Gap(16),
                           Text(
-                            '${state.user.firstName} ${state.user.lastName}',
+                            '${state.user.firstName ?? ''} ${state.user.lastName ?? ''}',
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -59,7 +59,7 @@ class _ProfilePageState extends CubitState<ProfilePage, ProfileCubit> {
                           ),
                           const Gap(8),
                           Text(
-                            '${state.user.company?.title}\n@${state.user.company?.name}',
+                            '@${state.user.username}',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontSize: 16,

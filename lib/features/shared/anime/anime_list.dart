@@ -26,8 +26,7 @@ class AnimeList extends StatelessWidget {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-          childAspectRatio: 0.5,
+          childAspectRatio: 0.45,
         ),
         itemBuilder: (context, index) => AnimeCard(item: movies[index]),
       ),

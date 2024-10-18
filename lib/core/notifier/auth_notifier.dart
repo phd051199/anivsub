@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,20 +11,34 @@ class AuthNotifier with ChangeNotifier {
   final AuthUseCases authUseCases;
   var _status = AuthStatus.notAuthenticated;
   UserSessionResponseEntity? _loginResponseEntity;
+  String? _tokenName;
+  String? _tokenValue;
 
   AuthStatus get status => _status;
   UserSessionResponseEntity? get loginResponseEntity => _loginResponseEntity;
+  String? get tokenName => _tokenName;
+  String? get tokenValue => _tokenValue;
+
+  bool get isLogged =>
+      _loginResponseEntity != null && _tokenName != null && _tokenValue != null;
+
+  String? get uid {
+    if (_loginResponseEntity == null) return null;
+    final email = _loginResponseEntity!.email!;
+    final name = _loginResponseEntity!.username!;
+    return sha256.convert(utf8.encode(email + name)).toString();
+  }
 
   Future<void> doLogin(UserSessionResponseEntity? loginResponseEntity) async {
     if (loginResponseEntity == null) {
       doLogout();
       return;
     }
-    if (loginResponseEntity.accessToken == null ||
-        loginResponseEntity.refreshToken == null) {
-      doLogout();
-      return;
-    }
+    // if (loginResponseEntity.accessToken == null ||
+    //     loginResponseEntity.refreshToken == null) {
+    //   doLogout();
+    //   return;
+    // }
     await authUseCases.setLocalAuthToken(loginResponseEntity);
     _loginResponseEntity = loginResponseEntity;
     _status = AuthStatus.authenticated;
@@ -32,7 +49,7 @@ class AuthNotifier with ChangeNotifier {
     final data = await authUseCases.getLocalUserSession();
     data.when(
       (data) {
-        if (data.accessToken != null && data.refreshToken != null) {
+        if (data.email != null) {
           _loginResponseEntity = data;
           _status = AuthStatus.authenticated;
           notifyListeners();
@@ -79,6 +96,28 @@ class AuthNotifier with ChangeNotifier {
     _loginResponseEntity = null;
     await authUseCases.clearLocalSession();
     notifyListeners();
+  }
+
+  Future<void> login(String email, String password) async {
+    final response = await authUseCases.getLocalUserSession();
+    response.when(
+      (data) async {
+        await doLogin(data);
+        // _setTokenFromCookie(data.cookie);
+        // TODO: Implement logEvent("login")
+      },
+      (error) {
+        // Handle login error
+      },
+    );
+  }
+
+  void _setTokenFromCookie(String cookie) {
+    final parts = cookie.split(';')[0].split('=');
+    if (parts.length == 2) {
+      _tokenName = parts[0].trim();
+      _tokenValue = parts[1].trim();
+    }
   }
 }
 

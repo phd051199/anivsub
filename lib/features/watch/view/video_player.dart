@@ -73,14 +73,11 @@ class _VideoPlayerWidgetState
   BetterPlayerControlsConfiguration _createCustomControlsConfiguration() {
     return BetterPlayerControlsConfiguration(
       playIcon: Icons.play_arrow,
-      enableMute: false,
       enablePlayPause: false,
       enableAudioTracks: false,
       enableSubtitles: false,
       enablePlaybackSpeed: false,
-      enableQualities: false,
       enablePip: false,
-      loadingWidget: const SizedBox.shrink(),
       progressBarPlayedColor: context.theme.colorScheme.primary,
       progressBarHandleColor: context.theme.colorScheme.primary,
     );

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:anivsub/data/data_exports.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -12,6 +14,10 @@ class DecryptHlsServiceImpl implements DecryptHlsService {
     DecryptHlsRequestDTO body, {
     CancelToken? cancelToken,
   }) {
-    return client.decryptHls(body, cancelToken: cancelToken);
+    return client.decryptHls(
+      body,
+      Platform.operatingSystem,
+      cancelToken: cancelToken,
+    );
   }
 }

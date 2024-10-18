@@ -1,11 +1,8 @@
 import 'package:anivsub/core/network/response.dart';
-import 'package:anivsub/data/datasources/remote/auth/auth_remote_data_source.dart';
-import 'package:anivsub/domain/entities/refresh_user_session_request_entity.dart';
-import 'package:anivsub/domain/entities/refresh_user_session_response_entity.dart';
-import 'package:anivsub/domain/entities/user/user_entity.dart';
-import 'package:anivsub/domain/entities/user_session_request_entity.dart';
-import 'package:anivsub/domain/entities/user_session_response_entity.dart';
-import 'package:anivsub/domain/repositories/auth_repository.dart';
+import 'package:anivsub/core/utils/md5_utils.dart';
+import 'package:anivsub/data/data_exports.dart';
+import 'package:anivsub/data/parser/account_info_parser.dart';
+import 'package:anivsub/domain/domain_exports.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthRepository)
@@ -19,9 +16,23 @@ class AuthRepositoryImpl implements AuthRepository {
     UserSessionRequestEntity authRequestEntity,
   ) {
     return execute(() async {
-      final response =
-          await _authRemoteDataSource.getUserSession(authRequestEntity.toDTO());
-      return response.toEntity();
+      final html = await _authRemoteDataSource.loginWithUsernameAndPassword(
+        email: authRequestEntity.username,
+        passwordMd5: Md5Utils.hash(authRequestEntity.password),
+      );
+
+      if (html.contains('alert-error')) {
+        throw AccountInfoParser.parseError(html);
+      }
+
+      final userInfo = await getUser();
+
+      return UserSessionResponseEntity(
+        username: userInfo.username,
+        email: userInfo.email,
+        gender: userInfo.gender,
+        image: userInfo.image,
+      );
     });
   }
 
@@ -38,10 +49,17 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<ResponseWrapper<UserEntity>> getUser() {
-    return execute(() async {
-      final response = await _authRemoteDataSource.getUser();
-      return response.toEntity();
-    });
+  Future<UserEntity> getUser() async {
+    final html = await _authRemoteDataSource.getUser();
+    final user = AccountInfoParser.parse(html);
+
+    return UserEntity(
+      username: user['name'],
+      lastName: user['name'],
+      firstName: '',
+      email: user['email'],
+      gender: user['sex'],
+      image: user['avatar'],
+    );
   }
 }

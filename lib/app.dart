@@ -12,30 +12,33 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ThemeCubit(appSettingsUseCases),
+      create: (_) => ThemeCubit(appSettingsUseCases),
       child: BlocBuilder<ThemeCubit, ThemeState>(
-        builder: (context, state) {
-          return GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: FocusManager.instance.primaryFocus?.unfocus,
-            child: MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              theme: AppTheme.fromBrightness(
-                brightness: Brightness.light,
-                seedColor: state.appSettings.colorEnum,
-              ).toThemeData(),
-              darkTheme: AppTheme.fromBrightness(
-                brightness: Brightness.dark,
-                seedColor: state.appSettings.colorEnum,
-              ).toThemeData(),
-              themeMode: state.appSettings.themeModeEnum,
-              routerConfig: goRouter,
-            ),
-          );
-        },
+        builder: (context, state) => _buildApp(context, state),
       ),
     );
+  }
+
+  Widget _buildApp(BuildContext context, ThemeState state) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: FocusManager.instance.primaryFocus?.unfocus,
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: _buildTheme(Brightness.light, state.appSettings.colorEnum),
+        darkTheme: _buildTheme(Brightness.dark, state.appSettings.colorEnum),
+        themeMode: state.appSettings.themeModeEnum,
+        routerConfig: goRouter,
+      ),
+    );
+  }
+
+  ThemeData _buildTheme(Brightness brightness, Color seedColor) {
+    return AppTheme.fromBrightness(
+      brightness: brightness,
+      seedColor: seedColor,
+    ).toThemeData();
   }
 }

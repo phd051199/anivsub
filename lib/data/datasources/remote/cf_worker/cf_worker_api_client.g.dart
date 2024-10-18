@@ -23,11 +23,12 @@ class _CFWorkerApiClient implements CFWorkerApiClient {
 
   @override
   Future<String> decryptHls(
-    DecryptHlsRequestDTO body, {
+    DecryptHlsRequestDTO body,
+    String platform, {
     CancelToken? cancelToken,
   }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'platform': platform};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

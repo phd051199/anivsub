@@ -12,7 +12,7 @@ class ErrorDialog {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog.adaptive(
+        return AlertDialog(
           title: Text(title ?? context.l10n.genericErrorTitle),
           content: Text(message ?? context.l10n.genericErrorMessage),
           contentPadding: const EdgeInsets.all(16),

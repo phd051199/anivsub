@@ -1,37 +1,149 @@
 {
+  "@@locale": "vi",
   "login": "Đăng nhập",
+  "@login": {
+    "description": "Label for the login button."
+  },
   "email": "Email",
+  "@email": {
+    "description": "Label for the email input field."
+  },
   "password": "Mật khẩu",
+  "@password": {
+    "description": "Label for the password input field."
+  },
   "requiredField": "Trường bắt buộc",
+  "@requiredField": {
+    "description": "Message displayed for a required field."
+  },
   "home": "Trang chủ",
+  "@home": {
+    "description": "Label for the home navigation item."
+  },
   "search": "Tìm kiếm",
+  "@search": {
+    "description": "Label for the search navigation item."
+  },
   "profile": "Hồ sơ",
+  "@profile": {
+    "description": "Label for the profile navigation item."
+  },
   "settings": "Cài đặt",
+  "@settings": {
+    "description": "Label for the settings navigation item."
+  },
   "light": "Sáng",
+  "@light": {
+    "description": "Label for the light theme option."
+  },
   "dark": "Tối",
+  "@dark": {
+    "description": "Label for the dark theme option."
+  },
   "system": "Hệ thống",
-  "genericErrorTitle" : "Lỗi chung",
-  "genericErrorMessage" : "Đã xảy ra lỗi",
+  "@system": {
+    "description": "Label for the system theme option."
+  },
+  "genericErrorTitle": "Có lỗi xảy ra",
+  "@genericErrorTitle": {
+    "description": "Title for generic error messages."
+  },
+  "genericErrorMessage": "Đã có lỗi xảy ra. Vui lòng thử lại sau",
+  "@genericErrorMessage": {
+    "description": "Message displayed when an error occurs."
+  },
   "close": "Đóng",
+  "@close": {
+    "description": "Label for the close button."
+  },
   "retry": "Thử lại",
-  "login_error": "Lỗi khi đăng nhập",
-  "theme": "Chủ đề",
-  "themeMessage": "Chọn chủ đề",
+  "@retry": {
+    "description": "Label for the retry button."
+  },
+  "login_error": "Đăng nhập thất bại",
+  "@login_error": {
+    "description": "Message displayed when login fails."
+  },
+  "theme": "Giao diện",
+  "@theme": {
+    "description": "Label for the theme option."
+  },
+  "themeMessage": "Chọn giao diện",
+  "@themeMessage": {
+    "description": "Message for choosing a theme."
+  },
   "logout": "Đăng xuất",
-  "logoutMessage" : "Đăng xuất người dùng hiện tại",
+  "@logout": {
+    "description": "Label for the logout button."
+  },
+  "logoutMessage": "Bạn có chắc muốn đăng xuất?",
+  "@logoutMessage": {
+    "description": "Confirmation message for logout."
+  },
   "contacts": "Liên hệ",
-  "welcome": "Chào mừng {name}",
-  "themeColor": "Màu chủ đề",
-  "themeColorMessage": "Chọn màu chủ đề",
-  "themeScrollMessage": "Cuộn ngang để duyệt màu\nChạm để chọn",
-  "episode": "Tập ",
-  "ep": "Tập ",
+  "@contacts": {
+    "description": "Label for contacts."
+  },
+  "welcome": "Xin chào, {name}",
+  "@welcome": {
+    "description": "Welcome message with user's name.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
+  "themeColor": "Màu sắc",
+  "@themeColor": {
+    "description": "Label for theme color option."
+  },
+  "themeColorMessage": "Chọn màu sắc chủ đạo",
+  "@themeColorMessage": {
+    "description": "Message for choosing a theme color."
+  },
+  "themeScrollMessage": "Vuốt ngang để xem các màu\nChạm để chọn",
+  "@themeScrollMessage": {
+    "description": "Instructions for scrolling and selecting theme colors."
+  },
+  "episode": "Tập",
+  "@episode": {
+    "description": "Label for episode."
+  },
+  "ep": "Tập",
+  "@ep": {
+    "description": "Short label for episode."
+  },
   "views": "Lượt xem",
-  "hotUpdates": "Đề xuất",
-  "preRelease": "Sắp phát hành",
-  "topMovies": "Hàng đầu",
+  "@views": {
+    "description": "Label for view count."
+  },
+  "hotUpdates": "Đang hot",
+  "@hotUpdates": {
+    "description": "Label for hot updates section."
+  },
+  "preRelease": "Sắp chiếu",
+  "@preRelease": {
+    "description": "Label for pre-release section."
+  },
+  "topMovies": "Xem nhiều",
+  "@topMovies": {
+    "description": "Label for top movies section."
+  },
   "latestUpdates": "Mới cập nhật",
+  "@latestUpdates": {
+    "description": "Label for latest updates section."
+  },
   "thisSeason": "Mùa này",
-  "sliderMovies": "Slider movies",
-  "searchHint": "Từ khóa: tên tiếng nhật, anh, việt"
+  "@thisSeason": {
+    "description": "Label for this season's anime."
+  },
+  "sliderMovies": "Anime nổi bật",
+  "@sliderMovies": {
+    "description": "Label for featured anime slider."
+  },
+  "searchHint": "Từ khóa (tên tiếng Nhật, Anh, Việt)",
+  "@searchHint": {
+    "description": "Hint text for search input."
+  }
 }

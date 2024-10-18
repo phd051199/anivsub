@@ -153,8 +153,7 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 0.5,
+        childAspectRatio: 0.45,
       ),
       builderDelegate: PagedChildBuilderDelegate<AnimeDataEntity>(
         itemBuilder: (context, item, index) => AnimeCard(item: item),

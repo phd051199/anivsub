@@ -2,7 +2,6 @@ import 'package:anivsub/data/datasources/remote/auth/auth_api_client.dart';
 import 'package:anivsub/data/datasources/remote/auth/auth_remote_data_source.dart';
 import 'package:anivsub/data/dto/refresh_user_session_request_dto.dart';
 import 'package:anivsub/data/dto/refresh_user_session_response_dto.dart';
-import 'package:anivsub/data/dto/user/user_dto.dart';
 import 'package:anivsub/data/dto/user_session_request_dto.dart';
 import 'package:anivsub/data/dto/user_session_response_dto.dart';
 import 'package:injectable/injectable.dart';
@@ -27,7 +26,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<UserDTO> getUser() {
+  Future<String> getUser() {
     return client.getUser();
+  }
+
+  @override
+  Future<String> loginWithUsernameAndPassword({
+    required String email,
+    required String passwordMd5,
+  }) {
+    return client.loginWithUsernameAndPassword(email, '', passwordMd5, '1', '');
   }
 }

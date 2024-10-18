@@ -1,37 +1,149 @@
 {
+  "@@locale": "en",
   "login": "Login",
+  "@login": {
+    "description": "Label for the login button."
+  },
   "email": "Email",
+  "@email": {
+    "description": "Label for the email input field."
+  },
   "password": "Password",
+  "@password": {
+    "description": "Label for the password input field."
+  },
   "requiredField": "Required field",
+  "@requiredField": {
+    "description": "Message displayed for a required field."
+  },
   "home": "Home",
+  "@home": {
+    "description": "Label for the home navigation item."
+  },
   "search": "Search",
+  "@search": {
+    "description": "Label for the search navigation item."
+  },
   "profile": "Profile",
+  "@profile": {
+    "description": "Label for the profile navigation item."
+  },
   "settings": "Setting",
+  "@settings": {
+    "description": "Label for the settings navigation item."
+  },
   "light": "Light",
+  "@light": {
+    "description": "Label for the light theme option."
+  },
   "dark": "Dark",
+  "@dark": {
+    "description": "Label for the dark theme option."
+  },
   "system": "System",
-  "genericErrorTitle" : "Generic error",
-  "genericErrorMessage" : "An error occurred",
+  "@system": {
+    "description": "Label for the system theme option."
+  },
+  "genericErrorTitle": "Error",
+  "@genericErrorTitle": {
+    "description": "Title for generic error messages."
+  },
+  "genericErrorMessage": "An error occurred. Please try again later",
+  "@genericErrorMessage": {
+    "description": "Message displayed when an error occurs."
+  },
   "close": "Close",
+  "@close": {
+    "description": "Label for the close button."
+  },
   "retry": "Retry",
-  "login_error": "Error during login",
+  "@retry": {
+    "description": "Label for the retry button."
+  },
+  "login_error": "Login failed",
+  "@login_error": {
+    "description": "Message displayed when login fails."
+  },
   "theme": "Theme",
+  "@theme": {
+    "description": "Label for the theme setting."
+  },
   "themeMessage": "Select theme",
-  "logout": "Logout",
-  "logoutMessage" : "Disconnect the current user",
+  "@themeMessage": {
+    "description": "Message prompting the user to select a theme."
+  },
   "contacts": "Contacts",
-  "welcome": "Welcome {name}",
+  "@contacts": {
+    "description": "Label for the contacts section."
+  },
+  "welcome": "Welcome, {name}",
+  "@welcome": {
+    "description": "Welcome message with the user's name.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
   "themeColor": "Theme color",
+  "@themeColor": {
+    "description": "Label for the theme color setting."
+  },
   "themeColorMessage": "Select the theme color",
-  "themeScrollMessage": "Scroll horizontally to navigate colors\nTap to select",
+  "@themeColorMessage": {
+    "description": "Message prompting the user to select a theme color."
+  },
+  "themeScrollMessage": "Scroll horizontally to view colors\nTap to select",
+  "@themeScrollMessage": {
+    "description": "Instructions for selecting a theme color."
+  },
   "episode": "Episode",
+  "@episode": {
+    "description": "Label for an episode."
+  },
   "ep": "Ep.",
+  "@ep": {
+    "description": "Abbreviated label for an episode."
+  },
   "views": "Views",
-  "hotUpdates": "Hot updates",
-  "preRelease": "Pre-release",
-  "topMovies": "Top movies",
-  "latestUpdates": "Latest updates",
+  "@views": {
+    "description": "Label for the number of views."
+  },
+  "hotUpdates": "Trending now",
+  "@hotUpdates": {
+    "description": "Label for the trending updates section."
+  },
+  "preRelease": "Coming soon",
+  "@preRelease": {
+    "description": "Label for upcoming releases."
+  },
+  "topMovies": "Most watched anime",
+  "@topMovies": {
+    "description": "Label for the most watched anime section."
+  },
+  "latestUpdates": "Recently updated",
+  "@latestUpdates": {
+    "description": "Label for the recently updated section."
+  },
   "thisSeason": "This season",
-  "sliderMovies": "Slider movies",
-  "searchHint": "Keyword: name in jp, en or vi"
+  "@thisSeason": {
+    "description": "Label for the current season's anime."
+  },
+  "sliderMovies": "Featured anime",
+  "@sliderMovies": {
+    "description": "Label for the featured anime slider."
+  },
+  "searchHint": "Search anime (Japanese, English, or Vietnamese title)",
+  "@searchHint": {
+    "description": "Hint text for the anime search input."
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Label for the logout button"
+  },
+  "logoutMessage" : "Disconnect the current user",
+  "@logoutMessage": {
+    "description": "Message displayed when logging out"
+  }
 }

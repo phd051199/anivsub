@@ -17,13 +17,6 @@ class ProfileCubit extends BaseCubit<ProfileState> {
   Future<void> getUser() async {
     emit(const ProfileLoading());
     final response = await profileUseCases.getUser();
-    response.when(
-      (data) {
-        emit(ProfileLoaded(data));
-      },
-      (error) {
-        emit(ProfileError(error.toString()));
-      },
-    );
+    emit(ProfileLoaded(response));
   }
 }

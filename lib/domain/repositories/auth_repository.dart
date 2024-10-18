@@ -12,5 +12,5 @@ abstract class AuthRepository {
   Future<ResponseWrapper<RefreshUserSessionResponseEntity>> refreshUserSession(
     RefreshUserSessionRequestEntity refreshTokenRequestEntity,
   );
-  Future<ResponseWrapper<UserEntity>> getUser();
+  Future<UserEntity> getUser();
 }

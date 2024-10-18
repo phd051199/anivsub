@@ -82,7 +82,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
 
   Widget _buildAiringList(BuildContext context, List<AnimeDataEntity> movies) {
     return SizedBox(
-      height: context.screenSize.height * 0.2,
+      height: 180,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: movies.length,
@@ -99,7 +99,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
         pathParameters: {'path': movie.path},
       ),
       child: SizedBox(
-        width: context.screenSize.width * 0.85,
+        width: 340,
         child: Row(
           children: [
             AnimeThumbnail(movie: movie),
