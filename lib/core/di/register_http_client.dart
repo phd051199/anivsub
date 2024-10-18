@@ -26,7 +26,6 @@ void registerHttpClient(Environment environment) {
       NetworkClient.getDio(
         baseUrl: hostCurl,
         headers: headers,
-        cookieManager: cookieManager,
         isAuthenticated: false,
       ),
     ),

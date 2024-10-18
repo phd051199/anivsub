@@ -142,73 +142,6 @@ abstract class _LoadWatch implements LoadWatch {
 }
 
 /// @nodoc
-mixin _$ToggleSkipIntro {}
-
-/// @nodoc
-abstract class $ToggleSkipIntroCopyWith<$Res> {
-  factory $ToggleSkipIntroCopyWith(
-          ToggleSkipIntro value, $Res Function(ToggleSkipIntro) then) =
-      _$ToggleSkipIntroCopyWithImpl<$Res, ToggleSkipIntro>;
-}
-
-/// @nodoc
-class _$ToggleSkipIntroCopyWithImpl<$Res, $Val extends ToggleSkipIntro>
-    implements $ToggleSkipIntroCopyWith<$Res> {
-  _$ToggleSkipIntroCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ToggleSkipIntro
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-abstract class _$$ToggleSkipIntroImplCopyWith<$Res> {
-  factory _$$ToggleSkipIntroImplCopyWith(_$ToggleSkipIntroImpl value,
-          $Res Function(_$ToggleSkipIntroImpl) then) =
-      __$$ToggleSkipIntroImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ToggleSkipIntroImplCopyWithImpl<$Res>
-    extends _$ToggleSkipIntroCopyWithImpl<$Res, _$ToggleSkipIntroImpl>
-    implements _$$ToggleSkipIntroImplCopyWith<$Res> {
-  __$$ToggleSkipIntroImplCopyWithImpl(
-      _$ToggleSkipIntroImpl _value, $Res Function(_$ToggleSkipIntroImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ToggleSkipIntro
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$ToggleSkipIntroImpl implements _ToggleSkipIntro {
-  const _$ToggleSkipIntroImpl();
-
-  @override
-  String toString() {
-    return 'ToggleSkipIntro()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ToggleSkipIntroImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class _ToggleSkipIntro implements ToggleSkipIntro {
-  const factory _ToggleSkipIntro() = _$ToggleSkipIntroImpl;
-}
-
-/// @nodoc
 mixin _$ChangeSeasonTab {
   String get id => throw _privateConstructorUsedError;
 
@@ -411,11 +344,8 @@ mixin _$WatchState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            List<ChapDataEntity> chaps,
-            AnimeDetailEntity detail,
-            bool skipIntro,
-            List<List<ChapDataEntity>?>? tabViewItems)
+    required TResult Function(List<ChapDataEntity> chaps,
+            AnimeDetailEntity detail, List<List<ChapDataEntity>?>? tabViewItems)
         loaded,
     required TResult Function(String message) error,
   }) =>
@@ -425,7 +355,7 @@ mixin _$WatchState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            bool skipIntro, List<List<ChapDataEntity>?>? tabViewItems)?
+            List<List<ChapDataEntity>?>? tabViewItems)?
         loaded,
     TResult? Function(String message)? error,
   }) =>
@@ -435,7 +365,7 @@ mixin _$WatchState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            bool skipIntro, List<List<ChapDataEntity>?>? tabViewItems)?
+            List<List<ChapDataEntity>?>? tabViewItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -532,11 +462,8 @@ class _$WatchInitialImpl implements WatchInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            List<ChapDataEntity> chaps,
-            AnimeDetailEntity detail,
-            bool skipIntro,
-            List<List<ChapDataEntity>?>? tabViewItems)
+    required TResult Function(List<ChapDataEntity> chaps,
+            AnimeDetailEntity detail, List<List<ChapDataEntity>?>? tabViewItems)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -549,7 +476,7 @@ class _$WatchInitialImpl implements WatchInitial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            bool skipIntro, List<List<ChapDataEntity>?>? tabViewItems)?
+            List<List<ChapDataEntity>?>? tabViewItems)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -562,7 +489,7 @@ class _$WatchInitialImpl implements WatchInitial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            bool skipIntro, List<List<ChapDataEntity>?>? tabViewItems)?
+            List<List<ChapDataEntity>?>? tabViewItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -658,11 +585,8 @@ class _$WatchLoadingImpl implements WatchLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            List<ChapDataEntity> chaps,
-            AnimeDetailEntity detail,
-            bool skipIntro,
-            List<List<ChapDataEntity>?>? tabViewItems)
+    required TResult Function(List<ChapDataEntity> chaps,
+            AnimeDetailEntity detail, List<List<ChapDataEntity>?>? tabViewItems)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -675,7 +599,7 @@ class _$WatchLoadingImpl implements WatchLoading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            bool skipIntro, List<List<ChapDataEntity>?>? tabViewItems)?
+            List<List<ChapDataEntity>?>? tabViewItems)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -688,7 +612,7 @@ class _$WatchLoadingImpl implements WatchLoading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            bool skipIntro, List<List<ChapDataEntity>?>? tabViewItems)?
+            List<List<ChapDataEntity>?>? tabViewItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -750,7 +674,6 @@ abstract class _$$WatchLoadedImplCopyWith<$Res> {
   $Res call(
       {List<ChapDataEntity> chaps,
       AnimeDetailEntity detail,
-      bool skipIntro,
       List<List<ChapDataEntity>?>? tabViewItems});
 }
 
@@ -769,7 +692,6 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
   $Res call({
     Object? chaps = null,
     Object? detail = null,
-    Object? skipIntro = null,
     Object? tabViewItems = freezed,
   }) {
     return _then(_$WatchLoadedImpl(
@@ -781,10 +703,6 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
           ? _value.detail
           : detail // ignore: cast_nullable_to_non_nullable
               as AnimeDetailEntity,
-      skipIntro: null == skipIntro
-          ? _value.skipIntro
-          : skipIntro // ignore: cast_nullable_to_non_nullable
-              as bool,
       tabViewItems: freezed == tabViewItems
           ? _value._tabViewItems
           : tabViewItems // ignore: cast_nullable_to_non_nullable
@@ -799,7 +717,6 @@ class _$WatchLoadedImpl implements WatchLoaded {
   const _$WatchLoadedImpl(
       {required final List<ChapDataEntity> chaps,
       required this.detail,
-      this.skipIntro = false,
       final List<List<ChapDataEntity>?>? tabViewItems})
       : _chaps = chaps,
         _tabViewItems = tabViewItems;
@@ -814,9 +731,6 @@ class _$WatchLoadedImpl implements WatchLoaded {
 
   @override
   final AnimeDetailEntity detail;
-  @override
-  @JsonKey()
-  final bool skipIntro;
   final List<List<ChapDataEntity>?>? _tabViewItems;
   @override
   List<List<ChapDataEntity>?>? get tabViewItems {
@@ -829,7 +743,7 @@ class _$WatchLoadedImpl implements WatchLoaded {
 
   @override
   String toString() {
-    return 'WatchState.loaded(chaps: $chaps, detail: $detail, skipIntro: $skipIntro, tabViewItems: $tabViewItems)';
+    return 'WatchState.loaded(chaps: $chaps, detail: $detail, tabViewItems: $tabViewItems)';
   }
 
   @override
@@ -839,8 +753,6 @@ class _$WatchLoadedImpl implements WatchLoaded {
             other is _$WatchLoadedImpl &&
             const DeepCollectionEquality().equals(other._chaps, _chaps) &&
             (identical(other.detail, detail) || other.detail == detail) &&
-            (identical(other.skipIntro, skipIntro) ||
-                other.skipIntro == skipIntro) &&
             const DeepCollectionEquality()
                 .equals(other._tabViewItems, _tabViewItems));
   }
@@ -850,7 +762,6 @@ class _$WatchLoadedImpl implements WatchLoaded {
       runtimeType,
       const DeepCollectionEquality().hash(_chaps),
       detail,
-      skipIntro,
       const DeepCollectionEquality().hash(_tabViewItems));
 
   /// Create a copy of WatchState
@@ -866,15 +777,12 @@ class _$WatchLoadedImpl implements WatchLoaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            List<ChapDataEntity> chaps,
-            AnimeDetailEntity detail,
-            bool skipIntro,
-            List<List<ChapDataEntity>?>? tabViewItems)
+    required TResult Function(List<ChapDataEntity> chaps,
+            AnimeDetailEntity detail, List<List<ChapDataEntity>?>? tabViewItems)
         loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(chaps, detail, skipIntro, tabViewItems);
+    return loaded(chaps, detail, tabViewItems);
   }
 
   @override
@@ -883,11 +791,11 @@ class _$WatchLoadedImpl implements WatchLoaded {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            bool skipIntro, List<List<ChapDataEntity>?>? tabViewItems)?
+            List<List<ChapDataEntity>?>? tabViewItems)?
         loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(chaps, detail, skipIntro, tabViewItems);
+    return loaded?.call(chaps, detail, tabViewItems);
   }
 
   @override
@@ -896,13 +804,13 @@ class _$WatchLoadedImpl implements WatchLoaded {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            bool skipIntro, List<List<ChapDataEntity>?>? tabViewItems)?
+            List<List<ChapDataEntity>?>? tabViewItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(chaps, detail, skipIntro, tabViewItems);
+      return loaded(chaps, detail, tabViewItems);
     }
     return orElse();
   }
@@ -949,12 +857,10 @@ abstract class WatchLoaded implements WatchState {
   const factory WatchLoaded(
       {required final List<ChapDataEntity> chaps,
       required final AnimeDetailEntity detail,
-      final bool skipIntro,
       final List<List<ChapDataEntity>?>? tabViewItems}) = _$WatchLoadedImpl;
 
   List<ChapDataEntity> get chaps;
   AnimeDetailEntity get detail;
-  bool get skipIntro;
   List<List<ChapDataEntity>?>? get tabViewItems;
 
   /// Create a copy of WatchState
@@ -1034,11 +940,8 @@ class _$WatchErrorImpl implements WatchError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(
-            List<ChapDataEntity> chaps,
-            AnimeDetailEntity detail,
-            bool skipIntro,
-            List<List<ChapDataEntity>?>? tabViewItems)
+    required TResult Function(List<ChapDataEntity> chaps,
+            AnimeDetailEntity detail, List<List<ChapDataEntity>?>? tabViewItems)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -1051,7 +954,7 @@ class _$WatchErrorImpl implements WatchError {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            bool skipIntro, List<List<ChapDataEntity>?>? tabViewItems)?
+            List<List<ChapDataEntity>?>? tabViewItems)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -1064,7 +967,7 @@ class _$WatchErrorImpl implements WatchError {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            bool skipIntro, List<List<ChapDataEntity>?>? tabViewItems)?
+            List<List<ChapDataEntity>?>? tabViewItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),

@@ -9,6 +9,7 @@ import 'package:anivsub/features/shared/anime/anime_thumbnail.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
@@ -49,9 +50,8 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
 
   Widget _buildHomeContent(BuildContext context, HomeLoaded state) {
     return RefreshIndicator(
-      onRefresh: () {
+      onRefresh: () async {
         bloc.add(const LoadHome());
-        return Future.value();
       },
       child: CustomScrollView(
         slivers: [
@@ -60,16 +60,12 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 _buildAiringList(context, state.homeData.sliderMovies),
+                const Gap(12),
                 ...state.homeData.toMap().keys.map((key) {
-                  return Column(
-                    children: [
-                      const SizedBox(height: 16),
-                      _buildAnimeSection(
-                        context,
-                        state.homeData.toMapLocalized(context)[key]!,
-                        state.homeData.toMap()[key],
-                      ),
-                    ],
+                  return _buildAnimeSection(
+                    context,
+                    state.homeData.toMapLocalized(context)[key]!,
+                    state.homeData.toMap()[key],
                   );
                 }),
               ]),
@@ -96,13 +92,16 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
     return GestureDetector(
       onTap: () => context.pushNamed(
         ScreenNames.watch,
-        pathParameters: {'path': movie.path},
+        queryParameters: {'path': movie.path},
       ),
       child: SizedBox(
         width: 340,
         child: Row(
           children: [
-            AnimeThumbnail(movie: movie),
+            AnimeThumbnail(
+              imageUrl: movie.image,
+              process: movie.process,
+            ),
             AnimeDescription(movie: movie),
           ],
         ),

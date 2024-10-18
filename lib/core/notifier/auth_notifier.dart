@@ -25,7 +25,7 @@ class AuthNotifier with ChangeNotifier {
   String? get uid {
     if (_loginResponseEntity == null) return null;
     final email = _loginResponseEntity!.email!;
-    final name = _loginResponseEntity!.username!;
+    final name = _loginResponseEntity!.firstName!;
     return sha256.convert(utf8.encode(email + name)).toString();
   }
 

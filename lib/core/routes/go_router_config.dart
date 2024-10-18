@@ -11,23 +11,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-abstract final class ScreenPaths {
-  static const home = '/';
-  static const search = '/search';
-  static const profile = '/profile';
-  static const settings = '/settings';
-  static const login = '/login';
-  static const watch = '/watch/:path';
-}
-
-abstract final class ScreenNames {
-  static const home = 'Home';
-  static const search = 'Search';
-  static const profile = 'Profile';
-  static const settings = 'Settings';
-  static const login = 'Login';
-  static const watch = 'Watch';
-}
+part 'screen_names.dart';
+part 'screen_paths.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
@@ -36,73 +21,79 @@ final goRouter = GoRouter(
   initialLocation: ScreenPaths.home,
   navigatorKey: _rootNavigatorKey,
   refreshListenable: authNotifier,
-  redirect: (context, state) {
-    if (authNotifier.status == AuthStatus.notAuthenticated) {
-      return ScreenPaths.login;
-    }
-    if (authNotifier.status == AuthStatus.authenticated &&
-        state.matchedLocation == ScreenPaths.login) {
-      return ScreenPaths.home;
-    }
-    return null;
-  },
+  redirect: _handleRedirect,
   routes: [
-    GoRoute(
-      name: ScreenNames.login,
-      path: ScreenPaths.login,
-      builder: (context, state) => const LoginScreen(),
-    ),
-    GoRoute(
-      name: ScreenNames.watch,
-      path: ScreenPaths.watch,
-      builder: (context, state) {
-        final String path = state.pathParameters['path']!;
+    _loginRoute,
+    _watchRoute,
+    _bottomNavigationRoute,
+  ],
+);
 
-        return WatchPage(path: path);
-      },
+String? _handleRedirect(BuildContext context, GoRouterState state) {
+  if (authNotifier.status == AuthStatus.notAuthenticated) {
+    return ScreenPaths.login;
+  }
+  if (authNotifier.status == AuthStatus.authenticated &&
+      state.matchedLocation == ScreenPaths.login) {
+    return ScreenPaths.home;
+  }
+  return null;
+}
+
+final _loginRoute = GoRoute(
+  name: ScreenNames.login,
+  path: ScreenPaths.login,
+  builder: (context, state) => const LoginScreen(),
+);
+
+final _watchRoute = GoRoute(
+  name: ScreenNames.watch,
+  path: ScreenPaths.watch,
+  builder: (context, state) => WatchPage(
+    path: state.uri.queryParameters['path']!,
+  ),
+);
+
+final _bottomNavigationRoute = StatefulShellRoute.indexedStack(
+  builder: (context, state, navigationShell) => BottomNavigationPage(
+    navigationShell: navigationShell,
+  ),
+  branches: [
+    StatefulShellBranch(
+      routes: [_homeRoute],
     ),
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) => BottomNavigationPage(
-        navigationShell: navigationShell,
-      ),
-      branches: [
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              name: ScreenNames.home,
-              path: ScreenPaths.home,
-              builder: (context, state) => const HomePage(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              name: ScreenNames.search,
-              path: ScreenPaths.search,
-              builder: (context, state) => const SearchPage(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              name: ScreenNames.profile,
-              path: ScreenPaths.profile,
-              builder: (context, state) => const ProfilePage(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              name: ScreenNames.settings,
-              path: ScreenPaths.settings,
-              builder: (context, state) => const SettingsPage(),
-            ),
-          ],
-        ),
-      ],
+    StatefulShellBranch(
+      routes: [_searchRoute],
+    ),
+    StatefulShellBranch(
+      routes: [_profileRoute],
+    ),
+    StatefulShellBranch(
+      routes: [_settingsRoute],
     ),
   ],
+);
+
+final _homeRoute = GoRoute(
+  name: ScreenNames.home,
+  path: ScreenPaths.home,
+  builder: (context, state) => const HomePage(),
+);
+
+final _searchRoute = GoRoute(
+  name: ScreenNames.search,
+  path: ScreenPaths.search,
+  builder: (context, state) => const SearchPage(),
+);
+
+final _profileRoute = GoRoute(
+  name: ScreenNames.profile,
+  path: ScreenPaths.profile,
+  builder: (context, state) => const ProfilePage(),
+);
+
+final _settingsRoute = GoRoute(
+  name: ScreenNames.settings,
+  path: ScreenPaths.settings,
+  builder: (context, state) => const SettingsPage(),
 );

@@ -13,12 +13,10 @@ class VideoPlayerWidget extends StatefulWidget {
   const VideoPlayerWidget({
     super.key,
     required this.chaps,
-    required this.skipIntro,
     required this.detail,
   });
 
   final List<ChapDataEntity> chaps;
-  final bool skipIntro;
   final AnimeDetailEntity detail;
 
   @override
@@ -28,16 +26,20 @@ class VideoPlayerWidget extends StatefulWidget {
 class _VideoPlayerWidgetState
     extends CubitState<VideoPlayerWidget, VideoPlayerCubit> {
   late final BetterPlayerController _betterPlayerController;
-  late bool _skipIntro;
   late List<ChapDataEntity> _chaps;
 
   @override
   void initState() {
     super.initState();
-    _skipIntro = widget.skipIntro;
     _chaps = widget.chaps;
     _initializeVideoPlayer();
     _initializeCubit();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    cubit.close();
   }
 
   void _initializeVideoPlayer() {
@@ -73,6 +75,7 @@ class _VideoPlayerWidgetState
   BetterPlayerControlsConfiguration _createCustomControlsConfiguration() {
     return BetterPlayerControlsConfiguration(
       playIcon: Icons.play_arrow,
+      showControlsOnInitialize: false,
       enablePlayPause: false,
       enableAudioTracks: false,
       enableSubtitles: false,
@@ -89,7 +92,6 @@ class _VideoPlayerWidgetState
         chaps: _chaps,
         detail: widget.detail,
         controller: _betterPlayerController,
-        skipIntro: _skipIntro,
       );
     }
   }
@@ -97,15 +99,7 @@ class _VideoPlayerWidgetState
   @override
   void didUpdateWidget(VideoPlayerWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _updateSkipIntro();
     _updateChapterList();
-  }
-
-  void _updateSkipIntro() {
-    if (widget.skipIntro != _skipIntro) {
-      _skipIntro = widget.skipIntro;
-      cubit.updateSkipIntro(_skipIntro);
-    }
   }
 
   void _updateChapterList() {
@@ -124,24 +118,25 @@ class _VideoPlayerWidgetState
           context.showSnackBar(state.message);
         }
       },
-      builder: (context, state) => _chaps.isNotEmpty
-          ? BetterPlayer(controller: _betterPlayerController)
-          : _buildEmptyPlayer(context),
+      builder: (context, state) => switch (state) {
+        VideoPlayerInitial() || VideoPlayerLoading() => _buildEmptyPlayer(
+            context,
+            const Center(child: CircularProgressIndicator(color: Colors.white)),
+          ),
+        VideoPlayerLoaded() => _chaps.isNotEmpty
+            ? BetterPlayer(controller: _betterPlayerController)
+            : _buildEmptyPlayer(context, _buildErrorText(context)),
+        _ => _buildEmptyPlayer(context, _buildErrorText(context)),
+      },
     );
   }
 
-  Widget _buildEmptyPlayer(BuildContext context) {
+  Widget _buildEmptyPlayer(BuildContext context, Widget child) {
     return Stack(
       children: [
-        const ColoredBox(color: Colors.black),
-        Center(
-          child: Text(
-            'No chapters found',
-            style: context.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
+        Container(
+          color: Colors.black,
+          child: child,
         ),
         Positioned(
           top: 10,
@@ -152,6 +147,18 @@ class _VideoPlayerWidgetState
           ),
         ),
       ],
+    );
+  }
+
+  Center _buildErrorText(BuildContext context) {
+    return Center(
+      child: Text(
+        'No chapters found',
+        style: context.textTheme.bodyMedium?.copyWith(
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

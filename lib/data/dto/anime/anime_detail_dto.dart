@@ -33,6 +33,7 @@ class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> {
     this.seasonOf,
     this.trailer,
     required this.toPut,
+    this.schedule,
   });
 
   factory AnimeDetailDTO.fromJson(Map<String, dynamic> json) =>
@@ -43,7 +44,7 @@ class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> {
   final String poster;
   final String? pathToView;
   final String description;
-  final int rate;
+  final double rate;
   final int countRate;
   final String duration;
   final int yearOf;
@@ -60,6 +61,7 @@ class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> {
   final Anchor? seasonOf;
   final String? trailer;
   final List<AnimeDataResponseDTO> toPut;
+  final String? schedule;
 
   @override
   List<Object?> get props => [
@@ -86,6 +88,7 @@ class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> {
         seasonOf,
         trailer,
         toPut,
+        schedule,
       ];
 
   @override
@@ -114,6 +117,7 @@ class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> {
       seasonOf: seasonOf,
       trailer: trailer,
       toPut: toPut.map((dto) => dto.toEntity()).toList(),
+      schedule: schedule,
     );
   }
 

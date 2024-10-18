@@ -25,7 +25,9 @@ mixin _$VideoPlayerState {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)
         loaded,
     required TResult Function(String message) error,
   }) =>
@@ -39,7 +41,9 @@ mixin _$VideoPlayerState {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)?
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)?
         loaded,
     TResult? Function(String message)? error,
   }) =>
@@ -53,7 +57,9 @@ mixin _$VideoPlayerState {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)?
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -155,7 +161,9 @@ class _$VideoPlayerInitialImpl implements VideoPlayerInitial {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -172,7 +180,9 @@ class _$VideoPlayerInitialImpl implements VideoPlayerInitial {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)?
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -189,7 +199,9 @@ class _$VideoPlayerInitialImpl implements VideoPlayerInitial {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)?
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -290,7 +302,9 @@ class _$VideoPlayerLoadingImpl implements VideoPlayerLoading {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -307,7 +321,9 @@ class _$VideoPlayerLoadingImpl implements VideoPlayerLoading {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)?
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -324,7 +340,9 @@ class _$VideoPlayerLoadingImpl implements VideoPlayerLoading {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)?
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -388,7 +406,9 @@ abstract class _$$VideoPlayerLoadedImplCopyWith<$Res> {
       ChapDataEntity currentChap,
       ChapDataEntity? nextChap,
       ListEpisodeResponseEntity? listEpisode,
-      EpisodeSkipResponseEntity? episodeSkip});
+      EpisodeSkipResponseEntity? episodeSkip,
+      bool? skipIntro,
+      bool? showSkipIntroText});
 }
 
 /// @nodoc
@@ -409,6 +429,8 @@ class __$$VideoPlayerLoadedImplCopyWithImpl<$Res>
     Object? nextChap = freezed,
     Object? listEpisode = freezed,
     Object? episodeSkip = freezed,
+    Object? skipIntro = freezed,
+    Object? showSkipIntroText = freezed,
   }) {
     return _then(_$VideoPlayerLoadedImpl(
       chaps: null == chaps
@@ -431,6 +453,14 @@ class __$$VideoPlayerLoadedImplCopyWithImpl<$Res>
           ? _value.episodeSkip
           : episodeSkip // ignore: cast_nullable_to_non_nullable
               as EpisodeSkipResponseEntity?,
+      skipIntro: freezed == skipIntro
+          ? _value.skipIntro
+          : skipIntro // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      showSkipIntroText: freezed == showSkipIntroText
+          ? _value.showSkipIntroText
+          : showSkipIntroText // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -443,7 +473,9 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
       required this.currentChap,
       this.nextChap,
       this.listEpisode,
-      this.episodeSkip})
+      this.episodeSkip,
+      this.skipIntro = false,
+      this.showSkipIntroText = false})
       : _chaps = chaps;
 
   final List<ChapDataEntity> _chaps;
@@ -462,10 +494,16 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
   final ListEpisodeResponseEntity? listEpisode;
   @override
   final EpisodeSkipResponseEntity? episodeSkip;
+  @override
+  @JsonKey()
+  final bool? skipIntro;
+  @override
+  @JsonKey()
+  final bool? showSkipIntroText;
 
   @override
   String toString() {
-    return 'VideoPlayerState.loaded(chaps: $chaps, currentChap: $currentChap, nextChap: $nextChap, listEpisode: $listEpisode, episodeSkip: $episodeSkip)';
+    return 'VideoPlayerState.loaded(chaps: $chaps, currentChap: $currentChap, nextChap: $nextChap, listEpisode: $listEpisode, episodeSkip: $episodeSkip, skipIntro: $skipIntro, showSkipIntroText: $showSkipIntroText)';
   }
 
   @override
@@ -481,7 +519,11 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
             (identical(other.listEpisode, listEpisode) ||
                 other.listEpisode == listEpisode) &&
             (identical(other.episodeSkip, episodeSkip) ||
-                other.episodeSkip == episodeSkip));
+                other.episodeSkip == episodeSkip) &&
+            (identical(other.skipIntro, skipIntro) ||
+                other.skipIntro == skipIntro) &&
+            (identical(other.showSkipIntroText, showSkipIntroText) ||
+                other.showSkipIntroText == showSkipIntroText));
   }
 
   @override
@@ -491,7 +533,9 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
       currentChap,
       nextChap,
       listEpisode,
-      episodeSkip);
+      episodeSkip,
+      skipIntro,
+      showSkipIntroText);
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -512,11 +556,14 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)
         loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(chaps, currentChap, nextChap, listEpisode, episodeSkip);
+    return loaded(chaps, currentChap, nextChap, listEpisode, episodeSkip,
+        skipIntro, showSkipIntroText);
   }
 
   @override
@@ -529,11 +576,14 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)?
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)?
         loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(chaps, currentChap, nextChap, listEpisode, episodeSkip);
+    return loaded?.call(chaps, currentChap, nextChap, listEpisode, episodeSkip,
+        skipIntro, showSkipIntroText);
   }
 
   @override
@@ -546,13 +596,16 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)?
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(chaps, currentChap, nextChap, listEpisode, episodeSkip);
+      return loaded(chaps, currentChap, nextChap, listEpisode, episodeSkip,
+          skipIntro, showSkipIntroText);
     }
     return orElse();
   }
@@ -601,13 +654,17 @@ abstract class VideoPlayerLoaded implements VideoPlayerState {
       required final ChapDataEntity currentChap,
       final ChapDataEntity? nextChap,
       final ListEpisodeResponseEntity? listEpisode,
-      final EpisodeSkipResponseEntity? episodeSkip}) = _$VideoPlayerLoadedImpl;
+      final EpisodeSkipResponseEntity? episodeSkip,
+      final bool? skipIntro,
+      final bool? showSkipIntroText}) = _$VideoPlayerLoadedImpl;
 
   List<ChapDataEntity> get chaps;
   ChapDataEntity get currentChap;
   ChapDataEntity? get nextChap;
   ListEpisodeResponseEntity? get listEpisode;
   EpisodeSkipResponseEntity? get episodeSkip;
+  bool? get skipIntro;
+  bool? get showSkipIntroText;
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -692,7 +749,9 @@ class _$VideoPlayerErrorImpl implements VideoPlayerError {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -709,7 +768,9 @@ class _$VideoPlayerErrorImpl implements VideoPlayerError {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)?
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -726,7 +787,9 @@ class _$VideoPlayerErrorImpl implements VideoPlayerError {
             ChapDataEntity currentChap,
             ChapDataEntity? nextChap,
             ListEpisodeResponseEntity? listEpisode,
-            EpisodeSkipResponseEntity? episodeSkip)?
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),

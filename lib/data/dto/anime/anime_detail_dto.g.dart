@@ -14,7 +14,7 @@ AnimeDetailDTO _$AnimeDetailDTOFromJson(Map<String, dynamic> json) =>
       poster: json['poster'] as String,
       pathToView: json['pathToView'] as String?,
       description: json['description'] as String,
-      rate: (json['rate'] as num).toInt(),
+      rate: (json['rate'] as num).toDouble(),
       countRate: (json['countRate'] as num).toInt(),
       duration: json['duration'] as String,
       yearOf: (json['yearOf'] as num).toInt(),
@@ -43,6 +43,7 @@ AnimeDetailDTO _$AnimeDetailDTOFromJson(Map<String, dynamic> json) =>
       toPut: (json['toPut'] as List<dynamic>)
           .map((e) => AnimeDataResponseDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
+      schedule: json['schedule'] as String?,
     );
 
 Map<String, dynamic> _$AnimeDetailDTOToJson(AnimeDetailDTO instance) =>
@@ -70,4 +71,5 @@ Map<String, dynamic> _$AnimeDetailDTOToJson(AnimeDetailDTO instance) =>
       'seasonOf': instance.seasonOf?.toJson(),
       'trailer': instance.trailer,
       'toPut': instance.toPut.map((e) => e.toJson()).toList(),
+      'schedule': instance.schedule,
     };

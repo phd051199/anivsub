@@ -11,6 +11,8 @@ class VideoPlayerState with _$VideoPlayerState {
     ChapDataEntity? nextChap,
     ListEpisodeResponseEntity? listEpisode,
     EpisodeSkipResponseEntity? episodeSkip,
+    @Default(false) bool? skipIntro,
+    @Default(false) bool? showSkipIntroText,
   }) = VideoPlayerLoaded;
 
   const factory VideoPlayerState.error(String message) = VideoPlayerError;

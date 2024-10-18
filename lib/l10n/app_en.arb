@@ -134,7 +134,7 @@
   "@sliderMovies": {
     "description": "Label for the featured anime slider."
   },
-  "searchHint": "Search anime (Japanese, English, or Vietnamese title)",
+  "searchHint": "Keyword (Japanese, English, or Vietnamese title)",
   "@searchHint": {
     "description": "Hint text for the anime search input."
   },

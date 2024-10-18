@@ -12,16 +12,13 @@ part 'watch_state.dart';
 class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   WatchBloc(
     this._getPlayDataUseCase,
-    this._appSettingsUseCases,
     this._getAnimeDetailUseCase,
   ) : super(const WatchInitial()) {
     on<LoadWatch>(_onLoadWatch);
-    on<ToggleSkipIntro>(_onToggleSkipIntro);
     on<ChangeSeasonTab>(_onChangeSeasonTab);
   }
 
   final GetPlayDataUseCase _getPlayDataUseCase;
-  final AppSettingsUseCases _appSettingsUseCases;
   final GetAnimeDetailUseCase _getAnimeDetailUseCase;
 
   Future<void> _onLoadWatch(LoadWatch event, Emitter<WatchState> emit) async {
@@ -36,7 +33,6 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
         WatchLoaded(
           chaps: watchData.chaps,
           detail: animeDetail,
-          skipIntro: watchData.skipIntro,
           tabViewItems: chapterLists,
         ),
       );
@@ -119,33 +115,12 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     return output.result;
   }
 
-  Future<void> _onToggleSkipIntro(
-    ToggleSkipIntro event,
-    Emitter<WatchState> emit,
-  ) async {
-    final currentState = state;
-    if (currentState is! WatchLoaded) return;
-
-    final updatedSkipIntro = !currentState.skipIntro;
-    await _updateAppSettings(skipIntro: updatedSkipIntro);
-    emit(currentState.copyWith(skipIntro: updatedSkipIntro));
-  }
-
   Future<_WatchData> _fetchWatchData(String id) async {
-    final currentAppSettings = await _appSettingsUseCases.getAppSettings();
     final playDataOutput =
         await _getPlayDataUseCase.send(GetPlayDataUseCaseInput(id: id));
 
     return _WatchData(
       chaps: playDataOutput.result.chaps,
-      skipIntro: currentAppSettings.skipIntro,
-    );
-  }
-
-  Future<void> _updateAppSettings({required bool skipIntro}) async {
-    final currentAppSettings = await _appSettingsUseCases.getAppSettings();
-    await _appSettingsUseCases.setAppSettings(
-      currentAppSettings.copyWith(skipIntro: skipIntro),
     );
   }
 
@@ -154,8 +129,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
 }
 
 class _WatchData {
-  const _WatchData({required this.chaps, required this.skipIntro});
+  const _WatchData({required this.chaps});
 
   final List<ChapDataEntity> chaps;
-  final bool skipIntro;
 }

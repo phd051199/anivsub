@@ -5,6 +5,7 @@ import 'package:anivsub/core/service/shared_preferences_service.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
+import 'package:anivsub/features/watch/watch.dart';
 import 'package:get_it/get_it.dart';
 
 Environment get environment => GetIt.I<Environment>();
@@ -53,5 +54,6 @@ GetListEpisodeUseCase get getListEpisodeUseCase =>
 GetEpisodeSkipUsecase get getEpisodeSkipUsecase =>
     GetIt.I<GetEpisodeSkipUsecase>();
 
-// Cubits
+// Cubits and Bloc
 VideoPlayerCubit get videoPlayerCubit => GetIt.I<VideoPlayerCubit>();
+WatchBloc get watchBloc => GetIt.I<WatchBloc>();

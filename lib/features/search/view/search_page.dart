@@ -59,14 +59,14 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
       },
       builder: (context, state) {
         return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () => context.focusScope.unfocus(),
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
               child: Column(
                 children: [
                   _buildSearchForm(),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 8),
                   Expanded(child: _buildSearchResults()),
                 ],
               ),
@@ -148,19 +148,24 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
   }
 
   Widget _buildSearchResults() {
-    return PagedGridView<int, AnimeDataEntity>(
-      pagingController: _pagingController,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 12,
-        childAspectRatio: 0.45,
+    return RefreshIndicator(
+      onRefresh: () async {
+        _pagingController.refresh();
+      },
+      child: PagedGridView<int, AnimeDataEntity>(
+        pagingController: _pagingController,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 12,
+          childAspectRatio: 0.45,
+        ),
+        builderDelegate: PagedChildBuilderDelegate<AnimeDataEntity>(
+          itemBuilder: (context, item, index) => AnimeCard(item: item),
+        ),
+        showNewPageProgressIndicatorAsGridChild: false,
+        showNewPageErrorIndicatorAsGridChild: false,
+        showNoMoreItemsIndicatorAsGridChild: false,
       ),
-      builderDelegate: PagedChildBuilderDelegate<AnimeDataEntity>(
-        itemBuilder: (context, item, index) => AnimeCard(item: item),
-      ),
-      showNewPageProgressIndicatorAsGridChild: false,
-      showNewPageErrorIndicatorAsGridChild: false,
-      showNoMoreItemsIndicatorAsGridChild: false,
     );
   }
 

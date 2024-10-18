@@ -26,6 +26,7 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
     this.seasonOf,
     this.trailer,
     required this.toPut,
+    this.schedule,
   });
   final String name;
   final String othername;
@@ -33,7 +34,7 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
   final String poster;
   final String? pathToView;
   final String description;
-  final int rate;
+  final double rate;
   final int countRate;
   final String duration;
   final int yearOf;
@@ -50,6 +51,7 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
   final Anchor? seasonOf;
   final String? trailer;
   final List<AnimeDataEntity> toPut;
+  final String? schedule;
 
   AnimeDetailEntity copyWith({
     String? name,
@@ -58,7 +60,7 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
     String? poster,
     String? pathToView,
     String? description,
-    int? rate,
+    double? rate,
     int? countRate,
     String? duration,
     int? yearOf,
@@ -75,6 +77,7 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
     Anchor? seasonOf,
     String? trailer,
     List<AnimeDataEntity>? toPut,
+    String? schedule,
   }) {
     return AnimeDetailEntity(
       name: name ?? this.name,
@@ -100,6 +103,7 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
       seasonOf: seasonOf ?? this.seasonOf,
       trailer: trailer ?? this.trailer,
       toPut: toPut ?? this.toPut,
+      schedule: schedule ?? this.schedule,
     );
   }
 
@@ -128,6 +132,7 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
         seasonOf,
         trailer,
         toPut,
+        schedule,
       ];
 
   @override
@@ -156,6 +161,7 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
       seasonOf: seasonOf,
       trailer: trailer,
       toPut: toPut.map((entity) => entity.toDTO()).toList(),
+      schedule: schedule,
     );
   }
 }

@@ -24,9 +24,10 @@ class AnimeDetailParser {
         : null;
     final String description =
         document.querySelector('.Description')?.text.trim() ?? '';
-    final int rate =
-        int.tryParse(document.querySelector('#average_score')?.text ?? '0') ??
-            0;
+    final double rate = double.tryParse(
+          document.querySelector('#average_score')?.text ?? '0',
+        ) ??
+        0;
     final int countRate =
         int.tryParse(document.querySelector('.num-rating')?.text ?? '0') ?? 0;
     final String duration =
@@ -59,10 +60,17 @@ class AnimeDetailParser {
     final String quality = document.querySelector('.Qlty')?.text ?? '';
 
     // Info section
-    final dom.Element? infoListLeft =
-        document.querySelector('.mvici-left .InfoList .AAIco-adjust');
-    final dom.Element? infoListRight =
-        document.querySelector('.mvici-right .InfoList .AAIco-adjust');
+    final List<dom.Element?> infoListLeft =
+        document.querySelectorAll('.mvici-left .InfoList .AAIco-adjust');
+    final List<dom.Element?> infoListRight =
+        document.querySelectorAll('.mvici-right .InfoList .AAIco-adjust');
+
+    final String schedule = _findInfo(document, infoListLeft, 'lịch chiếu')
+            ?.text
+            .split(':')
+            .last
+            .trim() ??
+        '';
 
     final String status = _findInfo(document, infoListLeft, 'trạng thái')
             ?.text
@@ -140,6 +148,7 @@ class AnimeDetailParser {
       seasonOf: seasonOf,
       trailer: trailer,
       pathToView: pathToView,
+      schedule: schedule,
     );
   }
 
@@ -162,11 +171,12 @@ class AnimeDetailParser {
 
   static dom.Element? _findInfo(
     dom.Document document,
-    dom.Element? listElement,
+    List<dom.Element?> listElement,
     String keyword,
   ) {
-    return listElement?.children.firstWhere(
-      (element) => element.text.toLowerCase().contains(keyword.toLowerCase()),
+    return listElement.firstWhere(
+      (element) =>
+          element?.text.toLowerCase().contains(keyword.toLowerCase()) ?? false,
       orElse: () => dom.Element.tag(''),
     );
   }

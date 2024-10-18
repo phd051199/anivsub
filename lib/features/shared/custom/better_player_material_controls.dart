@@ -1,6 +1,10 @@
 import 'dart:async';
 
+import 'package:anivsub/core/di/shared_export.dart';
+import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:river_player/src/configuration/better_player_controls_configuration.dart';
 import 'package:river_player/src/controls/better_player_clickable_widget.dart';
@@ -228,6 +232,11 @@ class _BetterPlayerCustomMaterialControlsState
                       },
                     ),
                     const Spacer(),
+                    _buildSkipSwitch(),
+                    if (_controlsConfiguration.enableMute)
+                      _buildMuteButton(_controller)
+                    else
+                      const SizedBox.shrink(),
                     if (_controlsConfiguration.enablePip)
                       _buildPipButtonWrapperWidget(
                         controlsNotVisible,
@@ -241,6 +250,60 @@ class _BetterPlayerCustomMaterialControlsState
               ),
             )
           : const SizedBox(),
+    );
+  }
+
+  Row _buildSkipSwitch() {
+    return Row(
+      children: [
+        BlocProvider<VideoPlayerCubit>.value(
+          value: videoPlayerCubit,
+          child: BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
+            builder: (context, state) {
+              final skipIntro =
+                  state is VideoPlayerLoaded && (state.skipIntro ?? false);
+              return Theme(
+                data: ThemeData(useMaterial3: false),
+                child: Row(
+                  children: [
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: state is VideoPlayerLoaded &&
+                              state.showSkipIntroText == true
+                          ? Text(
+                              '${skipIntro ? 'Enabled' : 'Disabled'} skip intro/outro',
+                              key: const ValueKey('skipIntroText'),
+                              style:
+                                  context.theme.textTheme.bodySmall!.copyWith(
+                                color: _controlsConfiguration.textColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                    const SizedBox(width: 8),
+                    Switch(
+                      value: skipIntro,
+                      activeColor: Colors.white,
+                      inactiveTrackColor: Colors.white38,
+                      activeTrackColor: Colors.white38,
+                      onChanged: (newValue) {
+                        videoPlayerCubit.toggleSkipIntro();
+                      },
+                      thumbIcon: MaterialStateProperty.all(
+                        const Icon(
+                          Icons.skip_next,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -335,10 +398,8 @@ class _BetterPlayerCustomMaterialControlsState
                         ? Expanded(child: _buildPosition())
                         : const SizedBox(),
                   const Spacer(),
-                  if (_controlsConfiguration.enableMute)
-                    _buildMuteButton(_controller)
-                  else
-                    const SizedBox(),
+                  _buildExtraSkipButton(),
+                  const SizedBox(width: 12),
                   if (_controlsConfiguration.enableFullscreen)
                     _buildExpandButton()
                   else
@@ -354,6 +415,32 @@ class _BetterPlayerCustomMaterialControlsState
                   : const SizedBox(),
           ],
         ),
+      ),
+    );
+  }
+
+  BetterPlayerMaterialClickableWidget _buildExtraSkipButton() {
+    return BetterPlayerMaterialClickableWidget(
+      onTap: () {
+        final currentPosition = _betterPlayerController!
+            .videoPlayerController!.value.position.inSeconds;
+        _betterPlayerController!
+            .seekTo(Duration(seconds: currentPosition + 90));
+      },
+      child: Row(
+        children: [
+          Text(
+            '+90s',
+            style: context.theme.textTheme.bodySmall!.copyWith(
+              color: _controlsConfiguration.textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Icon(
+            Icons.skip_next,
+            color: _controlsConfiguration.textColor,
+          ),
+        ],
       ),
     );
   }
@@ -425,7 +512,9 @@ class _BetterPlayerCustomMaterialControlsState
                   _buildSkipButton()
                 else
                   const SizedBox(),
+                SizedBox(width: horizontalPadding),
                 _buildReplayButton(_controller!),
+                SizedBox(width: horizontalPadding),
                 if (_controlsConfiguration.enableSkips)
                   _buildForwardButton()
                 else

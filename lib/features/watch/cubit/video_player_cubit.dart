@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/shared/string_extension.dart';
+import 'package:anivsub/core/utils/image_url_utils.dart';
 import 'package:anivsub/core/utils/log_utils.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
@@ -7,6 +10,7 @@ import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:river_player/river_player.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'video_player_cubit.freezed.dart';
 part 'video_player_state.dart';
@@ -18,32 +22,63 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     this._decryptHlsUseCase,
     this._getListEpisodeUseCase,
     this._getEpisodeSkipUsecase,
+    this._appSettingsUseCases,
   ) : super(const VideoPlayerInitial());
 
   final GetEncryptedHlsUseCase _getEncryptedHlsUseCase;
   final DecryptHlsUseCase _decryptHlsUseCase;
   final GetListEpisodeUseCase _getListEpisodeUseCase;
   final GetEpisodeSkipUsecase _getEpisodeSkipUsecase;
+  final AppSettingsUseCases _appSettingsUseCases;
 
   late AnimeDetailEntity _detail;
-  late bool _skipIntro;
   BetterPlayerController? _playerController;
   bool _isSkipEventTriggered = false;
   bool _isNextChapterTriggered = false;
   CancelToken? _cancelToken;
+  Timer? _progressTimer;
 
-  void updateSkipIntro(bool skipIntro) => _skipIntro = skipIntro;
+  Future<void> toggleSkipIntro() async {
+    final currentState = state;
+    if (currentState is! VideoPlayerLoaded) return;
+
+    final updatedSkipIntro = !(currentState.skipIntro ?? false);
+    await _updateAppSettings(skipIntro: updatedSkipIntro);
+    emit(
+      currentState.copyWith(
+        skipIntro: updatedSkipIntro,
+        showSkipIntroText: true,
+      ),
+    );
+
+    Future.delayed(const Duration(seconds: 2), () {
+      if (state is VideoPlayerLoaded) {
+        final updatedState = state as VideoPlayerLoaded;
+        emit(updatedState.copyWith(showSkipIntroText: false));
+      }
+    });
+  }
+
+  Future<void> _updateAppSettings({required bool skipIntro}) async {
+    final currentAppSettings = await _appSettingsUseCases.getAppSettings();
+    await _appSettingsUseCases.setAppSettings(
+      currentAppSettings.copyWith(skipIntro: skipIntro),
+    );
+  }
 
   void updateChapterList(List<ChapDataEntity>? chaps) {
     if (state is! VideoPlayerLoaded || chaps == null || chaps.isEmpty) return;
-    emit((state as VideoPlayerLoaded).copyWith(chaps: chaps));
+    emit(
+      (state as VideoPlayerLoaded).copyWith(
+        chaps: chaps,
+      ),
+    );
   }
 
   Future<void> initialize({
     required List<ChapDataEntity> chaps,
     required BetterPlayerController controller,
     required AnimeDetailEntity detail,
-    bool skipIntro = false,
   }) async {
     if (chaps.isEmpty) {
       emit(const VideoPlayerError('No chapters available'));
@@ -54,7 +89,6 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
       emit(const VideoPlayerLoading());
       _initializeVariables(
         controller: controller,
-        skipIntro: skipIntro,
         detail: detail,
       );
       await _initializeChapter(chaps.first, chaps);
@@ -63,16 +97,62 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     }
   }
 
+  void setSingleProgress({
+    required double progress,
+    required double duration,
+  }) async {
+    if (state is! VideoPlayerLoaded) return;
+    final currentState = state as VideoPlayerLoaded;
+
+    final seasonId = _detail.pathToView?.split('/')[2];
+
+    await Supabase.instance.client.rpc(
+      'set_single_progress',
+      params: {
+        'user_uid':
+            'a3aaca2af18b3e54a02c1cfb727028935cca230889afe8b17cf4b3d9f3b66111',
+        'p_name': _detail.name,
+        'p_poster': ImageUrlUtils.removeHostUrlImage(_detail.poster),
+        'season_id': seasonId,
+        'p_season_name': _detail.season.map((e) => e.name).join(','),
+        'e_cur': progress,
+        'e_dur': duration,
+        'e_name': currentState.currentChap.name,
+        'e_chap': currentState.currentChap.id,
+        'gmt': 'Asia/Ho_Chi_Minh',
+      },
+    );
+
+    Log.debug('Progress: $progress ${currentState.currentChap.id}');
+  }
+
   void _initializeVariables({
     required BetterPlayerController controller,
-    required bool skipIntro,
     required AnimeDetailEntity detail,
   }) {
     _playerController = controller;
     _isNextChapterTriggered = false;
     _detail = detail;
     _cancelToken = CancelToken();
-    updateSkipIntro(skipIntro);
+    _startProgressTimer();
+  }
+
+  void _startProgressTimer() {
+    _progressTimer?.cancel();
+    _progressTimer = Timer.periodic(const Duration(seconds: 10), (_) {
+      if (_playerController?.videoPlayerController?.value.isPlaying ?? false) {
+        final duration = _playerController
+                ?.videoPlayerController?.value.duration?.inSeconds
+                .toDouble() ??
+            0;
+
+        final progress = _playerController
+                ?.videoPlayerController?.value.position.inSeconds
+                .toDouble() ??
+            0;
+        setSingleProgress(progress: progress, duration: duration);
+      }
+    });
   }
 
   Future<void> loadChapter(ChapDataEntity chap) async {
@@ -107,11 +187,11 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   Future<void> previousChapter() => _changeChapter(next: false);
 
   Future<void> dispose() async {
-    await _pauseAndRemoveEventListener();
     _playerController?.dispose();
     _playerController = null;
     _cancelToken?.cancel();
     _cancelToken = null;
+    _progressTimer?.cancel();
   }
 
   Future<void> _initializeChapter(
@@ -119,11 +199,24 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     List<ChapDataEntity> chaps,
   ) async {
     await _loadChapterData(chap, chaps);
+    await _loadInitialConfig();
     await _play();
 
     await loadAdditionalData(_detail);
     await _loadEpisodeSkip(chap);
     _addEventListener();
+  }
+
+  Future<void> _loadInitialConfig() async {
+    final currentState = state;
+    if (currentState is! VideoPlayerLoaded) return;
+
+    final appSettings = await _appSettingsUseCases.getAppSettings();
+    emit(
+      currentState.copyWith(
+        skipIntro: appSettings.skipIntro,
+      ),
+    );
   }
 
   Future<void> _loadChapterData(
@@ -190,7 +283,10 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }
 
   bool _shouldHandleVideoProgress() {
-    return state is VideoPlayerLoaded && _skipIntro && !_isSkipEventTriggered;
+    if (state is! VideoPlayerLoaded) return false;
+
+    final currentState = state as VideoPlayerLoaded;
+    return (currentState.skipIntro ?? false) && !_isSkipEventTriggered;
   }
 
   void _attemptSkipSection(Duration position, InOutro section) {
@@ -206,7 +302,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   Future<void> _setupPlayerDataSource(ChapDataEntity chap) async {
     try {
       final chapterLink = await _getChapterLink(chap);
-      Log.debug('Chapter link: $chapterLink');
+      Log.debug('Chapter link: ${chapterLink.substring(0, 100)}');
 
       if (_playerController == null) {
         throw Exception('Player controller is not initialized');
@@ -216,9 +312,11 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         throw Exception('Invalid chapter link: URL is empty');
       }
 
-      Log.debug('Setting up data source with URL: $chapterLink');
+      Log.debug(
+        'Setting up data source with URL: ${chapterLink.substring(0, 100)}',
+      );
 
-      await _playerController!.setupDataSource(
+      await _playerController?.setupDataSource(
         BetterPlayerDataSource(BetterPlayerDataSourceType.network, chapterLink),
       );
 
@@ -250,7 +348,9 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
       if (hlsOutput.result.link.isEmpty) {
         throw Exception('No HLS link available');
       }
-      Log.debug('HLS link: ${hlsOutput.result.link.first.file}');
+      Log.debug(
+        'HLS link: ${hlsOutput.result.link.first.file.substring(0, 100)}',
+      );
       final decryptOutput = await _decryptHlsUseCase.send(
         DecryptHlsUseCaseInput(
           hash: hlsOutput.result.link.first.file,
@@ -323,6 +423,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }) {
     final int currentIndex = chaps.indexOf(currentChap);
     if (currentIndex == -1) return null;
+
     final int adjacentIndex = next ? currentIndex + 1 : currentIndex - 1;
     return (adjacentIndex >= 0 && adjacentIndex < chaps.length)
         ? chaps[adjacentIndex]
@@ -371,6 +472,11 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }
 
   Future<void> _handleFinishedEvent() async {
+    final currentState = state;
+    if (currentState is! VideoPlayerLoaded || currentState.nextChap == null) {
+      return;
+    }
+
     await nextChapter();
     await _playerController?.seekTo(Duration.zero);
     await _play();
@@ -379,8 +485,8 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   Future<void> _pauseAndRemoveEventListener() async {
     if (_playerController == null) return;
 
-    await _playerController!.pause();
-    _playerController!.removeEventsListener(_onPlayEvent);
+    await _playerController?.pause();
+    _playerController?.removeEventsListener(_onPlayEvent);
   }
 
   void _addEventListener() {
@@ -391,12 +497,13 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     if (_playerController == null) {
       throw Exception('Player controller is not initialized');
     }
-    await _playerController!.play();
-    _playerController!.setControlsVisibility(false);
+    await _playerController?.play();
+    _playerController?.setControlsVisibility(false);
   }
 
   @override
   Future<void> close() async {
+    _progressTimer?.cancel();
     await dispose();
     // Does not call super.close() to keep the singleton instance
   }

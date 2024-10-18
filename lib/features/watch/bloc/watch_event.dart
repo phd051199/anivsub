@@ -10,11 +10,6 @@ class LoadWatch extends WatchEvent with _$LoadWatch {
 }
 
 @freezed
-class ToggleSkipIntro extends WatchEvent with _$ToggleSkipIntro {
-  const factory ToggleSkipIntro() = _ToggleSkipIntro;
-}
-
-@freezed
 class ChangeSeasonTab extends WatchEvent with _$ChangeSeasonTab {
   const factory ChangeSeasonTab({
     required String id,

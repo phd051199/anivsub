@@ -50,10 +50,9 @@ class AnimeCard extends StatelessWidget {
           context.focusScope.unfocus();
           return;
         }
-
         context.pushNamed(
           ScreenNames.watch,
-          pathParameters: {'path': item.path},
+          queryParameters: {'path': item.path},
         );
       },
       child: SizedBox(
@@ -62,7 +61,9 @@ class AnimeCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AnimeThumbnail(
-              movie: item,
+              imageUrl: item.image,
+              process: item.process,
+              rate: item.rate,
               height: 160,
             ),
             const SizedBox(height: 8),
