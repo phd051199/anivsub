@@ -103,7 +103,7 @@ class _ProfilePageState extends CubitState<ProfilePage, ProfileCubit> {
                                         context.pushNamed(
                                           ScreenNames.watch,
                                           queryParameters: {
-                                            'path': '/phim/${e['season']}',
+                                            'path': '/phim/${e['season']}/',
                                           },
                                         );
                                       },
@@ -131,7 +131,7 @@ class _ProfilePageState extends CubitState<ProfilePage, ProfileCubit> {
                                           ),
                                         ),
                                         title: Text(
-                                          '${e['name']?.toString()}\nTập ${e['watch_name']?.toString()}',
+                                          '${e['name']?.toString()}\n${e['season_name']} Tập ${e['watch_name']?.toString()}',
                                           style: const TextStyle(fontSize: 14),
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,

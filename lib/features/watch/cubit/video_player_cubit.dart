@@ -105,6 +105,15 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     final currentState = state as VideoPlayerLoaded;
 
     final seasonId = _detail.pathToView?.split('/')[2];
+    final currentSeason = _detail.season.isEmpty
+        ? ''
+        : _detail.season
+            .firstWhere(
+              (element) =>
+                  element.path ==
+                  _detail.pathToView?.replaceAll('xem-phim.html', ''),
+            )
+            .name;
 
     await Supabase.instance.client.rpc(
       'set_single_progress',
@@ -114,7 +123,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         'p_name': _detail.name,
         'p_poster': ImageUrlUtils.removeHostUrlImage(_detail.poster),
         'season_id': seasonId,
-        'p_season_name': _detail.season.map((e) => e.name).join(','),
+        'p_season_name': currentSeason,
         'e_cur': progress,
         'e_dur': duration,
         'e_name': currentState.currentChap.name,

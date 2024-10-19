@@ -138,7 +138,7 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
   void _onSuggestionSelected(PreSearchItemEntity item) {
     context.pushNamed(
       ScreenNames.watch,
-      pathParameters: {'path': item.path},
+      queryParameters: {'path': item.path},
     );
   }
 

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 extension StringExtension on String {
   int extractFirstInt() {
     final match = RegExp(r'\d+').firstMatch(this);
@@ -17,5 +19,9 @@ extension StringExtension on String {
     final cleaned = string.replaceAll('/phim/', '');
     final lastDashIndex = cleaned.lastIndexOf('-');
     return lastDashIndex != -1 ? cleaned.substring(0, lastDashIndex) : cleaned;
+  }
+
+  String toBase64() {
+    return base64Encode(utf8.encode(this));
   }
 }

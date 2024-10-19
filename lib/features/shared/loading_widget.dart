@@ -1,6 +1,5 @@
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({
@@ -18,14 +17,14 @@ class LoadingWidget extends StatelessWidget {
           : context.theme.colorScheme.surface,
       child: SizedBox.expand(
         child: Center(
-          child: Lottie.asset(
-            'assets/json/loading.json',
-            width: 200,
-            height: 200,
-          ),
-          // child: CircularProgressIndicator(
-          //   color: context.theme.colorScheme.primary,
+          // child: Lottie.asset(
+          //   'assets/json/loading.json',
+          //   width: 200,
+          //   height: 200,
           // ),
+          child: CircularProgressIndicator(
+            color: context.theme.colorScheme.primary,
+          ),
         ),
       ),
     );

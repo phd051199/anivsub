@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:crypto/crypto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -20,25 +17,27 @@ class ProfileCubit extends BaseCubit<ProfileState> {
 
   Future<void> getUser() async {
     emit(const ProfileLoading());
-    final response = await profileUseCases.getUser();
-
-    final userUid = sha256
-        .convert(utf8.encode(response.email! + response.lastName!))
-        .toString();
-
-    final result = await Supabase.instance.client.rpc(
-      'query_history',
-      params: {
-        'user_uid': userUid,
-        'page': 1,
-        'size': 30,
-      },
-    );
+    final results = await Future.wait([
+      profileUseCases.getUser(),
+      Future(
+        () => Supabase.instance.client.rpc(
+          'query_history',
+          params: {
+            'user_uid':
+                'a3aaca2af18b3e54a02c1cfb727028935cca230889afe8b17cf4b3d9f3b66111',
+            'page': 1,
+            'size': 30,
+          },
+        ),
+      ),
+    ]);
+    final UserEntity user = results.first;
+    final List<dynamic> queryHistory = results.last;
 
     emit(
       ProfileLoaded(
-        user: response,
-        queryHistory: result,
+        user: user,
+        queryHistory: queryHistory,
       ),
     );
   }

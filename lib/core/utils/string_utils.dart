@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:anivsub/core/shared/string_extension.dart';
 import 'package:crypto/crypto.dart';
+import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 class StringUtils {
@@ -11,6 +13,17 @@ class StringUtils {
   static String md5HashAsciiString(String text) {
     return md5.convert(utf8.encode(text)).toString();
   }
+}
+
+String cacheKeyBuilder(RequestOptions options) {
+  if (options.method.toUpperCase() == 'POST') {
+    final base64Data = options.data.toString().toBase64();
+    return base64Data.length > 255 ? base64Data.substring(0, 255) : base64Data;
+  }
+  final queryParams = options.queryParameters.entries
+      .map((e) => '${e.key}=${e.value}')
+      .join('&');
+  return '${options.path}${queryParams.isNotEmpty ? '?$queryParams' : ''}';
 }
 
 String formatTimestamp(dynamic timestamp, {bool withTime = true}) {
