@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+part 'keyboard_control_observer.dart';
 part 'screen_names.dart';
 part 'screen_paths.dart';
 
@@ -22,6 +23,9 @@ final goRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
   refreshListenable: authNotifier,
   redirect: _handleRedirect,
+  observers: [
+    KeyboardControlObserver(),
+  ],
   routes: [
     _loginRoute,
     _watchRoute,

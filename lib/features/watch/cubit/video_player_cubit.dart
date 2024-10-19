@@ -104,35 +104,37 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     if (state is! VideoPlayerLoaded) return;
     final currentState = state as VideoPlayerLoaded;
 
-    final seasonId = _detail.pathToView?.split('/')[2];
-    final currentSeason = _detail.season.isEmpty
-        ? ''
-        : _detail.season
-            .firstWhere(
-              (element) =>
-                  element.path ==
-                  _detail.pathToView?.replaceAll('xem-phim.html', ''),
-            )
-            .name;
+    try {
+      final seasonId = _detail.pathToView?.split('/')[2];
+      final currentSeason = _detail.season.isEmpty
+          ? ''
+          : _detail.season
+              .firstWhere(
+                (element) =>
+                    element.path ==
+                    _detail.pathToView?.replaceAll('xem-phim.html', ''),
+              )
+              .name;
 
-    await Supabase.instance.client.rpc(
-      'set_single_progress',
-      params: {
-        'user_uid':
-            'a3aaca2af18b3e54a02c1cfb727028935cca230889afe8b17cf4b3d9f3b66111',
-        'p_name': _detail.name,
-        'p_poster': ImageUrlUtils.removeHostUrlImage(_detail.poster),
-        'season_id': seasonId,
-        'p_season_name': currentSeason,
-        'e_cur': progress,
-        'e_dur': duration,
-        'e_name': currentState.currentChap.name,
-        'e_chap': currentState.currentChap.id,
-        'gmt': 'Asia/Ho_Chi_Minh',
-      },
-    );
-
-    Log.debug('Progress: $progress ${currentState.currentChap.id}');
+      await Supabase.instance.client.rpc(
+        'set_single_progress',
+        params: {
+          'user_uid':
+              'a3aaca2af18b3e54a02c1cfb727028935cca230889afe8b17cf4b3d9f3b66111',
+          'p_name': _detail.name,
+          'p_poster': ImageUrlUtils.removeHostUrlImage(_detail.poster),
+          'season_id': seasonId,
+          'p_season_name': currentSeason,
+          'e_cur': progress,
+          'e_dur': duration,
+          'e_name': currentState.currentChap.name,
+          'e_chap': currentState.currentChap.id,
+          'gmt': 'Asia/Ho_Chi_Minh',
+        },
+      );
+    } catch (e) {
+      Log.debug('Error setting single progress: $e');
+    }
   }
 
   void _initializeVariables({
@@ -311,7 +313,6 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   Future<void> _setupPlayerDataSource(ChapDataEntity chap) async {
     try {
       final chapterLink = await _getChapterLink(chap);
-      Log.debug('Chapter link: ${chapterLink.substring(0, 100)}');
 
       if (_playerController == null) {
         throw Exception('Player controller is not initialized');
@@ -321,19 +322,13 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         throw Exception('Invalid chapter link: URL is empty');
       }
 
-      Log.debug(
-        'Setting up data source with URL: ${chapterLink.substring(0, 100)}',
-      );
-
       await _playerController?.setupDataSource(
         BetterPlayerDataSource(BetterPlayerDataSourceType.network, chapterLink),
       );
-
-      Log.debug('Data source setup completed successfully');
     } catch (e) {
-      Log.error('Error setting up player data source: $e');
       if (e is DioException) {
         Log.error('DioException details: ${e.message}, ${e.response}');
+        return;
       }
       emit(VideoPlayerError('Failed to set up video source: $e'));
     }
@@ -357,9 +352,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
       if (hlsOutput.result.link.isEmpty) {
         throw Exception('No HLS link available');
       }
-      Log.debug(
-        'HLS link: ${hlsOutput.result.link.first.file.substring(0, 100)}',
-      );
+
       final decryptOutput = await _decryptHlsUseCase.send(
         DecryptHlsUseCaseInput(
           hash: hlsOutput.result.link.first.file,
