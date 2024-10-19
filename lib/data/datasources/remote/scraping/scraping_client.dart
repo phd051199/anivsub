@@ -12,7 +12,10 @@ abstract class ScrapingClient {
   Future<String> getHomeData();
 
   @GET('/{id}')
-  Future<String> getAnimeDetail(@Path('id') String id);
+  Future<String> getAnimeDetail(
+    @Path('id') String id, {
+    @CancelRequest() CancelToken? cancelToken,
+  });
 
   @GET('/{id}/xem-phim.html')
   Future<String> getPlayData(

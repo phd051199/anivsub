@@ -24,4 +24,8 @@ extension StringExtension on String {
   String toBase64() {
     return base64Encode(utf8.encode(this));
   }
+
+  bool isNotNumeric() {
+    return !RegExp(r'^\d+$').hasMatch(this);
+  }
 }

@@ -14,10 +14,12 @@ class VideoPlayerWidget extends StatefulWidget {
     super.key,
     required this.chaps,
     required this.detail,
+    this.listEpisodeSkip,
   });
 
   final List<ChapDataEntity> chaps;
   final AnimeDetailEntity detail;
+  final ListEpisodeResponseEntity? listEpisodeSkip;
 
   @override
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
@@ -27,11 +29,13 @@ class _VideoPlayerWidgetState
     extends CubitState<VideoPlayerWidget, VideoPlayerCubit> {
   late final BetterPlayerController _betterPlayerController;
   late List<ChapDataEntity> _chaps;
+  ListEpisodeResponseEntity? _listEpisodeSkip;
 
   @override
   void initState() {
     super.initState();
     _chaps = widget.chaps;
+    _listEpisodeSkip = widget.listEpisodeSkip;
     _initializeVideoPlayer();
     _initializeCubit();
   }
@@ -89,9 +93,10 @@ class _VideoPlayerWidgetState
   void _initializeCubit() {
     if (_chaps.isNotEmpty) {
       cubit.initialize(
-        chaps: _chaps,
-        detail: widget.detail,
+        episodes: _chaps,
+        animeDetail: widget.detail,
         controller: _betterPlayerController,
+        listEpisodeSkip: _listEpisodeSkip,
       );
     }
   }
@@ -105,7 +110,8 @@ class _VideoPlayerWidgetState
   void _updateChapterList() {
     if (_chaps.isEmpty && widget.chaps != _chaps) {
       _chaps = widget.chaps;
-      cubit.updateChapterList(_chaps);
+      _listEpisodeSkip = widget.listEpisodeSkip;
+      cubit.updateEpisodeList(_chaps, _listEpisodeSkip);
       _initializeCubit();
     }
   }

@@ -74,7 +74,7 @@ Future<void> registerCacheManager() async {
   GetIt.I.registerLazySingleton<CacheOptions>(
     () => CacheOptions(
       store: cacheStore,
-      maxStale: const Duration(days: 7),
+      maxStale: const Duration(days: 1),
       policy: CachePolicy.forceCache,
       keyBuilder: cacheKeyBuilder,
       allowPostMethod: true,

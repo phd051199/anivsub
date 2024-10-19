@@ -17,6 +17,13 @@ class ChangeSeasonTab extends WatchEvent with _$ChangeSeasonTab {
 }
 
 @freezed
+class ChangeEpisode extends WatchEvent with _$ChangeEpisode {
+  const factory ChangeEpisode({
+    required AnimeDetailEntity animeDetail,
+  }) = _ChangeEpisode;
+}
+
+@freezed
 class ErrorWatch extends WatchEvent with _$ErrorWatch {
   const factory ErrorWatch() = _ErrorWatch;
 }

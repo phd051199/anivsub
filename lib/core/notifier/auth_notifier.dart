@@ -111,14 +111,6 @@ class AuthNotifier with ChangeNotifier {
       },
     );
   }
-
-  void _setTokenFromCookie(String cookie) {
-    final parts = cookie.split(';')[0].split('=');
-    if (parts.length == 2) {
-      _tokenName = parts[0].trim();
-      _tokenValue = parts[1].trim();
-    }
-  }
 }
 
 enum AuthStatus {

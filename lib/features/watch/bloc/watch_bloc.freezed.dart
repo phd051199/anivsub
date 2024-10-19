@@ -272,6 +272,136 @@ abstract class _ChangeSeasonTab implements ChangeSeasonTab {
 }
 
 /// @nodoc
+mixin _$ChangeEpisode {
+  AnimeDetailEntity get animeDetail => throw _privateConstructorUsedError;
+
+  /// Create a copy of ChangeEpisode
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ChangeEpisodeCopyWith<ChangeEpisode> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ChangeEpisodeCopyWith<$Res> {
+  factory $ChangeEpisodeCopyWith(
+          ChangeEpisode value, $Res Function(ChangeEpisode) then) =
+      _$ChangeEpisodeCopyWithImpl<$Res, ChangeEpisode>;
+  @useResult
+  $Res call({AnimeDetailEntity animeDetail});
+}
+
+/// @nodoc
+class _$ChangeEpisodeCopyWithImpl<$Res, $Val extends ChangeEpisode>
+    implements $ChangeEpisodeCopyWith<$Res> {
+  _$ChangeEpisodeCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ChangeEpisode
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? animeDetail = null,
+  }) {
+    return _then(_value.copyWith(
+      animeDetail: null == animeDetail
+          ? _value.animeDetail
+          : animeDetail // ignore: cast_nullable_to_non_nullable
+              as AnimeDetailEntity,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ChangeEpisodeImplCopyWith<$Res>
+    implements $ChangeEpisodeCopyWith<$Res> {
+  factory _$$ChangeEpisodeImplCopyWith(
+          _$ChangeEpisodeImpl value, $Res Function(_$ChangeEpisodeImpl) then) =
+      __$$ChangeEpisodeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({AnimeDetailEntity animeDetail});
+}
+
+/// @nodoc
+class __$$ChangeEpisodeImplCopyWithImpl<$Res>
+    extends _$ChangeEpisodeCopyWithImpl<$Res, _$ChangeEpisodeImpl>
+    implements _$$ChangeEpisodeImplCopyWith<$Res> {
+  __$$ChangeEpisodeImplCopyWithImpl(
+      _$ChangeEpisodeImpl _value, $Res Function(_$ChangeEpisodeImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ChangeEpisode
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? animeDetail = null,
+  }) {
+    return _then(_$ChangeEpisodeImpl(
+      animeDetail: null == animeDetail
+          ? _value.animeDetail
+          : animeDetail // ignore: cast_nullable_to_non_nullable
+              as AnimeDetailEntity,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ChangeEpisodeImpl implements _ChangeEpisode {
+  const _$ChangeEpisodeImpl({required this.animeDetail});
+
+  @override
+  final AnimeDetailEntity animeDetail;
+
+  @override
+  String toString() {
+    return 'ChangeEpisode(animeDetail: $animeDetail)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeEpisodeImpl &&
+            (identical(other.animeDetail, animeDetail) ||
+                other.animeDetail == animeDetail));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, animeDetail);
+
+  /// Create a copy of ChangeEpisode
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeEpisodeImplCopyWith<_$ChangeEpisodeImpl> get copyWith =>
+      __$$ChangeEpisodeImplCopyWithImpl<_$ChangeEpisodeImpl>(this, _$identity);
+}
+
+abstract class _ChangeEpisode implements ChangeEpisode {
+  const factory _ChangeEpisode({required final AnimeDetailEntity animeDetail}) =
+      _$ChangeEpisodeImpl;
+
+  @override
+  AnimeDetailEntity get animeDetail;
+
+  /// Create a copy of ChangeEpisode
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ChangeEpisodeImplCopyWith<_$ChangeEpisodeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$ErrorWatch {}
 
 /// @nodoc
@@ -345,7 +475,7 @@ mixin _$WatchState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<ChapDataEntity> chaps,
-            AnimeDetailEntity detail, List<List<ChapDataEntity>?>? tabViewItems)
+            AnimeDetailEntity detail, List<TabViewItem?>? tabViewItems)
         loaded,
     required TResult Function(String message) error,
   }) =>
@@ -355,7 +485,7 @@ mixin _$WatchState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            List<List<ChapDataEntity>?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems)?
         loaded,
     TResult? Function(String message)? error,
   }) =>
@@ -365,7 +495,7 @@ mixin _$WatchState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            List<List<ChapDataEntity>?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -463,7 +593,7 @@ class _$WatchInitialImpl implements WatchInitial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<ChapDataEntity> chaps,
-            AnimeDetailEntity detail, List<List<ChapDataEntity>?>? tabViewItems)
+            AnimeDetailEntity detail, List<TabViewItem?>? tabViewItems)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -476,7 +606,7 @@ class _$WatchInitialImpl implements WatchInitial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            List<List<ChapDataEntity>?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -489,7 +619,7 @@ class _$WatchInitialImpl implements WatchInitial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            List<List<ChapDataEntity>?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -586,7 +716,7 @@ class _$WatchLoadingImpl implements WatchLoading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<ChapDataEntity> chaps,
-            AnimeDetailEntity detail, List<List<ChapDataEntity>?>? tabViewItems)
+            AnimeDetailEntity detail, List<TabViewItem?>? tabViewItems)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -599,7 +729,7 @@ class _$WatchLoadingImpl implements WatchLoading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            List<List<ChapDataEntity>?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -612,7 +742,7 @@ class _$WatchLoadingImpl implements WatchLoading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            List<List<ChapDataEntity>?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -674,7 +804,7 @@ abstract class _$$WatchLoadedImplCopyWith<$Res> {
   $Res call(
       {List<ChapDataEntity> chaps,
       AnimeDetailEntity detail,
-      List<List<ChapDataEntity>?>? tabViewItems});
+      List<TabViewItem?>? tabViewItems});
 }
 
 /// @nodoc
@@ -706,7 +836,7 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
       tabViewItems: freezed == tabViewItems
           ? _value._tabViewItems
           : tabViewItems // ignore: cast_nullable_to_non_nullable
-              as List<List<ChapDataEntity>?>?,
+              as List<TabViewItem?>?,
     ));
   }
 }
@@ -717,7 +847,7 @@ class _$WatchLoadedImpl implements WatchLoaded {
   const _$WatchLoadedImpl(
       {required final List<ChapDataEntity> chaps,
       required this.detail,
-      final List<List<ChapDataEntity>?>? tabViewItems})
+      final List<TabViewItem?>? tabViewItems})
       : _chaps = chaps,
         _tabViewItems = tabViewItems;
 
@@ -731,9 +861,9 @@ class _$WatchLoadedImpl implements WatchLoaded {
 
   @override
   final AnimeDetailEntity detail;
-  final List<List<ChapDataEntity>?>? _tabViewItems;
+  final List<TabViewItem?>? _tabViewItems;
   @override
-  List<List<ChapDataEntity>?>? get tabViewItems {
+  List<TabViewItem?>? get tabViewItems {
     final value = _tabViewItems;
     if (value == null) return null;
     if (_tabViewItems is EqualUnmodifiableListView) return _tabViewItems;
@@ -778,7 +908,7 @@ class _$WatchLoadedImpl implements WatchLoaded {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<ChapDataEntity> chaps,
-            AnimeDetailEntity detail, List<List<ChapDataEntity>?>? tabViewItems)
+            AnimeDetailEntity detail, List<TabViewItem?>? tabViewItems)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -791,7 +921,7 @@ class _$WatchLoadedImpl implements WatchLoaded {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            List<List<ChapDataEntity>?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -804,7 +934,7 @@ class _$WatchLoadedImpl implements WatchLoaded {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            List<List<ChapDataEntity>?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -857,11 +987,11 @@ abstract class WatchLoaded implements WatchState {
   const factory WatchLoaded(
       {required final List<ChapDataEntity> chaps,
       required final AnimeDetailEntity detail,
-      final List<List<ChapDataEntity>?>? tabViewItems}) = _$WatchLoadedImpl;
+      final List<TabViewItem?>? tabViewItems}) = _$WatchLoadedImpl;
 
   List<ChapDataEntity> get chaps;
   AnimeDetailEntity get detail;
-  List<List<ChapDataEntity>?>? get tabViewItems;
+  List<TabViewItem?>? get tabViewItems;
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -941,7 +1071,7 @@ class _$WatchErrorImpl implements WatchError {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<ChapDataEntity> chaps,
-            AnimeDetailEntity detail, List<List<ChapDataEntity>?>? tabViewItems)
+            AnimeDetailEntity detail, List<TabViewItem?>? tabViewItems)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -954,7 +1084,7 @@ class _$WatchErrorImpl implements WatchError {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            List<List<ChapDataEntity>?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -967,7 +1097,7 @@ class _$WatchErrorImpl implements WatchError {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity> chaps, AnimeDetailEntity detail,
-            List<List<ChapDataEntity>?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),

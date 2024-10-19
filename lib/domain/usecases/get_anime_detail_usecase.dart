@@ -1,4 +1,5 @@
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -15,7 +16,10 @@ class GetAnimeDetailUseCase extends BaseFutureUseCase<
   Future<GetAnimeDetailUseCaseOutput> buildUseCase(
     GetAnimeDetailUseCaseInput input,
   ) async {
-    final result = await _repository.getAnimeDetail(input.id);
+    final result = await _repository.getAnimeDetail(
+      input.id,
+      cancelToken: input.cancelToken,
+    );
     return GetAnimeDetailUseCaseOutput(result: result);
   }
 }
@@ -25,6 +29,7 @@ class GetAnimeDetailUseCaseInput extends BaseInput
     with _$GetAnimeDetailUseCaseInput {
   const factory GetAnimeDetailUseCaseInput({
     required String id,
+    CancelToken? cancelToken,
   }) = _GetAnimeDetailUseCaseInput;
 }
 

@@ -13,8 +13,8 @@ class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {
   }
 
   @override
-  Future<String> getAnimeDetail(String id) {
-    return client.getAnimeDetail(id);
+  Future<String> getAnimeDetail(String id, {CancelToken? cancelToken}) {
+    return client.getAnimeDetail(id, cancelToken: cancelToken);
   }
 
   @override

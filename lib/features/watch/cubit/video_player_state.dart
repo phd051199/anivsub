@@ -9,7 +9,6 @@ class VideoPlayerState with _$VideoPlayerState {
     required List<ChapDataEntity> chaps,
     required ChapDataEntity currentChap,
     ChapDataEntity? nextChap,
-    ListEpisodeResponseEntity? listEpisode,
     EpisodeSkipResponseEntity? episodeSkip,
     @Default(false) bool? skipIntro,
     @Default(false) bool? showSkipIntroText,

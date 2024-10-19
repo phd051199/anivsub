@@ -55,9 +55,13 @@ class _ScrapingClient implements ScrapingClient {
   }
 
   @override
-  Future<String> getAnimeDetail(String id) async {
+  Future<String> getAnimeDetail(
+    String id, {
+    CancelToken? cancelToken,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<String>(Options(
@@ -70,6 +74,7 @@ class _ScrapingClient implements ScrapingClient {
           '/${id}',
           queryParameters: queryParameters,
           data: _data,
+          cancelToken: cancelToken,
         )
         .copyWith(
             baseUrl: _combineBaseUrls(

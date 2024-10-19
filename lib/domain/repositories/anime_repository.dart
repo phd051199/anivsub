@@ -7,7 +7,10 @@ abstract class AnimeRepository {
     String id, {
     CancelToken? cancelToken,
   });
-  Future<AnimeDetailEntity> getAnimeDetail(String id);
+  Future<AnimeDetailEntity> getAnimeDetail(
+    String id, {
+    CancelToken? cancelToken,
+  });
   Future<GetEncryptedHlsResponseEntity> getEncryptedHls(
     GetEncryptedHlsRequestEntity body, {
     CancelToken? cancelToken,

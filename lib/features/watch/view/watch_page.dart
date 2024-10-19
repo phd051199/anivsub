@@ -34,6 +34,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   @override
   void dispose() {
     _tabController?.dispose();
+    videoPlayerCubit.close();
     super.dispose();
   }
 
@@ -59,9 +60,14 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
 
   Widget _buildBody(WatchState state) {
     return switch (state) {
-      WatchInitial() || WatchLoading() => const LoadingWidget(),
       WatchLoaded() => _buildContent(state),
-      _ => Container(),
+      _ => const AspectRatio(
+          aspectRatio: 16 / 9,
+          child: ColoredBox(
+            color: Colors.black,
+            child: LoadingWidget(color: Colors.white),
+          ),
+        ),
     };
   }
 
@@ -203,11 +209,14 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   }
 
   Widget _buildVideoPlayer(WatchLoaded state) {
+    final listEpisodeSkip = state.tabViewItems?[_currentTabIndex]?.listEpisode;
+
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: VideoPlayerWidget(
         chaps: state.chaps,
         detail: state.detail,
+        listEpisodeSkip: listEpisodeSkip,
       ),
     );
   }
@@ -233,10 +242,10 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
       child: TabBarView(
         controller: _tabController,
         physics: const NeverScrollableScrollPhysics(),
-        children: state.tabViewItems!.map((chaps) {
-          return chaps == null
+        children: state.tabViewItems!.map((item) {
+          return item?.chaps == null
               ? const Center(child: CircularProgressIndicator())
-              : _buildChaptersGrid(chaps, state);
+              : _buildChaptersGrid(item!.chaps!, state);
         }).toList(),
       ),
     );
@@ -280,7 +289,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
 
   Widget _buildTabBar(WatchLoaded state) {
     if (state.detail.season.isEmpty) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
     return TabBar(
       tabAlignment: TabAlignment.start,
@@ -342,13 +351,24 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
         (state is VideoPlayerLoading && index == 0);
   }
 
-  void _onChapTap(bool isPlaying, ChapDataEntity chap, WatchLoaded state) {
+  void _onChapTap(
+    bool isPlaying,
+    ChapDataEntity chap,
+    WatchLoaded state,
+  ) {
     if (!isPlaying) {
       if (state.tabViewItems?.isNotEmpty ?? false) {
         final currentChaps = state.tabViewItems![_currentTabIndex];
-        videoPlayerCubit.updateChapterList(currentChaps);
+        videoPlayerCubit.updateEpisodeList(
+          currentChaps?.chaps,
+          currentChaps?.listEpisode,
+        );
+
+        bloc.add(
+          ChangeEpisode(animeDetail: currentChaps!.animeDetail!),
+        );
       }
-      videoPlayerCubit.loadChapter(chap);
+      videoPlayerCubit.loadEpisode(chap);
     }
   }
 

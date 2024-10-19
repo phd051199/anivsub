@@ -5,9 +5,11 @@ class LoadingWidget extends StatelessWidget {
   const LoadingWidget({
     super.key,
     this.isTransparent = true,
+    this.color,
   });
 
   final bool isTransparent;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class LoadingWidget extends StatelessWidget {
           //   height: 200,
           // ),
           child: CircularProgressIndicator(
-            color: context.theme.colorScheme.primary,
+            color: color ?? context.theme.colorScheme.primary,
           ),
         ),
       ),

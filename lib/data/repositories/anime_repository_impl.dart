@@ -33,8 +33,14 @@ class AnimeRepositoryImpl implements AnimeRepository {
   }
 
   @override
-  Future<AnimeDetailEntity> getAnimeDetail(String id) async {
-    final html = await _animeRemoteDataSource.getAnimeDetail(id);
+  Future<AnimeDetailEntity> getAnimeDetail(
+    String id, {
+    CancelToken? cancelToken,
+  }) async {
+    final html = await _animeRemoteDataSource.getAnimeDetail(
+      id,
+      cancelToken: cancelToken,
+    );
     return AnimeDetailParser.parse(html);
   }
 

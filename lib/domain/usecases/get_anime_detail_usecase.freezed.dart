@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$GetAnimeDetailUseCaseInput {
   String get id => throw _privateConstructorUsedError;
+  CancelToken? get cancelToken => throw _privateConstructorUsedError;
 
   /// Create a copy of GetAnimeDetailUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +33,7 @@ abstract class $GetAnimeDetailUseCaseInputCopyWith<$Res> {
       _$GetAnimeDetailUseCaseInputCopyWithImpl<$Res,
           GetAnimeDetailUseCaseInput>;
   @useResult
-  $Res call({String id});
+  $Res call({String id, CancelToken? cancelToken});
 }
 
 /// @nodoc
@@ -52,12 +53,17 @@ class _$GetAnimeDetailUseCaseInputCopyWithImpl<$Res,
   @override
   $Res call({
     Object? id = null,
+    Object? cancelToken = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      cancelToken: freezed == cancelToken
+          ? _value.cancelToken
+          : cancelToken // ignore: cast_nullable_to_non_nullable
+              as CancelToken?,
     ) as $Val);
   }
 }
@@ -71,7 +77,7 @@ abstract class _$$GetAnimeDetailUseCaseInputImplCopyWith<$Res>
       __$$GetAnimeDetailUseCaseInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id});
+  $Res call({String id, CancelToken? cancelToken});
 }
 
 /// @nodoc
@@ -90,12 +96,17 @@ class __$$GetAnimeDetailUseCaseInputImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? cancelToken = freezed,
   }) {
     return _then(_$GetAnimeDetailUseCaseInputImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      cancelToken: freezed == cancelToken
+          ? _value.cancelToken
+          : cancelToken // ignore: cast_nullable_to_non_nullable
+              as CancelToken?,
     ));
   }
 }
@@ -103,14 +114,16 @@ class __$$GetAnimeDetailUseCaseInputImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GetAnimeDetailUseCaseInputImpl implements _GetAnimeDetailUseCaseInput {
-  const _$GetAnimeDetailUseCaseInputImpl({required this.id});
+  const _$GetAnimeDetailUseCaseInputImpl({required this.id, this.cancelToken});
 
   @override
   final String id;
+  @override
+  final CancelToken? cancelToken;
 
   @override
   String toString() {
-    return 'GetAnimeDetailUseCaseInput(id: $id)';
+    return 'GetAnimeDetailUseCaseInput(id: $id, cancelToken: $cancelToken)';
   }
 
   @override
@@ -118,11 +131,14 @@ class _$GetAnimeDetailUseCaseInputImpl implements _GetAnimeDetailUseCaseInput {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetAnimeDetailUseCaseInputImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            const DeepCollectionEquality()
+                .equals(other.cancelToken, cancelToken));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(
+      runtimeType, id, const DeepCollectionEquality().hash(cancelToken));
 
   /// Create a copy of GetAnimeDetailUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
@@ -136,11 +152,14 @@ class _$GetAnimeDetailUseCaseInputImpl implements _GetAnimeDetailUseCaseInput {
 
 abstract class _GetAnimeDetailUseCaseInput
     implements GetAnimeDetailUseCaseInput {
-  const factory _GetAnimeDetailUseCaseInput({required final String id}) =
-      _$GetAnimeDetailUseCaseInputImpl;
+  const factory _GetAnimeDetailUseCaseInput(
+      {required final String id,
+      final CancelToken? cancelToken}) = _$GetAnimeDetailUseCaseInputImpl;
 
   @override
   String get id;
+  @override
+  CancelToken? get cancelToken;
 
   /// Create a copy of GetAnimeDetailUseCaseInput
   /// with the given fields replaced by the non-null parameter values.
