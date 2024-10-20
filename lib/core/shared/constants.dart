@@ -1,3 +1,5 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 const kSPUserToken = 'kUserToken';
 const kSPThemeMode = 'kThemeMode';
 
@@ -5,32 +7,7 @@ final decryptHlsUrl = 'https://decrypt-hls.dph.workers.dev';
 const skApiUrl1 = 'https://sk-9animetv.dph.workers.dev';
 const skApiUrl2 = 'https://sk-hianime.dph.workers.dev';
 
-final hostCurl = String.fromCharCodes([
-  104,
-  116,
-  116,
-  112,
-  115,
-  58,
-  47,
-  47,
-  97,
-  110,
-  105,
-  109,
-  101,
-  118,
-  105,
-  101,
-  116,
-  115,
-  117,
-  98,
-  46,
-  114,
-  117,
-  110,
-]);
+final hostCurl = dotenv.get('HOST_CURL');
 
 final headers = {
   'user-agent': String.fromCharCodes([

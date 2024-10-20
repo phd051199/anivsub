@@ -111,7 +111,6 @@ class AnimeDataEntity extends BaseEntity {
           {'name': 'genre genre genre'},
         ],
         timeRelease: 120,
-        process: '12/12',
         views: 100000,
         rate: 0.0,
       );

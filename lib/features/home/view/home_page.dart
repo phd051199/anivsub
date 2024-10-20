@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:uuid/uuid.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -102,21 +103,25 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
   }
 
   Widget _buildMovieCard(BuildContext context, AnimeDataEntity movie) {
-    return GestureDetector(
-      onTap: () => context.pushNamed(
-        ScreenNames.watch,
-        queryParameters: {'path': movie.path},
-      ),
-      child: SizedBox(
-        width: 340,
-        child: Row(
-          children: [
-            AnimeThumbnail(
-              imageUrl: movie.image,
-              process: movie.process,
-            ),
-            AnimeDescription(movie: movie),
-          ],
+    final tag = const Uuid().v4();
+    return Hero(
+      tag: tag,
+      child: GestureDetector(
+        onTap: () => context.pushNamed(
+          ScreenNames.watch,
+          queryParameters: {'path': movie.path, 'tag': tag},
+        ),
+        child: SizedBox(
+          width: 340,
+          child: Row(
+            children: [
+              AnimeThumbnail(
+                imageUrl: movie.image,
+                process: movie.process,
+              ),
+              AnimeDescription(movie: movie),
+            ],
+          ),
         ),
       ),
     );

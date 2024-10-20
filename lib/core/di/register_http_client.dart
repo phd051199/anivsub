@@ -11,8 +11,8 @@ import 'package:path_provider/path_provider.dart';
 void registerHttpClient(Environment environment) {
   final cookieManager = GetIt.I<CookieManager>();
 
-  GetIt.I.registerLazySingleton<AuthApiClient>(
-    () => AuthApiClient(
+  GetIt.I.registerSingleton<AuthApiClient>(
+    AuthApiClient(
       NetworkClient.getDio(
         baseUrl: environment.baseUrl,
         headers: headers,
@@ -21,8 +21,8 @@ void registerHttpClient(Environment environment) {
     ),
   );
 
-  GetIt.I.registerLazySingleton<ScrapingClient>(
-    () => ScrapingClient(
+  GetIt.I.registerSingleton<ScrapingClient>(
+    ScrapingClient(
       NetworkClient.getDio(
         baseUrl: hostCurl,
         headers: headers,
@@ -32,8 +32,8 @@ void registerHttpClient(Environment environment) {
     ),
   );
 
-  GetIt.I.registerLazySingleton<CFWorkerApiClient>(
-    () => CFWorkerApiClient(
+  GetIt.I.registerSingleton<CFWorkerApiClient>(
+    CFWorkerApiClient(
       NetworkClient.getDio(
         baseUrl: decryptHlsUrl,
         isAuthenticated: false,
@@ -41,8 +41,8 @@ void registerHttpClient(Environment environment) {
     ),
   );
 
-  GetIt.I.registerLazySingleton<OpenDApiClient>(
-    () => OpenDApiClient(
+  GetIt.I.registerSingleton<OpenDApiClient>(
+    OpenDApiClient(
       NetworkClient.getDio(
         baseUrl: skApiUrl1,
         isAuthenticated: false,
@@ -55,8 +55,8 @@ Future<void> registerCookieManager() async {
   final appDocDir = await getApplicationDocumentsDirectory();
   final cookiePath = '${appDocDir.path}/.cookies/';
 
-  GetIt.I.registerLazySingleton<CookieManager>(
-    () => CookieManager(
+  GetIt.I.registerSingleton<CookieManager>(
+    CookieManager(
       PersistCookieJar(
         ignoreExpires: true,
         storage: FileStorage(cookiePath),
@@ -68,8 +68,8 @@ Future<void> registerCookieManager() async {
 void registerCacheManager() {
   final CacheStore cacheStore = MemCacheStore();
 
-  GetIt.I.registerLazySingleton<CacheOptions>(
-    () => CacheOptions(
+  GetIt.I.registerSingleton<CacheOptions>(
+    CacheOptions(
       store: cacheStore,
       maxStale: const Duration(minutes: 1),
       policy: CachePolicy.forceCache,

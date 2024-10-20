@@ -4,6 +4,7 @@ import 'package:anivsub/core/shared/number_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:uuid/uuid.dart';
 
 import 'anime_thumbnail.dart';
 
@@ -40,7 +41,7 @@ class AnimeList extends StatelessWidget {
 }
 
 class AnimeCard extends StatelessWidget {
-  const AnimeCard({
+  AnimeCard({
     super.key,
     required this.item,
     this.onTap,
@@ -48,52 +49,56 @@ class AnimeCard extends StatelessWidget {
 
   final AnimeDataEntity item;
   final void Function(AnimeDataEntity)? onTap;
+  final String tag = const Uuid().v4();
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (onTap != null) {
-          onTap!(item);
-        } else {
-          context.pushNamed(
-            ScreenNames.watch,
-            queryParameters: {'path': item.path},
-          );
-        }
-      },
-      child: SizedBox(
-        width: 120,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AnimeThumbnail(
-              imageUrl: item.image,
-              process: item.process,
-              rate: item.rate,
-              height: 160,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              item.name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            if (item.views != 0) ...[
-              const SizedBox(height: 2),
-              Text(
-                '${context.l10n.views}: ${item.views?.formatNumber()}',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: context.textTheme.labelSmall!.copyWith(
-                  color: context.theme.colorScheme.secondary,
-                ),
+    return Hero(
+      tag: tag,
+      child: GestureDetector(
+        onTap: () {
+          if (onTap != null) {
+            onTap!(item);
+          } else {
+            context.pushNamed(
+              ScreenNames.watch,
+              queryParameters: {'path': item.path, 'tag': tag},
+            );
+          }
+        },
+        child: SizedBox(
+          width: 120,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AnimeThumbnail(
+                imageUrl: item.image,
+                process: item.process,
+                rate: item.rate,
+                height: 160,
               ),
+              const SizedBox(height: 8),
+              Text(
+                item.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              if (item.views != 0) ...[
+                const SizedBox(height: 2),
+                Text(
+                  '${context.l10n.views}: ${item.views?.formatNumber()}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.textTheme.labelSmall!.copyWith(
+                    color: context.theme.colorScheme.secondary,
+                  ),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

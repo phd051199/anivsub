@@ -51,6 +51,7 @@ final _watchRoute = GoRoute(
   path: ScreenPaths.watch,
   builder: (context, state) => WatchPage(
     path: state.uri.queryParameters['path']!,
+    tag: state.uri.queryParameters['tag'],
   ),
 );
 

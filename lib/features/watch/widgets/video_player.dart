@@ -128,7 +128,7 @@ class _VideoPlayerWidgetState
       },
       builder: (context, state) => switch (state) {
         VideoPlayerInitial() || VideoPlayerLoading() => const EmptyPlayer(
-            child: LoadingWidget(),
+            child: LoadingWidget(color: Colors.white),
           ),
         VideoPlayerLoaded() => _chaps.isNotEmpty
             ? BetterPlayer(controller: _betterPlayerController)

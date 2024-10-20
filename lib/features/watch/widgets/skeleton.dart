@@ -3,24 +3,28 @@ import 'package:anivsub/core/shared/number_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/anime/anime_list.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
-import 'package:anivsub/features/watch/watch.dart';
-import 'package:anivsub/features/watch/widgets/chapter_horizonal.dart';
 import 'package:anivsub/features/watch/widgets/empty_player.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:uuid/uuid.dart';
 
 class WatchSkeleton extends StatelessWidget {
-  const WatchSkeleton({super.key});
+  const WatchSkeleton({super.key, this.tag});
+
+  final String? tag;
 
   @override
   Widget build(BuildContext context) {
     final detail = AnimeDetailEntity.mockup();
     return ListView(
       children: [
-        const AspectRatio(
-          aspectRatio: 16 / 9,
-          child: EmptyPlayer(child: LoadingWidget(color: Colors.white)),
+        Hero(
+          tag: tag ?? const Uuid().v4(),
+          child: const AspectRatio(
+            aspectRatio: 16 / 9,
+            child: EmptyPlayer(child: LoadingWidget(color: Colors.white)),
+          ),
         ),
         const Gap(4),
         Skeletonizer(
@@ -36,28 +40,31 @@ class WatchSkeleton extends StatelessWidget {
           child: Container(
             height: 90,
             padding: const EdgeInsets.only(left: 12),
-            child: ChapterHorizontal(
-              chaps: List.generate(6, (_) => ChapDataEntity.mockup()),
-              state: WatchLoaded(detail: detail, chaps: []),
+            child: _buildChaptersPlaceholder(
+              context,
+              List.generate(6, (_) => ChapDataEntity.mockup()),
             ),
           ),
         ),
         const Gap(4),
         Skeletonizer(
           enabled: true,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(context.l10n.related),
-          ),
-        ),
-        const Gap(4),
-        Skeletonizer(
-          enabled: true,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: AnimeList(
-              movies: List.generate(3, (_) => AnimeDataEntity.mockup()),
+          child: ExpansionTile(
+            tilePadding: const EdgeInsets.symmetric(horizontal: 14),
+            initiallyExpanded: true,
+            title: Text(
+              context.l10n.related,
+              style: context.textTheme.titleMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: AnimeList(
+                  movies: List.generate(3, (_) => AnimeDataEntity.mockup()),
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -92,5 +99,52 @@ class WatchSkeleton extends StatelessWidget {
     return texts
         .map((text) => Text(text, style: context.textTheme.bodyMedium))
         .toList();
+  }
+
+  Widget _buildChaptersPlaceholder(
+    BuildContext context,
+    List<ChapDataEntity> chaps,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ListTile(
+          minTileHeight: 32,
+          contentPadding: const EdgeInsets.only(left: 4),
+          title:
+              Text(context.l10n.episode, style: context.textTheme.titleSmall),
+          trailing: const Icon(Icons.chevron_right),
+        ),
+        Expanded(
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: chaps.length,
+            separatorBuilder: (context, index) => const Gap(4),
+            itemBuilder: (context, index) =>
+                _buildChapCard(context, chaps[index]),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildChapCard(
+    BuildContext context,
+    ChapDataEntity chap,
+  ) {
+    return Card.filled(
+      color: context.theme.colorScheme.surfaceContainer,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18),
+        child: Center(
+          child: Text(
+            chap.name,
+            style: context.textTheme.bodySmall!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

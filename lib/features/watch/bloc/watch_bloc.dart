@@ -153,7 +153,8 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       _fetchDetailData(id),
     ).wait;
 
-    final listEpisodeSkip = await _loadAdditionalAnimeData(animeDetail);
+    final listEpisodeSkip =
+        await _loadAdditionalAnimeData(animeDetail).catchError((_) => null);
 
     return (chaps, animeDetail, listEpisodeSkip);
   }
