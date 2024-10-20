@@ -4,8 +4,8 @@ import 'package:anivsub/core/environment/environment.dart';
 
 Future<void> registerDependencies(Environment environment) async {
   await registerCookieManager();
-  await registerCacheManager();
-
+  registerCacheManager();
   registerHttpClient(environment);
+
   configureInjection();
 }

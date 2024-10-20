@@ -288,12 +288,6 @@ class _BetterPlayerCustomMaterialControlsState
                       onChanged: (newValue) {
                         videoPlayerCubit.toggleSkipIntro();
                       },
-                      thumbIcon: WidgetStateProperty.all(
-                        const Icon(
-                          Icons.skip_next,
-                          color: Colors.black54,
-                        ),
-                      ),
                       trackColor: WidgetStateProperty.all(
                         Colors.white38,
                       ),

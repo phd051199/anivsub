@@ -16,7 +16,7 @@ class BottomNavigationPage extends StatelessWidget {
         forceMaterialTransparency: true,
         title: Text(
           _getScreenTitle(context, navigationShell.currentIndex),
-          style: context.textTheme.headlineLarge!.copyWith(
+          style: context.textTheme.headlineMedium!.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -29,7 +29,7 @@ class BottomNavigationPage extends StatelessWidget {
           },
         ),
       ),
-      body: navigationShell,
+      body: SafeArea(child: navigationShell),
       bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }

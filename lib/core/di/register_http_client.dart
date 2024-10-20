@@ -1,11 +1,9 @@
 import 'package:anivsub/core/environment/environment.dart';
 import 'package:anivsub/core/network/network_client.dart';
 import 'package:anivsub/core/shared/constants.dart';
-import 'package:anivsub/core/utils/string_utils.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
-import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path_provider/path_provider.dart';
@@ -67,17 +65,14 @@ Future<void> registerCookieManager() async {
   );
 }
 
-Future<void> registerCacheManager() async {
-  final appDocDir = await getApplicationDocumentsDirectory();
-  final CacheStore cacheStore = HiveCacheStore(appDocDir.path);
+void registerCacheManager() {
+  final CacheStore cacheStore = MemCacheStore();
 
   GetIt.I.registerLazySingleton<CacheOptions>(
     () => CacheOptions(
       store: cacheStore,
-      maxStale: const Duration(days: 1),
+      maxStale: const Duration(minutes: 1),
       policy: CachePolicy.forceCache,
-      keyBuilder: cacheKeyBuilder,
-      allowPostMethod: true,
     ),
   );
 }

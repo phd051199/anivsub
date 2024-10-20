@@ -4,7 +4,6 @@ import 'package:anivsub/core/shared/constants.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 
 class AnimeThumbnail extends StatelessWidget {
   const AnimeThumbnail({
@@ -24,39 +23,21 @@ class AnimeThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        _buildThumbnailImage(context),
-        if (process?.isNotEmpty ?? false) _buildProcessOverlay(context),
-        if (rate != null) _buildRatingOverlay(context),
-      ],
-    );
-  }
-
-  Widget _buildThumbnailImage(BuildContext context) {
-    return Card(
+    return Card.filled(
       clipBehavior: Clip.hardEdge,
-      child: CachedNetworkImage(
-        imageUrl: imageUrl ?? '',
-        httpHeaders: headers,
-        fit: BoxFit.cover,
-        height: height,
-        width: width,
-        placeholder: (context, url) => _buildShimmerPlaceholder(context),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
-      ),
-    );
-  }
-
-  Widget _buildShimmerPlaceholder(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    return Shimmer.fromColors(
-      baseColor: colorScheme.surfaceContainerHighest,
-      highlightColor: colorScheme.surface,
-      child: Container(
-        height: height,
-        width: width,
-        color: colorScheme.surface.withOpacity(0.25),
+      child: Stack(
+        children: [
+          CachedNetworkImage(
+            imageUrl: imageUrl ?? '',
+            httpHeaders: headers,
+            fit: BoxFit.cover,
+            height: height,
+            width: width,
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          ),
+          if (process?.isNotEmpty ?? false) _buildProcessOverlay(context),
+          if (rate != null) _buildRatingOverlay(context),
+        ],
       ),
     );
   }
@@ -73,6 +54,7 @@ class AnimeThumbnail extends StatelessWidget {
           child: Container(
             height: 32,
             alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 4),
             decoration: BoxDecoration(
               color: context.theme.colorScheme.onPrimary.withOpacity(0.8),
               borderRadius: BorderRadius.circular(12),
@@ -91,35 +73,31 @@ class AnimeThumbnail extends StatelessWidget {
         fontWeight: FontWeight.bold,
       ),
       maxLines: 1,
-      overflow: TextOverflow.visible,
+      overflow: TextOverflow.fade,
+      softWrap: false,
     );
   }
 
   Widget _buildRatingOverlay(BuildContext context) {
-    return Positioned(
-      left: 4,
-      top: 4,
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(12),
-          bottomRight: Radius.circular(12),
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-          child: Container(
-            height: 24,
-            width: 52,
-            decoration: BoxDecoration(
-              color:
-                  context.theme.colorScheme.secondaryContainer.withOpacity(0.9),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(12),
-                bottomRight: Radius.circular(12),
-              ),
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        bottomRight: Radius.circular(12),
+      ),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+        child: Container(
+          height: 24,
+          width: 48,
+          decoration: BoxDecoration(
+            color:
+                context.theme.colorScheme.secondaryContainer.withOpacity(0.9),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(12),
+              bottomRight: Radius.circular(12),
             ),
-            alignment: Alignment.center,
-            child: _buildRatingText(context),
           ),
+          alignment: Alignment.center,
+          child: _buildRatingText(context),
         ),
       ),
     );

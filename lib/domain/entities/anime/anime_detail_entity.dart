@@ -164,4 +164,34 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO> {
       schedule: schedule,
     );
   }
+
+  static AnimeDetailEntity mockup() => AnimeDetailEntity(
+        name: 'Anime Title Anime Title Anime Title Anime Title',
+        othername: 'Other Name',
+        image: 'https://avatars.githubusercontent.com/u/30114834',
+        poster: 'https://avatars.githubusercontent.com/u/30114834',
+        description: 'Sample anime description',
+        rate: 5.0,
+        countRate: 1000,
+        duration: '24 min',
+        yearOf: 2024,
+        views: 100000,
+        season: [Anchor(name: 'Season 1', path: '/season1')],
+        genre: [
+          Anchor(name: 'Genre1 Genre1 Genre1', path: '/genre1'),
+          Anchor(name: 'Genre2 Genre2 Genre2', path: '/genre2'),
+          Anchor(name: 'Genre3 Genre3 Genre3', path: '/genre3'),
+        ],
+        quality: 'HD',
+        status: 'Ongoing',
+        authors: [Anchor(name: 'Author 1', path: '/author1')],
+        countries: [Anchor(name: 'Country', path: '/country')],
+        follows: 50000,
+        language: 'Japanese',
+        studio: 'Sample Studio',
+        seasonOf: Anchor(name: 'Main Series', path: '/main-series'),
+        trailer: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        toPut: [AnimeDataEntity.mockup()],
+        schedule: 'Sample Schedule Sample Schedule Sample Schedule',
+      );
 }

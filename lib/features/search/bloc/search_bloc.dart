@@ -21,15 +21,13 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
   final SearchAnimeUseCase _searchAnimeUseCase;
   final GetPreSearchUseCase _getPreSearchUseCase;
 
-  static const _pageSize = 30;
+  static const int _pageSize = 30;
 
   Future<List<PreSearchItemEntity>?> suggestionsCallback(String keyword) async {
     if (keyword.isEmpty) return null;
 
     final output = await _getPreSearchUseCase.send(
-      GetPreSearchUseCaseInput(
-        keyword: keyword,
-      ),
+      GetPreSearchUseCaseInput(keyword: keyword),
     );
     return output.result;
   }
@@ -48,26 +46,23 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
         ),
       );
 
-      if (output.result.items.isNotEmpty) {
-        emit(
-          SearchLoaded(
-            result: output.result,
-            hasReachedMax: output.result.items.length < _pageSize,
-            currentPage: event.page,
-          ),
-        );
-      } else {
-        emit(
-          const SearchLoaded(
-            hasReachedMax: true,
-            result: SearchResultEntity(items: []),
-          ),
-        );
-      }
-    } catch (e) {
+      final items = output.result.items;
+      final hasReachedMax = items.length < _pageSize;
+
       emit(
-        SearchError('An error occurred: $e'),
+        items.isNotEmpty
+            ? SearchLoaded(
+                result: output.result,
+                hasReachedMax: hasReachedMax,
+                currentPage: event.page,
+              )
+            : const SearchLoaded(
+                hasReachedMax: true,
+                result: SearchResultEntity(items: []),
+              ),
       );
+    } catch (e) {
+      emit(SearchError('An error occurred: $e'));
     }
   }
 

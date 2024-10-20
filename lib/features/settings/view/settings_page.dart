@@ -15,18 +15,16 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends CubitState<SettingsPage, SettingsCubit> {
   @override
   Widget buildPage(BuildContext context) {
-    return const SafeArea(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            ThemeModeWidget(),
-            Divider(),
-            ThemeColorWidget(),
-            Divider(),
-            LogoutWidget(),
-          ],
-        ),
+    return const SingleChildScrollView(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          ThemeModeWidget(),
+          Divider(),
+          ThemeColorWidget(),
+          Divider(),
+          LogoutWidget(),
+        ],
       ),
     );
   }

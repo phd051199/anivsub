@@ -6,11 +6,11 @@ import 'package:anivsub/features/home/home.dart';
 import 'package:anivsub/features/shared/anime/anime_description.dart';
 import 'package:anivsub/features/shared/anime/anime_list.dart';
 import 'package:anivsub/features/shared/anime/anime_thumbnail.dart';
-import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -38,17 +38,17 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
       listener: (context, state) {
         if (state is HomeError) onErrorListener(context, state);
       },
-      builder: (context, state) => SafeArea(
-        child: switch (state) {
-          HomeInitial() || HomeLoading() => const LoadingWidget(),
-          HomeLoaded() => _buildHomeContent(context, state),
-          _ => Container(),
-        },
-      ),
+      builder: (context, state) => switch (state) {
+        HomeInitial() || HomeLoading() => Skeletonizer(
+            child: _buildHomeContent(context),
+          ),
+        HomeLoaded() => _buildHomeContent(context, state: state),
+        _ => Container(),
+      },
     );
   }
 
-  Widget _buildHomeContent(BuildContext context, HomeLoaded state) {
+  Widget _buildHomeContent(BuildContext context, {HomeLoaded? state}) {
     return RefreshIndicator(
       onRefresh: () async {
         bloc.add(const LoadHome());
@@ -59,15 +59,28 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
             padding: const EdgeInsets.all(12),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                _buildAiringList(context, state.homeData.sliderMovies),
-                const Gap(12),
-                ...state.homeData.toMap().keys.map((key) {
-                  return _buildAnimeSection(
+                if (state != null) ...[
+                  _buildAiringList(context, state.homeData.sliderMovies),
+                  const Gap(12),
+                  ...state.homeData.toMap().keys.map((key) {
+                    return _buildAnimeSection(
+                      context,
+                      state.homeData.toMapLocalized(context)[key]!,
+                      state.homeData.toMap()[key],
+                    );
+                  }),
+                ] else ...[
+                  _buildAiringList(
                     context,
-                    state.homeData.toMapLocalized(context)[key]!,
-                    state.homeData.toMap()[key],
-                  );
-                }),
+                    List.generate(2, (_) => AnimeDataEntity.mockup()),
+                  ),
+                  const Gap(12),
+                  _buildAnimeSection(
+                    context,
+                    'Loading...',
+                    List.generate(6, (_) => AnimeDataEntity.mockup()),
+                  ),
+                ],
               ]),
             ),
           ),

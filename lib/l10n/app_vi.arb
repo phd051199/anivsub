@@ -145,5 +145,9 @@
   "searchHint": "Từ khóa (tên tiếng Nhật, Anh, Việt)",
   "@searchHint": {
     "description": "Hint text for search input."
+  },
+  "related": "Liên quan",
+  "@related": {
+    "description": "Label for related anime."
   }
 }

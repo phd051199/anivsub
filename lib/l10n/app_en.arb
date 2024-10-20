@@ -142,8 +142,12 @@
   "@logout": {
     "description": "Label for the logout button"
   },
-  "logoutMessage" : "Disconnect the current user",
+  "logoutMessage": "Disconnect the current user",
   "@logoutMessage": {
     "description": "Message displayed when logging out"
+  },
+  "related": "Related",
+  "@related": {
+    "description": "Label for related anime."
   }
 }

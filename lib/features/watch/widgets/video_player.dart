@@ -2,11 +2,12 @@ import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/custom/better_player_material_controls.dart';
+import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
+import 'package:anivsub/features/watch/widgets/empty_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:river_player/river_player.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
@@ -87,6 +88,7 @@ class _VideoPlayerWidgetState
       enablePip: false,
       progressBarPlayedColor: context.theme.colorScheme.primary,
       progressBarHandleColor: context.theme.colorScheme.primary,
+      loadingWidget: const LoadingWidget(color: Colors.white),
     );
   }
 
@@ -125,34 +127,14 @@ class _VideoPlayerWidgetState
         }
       },
       builder: (context, state) => switch (state) {
-        VideoPlayerInitial() || VideoPlayerLoading() => _buildEmptyPlayer(
-            context,
-            const Center(child: CircularProgressIndicator(color: Colors.white)),
+        VideoPlayerInitial() || VideoPlayerLoading() => const EmptyPlayer(
+            child: LoadingWidget(),
           ),
         VideoPlayerLoaded() => _chaps.isNotEmpty
             ? BetterPlayer(controller: _betterPlayerController)
-            : _buildEmptyPlayer(context, _buildErrorText(context)),
-        _ => _buildEmptyPlayer(context, _buildErrorText(context)),
+            : EmptyPlayer(child: _buildErrorText(context)),
+        _ => EmptyPlayer(child: _buildErrorText(context)),
       },
-    );
-  }
-
-  Widget _buildEmptyPlayer(BuildContext context, Widget child) {
-    return Stack(
-      children: [
-        Container(
-          color: Colors.black,
-          child: child,
-        ),
-        Positioned(
-          top: 10,
-          left: 6,
-          child: IconButton(
-            onPressed: context.pop,
-            icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
-          ),
-        ),
-      ],
     );
   }
 

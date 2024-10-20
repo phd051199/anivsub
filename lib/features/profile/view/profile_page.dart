@@ -31,132 +31,130 @@ class _ProfilePageState extends CubitState<ProfilePage, ProfileCubit> {
           );
         }
       },
-      builder: (context, state) => SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () {
-            context.read<ProfileCubit>().getUser();
-            return Future.value();
-          },
-          child: switch (state) {
-            ProfileInitial() || ProfileLoading() => const LoadingWidget(),
-            ProfileLoaded() => CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundImage: CachedNetworkImageProvider(
-                              state.user.image ?? '',
-                            ),
+      builder: (context, state) => RefreshIndicator(
+        onRefresh: () {
+          context.read<ProfileCubit>().getUser();
+          return Future.value();
+        },
+        child: switch (state) {
+          ProfileInitial() || ProfileLoading() => const LoadingWidget(),
+          ProfileLoaded() => CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundImage: CachedNetworkImageProvider(
+                            state.user.image ?? '',
                           ),
-                          const Gap(16),
-                          Text(
-                            '${state.user.firstName ?? ''} ${state.user.lastName ?? ''}',
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        ),
+                        const Gap(16),
+                        Text(
+                          '${state.user.firstName ?? ''} ${state.user.lastName ?? ''}',
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                          const Gap(8),
-                          Text(
-                            state.user.email ?? '',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
+                        ),
+                        const Gap(8),
+                        Text(
+                          state.user.email ?? '',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 16,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final groupedHistory = groupHistoryByDate(
-                          state.queryHistory as List<dynamic>,
-                        );
-                        final date = groupedHistory.keys.elementAt(index);
-                        final items = groupedHistory[date]!;
+                ),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final groupedHistory = groupHistoryByDate(
+                        state.queryHistory as List<dynamic>,
+                      );
+                      final date = groupedHistory.keys.elementAt(index);
+                      final items = groupedHistory[date]!;
 
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(
-                                formatTimestamp(date, withTime: false),
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              formatTimestamp(date, withTime: false),
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            ...items.map(
-                              (e) => e is Map<String, dynamic>
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        context.pushNamed(
-                                          ScreenNames.watch,
-                                          queryParameters: {
-                                            'path': '/phim/${e['season']}/',
-                                          },
-                                        );
-                                      },
-                                      child: ListTile(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                        ),
-                                        leading: AspectRatio(
-                                          aspectRatio: 16 / 9,
-                                          child: Container(
-                                            width: 100,
-                                            clipBehavior: Clip.hardEdge,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
+                          ),
+                          ...items.map(
+                            (e) => e is Map<String, dynamic>
+                                ? GestureDetector(
+                                    onTap: () {
+                                      context.pushNamed(
+                                        ScreenNames.watch,
+                                        queryParameters: {
+                                          'path': '/phim/${e['season']}/',
+                                        },
+                                      );
+                                    },
+                                    child: ListTile(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                      ),
+                                      leading: AspectRatio(
+                                        aspectRatio: 16 / 9,
+                                        child: Container(
+                                          width: 100,
+                                          clipBehavior: Clip.hardEdge,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                ImageUrlUtils.addHostUrlImage(
+                                              e['poster'] ?? '',
                                             ),
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  ImageUrlUtils.addHostUrlImage(
-                                                e['poster'] ?? '',
-                                              ),
-                                              fit: BoxFit.cover,
-                                            ),
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
-                                        title: Text(
-                                          '${e['name']?.toString()}\n${e['season_name']} Tập ${e['watch_name']?.toString()}',
-                                          style: const TextStyle(fontSize: 14),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        subtitle: Text(
-                                          formatTimestamp(e['created_at']),
-                                          style: const TextStyle(fontSize: 14),
-                                        ),
                                       ),
-                                    )
-                                  : Container(),
-                            ),
-                          ],
-                        );
-                      },
-                      childCount: groupHistoryByDate(
-                        state.queryHistory as List<dynamic>,
-                      ).length,
-                    ),
+                                      title: Text(
+                                        '${e['name']?.toString()}\n${e['season_name']} Tập ${e['watch_name']?.toString()}',
+                                        style: const TextStyle(fontSize: 14),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      subtitle: Text(
+                                        formatTimestamp(e['created_at']),
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                          ),
+                        ],
+                      );
+                    },
+                    childCount: groupHistoryByDate(
+                      state.queryHistory as List<dynamic>,
+                    ).length,
                   ),
-                ],
-              ),
-            _ => Container(),
-          },
-        ),
+                ),
+              ],
+            ),
+          _ => Container(),
+        },
       ),
     );
   }

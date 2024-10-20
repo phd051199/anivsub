@@ -11,9 +11,11 @@ class AnimeList extends StatelessWidget {
   const AnimeList({
     super.key,
     required this.movies,
+    this.onTap,
   });
 
   final List<AnimeDataEntity> movies;
+  final void Function(AnimeDataEntity)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,10 @@ class AnimeList extends StatelessWidget {
           crossAxisSpacing: 12,
           childAspectRatio: 0.45,
         ),
-        itemBuilder: (context, index) => AnimeCard(item: movies[index]),
+        itemBuilder: (context, index) => AnimeCard(
+          item: movies[index],
+          onTap: onTap,
+        ),
       ),
     );
   }
@@ -38,22 +43,24 @@ class AnimeCard extends StatelessWidget {
   const AnimeCard({
     super.key,
     required this.item,
+    this.onTap,
   });
 
   final AnimeDataEntity item;
+  final void Function(AnimeDataEntity)? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (context.focusScope.hasFocus) {
-          context.focusScope.unfocus();
-          return;
+        if (onTap != null) {
+          onTap!(item);
+        } else {
+          context.pushNamed(
+            ScreenNames.watch,
+            queryParameters: {'path': item.path},
+          );
         }
-        context.pushNamed(
-          ScreenNames.watch,
-          queryParameters: {'path': item.path},
-        );
       },
       child: SizedBox(
         width: 120,

@@ -97,4 +97,22 @@ class AnimeDataEntity extends BaseEntity {
       timeRelease: timeRelease ?? this.timeRelease,
     );
   }
+
+  static AnimeDataEntity mockup() => const AnimeDataEntity(
+        path: 'path',
+        image: 'https://avatars.githubusercontent.com/u/30114834',
+        name: 'namenamenam',
+        chap: 'chap',
+        quality: 'quality',
+        year: 2024,
+        description: 'description\ndescription description',
+        studio: 'studio',
+        genre: [
+          {'name': 'genre genre genre'},
+        ],
+        timeRelease: 120,
+        process: '12/12',
+        views: 100000,
+        rate: 0.0,
+      );
 }
