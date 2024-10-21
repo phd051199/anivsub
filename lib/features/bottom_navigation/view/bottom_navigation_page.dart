@@ -22,14 +22,12 @@ class BottomNavigationPage extends StatelessWidget {
         ),
         centerTitle: false,
         flexibleSpace: GestureDetector(
-          onTap: () {
-            if (context.focusScope.hasFocus) {
-              context.focusScope.unfocus();
-            }
-          },
+          onTap: FocusManager.instance.primaryFocus?.unfocus,
         ),
       ),
-      body: SafeArea(child: navigationShell),
+      body: SafeArea(
+        child: navigationShell,
+      ),
       bottomNavigationBar: _buildBottomNavigationBar(context),
     );
   }

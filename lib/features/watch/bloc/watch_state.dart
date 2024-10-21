@@ -5,7 +5,7 @@ class WatchState extends BaseBlocState with _$WatchState {
   const factory WatchState.initial() = WatchInitial;
   const factory WatchState.loading() = WatchLoading;
   const factory WatchState.loaded({
-    required List<ChapDataEntity> chaps,
+    List<ChapDataEntity>? chaps,
     required AnimeDetailEntity detail,
     List<TabViewItem?>? tabViewItems,
   }) = WatchLoaded;

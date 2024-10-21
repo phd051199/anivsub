@@ -149,5 +149,9 @@
   "related": "Related",
   "@related": {
     "description": "Label for related anime."
+  },
+  "comment": "Comment",
+  "@comment": {
+    "description": "Label for comment section."
   }
 }

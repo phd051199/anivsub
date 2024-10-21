@@ -3,6 +3,13 @@ part of 'watch_bloc.dart';
 abstract class WatchEvent extends BaseBlocEvent {}
 
 @freezed
+class InitWatch extends WatchEvent with _$InitWatch {
+  const factory InitWatch({
+    required String id,
+  }) = _InitWatch;
+}
+
+@freezed
 class LoadWatch extends WatchEvent with _$LoadWatch {
   const factory LoadWatch({
     required String id,

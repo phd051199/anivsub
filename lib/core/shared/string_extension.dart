@@ -28,4 +28,8 @@ extension StringExtension on String {
   bool isNotNumeric() {
     return !RegExp(r'^\d+$').hasMatch(this);
   }
+
+  String cleanPathToView() {
+    return replaceAll('xem-phim.html', '');
+  }
 }

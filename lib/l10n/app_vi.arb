@@ -149,5 +149,9 @@
   "related": "Liên quan",
   "@related": {
     "description": "Label for related anime."
+  },
+  "comment": "Bình luận",
+  "@comment": {
+    "description": "Label for comment section."
   }
 }

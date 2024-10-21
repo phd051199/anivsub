@@ -3,6 +3,7 @@ import 'package:anivsub/core/shared/number_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/anime/anime_list.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
+import 'package:anivsub/features/watch/watch.dart';
 import 'package:anivsub/features/watch/widgets/empty_player.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -38,8 +39,8 @@ class WatchSkeleton extends StatelessWidget {
         Skeletonizer(
           enabled: true,
           child: Container(
-            height: 90,
-            padding: const EdgeInsets.only(left: 12),
+            height: 120,
+            padding: const EdgeInsets.all(12),
             child: _buildChaptersPlaceholder(
               context,
               List.generate(6, (_) => ChapDataEntity.mockup()),
@@ -75,30 +76,87 @@ class WatchSkeleton extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ListTile(
-          contentPadding: EdgeInsets.zero,
-          title: Text(detail.name, style: context.textTheme.titleMedium),
-          subtitle: Text(
-            '${detail.views.formatNumber()} views',
-            style: context.textTheme.titleSmall,
-          ),
-        ),
-        ..._buildInfoTexts(context, detail),
+        _buildDetailTile(context, detail),
+        _buildInfoText(context, detail),
       ],
     );
   }
 
-  List<Widget> _buildInfoTexts(BuildContext context, AnimeDetailEntity detail) {
-    final texts = [
-      'Studio: ${detail.studio}',
-      'Schedule: ${detail.schedule}',
-      '${detail.yearOf} | ${detail.duration} | ${detail.countries.map((e) => e.name).join(', ')}',
-      '${detail.rate}☆ | ${detail.countRate} ratings | ${detail.seasonOf?.name}',
-      detail.genre.map((e) => '#${e.name}').join(' '),
+  Widget _buildDetailTile(BuildContext context, AnimeDetailEntity detail) {
+    return ListTile(
+      minVerticalPadding: 16,
+      contentPadding: EdgeInsets.zero,
+      title: Text(
+        detail.name,
+        style: context.textTheme.titleLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Text(
+          '${detail.views.formatNumber()} ${context.l10n.views.toLowerCase()}',
+          style: context.textTheme.titleSmall?.copyWith(
+            color: context.theme.colorScheme.secondary,
+          ),
+        ),
+      ),
+      trailing: const Icon(Icons.chevron_right),
+    );
+  }
+
+  Widget _buildInfoText(BuildContext context, AnimeDetailEntity detail) {
+    final infoTexts = [
+      InfoText(
+        'Sản xuất bởi ${detail.studio}',
+        TextStyle(
+          color: context.theme.colorScheme.tertiary,
+          fontWeight: FontWeight.bold,
+        ),
+        Icons.movie_creation_outlined,
+      ),
+      InfoText(
+        'Lịch chiếu: ${detail.schedule?.toLowerCase()}',
+        null,
+        Icons.calendar_today_outlined,
+      ),
+      InfoText(
+        '${detail.yearOf} | Tập ${detail.duration} | ${detail.countries.map((e) => e.name).join(', ')}',
+        null,
+        Icons.info_outline,
+      ),
+      InfoText(
+        '${detail.rate} | ${detail.countRate} đánh giá | ${detail.seasonOf?.name}',
+        TextStyle(
+          fontWeight: FontWeight.bold,
+          color: context.theme.colorScheme.secondary,
+        ),
+        Icons.star_outline,
+      ),
+      InfoText(
+        detail.genre.map((e) => '#${e.name}').join(' '),
+        TextStyle(
+          color: context.theme.colorScheme.primary,
+          fontStyle: FontStyle.italic,
+        ),
+        Icons.tag,
+      ),
     ];
-    return texts
-        .map((text) => Text(text, style: context.textTheme.bodyMedium))
-        .toList();
+
+    return Card.filled(
+      color: context.theme.colorScheme.surfaceContainer,
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: infoTexts.map((item) => item.build(context)).toList(),
+        ),
+      ),
+    );
   }
 
   Widget _buildChaptersPlaceholder(

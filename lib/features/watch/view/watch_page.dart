@@ -2,17 +2,20 @@ import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/core/shared/number_extension.dart';
+import 'package:anivsub/core/shared/string_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/anime/anime_list.dart';
 import 'package:anivsub/features/shared/anime/anime_thumbnail.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
 import 'package:anivsub/features/watch/watch.dart';
+import 'package:anivsub/features/watch/widgets/empty_player.dart';
 import 'package:anivsub/features/watch/widgets/skeleton.dart';
 import 'package:anivsub/features/watch/widgets/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:uuid/uuid.dart';
 
 class WatchPage extends StatefulWidget {
@@ -28,11 +31,13 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
   int _currentTabIndex = 0;
+  bool _needUpdateTabIndex = false;
+  final ItemScrollController _scrollController = ItemScrollController();
 
   @override
   void initState() {
     super.initState();
-    bloc.add(LoadWatch(id: widget.path));
+    bloc.add(InitWatch(id: widget.path));
   }
 
   @override
@@ -60,7 +65,9 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   void _watchStateListener(BuildContext context, WatchState state) {
     if (state is WatchLoaded) {
       _initializeTabController(state);
-    } else if (state is WatchError) {
+    }
+
+    if (state is WatchError) {
       onErrorListener(context, state);
     }
   }
@@ -80,7 +87,6 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
             onTap: () => _showDetailBottomSheet(state),
@@ -93,75 +99,28 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   }
 
   Widget _buildDetailTile(WatchLoaded state) {
-    return Hero(
-      tag: widget.tag ?? const Uuid().v4(),
-      child: ListTile(
-        minVerticalPadding: 16,
-        contentPadding: EdgeInsets.zero,
-        title: Text(
-          state.detail.name,
-          style: context.textTheme.titleLarge
-              ?.copyWith(fontWeight: FontWeight.bold, fontSize: 20),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+    return ListTile(
+      minVerticalPadding: 16,
+      contentPadding: EdgeInsets.zero,
+      title: Text(
+        state.detail.name,
+        style: context.textTheme.titleLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
         ),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: Text(
-            '${state.detail.views.formatNumber()} ${context.l10n.views.toLowerCase()}',
-            style: context.textTheme.titleSmall
-                ?.copyWith(color: context.theme.colorScheme.secondary),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Text(
+          '${state.detail.views.formatNumber()} ${context.l10n.views.toLowerCase()}',
+          style: context.textTheme.titleSmall?.copyWith(
+            color: context.theme.colorScheme.secondary,
           ),
         ),
-        trailing: const Icon(Icons.chevron_right),
       ),
-    );
-  }
-
-  Widget _buildInfoText(WatchLoaded state) {
-    final infoTexts = [
-      (
-        'Sản xuất bởi ${state.detail.studio}',
-        TextStyle(
-          color: context.theme.colorScheme.tertiary,
-          fontWeight: FontWeight.bold,
-        )
-      ),
-      (
-        'Lịch chiếu: ${state.detail.schedule?.toLowerCase()}',
-        const TextStyle()
-      ),
-      (
-        '${state.detail.yearOf} | Tập ${state.detail.duration} | ${state.detail.countries.map((e) => e.name).join(', ')}',
-        const TextStyle()
-      ),
-      (
-        '${state.detail.rate} ★ | ${state.detail.countRate} đánh giá | ${state.detail.seasonOf?.name}',
-        TextStyle(
-          fontWeight: FontWeight.bold,
-          color: context.theme.colorScheme.secondary,
-        )
-      ),
-      (
-        state.detail.genre.map((e) => '#${e.name}').join(' '),
-        TextStyle(
-          color: context.theme.colorScheme.primary,
-        )
-      ),
-    ];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: infoTexts
-          .map((item) => _buildInfoTextItem(item.$1, item.$2))
-          .toList(),
-    );
-  }
-
-  Widget _buildInfoTextItem(String text, TextStyle style) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Text(text, style: context.textTheme.bodyMedium?.merge(style)),
+      trailing: const Icon(Icons.info_outline),
     );
   }
 
@@ -179,43 +138,72 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     return Container(
       height: context.screenSize.height * 0.75,
       padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Chi tiết',
-            style: context.textTheme.titleLarge
-                ?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 12),
-          AnimeThumbnail(imageUrl: state.detail.image),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            title: Text(
-              'Giới thiệu',
-              style: context.textTheme.titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Chi tiết',
+              style: context.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            subtitle: Text(
-              state.detail.description,
-              style: context.textTheme.titleSmall
-                  ?.copyWith(color: context.theme.colorScheme.secondary),
+            const Gap(12),
+            AnimeThumbnail(imageUrl: state.detail.image),
+            const Gap(12),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Text(
+                  'Giới thiệu',
+                  style: context.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              subtitle: Text(
+                state.detail.description,
+                style: context.textTheme.bodyLarge?.copyWith(
+                  color: context.theme.colorScheme.secondary,
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildVideoPlayer(WatchLoaded state) {
-    final listEpisodeSkip = state.tabViewItems?[_currentTabIndex]?.listEpisode;
     return AspectRatio(
       aspectRatio: 16 / 9,
-      child: VideoPlayerWidget(
-        chaps: state.chaps,
-        detail: state.detail,
-        listEpisodeSkip: listEpisodeSkip,
+      child: Stack(
+        children: [
+          _buildHeroWidget(),
+          _buildVideoPlayerWidget(state),
+        ],
       ),
+    );
+  }
+
+  Widget _buildHeroWidget() {
+    return Hero(
+      tag: widget.tag ?? const Uuid().v4(),
+      child: const SizedBox.expand(),
+    );
+  }
+
+  Widget _buildVideoPlayerWidget(WatchLoaded state) {
+    if (state.chaps == null || state.chaps!.isEmpty) {
+      return const EmptyPlayer(child: LoadingWidget(color: Colors.white));
+    }
+
+    final listEpisodeSkip = state.tabViewItems?[_currentTabIndex]?.listEpisode;
+    return VideoPlayerWidget(
+      chaps: state.chaps!,
+      detail: state.detail,
+      listEpisodeSkip: listEpisodeSkip,
     );
   }
 
@@ -224,12 +212,16 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
       child: Column(
         children: [
           _buildDetail(state),
-          const Gap(4),
-          if (state.detail.season.isNotEmpty) ...[
+          const Gap(8),
+          if (state.detail.season.isNotEmpty && state.tabViewItems != null) ...[
             _buildTabBar(state),
             _buildTabBarView(state),
-          ] else
+          ] else if (state.chaps != null && state.chaps!.isNotEmpty) ...[
             _buildSingleSeasonView(state),
+          ] else ...[
+            const SizedBox(height: 100, child: LoadingWidget()),
+          ],
+          _buildCommentSection(state),
           _buildRelatedSection(state),
         ],
       ),
@@ -239,7 +231,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   Widget _buildTabBarView(WatchLoaded state) {
     return Container(
       padding: const EdgeInsets.all(12),
-      height: 112,
+      height: 136,
       child: TabBarView(
         controller: _tabController,
         children: state.tabViewItems!.map((item) {
@@ -256,24 +248,36 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
 
   Widget _buildSingleSeasonView(WatchLoaded state) {
     return Container(
-      height: 110,
+      height: 136,
       padding: const EdgeInsets.all(12),
-      child: _buildChapterHorizontal(chaps: state.chaps, state: state),
+      child: _buildChapterHorizontal(
+        chaps: state.chaps!,
+        state: state,
+      ),
     );
   }
 
   void _initializeTabController(WatchLoaded state) {
-    if (_tabController == null && state.detail.season.isNotEmpty) {
-      final initialIndex =
-          state.detail.season.indexWhere((item) => item.path == widget.path);
-      _currentTabIndex = initialIndex >= 0 ? initialIndex : 0;
+    if (state.detail.season.isEmpty) return;
+    final initialTabIndex = _getInitialTabIndex(state);
+    _currentTabIndex = initialTabIndex >= 0 ? initialTabIndex : 0;
 
-      _tabController = TabController(
-        length: state.detail.season.length,
-        vsync: this,
-        initialIndex: _currentTabIndex,
-      )..addListener(_onTabChange);
+    _tabController ??= TabController(
+      length: state.detail.season.length,
+      vsync: this,
+      initialIndex: _currentTabIndex,
+    )..addListener(_onTabChange);
+
+    if (_needUpdateTabIndex) {
+      _tabController?.index = _currentTabIndex;
+      _needUpdateTabIndex = false;
     }
+  }
+
+  int _getInitialTabIndex(WatchLoaded state) {
+    return state.detail.season.indexWhere(
+      (item) => item.path == state.detail.pathToView!.cleanPathToView(),
+    );
   }
 
   void _onTabChange() {
@@ -298,8 +302,9 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
             (item) => Tab(
               child: Text(
                 item.name,
-                style: context.textTheme.titleSmall!
-                    .copyWith(fontWeight: FontWeight.bold),
+                style: context.textTheme.titleSmall!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           )
@@ -307,21 +312,46 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     );
   }
 
+  Widget _buildCommentSection(WatchLoaded state) {
+    // return ExpansionTile(
+    //   tilePadding: const EdgeInsets.symmetric(horizontal: 14),
+    //   title: Text(
+    //     context.l10n.comment,
+    //     style: context.textTheme.titleMedium?.copyWith(
+    //       fontWeight: FontWeight.bold,
+    //     ),
+    //   ),
+    //   onExpansionChanged: (isExpanded) {
+    //     if (isExpanded) {
+    //       context.showSnackBar('Feature not implemented');
+    //     }
+    //   },
+    //   children: const [],
+    // );
+    return const SizedBox.shrink();
+  }
+
   Widget _buildRelatedSection(WatchLoaded state) {
     return ExpansionTile(
-      tilePadding: const EdgeInsets.symmetric(horizontal: 14),
+      tilePadding: const EdgeInsets.symmetric(horizontal: 16),
       initiallyExpanded: true,
       title: Text(
         context.l10n.related,
-        style: context.textTheme.titleMedium
-            ?.copyWith(fontWeight: FontWeight.bold),
+        style: context.textTheme.titleMedium?.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
       ),
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: AnimeList(
             movies: state.detail.toPut,
-            onTap: (chap) => bloc.add(LoadWatch(id: chap.path)),
+            onTap: (chap) {
+              videoPlayerCubit.dispose();
+              _needUpdateTabIndex = true;
+
+              bloc.add(InitWatch(id: chap.path));
+            },
           ),
         ),
       ],
@@ -338,18 +368,24 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
         GestureDetector(
           onTap: () => _onEpisodeTap(context, chaps, state),
           child: ListTile(
-            minTileHeight: 32,
-            contentPadding: const EdgeInsets.only(left: 4),
-            title:
-                Text(context.l10n.episode, style: context.textTheme.titleSmall),
+            contentPadding: const EdgeInsets.only(left: 6),
+            title: Text(
+              context.l10n.episode,
+              style: context.textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.theme.colorScheme.secondary,
+              ),
+            ),
             trailing: const Icon(Icons.chevron_right),
           ),
         ),
-        Expanded(
-          child: ListView.separated(
+        SizedBox(
+          height: 56,
+          child: ScrollablePositionedList.separated(
             scrollDirection: Axis.horizontal,
             itemCount: chaps.length,
-            separatorBuilder: (context, index) => const Gap(4),
+            itemScrollController: _scrollController,
+            separatorBuilder: (_, __) => const Gap(4),
             itemBuilder: (context, index) =>
                 _buildChapterItem(chaps[index], index, state),
           ),
@@ -363,6 +399,8 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     List<ChapDataEntity> chaps,
     WatchLoaded state,
   ) {
+    _scrollToChapter(chaps, chaps[0]);
+
     showModalBottomSheet(
       showDragHandle: true,
       isScrollControlled: true,
@@ -427,15 +465,28 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   ) {
     if (isPlaying) return;
 
-    final currentChaps = state.tabViewItems![_currentTabIndex];
+    final currentChaps = state.tabViewItems?[_currentTabIndex];
+
+    _scrollToChapter(currentChaps?.chaps, chap);
+
     videoPlayerCubit.updateEpisodeList(
       currentChaps?.chaps,
       currentChaps?.listEpisode,
     );
-    bloc.add(
-      ChangeEpisode(animeDetail: currentChaps!.animeDetail!),
-    );
+    bloc.add(ChangeEpisode(animeDetail: currentChaps!.animeDetail!));
     videoPlayerCubit.loadEpisode(chap);
+  }
+
+  void _scrollToChapter(List<ChapDataEntity>? chaps, ChapDataEntity chap) {
+    if (chaps == null) return;
+
+    final chapterIndex = chaps.indexOf(chap);
+    if (chapterIndex != -1) {
+      _scrollController.scrollTo(
+        index: chapterIndex,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
   }
 
   Widget _buildChapCard(
@@ -457,6 +508,85 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildInfoText(WatchLoaded state) {
+    final infoTexts = [
+      InfoText(
+        'Sản xuất bởi ${state.detail.studio}',
+        TextStyle(
+          color: context.theme.colorScheme.tertiary,
+          fontWeight: FontWeight.bold,
+        ),
+        Icons.movie_creation_outlined,
+      ),
+      InfoText(
+        state.detail.schedule != ''
+            ? state.detail.schedule ?? ''
+            : 'Season End',
+        null,
+        Icons.calendar_today_outlined,
+      ),
+      InfoText(
+        '${state.detail.yearOf} • Tập ${state.detail.duration} • ${state.detail.countries.map((e) => e.name).join(', ')}',
+        null,
+        Icons.info_outline,
+      ),
+      InfoText(
+        '${state.detail.rate} • ${state.detail.countRate} đánh giá • ${state.detail.seasonOf?.name}',
+        null,
+        Icons.star_outline,
+      ),
+      InfoText(
+        state.detail.genre.map((e) => e.name).join(', '),
+        TextStyle(
+          color: context.theme.colorScheme.primary,
+          fontWeight: FontWeight.bold,
+        ),
+        Icons.tag,
+      ),
+    ];
+
+    return Card.filled(
+      color: context.theme.colorScheme.surfaceContainer,
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: infoTexts.map((item) => item.build(context)).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class InfoText {
+  const InfoText(this.text, [this.style, this.icon]);
+  final String text;
+  final TextStyle? style;
+  final IconData? icon;
+
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          if (icon != null)
+            Icon(icon, size: 20, color: context.theme.colorScheme.secondary),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              text,
+              style: context.textTheme.bodyMedium?.merge(style).copyWith(
+                    letterSpacing: 0.5,
+                  ),
+              softWrap: true,
+            ),
+          ),
+        ],
       ),
     );
   }

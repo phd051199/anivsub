@@ -30,7 +30,7 @@ class LoadingWidget extends StatelessWidget {
     );
 
     return withBox
-        ? Container(
+        ? ColoredBox(
             color: isTransparent
                 ? Colors.transparent
                 : context.theme.colorScheme.surface,

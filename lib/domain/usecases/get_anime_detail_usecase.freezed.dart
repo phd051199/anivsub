@@ -132,13 +132,12 @@ class _$GetAnimeDetailUseCaseInputImpl implements _GetAnimeDetailUseCaseInput {
         (other.runtimeType == runtimeType &&
             other is _$GetAnimeDetailUseCaseInputImpl &&
             (identical(other.id, id) || other.id == id) &&
-            const DeepCollectionEquality()
-                .equals(other.cancelToken, cancelToken));
+            (identical(other.cancelToken, cancelToken) ||
+                other.cancelToken == cancelToken));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, const DeepCollectionEquality().hash(cancelToken));
+  int get hashCode => Object.hash(runtimeType, id, cancelToken);
 
   /// Create a copy of GetAnimeDetailUseCaseInput
   /// with the given fields replaced by the non-null parameter values.

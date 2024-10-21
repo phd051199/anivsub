@@ -86,7 +86,7 @@ class AnimeCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
               ),
-              if (item.views != 0) ...[
+              if (item.views != null && item.views != 0) ...[
                 const SizedBox(height: 2),
                 Text(
                   '${context.l10n.views}: ${item.views?.formatNumber()}',

@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 class EmptyPlayer extends StatelessWidget {
   const EmptyPlayer({
     super.key,
-    required this.child,
+    this.child,
   });
 
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

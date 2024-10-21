@@ -179,7 +179,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
 
   void _startProgressUpdateTimer() {
     _progressUpdateTimer?.cancel();
-    _progressUpdateTimer = Timer.periodic(const Duration(seconds: 10), (_) {
+    _progressUpdateTimer = Timer.periodic(const Duration(seconds: 15), (_) {
       if (_playerController?.videoPlayerController?.value.isPlaying ?? false) {
         final duration = _playerController
                 ?.videoPlayerController?.value.duration?.inSeconds
