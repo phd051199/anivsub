@@ -4,8 +4,6 @@ import 'package:anivsub/core/service/flutter_secure_storage_service.dart';
 import 'package:anivsub/core/service/shared_preferences_service.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
-import 'package:anivsub/features/watch/watch.dart';
 import 'package:get_it/get_it.dart';
 
 Environment get environment => GetIt.I<Environment>();
@@ -20,7 +18,7 @@ FlutterSecureStorageService get flutterSecureStorageService =>
 // Api Client
 AuthApiClient get authApiClient => GetIt.I<AuthApiClient>();
 ScrapingClient get scrapingClient => GetIt.I<ScrapingClient>();
-CFWorkerApiClient get cfWorkerApiClient => GetIt.I<CFWorkerApiClient>();
+WorkerApiClient get workerApiClient => GetIt.I<WorkerApiClient>();
 
 // Remote Data Source
 AuthRemoteDataSource get authRemoteDataSource =>
@@ -53,7 +51,3 @@ GetListEpisodeUseCase get getListEpisodeUseCase =>
     GetIt.I<GetListEpisodeUseCase>();
 GetEpisodeSkipUsecase get getEpisodeSkipUsecase =>
     GetIt.I<GetEpisodeSkipUsecase>();
-
-// Cubits and Bloc
-VideoPlayerCubit get videoPlayerCubit => GetIt.I<VideoPlayerCubit>();
-WatchBloc get watchBloc => GetIt.I<WatchBloc>();

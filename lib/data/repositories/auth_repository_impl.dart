@@ -1,7 +1,6 @@
 import 'package:anivsub/core/network/response.dart';
 import 'package:anivsub/core/utils/md5_utils.dart';
 import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/data/parser/account_info_parser.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:injectable/injectable.dart';
 

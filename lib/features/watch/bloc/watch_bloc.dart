@@ -112,8 +112,6 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
           tabViewItems: updatedTabViewItems,
         ),
       );
-
-      event.onSuccess?.call();
     } catch (e) {
       emit(WatchError(_formatErrorMessage(e)));
     }

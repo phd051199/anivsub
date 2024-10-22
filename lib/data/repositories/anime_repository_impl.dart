@@ -8,11 +8,11 @@ class AnimeRepositoryImpl implements AnimeRepository {
   AnimeRepositoryImpl(
     this._animeRemoteDataSource,
     this._decryptHlsService,
-    this._openDRemoteDataSource,
+    this._skRemoteDataSource,
   );
   final AnimeRemoteDataSource _animeRemoteDataSource;
   final DecryptHlsService _decryptHlsService;
-  final OpenDRemoteDataSource _openDRemoteDataSource;
+  final SkRemoteDataSource _skRemoteDataSource;
 
   @override
   Future<HomeDataCategoriesEntity> getHomeData() async {
@@ -73,7 +73,7 @@ class AnimeRepositoryImpl implements AnimeRepository {
     List<String> name, {
     CancelToken? cancelToken,
   }) async {
-    final response = await _openDRemoteDataSource.listEpisodes(
+    final response = await _skRemoteDataSource.listEpisodes(
       name,
       cancelToken: cancelToken,
     );
@@ -85,7 +85,7 @@ class AnimeRepositoryImpl implements AnimeRepository {
     String id, {
     CancelToken? cancelToken,
   }) async {
-    final response = await _openDRemoteDataSource.skipEpisode(
+    final response = await _skRemoteDataSource.skipEpisode(
       id,
       cancelToken: cancelToken,
     );

@@ -2,10 +2,10 @@ import 'package:anivsub/data/data_exports.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-@LazySingleton(as: OpenDRemoteDataSource)
-class OpenDRemoteDataSourceImpl implements OpenDRemoteDataSource {
-  OpenDRemoteDataSourceImpl(this.client);
-  final OpenDApiClient client;
+@LazySingleton(as: SkRemoteDataSource)
+class SkRemoteDataSourceImpl implements SkRemoteDataSource {
+  SkRemoteDataSourceImpl(this.client);
+  final SkApiClient client;
 
   @override
   Future<ListEpisodeResponseDTO> listEpisodes(

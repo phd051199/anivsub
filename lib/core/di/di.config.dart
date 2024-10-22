@@ -29,12 +29,12 @@ import 'package:anivsub/data/datasources/remote/auth/auth_remote_data_source.dar
     as _i540;
 import 'package:anivsub/data/datasources/remote/auth/auth_remote_data_source_impl.dart'
     as _i254;
-import 'package:anivsub/data/datasources/remote/cf_worker/decrypt_hls_service_impl.dart'
-    as _i689;
-import 'package:anivsub/data/datasources/remote/open_d/open_d_remote_data_source_impl.dart'
-    as _i897;
 import 'package:anivsub/data/datasources/remote/scraping/anime_remote_data_source_impl.dart'
     as _i603;
+import 'package:anivsub/data/datasources/remote/sk/sk_remote_data_source_impl.dart'
+    as _i387;
+import 'package:anivsub/data/datasources/remote/worker/decrypt_hls_service_impl.dart'
+    as _i274;
 import 'package:anivsub/data/repositories/anime_repository_impl.dart' as _i728;
 import 'package:anivsub/data/repositories/app_settings_local_repository_impl.dart'
     as _i200;
@@ -93,8 +93,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i260.LocationService>(() => _i260.LocationService());
     gh.lazySingleton<_i987.AnimeRemoteDataSource>(() =>
         _i603.AnimeRemoteDataSourceImpl(client: gh<_i987.ScrapingClient>()));
-    gh.lazySingleton<_i987.OpenDRemoteDataSource>(
-        () => _i897.OpenDRemoteDataSourceImpl(gh<_i987.OpenDApiClient>()));
+    gh.lazySingleton<_i987.SkRemoteDataSource>(
+        () => _i387.SkRemoteDataSourceImpl(gh<_i987.SkApiClient>()));
     gh.lazySingleton<_i723.FlutterSecureStorageService>(
         () => _i723.FlutterSecureStorageService(
               externalAndroidOptions: gh<_i558.AndroidOptions>(),
@@ -107,8 +107,8 @@ extension GetItInjectableX on _i174.GetIt {
         _i254.AuthRemoteDataSourceImpl(client: gh<_i502.AuthApiClient>()));
     gh.lazySingleton<_i772.AuthRepository>(() => _i792.AuthRepositoryImpl(
         authRemoteDataSource: gh<_i987.AuthRemoteDataSource>()));
-    gh.lazySingleton<_i987.DecryptHlsService>(() =>
-        _i689.DecryptHlsServiceImpl(client: gh<_i987.CFWorkerApiClient>()));
+    gh.lazySingleton<_i987.DecryptHlsService>(
+        () => _i274.DecryptHlsServiceImpl(client: gh<_i987.WorkerApiClient>()));
     gh.singleton<_i107.ProfileUseCases>(
         () => _i107.ProfileUseCases(gh<_i772.AuthRepository>()));
     gh.lazySingleton<_i833.AuthLocalDataSource>(() =>
@@ -118,11 +118,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1060.AuthLocalRepository>(() =>
         _i954.AuthLocalRepositoryImpl(
             authLocalDataSource: gh<_i833.AuthLocalDataSource>()));
-    gh.lazySingleton<_i772.AnimeRepository>(() => _i728.AnimeRepositoryImpl(
-          gh<_i987.AnimeRemoteDataSource>(),
-          gh<_i987.DecryptHlsService>(),
-          gh<_i987.OpenDRemoteDataSource>(),
-        ));
     gh.lazySingleton<_i104.AppSettingsLocalRepository>(() =>
         _i200.AppSettingsLocalRepositoryImpl(
             appSettingsLocalDataSource:
@@ -135,6 +130,11 @@ extension GetItInjectableX on _i174.GetIt {
         _i268.AppSettingsUseCases(gh<_i104.AppSettingsLocalRepository>()));
     gh.singleton<_i179.HomeUseCases>(
         () => _i179.HomeUseCases(gh<_i772.AuthLocalRepository>()));
+    gh.lazySingleton<_i772.AnimeRepository>(() => _i728.AnimeRepositoryImpl(
+          gh<_i987.AnimeRemoteDataSource>(),
+          gh<_i987.DecryptHlsService>(),
+          gh<_i987.SkRemoteDataSource>(),
+        ));
     gh.factory<_i125.SearchAnimeUseCase>(
         () => _i125.SearchAnimeUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i407.GetEncryptedHlsUseCase>(

@@ -1,20 +1,16 @@
-import 'dart:io';
-
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/routes/go_router_config.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/search/bloc/search_bloc.dart';
-import 'package:anivsub/features/shared/anime/anime_list.dart';
+import 'package:anivsub/features/search/widget/search_results.dart';
+import 'package:anivsub/features/search/widget/suggestion_image.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -38,7 +34,7 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
   void _initPagingController() {
     _pagingController = PagingController(
       firstPageKey: _initPage,
-      invisibleItemsThreshold: 12,
+      invisibleItemsThreshold: 6,
     )..addPageRequestListener(_onPageRequest);
   }
 
@@ -77,9 +73,18 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
           padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
           child: Column(
             children: [
-              _buildSearchForm(),
+              SearchForm(
+                controller: _searchInputController,
+                onSearch: () => _onSearch(context),
+                suggestionsCallback: bloc.suggestionsCallback,
+              ),
               const SizedBox(height: 8),
-              Expanded(child: _buildSearchResults(state)),
+              Expanded(
+                child: SearchResults(
+                  state: state,
+                  pagingController: _pagingController,
+                ),
+              ),
             ],
           ),
         ),
@@ -87,14 +92,43 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
     );
   }
 
-  Widget _buildSearchForm() {
+  void _onSearch(BuildContext context) {
+    context.focusScope.unfocus();
+    _pagingController.refresh();
+  }
+
+  void _updatePagingController(SearchLoaded state) {
+    final isLastPage = state.hasReachedMax;
+    final newItems = state.result.items;
+
+    if (isLastPage) {
+      _pagingController.appendLastPage(newItems);
+    } else {
+      _pagingController.appendPage(newItems, state.currentPage + 1);
+    }
+  }
+}
+
+class SearchForm extends StatelessWidget {
+  const SearchForm({
+    super.key,
+    required this.controller,
+    required this.onSearch,
+    required this.suggestionsCallback,
+  });
+  final TextEditingController controller;
+  final VoidCallback onSearch;
+  final Future<List<PreSearchItemEntity>> Function(String) suggestionsCallback;
+
+  @override
+  Widget build(BuildContext context) {
     return TypeAheadField<PreSearchItemEntity>(
       constraints: const BoxConstraints(maxHeight: 320),
-      controller: _searchInputController,
-      suggestionsCallback: bloc.suggestionsCallback,
+      controller: controller,
+      suggestionsCallback: suggestionsCallback,
       builder: _buildSearchInput,
       itemBuilder: _buildSuggestionItem,
-      onSelected: _onSuggestionSelected,
+      onSelected: (item) => _onSuggestionSelected(context, item),
       loadingBuilder: (_) => const LoadingWidget(),
     );
   }
@@ -110,113 +144,29 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.search),
         hintText: context.l10n.searchHint,
-        suffixIcon: _buildClearButton(),
+        suffixIcon: IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: controller.clear,
+        ),
       ),
-      onFieldSubmitted: (_) => _onSearch(context),
-    );
-  }
-
-  Widget _buildClearButton() {
-    return IconButton(
-      icon: const Icon(Icons.clear),
-      onPressed: _searchInputController.clear,
+      onFieldSubmitted: (_) => onSearch(),
     );
   }
 
   Widget _buildSuggestionItem(BuildContext context, PreSearchItemEntity item) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-      leading: _buildSuggestionImage(item.image),
+      leading: SuggestionImage(imageUrl: item.image),
       title: Text(item.name),
       subtitle: Text(item.status),
       trailing: const Icon(Icons.chevron_right),
     );
   }
 
-  Widget _buildSuggestionImage(String imageUrl) {
-    return Container(
-      width: 42,
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: CachedNetworkImage(imageUrl: imageUrl),
-    );
-  }
-
-  void _onSuggestionSelected(PreSearchItemEntity item) {
+  void _onSuggestionSelected(BuildContext context, PreSearchItemEntity item) {
     context.pushNamed(
       ScreenNames.watch,
       queryParameters: {'path': item.path},
     );
-  }
-
-  void _onSearch(BuildContext context) {
-    context.focusScope.unfocus();
-    _pagingController.refresh();
-  }
-
-  Widget _buildSearchResults(SearchState state) {
-    return BlocBuilder<SearchBloc, SearchState>(
-      builder: (context, state) {
-        return switch (state) {
-          SearchLoading() ||
-          SearchInitial() when _pagingController.itemList == null =>
-            _buildSkeletonGrid(),
-          _ => RefreshIndicator(
-              onRefresh: () async => _pagingController.refresh(),
-              child: PagedGridView<int, AnimeDataEntity>(
-                pagingController: _pagingController,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 0.45,
-                ),
-                builderDelegate: PagedChildBuilderDelegate<AnimeDataEntity>(
-                  itemBuilder: (_, item, __) => AnimeCard(item: item),
-                  newPageProgressIndicatorBuilder: (context) => SizedBox(
-                    height: 80,
-                    child: Platform.isIOS
-                        ? CupertinoActivityIndicator(
-                            color: context.theme.colorScheme.onSurface,
-                            radius: 12,
-                          )
-                        : CircularProgressIndicator(
-                            color: context.theme.colorScheme.primary,
-                          ),
-                  ),
-                ),
-                showNewPageProgressIndicatorAsGridChild: false,
-              ),
-            ),
-        };
-      },
-    );
-  }
-
-  Widget _buildSkeletonGrid() {
-    return Skeletonizer(
-      enabled: true,
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 12,
-          childAspectRatio: 0.45,
-        ),
-        itemCount: 9,
-        itemBuilder: (_, __) => AnimeCard(item: AnimeDataEntity.mockup()),
-      ),
-    );
-  }
-
-  void _updatePagingController(SearchLoaded state) {
-    final isLastPage = state.hasReachedMax;
-    final newItems = state.result.items;
-
-    if (isLastPage) {
-      _pagingController.appendLastPage(newItems);
-    } else {
-      _pagingController.appendPage(newItems, state.currentPage + 1);
-    }
   }
 }

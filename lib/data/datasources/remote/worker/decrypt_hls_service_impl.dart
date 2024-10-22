@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 @LazySingleton(as: DecryptHlsService)
 class DecryptHlsServiceImpl implements DecryptHlsService {
   DecryptHlsServiceImpl({required this.client});
-  final CFWorkerApiClient client;
+  final WorkerApiClient client;
 
   @override
   Future<String> decryptHls(

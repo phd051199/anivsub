@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'cf_worker_api_client.dart';
+part of 'worker_api_client.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'cf_worker_api_client.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _CFWorkerApiClient implements CFWorkerApiClient {
-  _CFWorkerApiClient(
+class _WorkerApiClient implements WorkerApiClient {
+  _WorkerApiClient(
     this._dio, {
     this.baseUrl,
     this.errorLogger,

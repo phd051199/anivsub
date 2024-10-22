@@ -19,10 +19,9 @@ abstract class BlocState<T extends StatefulWidget, B extends BaseBloc>
 
   Widget buildPage(BuildContext context);
 
-  // ignore: avoid_shadowing_type_parameters
-  void onErrorListener<T extends Object>(
+  void onErrorListener<S extends Object>(
     BuildContext context,
-    T state,
+    S state,
   ) {
     if (state is IBaseBlocStateErrorMessage && state.message != null) {
       context.showSnackBar(state.message!);

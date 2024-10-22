@@ -32,8 +32,8 @@ void registerHttpClient(Environment environment) {
     ),
   );
 
-  GetIt.I.registerSingleton<CFWorkerApiClient>(
-    CFWorkerApiClient(
+  GetIt.I.registerSingleton<WorkerApiClient>(
+    WorkerApiClient(
       NetworkClient.getDio(
         baseUrl: decryptHlsUrl,
         isAuthenticated: false,
@@ -41,8 +41,8 @@ void registerHttpClient(Environment environment) {
     ),
   );
 
-  GetIt.I.registerSingleton<OpenDApiClient>(
-    OpenDApiClient(
+  GetIt.I.registerSingleton<SkApiClient>(
+    SkApiClient(
       NetworkClient.getDio(
         baseUrl: skApiUrl1,
         isAuthenticated: false,

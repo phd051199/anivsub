@@ -3,11 +3,11 @@ import 'package:anivsub/data/data_exports.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-part 'open_d_api_client.g.dart';
+part 'sk_api_client.g.dart';
 
 @RestApi()
-abstract class OpenDApiClient {
-  factory OpenDApiClient(Dio dio) = _OpenDApiClient;
+abstract class SkApiClient {
+  factory SkApiClient(Dio dio) = _SkApiClient;
 
   @GET('/list-episodes')
   Future<ListEpisodeResponseDTO> listEpisodes(

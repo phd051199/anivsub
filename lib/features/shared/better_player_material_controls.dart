@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:river_player/src/configuration/better_player_controls_configuration.dart';
 import 'package:river_player/src/controls/better_player_clickable_widget.dart';
@@ -264,7 +264,7 @@ class _BetterPlayerCustomMaterialControlsState
     return Row(
       children: [
         BlocProvider<VideoPlayerCubit>.value(
-          value: videoPlayerCubit,
+          value: GetIt.I<VideoPlayerCubit>(),
           child: BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
             builder: (context, state) {
               final skipIntro =
@@ -293,7 +293,7 @@ class _BetterPlayerCustomMaterialControlsState
                       value: skipIntro,
                       activeColor: Colors.white70,
                       onChanged: (newValue) {
-                        videoPlayerCubit.toggleSkipIntro();
+                        GetIt.I<VideoPlayerCubit>().toggleSkipIntro();
                       },
                       trackColor: WidgetStateProperty.all(
                         Colors.white38,

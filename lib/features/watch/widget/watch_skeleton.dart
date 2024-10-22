@@ -1,10 +1,10 @@
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/core/shared/number_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/features/shared/anime/anime_list.dart';
+import 'package:anivsub/features/shared/anime_list.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
-import 'package:anivsub/features/watch/watch.dart';
-import 'package:anivsub/features/watch/widgets/empty_player.dart';
+import 'package:anivsub/features/watch/widget/detail_section.dart';
+import 'package:anivsub/features/watch/widget/empty_player.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:skeletonizer/skeletonizer.dart';
