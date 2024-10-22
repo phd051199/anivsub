@@ -15,7 +15,6 @@ import 'package:anivsub/features/watch/widgets/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:uuid/uuid.dart';
 
 class WatchPage extends StatefulWidget {
@@ -28,11 +27,10 @@ class WatchPage extends StatefulWidget {
 }
 
 class _WatchPageState extends BlocState<WatchPage, WatchBloc>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   TabController? _tabController;
   int _currentTabIndex = 0;
   bool _needUpdateTabIndex = false;
-  final ItemScrollController _scrollController = ItemScrollController();
 
   @override
   void initState() {
@@ -81,6 +79,72 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
         Expanded(child: _buildScrollableContent(state)),
       ],
     );
+  }
+
+  Widget _buildVideoPlayer(WatchLoaded state) {
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: Stack(
+        children: [
+          _buildHeroWidget(),
+          _buildVideoPlayerWidget(state),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeroWidget() {
+    return Hero(
+      tag: widget.tag ?? const Uuid().v4(),
+      child: const SizedBox.expand(),
+    );
+  }
+
+  Widget _buildVideoPlayerWidget(WatchLoaded state) {
+    if (state.chaps == null || state.chaps!.isEmpty) {
+      return const EmptyPlayer(child: LoadingWidget(color: Colors.white));
+    }
+
+    ListEpisodeResponseEntity? listEpisodeSkip;
+    if (state.tabViewItems != null &&
+        _currentTabIndex < (state.tabViewItems?.length ?? 0)) {
+      listEpisodeSkip = state.tabViewItems?[_currentTabIndex]?.listEpisode;
+    }
+
+    return VideoPlayerWidget(
+      chaps: state.chaps!,
+      detail: state.detail,
+      listEpisodeSkip: listEpisodeSkip,
+    );
+  }
+
+  Widget _buildScrollableContent(WatchLoaded state) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _buildDetail(state),
+          const Gap(8),
+          _buildEpisodesSection(state),
+          _buildCommentSection(state),
+          _buildRelatedSection(state),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEpisodesSection(WatchLoaded state) {
+    if (state.detail.season.isNotEmpty && state.tabViewItems != null) {
+      return Column(
+        children: [
+          _buildTabBar(state),
+          _buildTabBarView(state),
+        ],
+      );
+    } else if (state.chaps != null && state.chaps!.isNotEmpty) {
+      return _buildSingleSeasonView(state);
+    } else {
+      return const SizedBox(height: 100, child: LoadingWidget());
+    }
   }
 
   Widget _buildDetail(WatchLoaded state) {
@@ -143,7 +207,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Chi tiết',
+              context.l10n.detail,
               style: context.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -156,7 +220,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
               title: Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: Text(
-                  'Giới thiệu',
+                  context.l10n.introduction,
                   style: context.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -171,59 +235,6 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildVideoPlayer(WatchLoaded state) {
-    return AspectRatio(
-      aspectRatio: 16 / 9,
-      child: Stack(
-        children: [
-          _buildHeroWidget(),
-          _buildVideoPlayerWidget(state),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeroWidget() {
-    return Hero(
-      tag: widget.tag ?? const Uuid().v4(),
-      child: const SizedBox.expand(),
-    );
-  }
-
-  Widget _buildVideoPlayerWidget(WatchLoaded state) {
-    if (state.chaps == null || state.chaps!.isEmpty) {
-      return const EmptyPlayer(child: LoadingWidget(color: Colors.white));
-    }
-
-    final listEpisodeSkip = state.tabViewItems?[_currentTabIndex]?.listEpisode;
-    return VideoPlayerWidget(
-      chaps: state.chaps!,
-      detail: state.detail,
-      listEpisodeSkip: listEpisodeSkip,
-    );
-  }
-
-  Widget _buildScrollableContent(WatchLoaded state) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          _buildDetail(state),
-          const Gap(8),
-          if (state.detail.season.isNotEmpty && state.tabViewItems != null) ...[
-            _buildTabBar(state),
-            _buildTabBarView(state),
-          ] else if (state.chaps != null && state.chaps!.isNotEmpty) ...[
-            _buildSingleSeasonView(state),
-          ] else ...[
-            const SizedBox(height: 100, child: LoadingWidget()),
-          ],
-          _buildCommentSection(state),
-          _buildRelatedSection(state),
-        ],
       ),
     );
   }
@@ -260,24 +271,32 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   void _initializeTabController(WatchLoaded state) {
     if (state.detail.season.isEmpty) return;
     final initialTabIndex = _getInitialTabIndex(state);
-    _currentTabIndex = initialTabIndex >= 0 ? initialTabIndex : 0;
 
-    _tabController ??= TabController(
-      length: state.detail.season.length,
-      vsync: this,
-      initialIndex: _currentTabIndex,
-    )..addListener(_onTabChange);
+    if (_tabController == null ||
+        _tabController!.length != state.detail.season.length) {
+      _tabController?.dispose();
+      _tabController = TabController(
+        length: state.detail.season.length,
+        vsync: this,
+        initialIndex: initialTabIndex,
+      );
+      _tabController!.addListener(_onTabChange);
+    }
+
+    _currentTabIndex = _tabController!.index;
 
     if (_needUpdateTabIndex) {
-      _tabController?.index = _currentTabIndex;
+      _tabController!.animateTo(initialTabIndex);
+      _currentTabIndex = initialTabIndex;
       _needUpdateTabIndex = false;
     }
   }
 
   int _getInitialTabIndex(WatchLoaded state) {
-    return state.detail.season.indexWhere(
+    final index = state.detail.season.indexWhere(
       (item) => item.path == state.detail.pathToView!.cleanPathToView(),
     );
+    return index >= 0 ? index : 0;
   }
 
   void _onTabChange() {
@@ -313,21 +332,6 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   }
 
   Widget _buildCommentSection(WatchLoaded state) {
-    // return ExpansionTile(
-    //   tilePadding: const EdgeInsets.symmetric(horizontal: 14),
-    //   title: Text(
-    //     context.l10n.comment,
-    //     style: context.textTheme.titleMedium?.copyWith(
-    //       fontWeight: FontWeight.bold,
-    //     ),
-    //   ),
-    //   onExpansionChanged: (isExpanded) {
-    //     if (isExpanded) {
-    //       context.showSnackBar('Feature not implemented');
-    //     }
-    //   },
-    //   children: const [],
-    // );
     return const SizedBox.shrink();
   }
 
@@ -349,6 +353,8 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
             onTap: (chap) {
               videoPlayerCubit.dispose();
               _needUpdateTabIndex = true;
+              _tabController?.dispose();
+              _tabController = null;
 
               bloc.add(InitWatch(id: chap.path));
             },
@@ -370,21 +376,30 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
           child: ListTile(
             contentPadding: const EdgeInsets.only(left: 6),
             title: Text(
-              context.l10n.episode,
+              context.l10n.episodeList,
               style: context.textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: context.theme.colorScheme.secondary,
               ),
             ),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  context.l10n.fullSeason,
+                  style: context.textTheme.bodyMedium,
+                ),
+                const SizedBox(width: 4),
+                const Icon(Icons.chevron_right),
+              ],
+            ),
           ),
         ),
         SizedBox(
           height: 56,
-          child: ScrollablePositionedList.separated(
+          child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: chaps.length,
-            itemScrollController: _scrollController,
             separatorBuilder: (_, __) => const Gap(4),
             itemBuilder: (context, index) =>
                 _buildChapterItem(chaps[index], index, state),
@@ -399,8 +414,6 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     List<ChapDataEntity> chaps,
     WatchLoaded state,
   ) {
-    _scrollToChapter(chaps, chaps[0]);
-
     showModalBottomSheet(
       showDragHandle: true,
       isScrollControlled: true,
@@ -467,26 +480,14 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
 
     final currentChaps = state.tabViewItems?[_currentTabIndex];
 
-    _scrollToChapter(currentChaps?.chaps, chap);
-
     videoPlayerCubit.updateEpisodeList(
       currentChaps?.chaps,
       currentChaps?.listEpisode,
     );
+
     bloc.add(ChangeEpisode(animeDetail: currentChaps!.animeDetail!));
+
     videoPlayerCubit.loadEpisode(chap);
-  }
-
-  void _scrollToChapter(List<ChapDataEntity>? chaps, ChapDataEntity chap) {
-    if (chaps == null) return;
-
-    final chapterIndex = chaps.indexOf(chap);
-    if (chapterIndex != -1) {
-      _scrollController.scrollTo(
-        index: chapterIndex,
-        duration: const Duration(milliseconds: 300),
-      );
-    }
   }
 
   Widget _buildChapCard(
@@ -515,7 +516,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   Widget _buildInfoText(WatchLoaded state) {
     final infoTexts = [
       InfoText(
-        'Sản xuất bởi ${state.detail.studio}',
+        '${context.l10n.producedBy} ${state.detail.studio}',
         TextStyle(
           color: context.theme.colorScheme.tertiary,
           fontWeight: FontWeight.bold,
@@ -525,17 +526,17 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
       InfoText(
         state.detail.schedule != ''
             ? state.detail.schedule ?? ''
-            : 'Season End',
+            : context.l10n.seasonEnd,
         null,
         Icons.calendar_today_outlined,
       ),
       InfoText(
-        '${state.detail.yearOf} • Tập ${state.detail.duration} • ${state.detail.countries.map((e) => e.name).join(', ')}',
+        '${state.detail.yearOf} • ${context.l10n.episode} ${state.detail.duration} • ${state.detail.countries.map((e) => e.name).join(', ')}',
         null,
         Icons.info_outline,
       ),
       InfoText(
-        '${state.detail.rate} • ${state.detail.countRate} đánh giá • ${state.detail.seasonOf?.name}',
+        '${state.detail.rate}/10 • ${state.detail.countRate} ${context.l10n.rating} • ${state.detail.seasonOf?.name}',
         null,
         Icons.star_outline,
       ),

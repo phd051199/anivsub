@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: FocusManager.instance.primaryFocus?.unfocus,
       child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         theme: _buildTheme(Brightness.light, state.appSettings.colorEnum),

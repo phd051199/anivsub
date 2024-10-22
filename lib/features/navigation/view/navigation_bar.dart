@@ -2,8 +2,8 @@ import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class BottomNavigationPage extends StatelessWidget {
-  const BottomNavigationPage({
+class BottomNavigation extends StatelessWidget {
+  const BottomNavigation({
     super.key,
     required this.navigationShell,
   });

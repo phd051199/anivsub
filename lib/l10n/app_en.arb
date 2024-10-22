@@ -153,5 +153,33 @@
   "comment": "Comment",
   "@comment": {
     "description": "Label for comment section."
+  },
+  "episodeList": "Episode list",
+  "@episodeList": {
+    "description": "Label for episode list."
+  },
+  "fullSeason": "Full season",
+  "@fullSeason": {
+    "description": "Label for full season."
+  },
+  "detail": "Detail",
+  "@detail": {
+    "description": "Label for detail."
+  },
+  "introduction": "Introduction",
+  "@introduction": {
+    "description": "Label for introduction."
+  },
+  "producedBy": "Produced by",
+  "@producedBy": {
+    "description": "Label for produced by."
+  },
+  "seasonEnd": "Completed",
+  "@seasonEnd": {
+    "description": "Label for season end."
+  },
+  "rating": "rating",
+  "@rating": {
+    "description": "Label for rating."
   }
 }

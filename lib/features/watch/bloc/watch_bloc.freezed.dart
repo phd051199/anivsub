@@ -271,6 +271,7 @@ abstract class _LoadWatch implements LoadWatch {
 /// @nodoc
 mixin _$ChangeSeasonTab {
   String get id => throw _privateConstructorUsedError;
+  void Function()? get onSuccess => throw _privateConstructorUsedError;
 
   /// Create a copy of ChangeSeasonTab
   /// with the given fields replaced by the non-null parameter values.
@@ -285,7 +286,7 @@ abstract class $ChangeSeasonTabCopyWith<$Res> {
           ChangeSeasonTab value, $Res Function(ChangeSeasonTab) then) =
       _$ChangeSeasonTabCopyWithImpl<$Res, ChangeSeasonTab>;
   @useResult
-  $Res call({String id});
+  $Res call({String id, void Function()? onSuccess});
 }
 
 /// @nodoc
@@ -304,12 +305,17 @@ class _$ChangeSeasonTabCopyWithImpl<$Res, $Val extends ChangeSeasonTab>
   @override
   $Res call({
     Object? id = null,
+    Object? onSuccess = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      onSuccess: freezed == onSuccess
+          ? _value.onSuccess
+          : onSuccess // ignore: cast_nullable_to_non_nullable
+              as void Function()?,
     ) as $Val);
   }
 }
@@ -322,7 +328,7 @@ abstract class _$$ChangeSeasonTabImplCopyWith<$Res>
       __$$ChangeSeasonTabImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id});
+  $Res call({String id, void Function()? onSuccess});
 }
 
 /// @nodoc
@@ -339,12 +345,17 @@ class __$$ChangeSeasonTabImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? onSuccess = freezed,
   }) {
     return _then(_$ChangeSeasonTabImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      onSuccess: freezed == onSuccess
+          ? _value.onSuccess
+          : onSuccess // ignore: cast_nullable_to_non_nullable
+              as void Function()?,
     ));
   }
 }
@@ -352,14 +363,16 @@ class __$$ChangeSeasonTabImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ChangeSeasonTabImpl implements _ChangeSeasonTab {
-  const _$ChangeSeasonTabImpl({required this.id});
+  const _$ChangeSeasonTabImpl({required this.id, this.onSuccess});
 
   @override
   final String id;
+  @override
+  final void Function()? onSuccess;
 
   @override
   String toString() {
-    return 'ChangeSeasonTab(id: $id)';
+    return 'ChangeSeasonTab(id: $id, onSuccess: $onSuccess)';
   }
 
   @override
@@ -367,11 +380,13 @@ class _$ChangeSeasonTabImpl implements _ChangeSeasonTab {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangeSeasonTabImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.onSuccess, onSuccess) ||
+                other.onSuccess == onSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, onSuccess);
 
   /// Create a copy of ChangeSeasonTab
   /// with the given fields replaced by the non-null parameter values.
@@ -384,11 +399,14 @@ class _$ChangeSeasonTabImpl implements _ChangeSeasonTab {
 }
 
 abstract class _ChangeSeasonTab implements ChangeSeasonTab {
-  const factory _ChangeSeasonTab({required final String id}) =
-      _$ChangeSeasonTabImpl;
+  const factory _ChangeSeasonTab(
+      {required final String id,
+      final void Function()? onSuccess}) = _$ChangeSeasonTabImpl;
 
   @override
   String get id;
+  @override
+  void Function()? get onSuccess;
 
   /// Create a copy of ChangeSeasonTab
   /// with the given fields replaced by the non-null parameter values.

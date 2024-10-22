@@ -1,8 +1,8 @@
 import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/notifier/auth_notifier.dart';
-import 'package:anivsub/features/bottom_navigation/bottom_navigation.dart';
 import 'package:anivsub/features/home/home.dart';
 import 'package:anivsub/features/login/login.dart';
+import 'package:anivsub/features/navigation/view/navigation_bar.dart';
 import 'package:anivsub/features/profile/profile.dart';
 import 'package:anivsub/features/search/search.dart';
 import 'package:anivsub/features/settings/settings.dart';
@@ -56,7 +56,7 @@ final _watchRoute = GoRoute(
 );
 
 final _bottomNavigationRoute = StatefulShellRoute.indexedStack(
-  builder: (context, state, navigationShell) => BottomNavigationPage(
+  builder: (context, state, navigationShell) => BottomNavigation(
     navigationShell: navigationShell,
   ),
   branches: [

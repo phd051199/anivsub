@@ -104,7 +104,6 @@ class AuthNotifier with ChangeNotifier {
       (data) async {
         await doLogin(data);
         // _setTokenFromCookie(data.cookie);
-        // TODO: Implement logEvent("login")
       },
       (error) {
         // Handle login error

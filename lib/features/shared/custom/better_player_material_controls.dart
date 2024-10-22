@@ -113,14 +113,22 @@ class _BetterPlayerCustomMaterialControlsState
               Center(child: _buildLoadingWidget())
             else
               _buildHitArea(),
-            Positioned(
-              top: verticalPadding,
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              top: controlsNotVisible
+                  ? -_controlsConfiguration.controlBarHeight
+                  : verticalPadding,
               left: horizontalPadding,
               right: horizontalPadding,
               child: _buildTopBar(),
             ),
-            Positioned(
-              bottom: verticalPadding,
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              bottom: controlsNotVisible
+                  ? -_controlsConfiguration.controlBarHeight
+                  : verticalPadding,
               left: horizontalPadding,
               right: horizontalPadding,
               child: _buildBottomBar(),
@@ -210,7 +218,6 @@ class _BetterPlayerCustomMaterialControlsState
           ? AnimatedOpacity(
               opacity: controlsNotVisible ? 0.0 : 1.0,
               duration: _controlsConfiguration.controlsHideTime,
-              onEnd: _onPlayerHide,
               child: SizedBox(
                 height: _controlsConfiguration.controlBarHeight,
                 width: double.infinity,
@@ -331,7 +338,6 @@ class _BetterPlayerCustomMaterialControlsState
           return AnimatedOpacity(
             opacity: hideStuff ? 0.0 : 1.0,
             duration: betterPlayerControlsConfiguration.controlsHideTime,
-            onEnd: onPlayerHide,
             child: SizedBox(
               height: betterPlayerControlsConfiguration.controlBarHeight,
               child: Row(
@@ -372,7 +378,6 @@ class _BetterPlayerCustomMaterialControlsState
     return AnimatedOpacity(
       opacity: controlsNotVisible ? 0.0 : 1.0,
       duration: _controlsConfiguration.controlsHideTime,
-      onEnd: _onPlayerHide,
       child: SizedBox(
         height: _controlsConfiguration.controlBarHeight + 20.0,
         child: Column(
@@ -390,7 +395,7 @@ class _BetterPlayerCustomMaterialControlsState
                     _buildLiveWidget()
                   else
                     _controlsConfiguration.enableProgressText
-                        ? Expanded(child: _buildPosition())
+                        ? _buildPosition()
                         : const SizedBox(),
                   const Spacer(),
                   _buildExtraSkipButton(),
@@ -429,6 +434,7 @@ class _BetterPlayerCustomMaterialControlsState
             style: context.theme.textTheme.bodySmall!.copyWith(
               color: _controlsConfiguration.textColor,
               fontWeight: FontWeight.bold,
+              fontSize: 14,
             ),
           ),
           Icon(
@@ -481,14 +487,10 @@ class _BetterPlayerCustomMaterialControlsState
       return const SizedBox();
     }
     return Center(
-      child: Stack(
-        children: [
-          AnimatedOpacity(
-            opacity: controlsNotVisible ? 0.0 : 1,
-            duration: _controlsConfiguration.controlsHideTime,
-            child: _buildMiddleRow(),
-          ),
-        ],
+      child: AnimatedOpacity(
+        opacity: controlsNotVisible ? 0.0 : 1.0,
+        duration: _controlsConfiguration.controlsHideTime,
+        child: _buildMiddleRow(),
       ),
     );
   }

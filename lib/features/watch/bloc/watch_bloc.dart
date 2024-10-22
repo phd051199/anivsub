@@ -19,7 +19,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     this._getAnimeDetailUseCase,
     this._episodeListUseCase,
   ) : super(const WatchInitial()) {
-    on<InitWatch>(_onInitialWatch);
+    on<InitWatch>(_onInitWatch);
     on<LoadWatch>(_onLoadWatch);
     on<ChangeSeasonTab>(_onChangeSeasonTab);
     on<ChangeEpisode>(_onChangeEpisode);
@@ -30,7 +30,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   final GetListEpisodeUseCase _episodeListUseCase;
   final CancelToken _cancelToken = CancelToken();
 
-  Future<void> _onInitialWatch(
+  Future<void> _onInitWatch(
     InitWatch event,
     Emitter<WatchState> emit,
   ) async {
@@ -50,8 +50,11 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
         return;
       }
 
-      final (chaps, listEpisodeSkip) =
-          await _fetchAnimeData(event.id, currentState);
+      final (chaps, listEpisodeSkip) = await _fetchAnimeData(
+        event.id,
+        currentState.detail,
+      );
+
       final chapterLists = _initializeChapterLists(
         currentState.detail,
         event.id,
@@ -88,14 +91,18 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     }
 
     try {
-      final (chaps, listEpisodeSkip) =
-          await _fetchAnimeData(event.id, currentState);
+      final animeDetail = await _fetchDetailData(event.id);
+
+      final (chaps, listEpisodeSkip) = await _fetchAnimeData(
+        event.id,
+        animeDetail,
+      );
 
       final updatedTabViewItems = _updateChapterLists(
         currentState,
         newIndex,
         chaps,
-        currentState.detail,
+        animeDetail,
         listEpisodeSkip,
       );
 
@@ -105,6 +112,8 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
           tabViewItems: updatedTabViewItems,
         ),
       );
+
+      event.onSuccess?.call();
     } catch (e) {
       emit(WatchError(_formatErrorMessage(e)));
     }
@@ -121,8 +130,9 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       null,
       growable: true,
     );
-    final currentIndex =
-        animeDetail.season.indexWhere((item) => item.path == currentId);
+    final currentIndex = animeDetail.season.indexWhere(
+      (item) => item.path == currentId,
+    );
 
     if (currentIndex != -1) {
       chapterLists[currentIndex] = TabViewItem(
@@ -150,8 +160,9 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     AnimeDetailEntity newAnimeDetail,
     ListEpisodeResponseEntity? newListEpisodeSkip,
   ) {
-    final updatedTabViewItems =
-        List<TabViewItem?>.from(currentState.tabViewItems!);
+    final updatedTabViewItems = List<TabViewItem?>.from(
+      currentState.tabViewItems!,
+    );
 
     updatedTabViewItems[newIndex] = TabViewItem(
       chaps: newChaps,
@@ -163,11 +174,11 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
 
   Future<(List<ChapDataEntity>, ListEpisodeResponseEntity?)> _fetchAnimeData(
     String id,
-    WatchLoaded currentState,
+    AnimeDetailEntity detail,
   ) async {
     final (chaps, listEpisodeSkip) = await (
       _fetchChaps(id),
-      _loadAdditionalAnimeData(currentState.detail).catchError((_) => null),
+      _loadAdditionalAnimeData(detail).catchError((_) => null),
     ).wait;
 
     return (chaps, listEpisodeSkip);

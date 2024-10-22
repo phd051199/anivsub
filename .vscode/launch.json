@@ -7,19 +7,16 @@
         {
             "name": "anivsub",
             "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "anivsub (profile mode)",
-            "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "debug",
+            "program": "lib/main_dev.dart"
         },
         {
             "name": "anivsub (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "program": "lib/main.dart"
         }
     ]
 }

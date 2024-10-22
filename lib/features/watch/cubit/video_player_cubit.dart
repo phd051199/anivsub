@@ -42,7 +42,6 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     if (currentState is! VideoPlayerLoaded) return;
 
     final newSkipIntroValue = !(currentState.skipIntro ?? false);
-    await _updateAppSettings(skipIntro: newSkipIntroValue);
     emit(
       currentState.copyWith(
         skipIntro: newSkipIntroValue,
@@ -50,15 +49,16 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
       ),
     );
 
+    await _updateAppSettings(skipIntro: newSkipIntroValue);
     _scheduleHideSkipIntroText();
   }
 
   void _scheduleHideSkipIntroText() {
     Future.delayed(const Duration(seconds: 2), () {
-      if (state is VideoPlayerLoaded) {
-        final updatedState = state as VideoPlayerLoaded;
-        emit(updatedState.copyWith(showSkipIntroText: false));
-      }
+      final currentState = state;
+      if (currentState is! VideoPlayerLoaded) return;
+
+      emit(currentState.copyWith(showSkipIntroText: false));
     });
   }
 
@@ -73,11 +73,14 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     List<ChapDataEntity>? episodes,
     ListEpisodeResponseEntity? listEpisodeSkip,
   ) {
-    if (state is! VideoPlayerLoaded || episodes == null || episodes.isEmpty) {
+    final currentState = state;
+    if (currentState is! VideoPlayerLoaded ||
+        episodes == null ||
+        episodes.isEmpty) {
       return;
     }
     _listEpisodeSkip = listEpisodeSkip;
-    emit((state as VideoPlayerLoaded).copyWith(chaps: episodes));
+    emit(currentState.copyWith(chaps: episodes));
   }
 
   Future<void> initialize({
@@ -108,8 +111,8 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     required double currentTime,
     required double totalDuration,
   }) async {
-    if (state is! VideoPlayerLoaded) return;
-    final currentState = state as VideoPlayerLoaded;
+    final currentState = state;
+    if (currentState is! VideoPlayerLoaded) return;
 
     try {
       final seasonId = _animeDetail.pathToView?.split('/')[2];
@@ -133,8 +136,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         : _animeDetail.season
             .firstWhere(
               (element) =>
-                  element.path ==
-                  _animeDetail.pathToView?.replaceAll('xem-phim.html', ''),
+                  element.path == _animeDetail.pathToView?.cleanPathToView(),
             )
             .name;
   }
@@ -195,9 +197,13 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     });
   }
 
-  Future<void> loadEpisode(ChapDataEntity episode) async {
-    if (state is! VideoPlayerLoaded) return;
-    final currentState = state as VideoPlayerLoaded;
+  Future<void> loadEpisode(
+    ChapDataEntity episode, {
+    void Function()? onLoad,
+  }) async {
+    final currentState = state;
+    if (currentState is! VideoPlayerLoaded) return;
+    onLoad?.call();
 
     _cancelToken?.cancel('Loading new episode');
     _cancelToken = CancelToken();
@@ -268,8 +274,8 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     _setEpisodeChangeFlags(next);
 
     try {
-      if (state is! VideoPlayerLoaded) return;
-      final currentState = state as VideoPlayerLoaded;
+      final currentState = state;
+      if (currentState is! VideoPlayerLoaded) return;
 
       final adjacentEpisode = _getAdjacentEpisode(
         currentState.chaps,
@@ -305,7 +311,8 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
 
   void _handleVideoProgress() {
     if (!_shouldHandleProgress()) return;
-    final currentState = state as VideoPlayerLoaded;
+    final currentState = state;
+    if (currentState is! VideoPlayerLoaded) return;
     final episodeSkip = currentState.episodeSkip;
     if (episodeSkip == null) return;
 
@@ -318,9 +325,9 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }
 
   bool _shouldHandleProgress() {
-    if (state is! VideoPlayerLoaded) return false;
+    final currentState = state;
+    if (currentState is! VideoPlayerLoaded) return false;
 
-    final currentState = state as VideoPlayerLoaded;
     return (currentState.skipIntro ?? false) && !_isSkipTriggered;
   }
 
@@ -391,8 +398,8 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }
 
   Future<void> _loadEpisodeSkipInfo(ChapDataEntity episode) async {
-    if (state is! VideoPlayerLoaded) return;
-    final currentState = state as VideoPlayerLoaded;
+    final currentState = state;
+    if (currentState is! VideoPlayerLoaded) return;
 
     try {
       final currentId =
@@ -457,17 +464,20 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     ChapDataEntity currentEpisode,
     ChapDataEntity? nextEpisode,
   ) {
-    return state is VideoPlayerLoaded
-        ? (state as VideoPlayerLoaded).copyWith(
-            chaps: episodes,
-            currentChap: currentEpisode,
-            nextChap: nextEpisode,
-          )
-        : VideoPlayerLoaded(
-            chaps: episodes,
-            currentChap: currentEpisode,
-            nextChap: nextEpisode,
-          );
+    final currentState = state;
+    if (currentState is! VideoPlayerLoaded) {
+      return VideoPlayerLoaded(
+        chaps: episodes,
+        currentChap: currentEpisode,
+        nextChap: nextEpisode,
+      );
+    }
+
+    return currentState.copyWith(
+      chaps: episodes,
+      currentChap: currentEpisode,
+      nextChap: nextEpisode,
+    );
   }
 
   void _onPlayerEvent(BetterPlayerEvent event) async {
@@ -507,7 +517,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
 
   Future<void> _playEpisode() async {
     if (_playerController == null) {
-      throw Exception('Player controller is not initialized');
+      return;
     }
     await _playerController?.play();
     _playerController?.setControlsVisibility(false);

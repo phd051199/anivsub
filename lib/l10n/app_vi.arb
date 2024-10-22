@@ -153,5 +153,33 @@
   "comment": "Bình luận",
   "@comment": {
     "description": "Label for comment section."
+  },
+  "episodeList": "Danh sách tập",
+  "@episodeList": {
+    "description": "Label for episode list."
+  },
+  "fullSeason": "Trọn bộ",
+  "@fullSeason": {
+    "description": "Label for full season."
+  },
+  "detail": "Chi tiết",
+  "@detail": {
+    "description": "Label for detail."
+  },
+  "introduction": "Giới thiệu",
+  "@introduction": {
+    "description": "Label for introduction."
+  },
+  "producedBy": "Sản xuất bởi",
+  "@producedBy": {
+    "description": "Label for produced by."
+  },
+  "seasonEnd": "Hoàn tất",
+  "@seasonEnd": {
+    "description": "Label for season end."
+  },
+  "rating": "đánh giá",
+  "@rating": {
+    "description": "Label for rating."
   }
 }

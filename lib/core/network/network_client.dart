@@ -2,6 +2,7 @@ import 'package:anivsub/core/network/auth_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -15,29 +16,50 @@ class NetworkClient {
     bool isAuthenticated = true,
     Map<String, dynamic>? headers,
   }) {
-    final dio = Dio(
+    final dio = _createDio(baseUrl, headers);
+    _configureHttpAdapter(dio);
+    _addInterceptors(dio, isAuthenticated, cookieManager);
+    return dio;
+  }
+
+  static Dio _createDio(String baseUrl, Map<String, dynamic>? headers) {
+    final timeout = const Duration(seconds: 20);
+
+    return Dio(
       BaseOptions(
         baseUrl: baseUrl,
         headers: headers,
         followRedirects: false,
-        connectTimeout: const Duration(seconds: 20),
+        connectTimeout: timeout,
         validateStatus: (status) =>
             status != null && status >= 200 && status < 400,
       ),
     );
+  }
 
-    dio.interceptors.addAll([
-      PrettyDioLogger(
-        enabled: kDebugMode,
-        requestBody: false,
-        responseBody: false,
+  static void _configureHttpAdapter(Dio dio) {
+    dio.httpClientAdapter = Http2Adapter(
+      ConnectionManager(
+        onClientCreate: (_, config) => config.onBadCertificate = (_) => true,
       ),
+    );
+  }
+
+  static void _addInterceptors(
+    Dio dio,
+    bool isAuthenticated,
+    CookieManager? cookieManager,
+  ) {
+    dio.interceptors.addAll([
+      if (kDebugMode)
+        PrettyDioLogger(
+          requestBody: false,
+          responseBody: false,
+        ),
       if (isAuthenticated) AuthInterceptor(),
       if (cookieManager != null) cookieManager,
       DioCacheInterceptor(options: GetIt.I.get<CacheOptions>()),
       ParseJsonInterceptor(),
     ]);
-
-    return dio;
   }
 }
