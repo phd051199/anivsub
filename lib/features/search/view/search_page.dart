@@ -34,7 +34,7 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
   void _initPagingController() {
     _pagingController = PagingController(
       firstPageKey: _initPage,
-      invisibleItemsThreshold: 6,
+      invisibleItemsThreshold: 3,
     )..addPageRequestListener(_onPageRequest);
   }
 
@@ -67,7 +67,7 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
 
   Widget _buildContent(BuildContext context, SearchState state) {
     return GestureDetector(
-      onTap: () => context.focusScope.unfocus(),
+      onTap: context.focusScope.unfocus,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 12, right: 12, top: 12),

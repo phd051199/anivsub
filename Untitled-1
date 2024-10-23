@@ -1,0 +1,386 @@
+{
+    "__ar": 1,
+    "payload": {
+        "totalCount": 35,
+        "commentIDs": [
+            1226239688592544,
+            1063815058758997,
+            907065531351925,
+            541736741568913,
+            1258945228880879,
+            1061699422019487,
+            1058417735975395,
+            481158531580699,
+            547474084330276,
+            1140853620569523
+        ],
+        "afterCursor": "AQHRT7wm_b-lslAx1V9zejf4_Tpzr6b2nxcq7HIPR2KXjUuwmPcRX4kXu_o0Pm020AemCM-bf5OLh7xb8vujrIndTQ",
+        "idMap": {
+            "61556716435414": {
+                "id": 61556716435414,
+                "name": "Nhú Xửa",
+                "thumbSrc": "https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/461666196_122179471184223881_8907249395459621743_n.jpg?stp=c0.0.432.432a_cp0_dst-jpg_s48x48&_nc_cat=111&ccb=1-7&_nc_sid=6738e8&_nc_ohc=5zMBmdGed_IQ7kNvgEhfKJk&_nc_ht=scontent.fsgn22-1.fna&edm=ADI6gjAEAAAA&_nc_gid=ASbw5a2DZR8YTH55XInUnXk&oh=00_AYCAWmu3uhe_XcQxkQdpw7tCk0dwxr7c_1X13VxHHM31VA&oe=671E5DE2",
+                "uri": "",
+                "isVerified": false,
+                "type": "user"
+            },
+            "27038355992476564": {
+                "id": 27038355992476564,
+                "name": "Youkai Gakkou no Sensei Hajimemashita! Tập 03 - 04 VietSub",
+                "uri": "https://animevietsub.run/phim/youkai-gakkou-no-sensei-hajimemashita-a5476/",
+                "type": "ogobject"
+            },
+            "100073785998107": {
+                "id": 100073785998107,
+                "name": "Ánh Tuyết",
+                "thumbSrc": "https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/448723794_484597364009793_795813632832862900_n.jpg?stp=cp0_dst-jpg_s48x48&_nc_cat=111&ccb=1-7&_nc_sid=6738e8&_nc_ohc=qOgz6IiLikcQ7kNvgEcIV37&_nc_ht=scontent.fsgn22-1.fna&edm=ADI6gjAEAAAA&_nc_gid=ASbw5a2DZR8YTH55XInUnXk&oh=00_AYCw3BF-trLg-iwxhMJSFqtA0OfrnPmO--7r6Y6J67tHOg&oe=671E5C2B",
+                "uri": "",
+                "isVerified": false,
+                "type": "user"
+            },
+            "61552621199827": {
+                "id": 61552621199827,
+                "name": "Hoàng Quân",
+                "thumbSrc": "https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/462153148_122196088754087373_3138615233441938149_n.jpg?stp=c0.0.933.933a_cp0_dst-jpg_s48x48&_nc_cat=107&ccb=1-7&_nc_sid=6738e8&_nc_ohc=S7RHI-mDMHsQ7kNvgHylryl&_nc_ht=scontent.fsgn22-1.fna&edm=ADI6gjAEAAAA&_nc_gid=ASbw5a2DZR8YTH55XInUnXk&oh=00_AYB17lYKq7P6HMbWmuSsysY2PqODYZGXDxEtji1tjnDvpA&oe=671E879B",
+                "uri": "",
+                "isVerified": false,
+                "type": "user"
+            },
+            "100012898389981": {
+                "id": 100012898389981,
+                "name": "JB Otaku",
+                "thumbSrc": "https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/337128100_550894887146137_8822144759439328949_n.jpg?stp=cp0_dst-jpg_s48x48&_nc_cat=106&ccb=1-7&_nc_sid=6738e8&_nc_ohc=CG26rJFInh8Q7kNvgEthKJm&_nc_ht=scontent.fsgn22-1.fna&edm=ADI6gjAEAAAA&_nc_gid=ASbw5a2DZR8YTH55XInUnXk&oh=00_AYBe2Oq81QXmbBgR6aHooXTZPSUo1xutmJyGxu_hSKspiQ&oe=671E65AF",
+                "uri": "https://www.facebook.com/tu.thien.9231?ref=embed_comment",
+                "isVerified": false,
+                "type": "user"
+            },
+            "61554510160059": {
+                "id": 61554510160059,
+                "name": "Nguyễn Đình Hoàn",
+                "thumbSrc": "https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/410235405_122104038152150338_3078728164255551322_n.jpg?stp=c0.0.195.195a_cp0_dst-jpg_s48x48&_nc_cat=111&ccb=1-7&_nc_sid=6738e8&_nc_ohc=ZUEJcFxdFzIQ7kNvgEZ5IUf&_nc_ht=scontent.fsgn22-1.fna&edm=ADI6gjAEAAAA&_nc_gid=ASbw5a2DZR8YTH55XInUnXk&oh=00_AYDa75fcU-ZnyYVC3De0Kqj69_MP5lGLVEvzOlZb_YSpRw&oe=671E81BA",
+                "uri": "https://www.facebook.com/people/Nguy%E1%BB%85n-%C4%90%C3%ACnh-Ho%C3%A0n/61554510160059/?ref=embed_comment",
+                "isVerified": false,
+                "type": "user"
+            },
+            "100030781774977": {
+                "id": 100030781774977,
+                "name": "Mạnh Hữu",
+                "thumbSrc": "https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/441242986_1162627854773263_6644314499633107093_n.jpg?stp=c0.0.966.966a_cp0_dst-jpg_s48x48&_nc_cat=101&ccb=1-7&_nc_sid=6738e8&_nc_ohc=X-zb9R6lOmYQ7kNvgFTEiAb&_nc_ht=scontent.fsgn22-1.fna&edm=ADI6gjAEAAAA&_nc_gid=ASbw5a2DZR8YTH55XInUnXk&oh=00_AYBK24FWJo2-XNAc9W2xZMuyakCmmTPB1t2_WyNGN5D1tg&oe=671E62B9",
+                "uri": "https://www.facebook.com/people/M%E1%BA%A1nh-H%E1%BB%AFu/100030781774977/?ref=embed_comment",
+                "isVerified": false,
+                "type": "user"
+            },
+            "100006227437179": {
+                "id": 100006227437179,
+                "name": "Vũ Hùng",
+                "thumbSrc": "https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/457028283_3840879586129585_620180980625299630_n.jpg?stp=cp0_dst-jpg_s48x48&_nc_cat=102&ccb=1-7&_nc_sid=6738e8&_nc_ohc=W9yoemtKghwQ7kNvgG8DULG&_nc_ht=scontent.fsgn22-1.fna&edm=ADI6gjAEAAAA&_nc_gid=ASbw5a2DZR8YTH55XInUnXk&oh=00_AYAdxOQaY_Josf6bXU5HsMSj_k5yBvMbhyIdXdHCT5W_9g&oe=671E757F",
+                "uri": "https://www.facebook.com/mieuka.mieu?ref=embed_comment",
+                "isVerified": false,
+                "type": "user"
+            },
+            "100048977712843": {
+                "id": 100048977712843,
+                "name": "Nguyễn Tuan Anh",
+                "thumbSrc": "https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/458772226_1057701012539146_3690955761543541973_n.jpg?stp=c58.0.433.433a_cp0_dst-jpg_s48x48&_nc_cat=104&ccb=1-7&_nc_sid=6738e8&_nc_ohc=OI3xHtkUrxUQ7kNvgGDA8Tl&_nc_ht=scontent.fsgn22-1.fna&edm=ADI6gjAEAAAA&_nc_gid=ASbw5a2DZR8YTH55XInUnXk&oh=00_AYBgXF_HK5lJbmhh1Cyj1dkZBaX4i-kLTDwQhc4n2rZseQ&oe=671E8B91",
+                "uri": "https://www.facebook.com/pyzaca?ref=embed_comment",
+                "isVerified": false,
+                "type": "user"
+            },
+            "100023231355476": {
+                "id": 100023231355476,
+                "name": "Thư Huỳnh",
+                "thumbSrc": "https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/455209289_1667741990676830_3489336030905190465_n.jpg?stp=cp0_dst-jpg_s48x48&_nc_cat=106&ccb=1-7&_nc_sid=6738e8&_nc_ohc=ErBtEzmtUrMQ7kNvgG6I0-8&_nc_ht=scontent.fsgn22-1.fna&edm=ADI6gjAEAAAA&_nc_gid=ASbw5a2DZR8YTH55XInUnXk&oh=00_AYD454tzr3XIC8ZK_Hljqr4FJNYZ6BiTLSiIpA3hkNEBNw&oe=671E791F",
+                "uri": "https://www.facebook.com/people/Th%C6%B0-Hu%E1%BB%B3nh/100023231355476/?ref=embed_comment",
+                "isVerified": false,
+                "type": "user"
+            },
+            "1058417735975395": {
+                "id": 1058417735975395,
+                "authorID": 100048977712843,
+                "body": {
+                    "text": "hay quá"
+                },
+                "ranges": [],
+                "timestamp": {
+                    "time": 1728476690,
+                    "text": "9 tháng 10 lúc 05:24"
+                },
+                "targetID": 27038355992476564,
+                "ogURL": "https://animevietsub.run/phim/youkai-gakkou-no-sensei-hajimemashita-a5476/",
+                "likeCount": 0,
+                "hasLiked": false,
+                "canLike": true,
+                "canEdit": false,
+                "hidden": false,
+                "highlightedWords": [],
+                "reportURI": "/report/dispatch/?content_type=98&cid=1058417735975395&rid=100048977712843&comment_id=1058417735975395",
+                "spamCount": 0,
+                "canEmbed": true,
+                "type": "comment"
+            },
+            "1226239688592544": {
+                "id": 1226239688592544,
+                "authorID": 100006227437179,
+                "body": {
+                    "text": "Voãi, thằng ku chibi hoá ra là cùng họ chồn với doraemon, đã thế lại còn đội dái lên đầu mới biến hình được nữa 😬🙀"
+                },
+                "ranges": [],
+                "timestamp": {
+                    "time": 1728577979,
+                    "text": "10 tháng 10 lúc 09:32"
+                },
+                "targetID": 27038355992476564,
+                "ogURL": "https://animevietsub.run/phim/youkai-gakkou-no-sensei-hajimemashita-a5476/",
+                "likeCount": 0,
+                "hasLiked": false,
+                "canLike": true,
+                "canEdit": false,
+                "hidden": false,
+                "highlightedWords": [],
+                "reportURI": "/report/dispatch/?content_type=98&cid=1226239688592544&rid=100006227437179&comment_id=1226239688592544",
+                "spamCount": 0,
+                "canEmbed": true,
+                "type": "comment"
+            },
+            "481158531580699": {
+                "id": 481158531580699,
+                "authorID": 100030781774977,
+                "body": {
+                    "text": "nhất quỷ nhì ma thứ ba học trò đây à"
+                },
+                "ranges": [],
+                "timestamp": {
+                    "time": 1728475900,
+                    "text": "9 tháng 10 lúc 05:11"
+                },
+                "targetID": 27038355992476564,
+                "ogURL": "https://animevietsub.run/phim/youkai-gakkou-no-sensei-hajimemashita-a5476/",
+                "likeCount": 0,
+                "hasLiked": false,
+                "canLike": true,
+                "canEdit": false,
+                "hidden": false,
+                "highlightedWords": [],
+                "reportURI": "/report/dispatch/?content_type=98&cid=481158531580699&rid=100030781774977&comment_id=481158531580699",
+                "spamCount": 0,
+                "canEmbed": true,
+                "type": "comment"
+            },
+            "1061699422019487": {
+                "id": 1061699422019487,
+                "authorID": 61554510160059,
+                "body": {
+                    "text": "coi bộ này xong nhớ hồi 2018 ghê lớp học ám sát với âm dương sư"
+                },
+                "ranges": [],
+                "timestamp": {
+                    "time": 1728481114,
+                    "text": "9 tháng 10 lúc 06:38"
+                },
+                "targetID": 27038355992476564,
+                "ogURL": "https://animevietsub.run/phim/youkai-gakkou-no-sensei-hajimemashita-a5476/",
+                "likeCount": 0,
+                "hasLiked": false,
+                "canLike": true,
+                "canEdit": false,
+                "hidden": false,
+                "highlightedWords": [],
+                "reportURI": "/report/dispatch/?content_type=98&cid=1061699422019487&rid=61554510160059&comment_id=1061699422019487",
+                "spamCount": 0,
+                "canEmbed": true,
+                "type": "comment"
+            },
+            "547474084330276": {
+                "id": 547474084330276,
+                "authorID": 100012898389981,
+                "body": {
+                    "text": "xem bộ này cảm thấy như đc chữa lành, hài với cute thật"
+                },
+                "ranges": [],
+                "timestamp": {
+                    "time": 1728469740,
+                    "text": "9 tháng 10 lúc 03:29"
+                },
+                "targetID": 27038355992476564,
+                "ogURL": "https://animevietsub.run/phim/youkai-gakkou-no-sensei-hajimemashita-a5476/",
+                "likeCount": 0,
+                "hasLiked": false,
+                "canLike": true,
+                "canEdit": false,
+                "hidden": false,
+                "highlightedWords": [],
+                "reportURI": "/report/dispatch/?content_type=98&cid=547474084330276&rid=100012898389981&comment_id=547474084330276",
+                "spamCount": 1,
+                "canEmbed": true,
+                "type": "comment"
+            },
+            "1258945228880879": {
+                "id": 1258945228880879,
+                "authorID": 61552621199827,
+                "body": {
+                    "text": "hay :))"
+                },
+                "ranges": [],
+                "timestamp": {
+                    "time": 1728486735,
+                    "text": "9 tháng 10 lúc 08:12"
+                },
+                "targetID": 27038355992476564,
+                "ogURL": "https://animevietsub.run/phim/youkai-gakkou-no-sensei-hajimemashita-a5476/",
+                "likeCount": 0,
+                "hasLiked": false,
+                "canLike": true,
+                "canEdit": false,
+                "hidden": false,
+                "highlightedWords": [],
+                "reportURI": "/report/dispatch/?content_type=98&cid=1258945228880879&rid=61552621199827&comment_id=1258945228880879",
+                "spamCount": 0,
+                "canEmbed": true,
+                "type": "comment"
+            },
+            "1140853620569523": {
+                "id": 1140853620569523,
+                "authorID": 100073785998107,
+                "body": {
+                    "text": "làm nhớ đến bộ lớp học ám sát quá à =)))))))"
+                },
+                "ranges": [],
+                "timestamp": {
+                    "time": 1728468201,
+                    "text": "9 tháng 10 lúc 03:03"
+                },
+                "targetID": 27038355992476564,
+                "ogURL": "https://animevietsub.run/phim/youkai-gakkou-no-sensei-hajimemashita-a5476/",
+                "likeCount": 0,
+                "hasLiked": false,
+                "canLike": true,
+                "canEdit": false,
+                "hidden": false,
+                "highlightedWords": [],
+                "reportURI": "/report/dispatch/?content_type=98&cid=1140853620569523&rid=100073785998107&comment_id=1140853620569523",
+                "spamCount": 0,
+                "canEmbed": true,
+                "type": "comment"
+            },
+            "541736741568913": {
+                "id": 541736741568913,
+                "authorID": 61556716435414,
+                "body": {
+                    "text": "Hay"
+                },
+                "ranges": [],
+                "timestamp": {
+                    "time": 1728487977,
+                    "text": "9 tháng 10 lúc 08:32"
+                },
+                "targetID": 27038355992476564,
+                "ogURL": "https://animevietsub.run/phim/youkai-gakkou-no-sensei-hajimemashita-a5476/",
+                "likeCount": 0,
+                "hasLiked": false,
+                "canLike": true,
+                "canEdit": false,
+                "hidden": false,
+                "highlightedWords": [],
+                "reportURI": "/report/dispatch/?content_type=98&cid=541736741568913&rid=61556716435414&comment_id=541736741568913",
+                "spamCount": 0,
+                "canEmbed": true,
+                "type": "comment"
+            },
+            "1063815058758997": {
+                "id": 1063815058758997,
+                "authorID": 100023231355476,
+                "body": {
+                    "text": "có ai có link cai BGM lúc hiệu trưởng nói quá khứ thầy ko mn"
+                },
+                "ranges": [],
+                "timestamp": {
+                    "time": 1728573286,
+                    "text": "10 tháng 10 lúc 08:14"
+                },
+                "targetID": 27038355992476564,
+                "ogURL": "https://animevietsub.run/phim/youkai-gakkou-no-sensei-hajimemashita-a5476/",
+                "likeCount": 0,
+                "hasLiked": false,
+                "canLike": true,
+                "canEdit": false,
+                "hidden": false,
+                "highlightedWords": [],
+                "reportURI": "/report/dispatch/?content_type=98&cid=1063815058758997&rid=100023231355476&comment_id=1063815058758997",
+                "spamCount": 0,
+                "canEmbed": true,
+                "type": "comment"
+            },
+            "61556725680204": {
+                "id": 61556725680204,
+                "name": "Thiên Quảng",
+                "thumbSrc": "https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/409112152_122099024432224189_769897038833124237_n.jpg?stp=cp0_dst-jpg_s48x48&_nc_cat=100&ccb=1-7&_nc_sid=6738e8&_nc_ohc=8a1oowWAkggQ7kNvgGoKjV7&_nc_ht=scontent.fsgn22-1.fna&edm=ADI6gjAEAAAA&_nc_gid=ASbw5a2DZR8YTH55XInUnXk&oh=00_AYBirLIFPcB7UU1pyvIQQ7M7pLvNcD-u2eduGFyJQEaPmg&oe=671E6E69",
+                "uri": "",
+                "isVerified": false,
+                "type": "user"
+            },
+            "100085527616793": {
+                "id": 100085527616793,
+                "name": "Dương Khánh",
+                "thumbSrc": "https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/457618405_470772115783705_736511641506548343_n.jpg?stp=cp0_dst-jpg_p48x48&_nc_cat=105&ccb=1-7&_nc_sid=6738e8&_nc_ohc=y46uvzDKdY0Q7kNvgF_YJoG&_nc_ht=scontent.fsgn22-1.fna&edm=ADI6gjAEAAAA&_nc_gid=ASbw5a2DZR8YTH55XInUnXk&oh=00_AYDstBQY-m8BvHQVRxb057yWPJlHCcXjz9aukBMWVdNvfA&oe=671E80ED",
+                "uri": "https://www.facebook.com/people/D%C6%B0%C6%A1ng-Kh%C3%A1nh/100085527616793/?ref=embed_comment",
+                "isVerified": false,
+                "type": "user"
+            },
+            "907065531351925": {
+                "id": 907065531351925,
+                "authorID": 61556725680204,
+                "body": {
+                    "text": "âm dương sư mạnh nhất là thầy giáo tại trường học quái vật :))"
+                },
+                "ranges": [],
+                "timestamp": {
+                    "time": 1728573193,
+                    "text": "10 tháng 10 lúc 08:13"
+                },
+                "targetID": 27038355992476564,
+                "ogURL": "https://animevietsub.run/phim/youkai-gakkou-no-sensei-hajimemashita-a5476/",
+                "public_replies": {
+                    "totalCount": 1,
+                    "commentIDs": [
+                        874530594727695
+                    ]
+                },
+                "likeCount": 0,
+                "hasLiked": false,
+                "canLike": true,
+                "canEdit": false,
+                "hidden": false,
+                "highlightedWords": [],
+                "reportURI": "/report/dispatch/?content_type=98&cid=907065531351925&rid=61556725680204&comment_id=907065531351925",
+                "spamCount": 0,
+                "canEmbed": true,
+                "type": "comment"
+            },
+            "874530594727695": {
+                "id": 874530594727695,
+                "authorID": 100085527616793,
+                "body": {
+                    "text": "Đâu ra,main chỉ là hậu duệ thôi :)))"
+                },
+                "ranges": [],
+                "timestamp": {
+                    "time": 1728628052,
+                    "text": "10 tháng 10 lúc 23:27"
+                },
+                "targetID": 907065531351925,
+                "ogURL": "https://animevietsub.run/phim/youkai-gakkou-no-sensei-hajimemashita-a5476/",
+                "likeCount": 0,
+                "hasLiked": false,
+                "canLike": true,
+                "canEdit": false,
+                "hidden": false,
+                "highlightedWords": [],
+                "reportURI": "/report/dispatch/?content_type=98&cid=874530594727695&rid=100085527616793&comment_id=874530594727695",
+                "spamCount": 0,
+                "canEmbed": true,
+                "type": "comment"
+            }
+        }
+    },
+    "lid": 7428866261685526197
+}

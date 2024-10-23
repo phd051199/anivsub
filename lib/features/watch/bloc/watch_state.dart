@@ -8,6 +8,7 @@ class WatchState extends BaseBlocState with _$WatchState {
     List<ChapDataEntity>? chaps,
     required AnimeDetailEntity detail,
     List<TabViewItem?>? tabViewItems,
+    List<CommentEntity>? comments,
   }) = WatchLoaded;
   const factory WatchState.error(String message) = WatchError;
 }

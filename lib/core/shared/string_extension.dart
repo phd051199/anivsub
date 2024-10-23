@@ -38,6 +38,12 @@ extension StringExtension on String {
     return 'tap-${_removeAccents()}'.toLowerCase().replaceAll(rSpace, '-');
   }
 
+  String? extractId() {
+    final RegExp regex = RegExp(r'a(\d+)/?$');
+    final Match? match = regex.firstMatch(this);
+    return match?.group(1);
+  }
+
   String _removeAccents() {
     final accentedCharacters = {
       'à': 'a',

@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/plugin/fb_comment.dart';
+import 'package:anivsub/core/shared/string_extension.dart';
 import 'package:anivsub/core/utils/log_utils.dart';
+import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
@@ -36,8 +39,32 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   ) async {
     emit(const WatchLoading());
 
-    final animeDetail = await _fetchDetailData(event.id);
-    emit(WatchLoaded(detail: animeDetail));
+    final config = FBCommentPluginConfig(
+      href: 'http://animevietsub.tv/phim/-${event.id.extractId()}/',
+      locale: 'vi_VN',
+      app: 'https://animevietsub.tv',
+      limit: 25,
+    );
+
+    final plugin = FBCommentPlugin(config);
+
+    final results = await Future.wait([
+      plugin.getComments(),
+      _fetchDetailData(event.id),
+    ]);
+
+    final comments = results.first as Map<String, dynamic>;
+    final animeDetail = results.last as AnimeDetailEntity;
+
+    List<CommentEntity> data =
+        CommentParser.parse(comments).map((e) => e.toEntity()).toList();
+
+    emit(
+      WatchLoaded(
+        detail: animeDetail,
+        comments: data,
+      ),
+    );
 
     add(LoadWatch(id: event.id));
   }

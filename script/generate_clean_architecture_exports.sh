@@ -36,4 +36,5 @@ for directory in "${directories[@]}"; do
   done
 
   echo "Export file generated at $output_file"
+  dart fix --apply $output_file
 done

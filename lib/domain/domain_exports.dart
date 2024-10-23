@@ -4,6 +4,7 @@ export 'domain_exports.dart';
 export 'entities/anime/anime_data_entity.dart';
 export 'entities/anime/anime_detail_entity.dart';
 export 'entities/anime/chap_data_entity.dart';
+export 'entities/anime/comment_entity.dart';
 export 'entities/anime/episode_skip_response_entity.dart';
 export 'entities/anime/get_encrypted_hls_request_entity.dart';
 export 'entities/anime/get_encrypted_hls_response_entity.dart';

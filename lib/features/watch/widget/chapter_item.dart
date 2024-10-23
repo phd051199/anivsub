@@ -12,11 +12,13 @@ class ChapterItem extends StatelessWidget {
     required this.chap,
     required this.index,
     required this.state,
+    required this.onChapTap,
   });
 
   final ChapDataEntity chap;
   final int index;
   final WatchLoaded state;
+  final Function(BuildContext, bool, ChapDataEntity, WatchLoaded) onChapTap;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class ChapterItem extends StatelessWidget {
         builder: (context, videoPlayerState) {
           final isPlaying = _isChapterPlaying(videoPlayerState);
           return GestureDetector(
-            onTap: () => _onChapTap(context, isPlaying),
+            onTap: () => onChapTap(context, isPlaying, chap, state),
             child: ChapCard(isPlaying: isPlaying, chap: chap),
           );
         },
@@ -40,24 +42,5 @@ class ChapterItem extends StatelessWidget {
     final isLoading = state is VideoPlayerLoading && index == 0;
 
     return isThisChap || isLoading;
-  }
-
-  void _onChapTap(BuildContext context, bool isPlaying) {
-    if (isPlaying) return;
-
-    final currentChaps = state.tabViewItems?.first;
-
-    GetIt.I<WatchBloc>().add(
-      ChangeEpisode(
-        animeDetail: currentChaps!.animeDetail!,
-      ),
-    );
-
-    GetIt.I<VideoPlayerCubit>()
-      ..updateEpisodeList(
-        currentChaps.chaps,
-        currentChaps.listEpisode,
-      )
-      ..loadEpisode(chap);
   }
 }

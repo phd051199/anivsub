@@ -45,6 +45,7 @@ dependencies:
   uuid: ^4.5.1
   flutter_dotenv: ^5.2.1
   dio_http2_adapter: ^2.5.3
+  comment_tree: ^0.3.0
 
 dev_dependencies:
   flutter_test:

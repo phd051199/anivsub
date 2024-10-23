@@ -1,5 +1,6 @@
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/watch.dart';
+import 'package:anivsub/features/watch/widget/comment_section.dart';
 import 'package:anivsub/features/watch/widget/detail_section.dart';
 import 'package:anivsub/features/watch/widget/episodes_section.dart';
 import 'package:anivsub/features/watch/widget/related_section.dart';
@@ -39,11 +40,14 @@ class WatchContent extends StatelessWidget {
         VideoPlayerSection(state: state, tag: tag),
         const Gap(4),
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                DetailSection(state: state, onTap: showDetailBottomSheet),
-                EpisodesSection(
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child:
+                    DetailSection(state: state, onTap: showDetailBottomSheet),
+              ),
+              SliverToBoxAdapter(
+                child: EpisodesSection(
                   state: state,
                   tabController: tabController,
                   currentTabIndex: currentTabIndex,
@@ -51,12 +55,19 @@ class WatchContent extends StatelessWidget {
                   onEpisodeTap: onEpisodeTap,
                   onChapTap: onChapTap,
                 ),
-                RelatedSection(
+              ),
+              SliverToBoxAdapter(
+                child: CommentSection(
+                  state: state,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: RelatedSection(
                   state: state,
                   onTap: onRelatedItemTap,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],

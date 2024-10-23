@@ -153,6 +153,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
       builder: (context) => ChaptersGrid(
         chaps: chaps,
         state: state,
+        onChapTap: _onChapTap,
       ),
     );
   }
@@ -166,12 +167,11 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     if (isPlaying) return;
 
     final currentChaps = state.tabViewItems?[_currentTabIndex];
+    if (currentChaps == null || currentChaps.animeDetail == null) {
+      return;
+    }
 
-    bloc.add(
-      ChangeEpisode(
-        animeDetail: currentChaps!.animeDetail!,
-      ),
-    );
+    bloc.add(ChangeEpisode(animeDetail: currentChaps.animeDetail!));
 
     GetIt.I<VideoPlayerCubit>()
       ..updateEpisodeList(

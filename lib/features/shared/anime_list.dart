@@ -86,17 +86,18 @@ class AnimeCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
               ),
-              if (item.views != null && item.views != 0) ...[
-                const SizedBox(height: 2),
-                Text(
-                  '${context.l10n.views}: ${item.views?.formatNumber()}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.textTheme.labelSmall!.copyWith(
-                    color: context.theme.colorScheme.secondary,
+              if (item.views != null && item.views != 0)
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Text(
+                    '${context.l10n.views}: ${item.views?.formatNumber()}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.labelSmall!.copyWith(
+                      color: context.theme.colorScheme.secondary,
+                    ),
                   ),
                 ),
-              ],
             ],
           ),
         ),

@@ -9,10 +9,12 @@ class ChaptersGrid extends StatelessWidget {
     super.key,
     required this.chaps,
     required this.state,
+    required this.onChapTap,
   });
 
   final List<ChapDataEntity> chaps;
   final WatchLoaded state;
+  final Function(BuildContext, bool, ChapDataEntity, WatchLoaded) onChapTap;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class ChaptersGrid extends StatelessWidget {
           chap: chaps[index],
           index: index,
           state: state,
+          onChapTap: onChapTap,
         ),
       ),
     );

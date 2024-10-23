@@ -601,8 +601,11 @@ mixin _$WatchState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<ChapDataEntity>? chaps,
-            AnimeDetailEntity detail, List<TabViewItem?>? tabViewItems)
+    required TResult Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments)
         loaded,
     required TResult Function(String message) error,
   }) =>
@@ -612,7 +615,7 @@ mixin _$WatchState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
         loaded,
     TResult? Function(String message)? error,
   }) =>
@@ -622,7 +625,7 @@ mixin _$WatchState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -719,8 +722,11 @@ class _$WatchInitialImpl implements WatchInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<ChapDataEntity>? chaps,
-            AnimeDetailEntity detail, List<TabViewItem?>? tabViewItems)
+    required TResult Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -733,7 +739,7 @@ class _$WatchInitialImpl implements WatchInitial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -746,7 +752,7 @@ class _$WatchInitialImpl implements WatchInitial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -842,8 +848,11 @@ class _$WatchLoadingImpl implements WatchLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<ChapDataEntity>? chaps,
-            AnimeDetailEntity detail, List<TabViewItem?>? tabViewItems)
+    required TResult Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -856,7 +865,7 @@ class _$WatchLoadingImpl implements WatchLoading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -869,7 +878,7 @@ class _$WatchLoadingImpl implements WatchLoading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -931,7 +940,8 @@ abstract class _$$WatchLoadedImplCopyWith<$Res> {
   $Res call(
       {List<ChapDataEntity>? chaps,
       AnimeDetailEntity detail,
-      List<TabViewItem?>? tabViewItems});
+      List<TabViewItem?>? tabViewItems,
+      List<CommentEntity>? comments});
 }
 
 /// @nodoc
@@ -950,6 +960,7 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
     Object? chaps = freezed,
     Object? detail = null,
     Object? tabViewItems = freezed,
+    Object? comments = freezed,
   }) {
     return _then(_$WatchLoadedImpl(
       chaps: freezed == chaps
@@ -964,6 +975,10 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
           ? _value._tabViewItems
           : tabViewItems // ignore: cast_nullable_to_non_nullable
               as List<TabViewItem?>?,
+      comments: freezed == comments
+          ? _value._comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<CommentEntity>?,
     ));
   }
 }
@@ -974,9 +989,11 @@ class _$WatchLoadedImpl implements WatchLoaded {
   const _$WatchLoadedImpl(
       {final List<ChapDataEntity>? chaps,
       required this.detail,
-      final List<TabViewItem?>? tabViewItems})
+      final List<TabViewItem?>? tabViewItems,
+      final List<CommentEntity>? comments})
       : _chaps = chaps,
-        _tabViewItems = tabViewItems;
+        _tabViewItems = tabViewItems,
+        _comments = comments;
 
   final List<ChapDataEntity>? _chaps;
   @override
@@ -1000,9 +1017,19 @@ class _$WatchLoadedImpl implements WatchLoaded {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<CommentEntity>? _comments;
+  @override
+  List<CommentEntity>? get comments {
+    final value = _comments;
+    if (value == null) return null;
+    if (_comments is EqualUnmodifiableListView) return _comments;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'WatchState.loaded(chaps: $chaps, detail: $detail, tabViewItems: $tabViewItems)';
+    return 'WatchState.loaded(chaps: $chaps, detail: $detail, tabViewItems: $tabViewItems, comments: $comments)';
   }
 
   @override
@@ -1013,7 +1040,8 @@ class _$WatchLoadedImpl implements WatchLoaded {
             const DeepCollectionEquality().equals(other._chaps, _chaps) &&
             (identical(other.detail, detail) || other.detail == detail) &&
             const DeepCollectionEquality()
-                .equals(other._tabViewItems, _tabViewItems));
+                .equals(other._tabViewItems, _tabViewItems) &&
+            const DeepCollectionEquality().equals(other._comments, _comments));
   }
 
   @override
@@ -1021,7 +1049,8 @@ class _$WatchLoadedImpl implements WatchLoaded {
       runtimeType,
       const DeepCollectionEquality().hash(_chaps),
       detail,
-      const DeepCollectionEquality().hash(_tabViewItems));
+      const DeepCollectionEquality().hash(_tabViewItems),
+      const DeepCollectionEquality().hash(_comments));
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -1036,12 +1065,15 @@ class _$WatchLoadedImpl implements WatchLoaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<ChapDataEntity>? chaps,
-            AnimeDetailEntity detail, List<TabViewItem?>? tabViewItems)
+    required TResult Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments)
         loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(chaps, detail, tabViewItems);
+    return loaded(chaps, detail, tabViewItems, comments);
   }
 
   @override
@@ -1050,11 +1082,11 @@ class _$WatchLoadedImpl implements WatchLoaded {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
         loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(chaps, detail, tabViewItems);
+    return loaded?.call(chaps, detail, tabViewItems, comments);
   }
 
   @override
@@ -1063,13 +1095,13 @@ class _$WatchLoadedImpl implements WatchLoaded {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(chaps, detail, tabViewItems);
+      return loaded(chaps, detail, tabViewItems, comments);
     }
     return orElse();
   }
@@ -1116,11 +1148,13 @@ abstract class WatchLoaded implements WatchState {
   const factory WatchLoaded(
       {final List<ChapDataEntity>? chaps,
       required final AnimeDetailEntity detail,
-      final List<TabViewItem?>? tabViewItems}) = _$WatchLoadedImpl;
+      final List<TabViewItem?>? tabViewItems,
+      final List<CommentEntity>? comments}) = _$WatchLoadedImpl;
 
   List<ChapDataEntity>? get chaps;
   AnimeDetailEntity get detail;
   List<TabViewItem?>? get tabViewItems;
+  List<CommentEntity>? get comments;
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -1199,8 +1233,11 @@ class _$WatchErrorImpl implements WatchError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<ChapDataEntity>? chaps,
-            AnimeDetailEntity detail, List<TabViewItem?>? tabViewItems)
+    required TResult Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -1213,7 +1250,7 @@ class _$WatchErrorImpl implements WatchError {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -1226,7 +1263,7 @@ class _$WatchErrorImpl implements WatchError {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems)?
+            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
