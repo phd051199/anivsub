@@ -1,30 +1,33 @@
-import 'package:anivsub/data/dto/base_dto.dart';
-import 'package:anivsub/domain/entities/refresh_user_session_request_entity.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:anivsub/data/data_exports.dart';
+import 'package:anivsub/domain/domain_exports.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'refresh_user_session_request_dto.freezed.dart';
 part 'refresh_user_session_request_dto.g.dart';
 
-@JsonSerializable(
-  createToJson: true,
-  explicitToJson: true,
-)
-class RefreshUserSessionRequestDTO
-    extends BaseDTO<RefreshUserSessionRequestEntity> {
-  const RefreshUserSessionRequestDTO({
-    required this.refreshToken,
-    this.expiresInMins,
-  });
-  final String refreshToken;
-  final int? expiresInMins;
+@freezed
+class RefreshUserSessionRequestDTO extends BaseDTO<RefreshUserSessionRequestEntity> with _$RefreshUserSessionRequestDTO {
+  const factory RefreshUserSessionRequestDTO({
+    required String refreshToken,
+    int? expiresInMins,
+  }) = _RefreshUserSessionRequestDTO;
+
+  const RefreshUserSessionRequestDTO._();
+
+  factory RefreshUserSessionRequestDTO.fromJson(Map<String, dynamic> json) =>
+      _$RefreshUserSessionRequestDTOFromJson(json);
 
   @override
-  RefreshUserSessionRequestEntity toEntity() => RefreshUserSessionRequestEntity(
-        refreshToken: refreshToken,
-        expiresInMins: expiresInMins,
-      );
+  List<Object?> get props => [
+        refreshToken,
+        expiresInMins,
+      ];
 
   @override
-  List<Object?> get props => [refreshToken, expiresInMins];
-
-  Map<String, dynamic> toJson() => _$RefreshUserSessionRequestDTOToJson(this);
+  RefreshUserSessionRequestEntity toEntity() {
+    return RefreshUserSessionRequestEntity(
+      refreshToken: refreshToken,
+      expiresInMins: expiresInMins,
+    );
+  }
 }

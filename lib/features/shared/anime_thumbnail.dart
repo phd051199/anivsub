@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:anivsub/core/shared/constants.dart';
 import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/utils/log_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,9 @@ class AnimeThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (imageUrl == null || imageUrl!.isEmpty) {
+      Log.debug('Image URL is null');
+    }
     return Card(
       clipBehavior: Clip.hardEdge,
       child: Stack(

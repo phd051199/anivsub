@@ -1,10 +1,9 @@
 import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/domain_exports.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
 class AnimeDetailParser {
-  static AnimeDetailEntity parse(String html) {
+  static AnimeDetailDTO parse(String html) {
     final dom.Document document = parser.parse(html);
     final int now = DateTime.now().millisecondsSinceEpoch;
 
@@ -119,12 +118,12 @@ class AnimeDetailParser {
     final String? trailer =
         document.querySelector('#Opt1 iframe')?.attributes['src'];
 
-    final List<AnimeDataEntity> toPut = document
+    final List<AnimeDataResponseDTO> toPut = document
         .querySelectorAll('.MovieListRelated .TPostMv')
         .map((item) => _getInfoTPost(item, now))
         .toList();
 
-    return AnimeDetailEntity(
+    return AnimeDetailDTO(
       name: name,
       othername: othername,
       image: image,
@@ -181,7 +180,7 @@ class AnimeDetailParser {
     );
   }
 
-  static AnimeDataEntity _getInfoTPost(dom.Element element, int now) {
+  static AnimeDataResponseDTO _getInfoTPost(dom.Element element, int now) {
     final String path =
         _getPathName(element.querySelector('a')?.attributes['href'] ?? '');
     final img = element.querySelector('img');
@@ -198,7 +197,7 @@ class AnimeDetailParser {
     final String description =
         element.querySelector('.Description > p')?.text.trim() ?? '';
 
-    return AnimeDataEntity(
+    return AnimeDataResponseDTO(
       path: path,
       image: image,
       name: name,

@@ -74,7 +74,7 @@ class EpisodesSection extends StatelessWidget {
               ? const LoadingWidget(withBox: false)
               : _buildChapterHorizontal(
                   context: context,
-                  chaps: item!.chaps!,
+                  chaps: item!.chaps,
                   state: state,
                 );
         }).toList(),

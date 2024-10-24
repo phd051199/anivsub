@@ -1,23 +1,24 @@
 import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class HomeDataCategoriesEntity extends BaseEntity {
-  const HomeDataCategoriesEntity({
-    required this.topMovies,
-    required this.sliderMovies,
-    required this.latestUpdates,
-    required this.preRelease,
-    required this.hotUpdates,
-    required this.thisSeason,
-  });
-  final List<AnimeDataEntity> topMovies;
-  final List<AnimeDataEntity> sliderMovies;
-  final List<AnimeDataEntity> latestUpdates;
-  final List<AnimeDataEntity> preRelease;
-  final List<AnimeDataEntity> hotUpdates;
-  final List<AnimeDataEntity> thisSeason;
+part 'home_data_categories_entity.freezed.dart';
+
+@freezed
+class HomeDataCategoriesEntity extends BaseEntity<HomeDataCategoriesDTO>
+    with _$HomeDataCategoriesEntity {
+  const factory HomeDataCategoriesEntity({
+    required List<AnimeDataEntity> topMovies,
+    required List<AnimeDataEntity> sliderMovies,
+    required List<AnimeDataEntity> latestUpdates,
+    required List<AnimeDataEntity> preRelease,
+    required List<AnimeDataEntity> hotUpdates,
+    required List<AnimeDataEntity> thisSeason,
+  }) = _HomeDataCategoriesEntity;
+
+  const HomeDataCategoriesEntity._();
 
   @override
   List<Object?> get props => [

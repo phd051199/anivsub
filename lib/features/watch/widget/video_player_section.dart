@@ -3,7 +3,6 @@ import 'package:anivsub/features/watch/watch.dart';
 import 'package:anivsub/features/watch/widget/empty_player.dart';
 import 'package:anivsub/features/watch/widget/video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 class VideoPlayerSection extends StatelessWidget {
   const VideoPlayerSection({
@@ -22,7 +21,7 @@ class VideoPlayerSection extends StatelessWidget {
       child: Stack(
         children: [
           Hero(
-            tag: tag ?? const Uuid().v4(),
+            tag: tag ?? UniqueKey().toString(),
             child: const SizedBox.expand(),
           ),
           _buildVideoPlayerWidget(),

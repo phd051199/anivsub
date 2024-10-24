@@ -1,10 +1,9 @@
-import 'package:anivsub/data/parser/common_parser.dart';
-import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/data/data_exports.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
 class PreSearchParser {
-  static List<PreSearchItemEntity> parse(String htmlString) {
+  static List<PreSearchItemDTO> parse(String htmlString) {
     final document = parser.parse(htmlString);
     final items = document.querySelectorAll('li:not(.ss-bottom)');
 
@@ -15,7 +14,7 @@ class PreSearchParser {
       final name = li.querySelector('.ss-title')?.text ?? '';
       final status = li.querySelector('p')?.text ?? '';
 
-      return PreSearchItemEntity(
+      return PreSearchItemDTO(
         image: image,
         path: path,
         name: name,

@@ -6,9 +6,9 @@ part of 'home_data_categories_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-HomeDataCategoriesDTO _$HomeDataCategoriesDTOFromJson(
+_$HomeDataCategoriesDTOImpl _$$HomeDataCategoriesDTOImplFromJson(
         Map<String, dynamic> json) =>
-    HomeDataCategoriesDTO(
+    _$HomeDataCategoriesDTOImpl(
       topMovies: (json['topMovies'] as List<dynamic>)
           .map((e) => AnimeDataResponseDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -29,13 +29,13 @@ HomeDataCategoriesDTO _$HomeDataCategoriesDTOFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$HomeDataCategoriesDTOToJson(
-        HomeDataCategoriesDTO instance) =>
+Map<String, dynamic> _$$HomeDataCategoriesDTOImplToJson(
+        _$HomeDataCategoriesDTOImpl instance) =>
     <String, dynamic>{
-      'topMovies': instance.topMovies.map((e) => e.toJson()).toList(),
-      'sliderMovies': instance.sliderMovies.map((e) => e.toJson()).toList(),
-      'latestUpdates': instance.latestUpdates.map((e) => e.toJson()).toList(),
-      'preRelease': instance.preRelease.map((e) => e.toJson()).toList(),
-      'hotUpdates': instance.hotUpdates.map((e) => e.toJson()).toList(),
-      'thisSeason': instance.thisSeason.map((e) => e.toJson()).toList(),
+      'topMovies': instance.topMovies,
+      'sliderMovies': instance.sliderMovies,
+      'latestUpdates': instance.latestUpdates,
+      'preRelease': instance.preRelease,
+      'hotUpdates': instance.hotUpdates,
+      'thisSeason': instance.thisSeason,
     };

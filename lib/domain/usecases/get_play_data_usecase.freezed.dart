@@ -184,6 +184,8 @@ abstract class $GetPlayDataUseCaseOutputCopyWith<$Res> {
       _$GetPlayDataUseCaseOutputCopyWithImpl<$Res, GetPlayDataUseCaseOutput>;
   @useResult
   $Res call({PlayDataEntity result});
+
+  $PlayDataEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc
@@ -211,6 +213,16 @@ class _$GetPlayDataUseCaseOutputCopyWithImpl<$Res,
               as PlayDataEntity,
     ) as $Val);
   }
+
+  /// Create a copy of GetPlayDataUseCaseOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PlayDataEntityCopyWith<$Res> get result {
+    return $PlayDataEntityCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -223,6 +235,9 @@ abstract class _$$GetPlayDataUseCaseOutputImplCopyWith<$Res>
   @override
   @useResult
   $Res call({PlayDataEntity result});
+
+  @override
+  $PlayDataEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc

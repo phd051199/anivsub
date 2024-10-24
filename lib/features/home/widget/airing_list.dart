@@ -1,5 +1,5 @@
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/features/home/widget/movie_card.dart';
+import 'package:anivsub/features/home/widget/anime_card.dart';
 import 'package:flutter/material.dart';
 
 class AiringList extends StatelessWidget {
@@ -13,7 +13,7 @@ class AiringList extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: movies.length,
-        itemBuilder: (context, index) => MovieCard(movie: movies[index]),
+        itemBuilder: (context, index) => AnimeCard(movie: movies[index]),
       ),
     );
   }

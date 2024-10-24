@@ -2,26 +2,22 @@ import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'play_data_dto.freezed.dart';
 part 'play_data_dto.g.dart';
 
-@JsonSerializable(
-  createToJson: true,
-  explicitToJson: true,
-)
-class PlayDataDTO extends BaseDTO<PlayDataEntity> {
-  const PlayDataDTO({
-    required this.chaps,
-    this.update,
-    required this.image,
-    required this.poster,
-  });
+@freezed
+class PlayDataDTO extends BaseDTO<PlayDataEntity> with _$PlayDataDTO {
+  const factory PlayDataDTO({
+    required List<ChapDataDTO> chaps,
+    List<int>? update,
+    required String image,
+    required String poster,
+  }) = _PlayDataDTO;
+
+  const PlayDataDTO._();
 
   factory PlayDataDTO.fromJson(Map<String, dynamic> json) =>
       _$PlayDataDTOFromJson(json);
-  final List<ChapDataDTO> chaps;
-  final List<int>? update;
-  final String image;
-  final String poster;
 
   @override
   List<Object?> get props => [chaps, update, image, poster];
@@ -35,6 +31,4 @@ class PlayDataDTO extends BaseDTO<PlayDataEntity> {
       poster: poster,
     );
   }
-
-  Map<String, dynamic> toJson() => _$PlayDataDTOToJson(this);
 }

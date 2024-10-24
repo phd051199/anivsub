@@ -6,16 +6,28 @@ part of 'episode_skip_response_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-EpisodeSkipResponseDTO _$EpisodeSkipResponseDTOFromJson(
+_$InOutroImpl _$$InOutroImplFromJson(Map<String, dynamic> json) =>
+    _$InOutroImpl(
+      start: (json['start'] as num).toInt(),
+      end: (json['end'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$$InOutroImplToJson(_$InOutroImpl instance) =>
+    <String, dynamic>{
+      'start': instance.start,
+      'end': instance.end,
+    };
+
+_$EpisodeSkipResponseDTOImpl _$$EpisodeSkipResponseDTOImplFromJson(
         Map<String, dynamic> json) =>
-    EpisodeSkipResponseDTO(
+    _$EpisodeSkipResponseDTOImpl(
       intro: InOutro.fromJson(json['intro'] as Map<String, dynamic>),
       outro: InOutro.fromJson(json['outro'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$EpisodeSkipResponseDTOToJson(
-        EpisodeSkipResponseDTO instance) =>
+Map<String, dynamic> _$$EpisodeSkipResponseDTOImplToJson(
+        _$EpisodeSkipResponseDTOImpl instance) =>
     <String, dynamic>{
-      'intro': instance.intro.toJson(),
-      'outro': instance.outro.toJson(),
+      'intro': instance.intro,
+      'outro': instance.outro,
     };

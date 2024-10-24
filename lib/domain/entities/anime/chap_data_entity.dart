@@ -1,31 +1,19 @@
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class ChapDataEntity extends BaseEntity<ChapDataDTO> {
-  const ChapDataEntity({
-    required this.id,
-    required this.play,
-    required this.hash,
-    required this.name,
-  });
-  final String id;
-  final String play;
-  final String hash;
-  final String name;
+part 'chap_data_entity.freezed.dart';
 
-  ChapDataEntity copyWith({
-    String? id,
-    String? play,
-    String? hash,
-    String? name,
-  }) {
-    return ChapDataEntity(
-      id: id ?? this.id,
-      play: play ?? this.play,
-      hash: hash ?? this.hash,
-      name: name ?? this.name,
-    );
-  }
+@freezed
+class ChapDataEntity extends BaseEntity<ChapDataDTO> with _$ChapDataEntity {
+  const factory ChapDataEntity({
+    required String id,
+    required String play,
+    required String hash,
+    required String name,
+  }) = _ChapDataEntity;
+
+  const ChapDataEntity._();
 
   @override
   List<Object?> get props => [
@@ -36,14 +24,12 @@ class ChapDataEntity extends BaseEntity<ChapDataDTO> {
       ];
 
   @override
-  ChapDataDTO toDTO() {
-    return ChapDataDTO(
-      id: id,
-      play: play,
-      hash: hash,
-      name: name,
-    );
-  }
+  ChapDataDTO toDTO() => ChapDataDTO(
+        id: id,
+        play: play,
+        hash: hash,
+        name: name,
+      );
 
   static ChapDataEntity mockup() => const ChapDataEntity(
         id: 'id',

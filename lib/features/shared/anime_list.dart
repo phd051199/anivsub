@@ -4,7 +4,6 @@ import 'package:anivsub/core/shared/number_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:uuid/uuid.dart';
 
 import 'anime_thumbnail.dart';
 
@@ -49,7 +48,7 @@ class AnimeCard extends StatelessWidget {
 
   final AnimeDataEntity item;
   final void Function(AnimeDataEntity)? onTap;
-  final String tag = const Uuid().v4();
+  final tag = UniqueKey().toString();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +61,7 @@ class AnimeCard extends StatelessWidget {
           } else {
             context.pushNamed(
               ScreenNames.watch,
-              queryParameters: {'path': item.path, 'tag': tag},
+              queryParameters: {'path': item.path, 'tag': tag.toString()},
             );
           }
         },

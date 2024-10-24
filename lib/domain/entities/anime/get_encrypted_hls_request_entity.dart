@@ -1,29 +1,38 @@
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class GetEncryptedHlsRequestEntity
-    extends BaseEntity<GetEncryptedHlsRequestDTO> {
-  const GetEncryptedHlsRequestEntity({
-    required this.id,
-    required this.play,
-    required this.link,
-    this.backuplinks = '1',
-  });
-  final String id;
-  final String play;
-  final String link;
-  final String backuplinks;
+part 'get_encrypted_hls_request_entity.freezed.dart';
+part 'get_encrypted_hls_request_entity.g.dart';
+
+@freezed
+class GetEncryptedHlsRequestEntity extends BaseEntity<GetEncryptedHlsRequestDTO>
+    with _$GetEncryptedHlsRequestEntity {
+  const factory GetEncryptedHlsRequestEntity({
+    required String id,
+    required String play,
+    required String link,
+    @Default('1') String backuplinks,
+  }) = _GetEncryptedHlsRequestEntity;
+
+  const GetEncryptedHlsRequestEntity._();
+
+  factory GetEncryptedHlsRequestEntity.fromJson(Map<String, dynamic> json) =>
+      _$GetEncryptedHlsRequestEntityFromJson(json);
 
   @override
-  List<Object?> get props => [id, play, link, backuplinks];
+  List<Object?> get props => [
+        id,
+        play,
+        link,
+        backuplinks,
+      ];
 
   @override
-  GetEncryptedHlsRequestDTO toDTO() {
-    return GetEncryptedHlsRequestDTO(
-      id: id,
-      play: play,
-      link: link,
-      backuplinks: backuplinks,
-    );
-  }
+  GetEncryptedHlsRequestDTO toDTO() => GetEncryptedHlsRequestDTO(
+        id: id,
+        play: play,
+        link: link,
+        backuplinks: backuplinks,
+      );
 }

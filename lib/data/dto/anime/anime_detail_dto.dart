@@ -1,67 +1,43 @@
 import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/entities/anime/anime_detail_entity.dart';
+import 'package:anivsub/domain/domain_exports.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'anime_detail_dto.freezed.dart';
 part 'anime_detail_dto.g.dart';
 
-@JsonSerializable(
-  createToJson: true,
-  explicitToJson: true,
-)
-class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> {
-  const AnimeDetailDTO({
-    required this.name,
-    required this.othername,
-    required this.image,
-    required this.poster,
-    this.pathToView,
-    required this.description,
-    required this.rate,
-    required this.countRate,
-    required this.duration,
-    required this.yearOf,
-    required this.views,
-    required this.season,
-    required this.genre,
-    required this.quality,
-    required this.status,
-    required this.authors,
-    required this.countries,
-    required this.follows,
-    required this.language,
-    required this.studio,
-    this.seasonOf,
-    this.trailer,
-    required this.toPut,
-    this.schedule,
-  });
+@freezed
+class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> with _$AnimeDetailDTO {
+  const factory AnimeDetailDTO({
+    required String name,
+    required String othername,
+    required String image,
+    required String poster,
+    String? pathToView,
+    required String description,
+    required double rate,
+    required int countRate,
+    required String duration,
+    required int yearOf,
+    required int views,
+    required List<Anchor> season,
+    required List<Anchor> genre,
+    required String quality,
+    required String status,
+    required List<Anchor> authors,
+    required List<Anchor> countries,
+    required int follows,
+    required String language,
+    required String studio,
+    Anchor? seasonOf,
+    String? trailer,
+    required List<AnimeDataResponseDTO> toPut,
+    String? schedule,
+  }) = _AnimeDetailDTO;
+
+  const AnimeDetailDTO._();
 
   factory AnimeDetailDTO.fromJson(Map<String, dynamic> json) =>
       _$AnimeDetailDTOFromJson(json);
-  final String name;
-  final String othername;
-  final String image;
-  final String poster;
-  final String? pathToView;
-  final String description;
-  final double rate;
-  final int countRate;
-  final String duration;
-  final int yearOf;
-  final int views;
-  final List<Anchor> season;
-  final List<Anchor> genre;
-  final String quality;
-  final String status;
-  final List<Anchor> authors;
-  final List<Anchor> countries;
-  final int follows;
-  final String language;
-  final String studio;
-  final Anchor? seasonOf;
-  final String? trailer;
-  final List<AnimeDataResponseDTO> toPut;
-  final String? schedule;
 
   @override
   List<Object?> get props => [
@@ -120,6 +96,4 @@ class AnimeDetailDTO extends BaseDTO<AnimeDetailEntity> {
       schedule: schedule,
     );
   }
-
-  Map<String, dynamic> toJson() => _$AnimeDetailDTOToJson(this);
 }

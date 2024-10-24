@@ -61,7 +61,7 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
     if (state is SearchLoaded) {
       _updatePagingController(state);
     } else if (state is SearchError) {
-      onErrorListener(context, state);
+      onErrorListener(context, state.message);
     }
   }
 

@@ -188,6 +188,8 @@ abstract class $GetAnimeDetailUseCaseOutputCopyWith<$Res> {
           GetAnimeDetailUseCaseOutput>;
   @useResult
   $Res call({AnimeDetailEntity result});
+
+  $AnimeDetailEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc
@@ -215,6 +217,16 @@ class _$GetAnimeDetailUseCaseOutputCopyWithImpl<$Res,
               as AnimeDetailEntity,
     ) as $Val);
   }
+
+  /// Create a copy of GetAnimeDetailUseCaseOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AnimeDetailEntityCopyWith<$Res> get result {
+    return $AnimeDetailEntityCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -227,6 +239,9 @@ abstract class _$$GetAnimeDetailUseCaseOutputImplCopyWith<$Res>
   @override
   @useResult
   $Res call({AnimeDetailEntity result});
+
+  @override
+  $AnimeDetailEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc

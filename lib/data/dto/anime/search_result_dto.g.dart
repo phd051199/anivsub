@@ -6,8 +6,9 @@ part of 'search_result_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SearchResultDTO _$SearchResultDTOFromJson(Map<String, dynamic> json) =>
-    SearchResultDTO(
+_$SearchResultDTOImpl _$$SearchResultDTOImplFromJson(
+        Map<String, dynamic> json) =>
+    _$SearchResultDTOImpl(
       items: (json['items'] as List<dynamic>)
           .map((e) => AnimeDataResponseDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -15,9 +16,10 @@ SearchResultDTO _$SearchResultDTOFromJson(Map<String, dynamic> json) =>
       maxPage: (json['maxPage'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$SearchResultDTOToJson(SearchResultDTO instance) =>
+Map<String, dynamic> _$$SearchResultDTOImplToJson(
+        _$SearchResultDTOImpl instance) =>
     <String, dynamic>{
-      'items': instance.items.map((e) => e.toJson()).toList(),
+      'items': instance.items,
       'curPage': instance.curPage,
       'maxPage': instance.maxPage,
     };

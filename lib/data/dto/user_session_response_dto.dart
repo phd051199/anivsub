@@ -1,34 +1,42 @@
-import 'package:anivsub/data/dto/base_dto.dart';
-import 'package:anivsub/domain/entities/user_session_response_entity.dart';
+import 'package:anivsub/data/data_exports.dart';
+import 'package:anivsub/domain/domain_exports.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'user_session_response_dto.freezed.dart';
 part 'user_session_response_dto.g.dart';
 
-@JsonSerializable()
-class UserSessionResponseDTO extends BaseDTO<UserSessionResponseEntity> {
-  const UserSessionResponseDTO({
-    this.accessToken,
-    this.refreshToken,
-    this.id,
-    this.username,
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.gender,
-    this.image,
-  });
+@freezed
+class UserSessionResponseDTO extends BaseDTO<UserSessionResponseEntity>
+    with _$UserSessionResponseDTO {
+  const factory UserSessionResponseDTO({
+    String? accessToken,
+    String? refreshToken,
+    int? id,
+    String? username,
+    String? email,
+    String? firstName,
+    String? lastName,
+    String? gender,
+    String? image,
+  }) = _UserSessionResponseDTO;
+
+  const UserSessionResponseDTO._();
 
   factory UserSessionResponseDTO.fromJson(Map<String, dynamic> json) =>
       _$UserSessionResponseDTOFromJson(json);
-  final String? accessToken;
-  final String? refreshToken;
-  final int? id;
-  final String? username;
-  final String? email;
-  final String? firstName;
-  final String? lastName;
-  final String? gender;
-  final String? image;
+
+  @override
+  List<Object?> get props => [
+        accessToken,
+        refreshToken,
+        id,
+        username,
+        email,
+        firstName,
+        lastName,
+        gender,
+        image,
+      ];
 
   @override
   UserSessionResponseEntity toEntity() {
@@ -44,10 +52,4 @@ class UserSessionResponseDTO extends BaseDTO<UserSessionResponseEntity> {
       image: image,
     );
   }
-
-  @override
-  List<Object?> get props =>
-      [accessToken, refreshToken, id, username, email, firstName, lastName];
-
-  Map<String, dynamic> toJson() => _$UserSessionResponseDTOToJson(this);
 }

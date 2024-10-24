@@ -6,7 +6,8 @@ part of 'play_data_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PlayDataDTO _$PlayDataDTOFromJson(Map<String, dynamic> json) => PlayDataDTO(
+_$PlayDataDTOImpl _$$PlayDataDTOImplFromJson(Map<String, dynamic> json) =>
+    _$PlayDataDTOImpl(
       chaps: (json['chaps'] as List<dynamic>)
           .map((e) => ChapDataDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -17,9 +18,9 @@ PlayDataDTO _$PlayDataDTOFromJson(Map<String, dynamic> json) => PlayDataDTO(
       poster: json['poster'] as String,
     );
 
-Map<String, dynamic> _$PlayDataDTOToJson(PlayDataDTO instance) =>
+Map<String, dynamic> _$$PlayDataDTOImplToJson(_$PlayDataDTOImpl instance) =>
     <String, dynamic>{
-      'chaps': instance.chaps.map((e) => e.toJson()).toList(),
+      'chaps': instance.chaps,
       'update': instance.update,
       'image': instance.image,
       'poster': instance.poster,

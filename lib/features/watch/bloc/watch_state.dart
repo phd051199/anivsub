@@ -9,6 +9,9 @@ class WatchState extends BaseBlocState with _$WatchState {
     required AnimeDetailEntity detail,
     List<TabViewItem?>? tabViewItems,
     List<CommentEntity>? comments,
+    int? totalCommentCount,
+    ActorEntity? fbUser,
+    @Default(false) bool isCmtLoading,
   }) = WatchLoaded;
   const factory WatchState.error(String message) = WatchError;
 }

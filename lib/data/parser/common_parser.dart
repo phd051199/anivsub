@@ -1,4 +1,4 @@
-import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/data/data_exports.dart';
 import 'package:html/dom.dart' as dom;
 
 class CommonParser {
@@ -11,7 +11,7 @@ class CommonParser {
     }
   }
 
-  static List<AnimeDataEntity> getInfoTPost(
+  static List<AnimeDataResponseDTO> getInfoTPost(
     Iterable<dom.Element> elements,
     int now,
   ) {
@@ -71,7 +71,7 @@ class CommonParser {
           ? (countdown != null ? (now ~/ 1000 + countdown) * 1000 : null)
           : null;
 
-      return AnimeDataEntity(
+      return AnimeDataResponseDTO(
         path: path,
         image: image,
         name: name,

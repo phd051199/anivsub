@@ -2,57 +2,43 @@ import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'list_episode_response_dto.freezed.dart';
 part 'list_episode_response_dto.g.dart';
 
-class Episode {
-  factory Episode.fromJson(Map<String, dynamic> json) => Episode(
-        id: json['id'],
-        order: json['order'],
-        name: json['name'],
-        title: json['title'],
-      );
-  Episode({
-    required this.id,
-    required this.order,
-    required this.name,
-    required this.title,
-  });
-  String id;
-  String order;
-  String name;
-  String title;
+@freezed
+class Episode with _$Episode {
+  const factory Episode({
+    required String id,
+    required String order,
+    required String name,
+    required String title,
+  }) = _Episode;
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'order': order,
-        'name': name,
-        'title': title,
-      };
+  factory Episode.fromJson(Map<String, dynamic> json) =>
+      _$EpisodeFromJson(json);
 }
 
-@JsonSerializable(
-  createToJson: true,
-  explicitToJson: true,
-)
-class ListEpisodeResponseDTO extends BaseDTO<ListEpisodeResponseEntity> {
-  const ListEpisodeResponseDTO({
-    required this.id,
-    required this.list,
-  });
+@freezed
+class ListEpisodeResponseDTO extends BaseDTO<ListEpisodeResponseEntity>
+    with _$ListEpisodeResponseDTO {
+  const factory ListEpisodeResponseDTO({
+    required String id,
+    required List<Episode> list,
+  }) = _ListEpisodeResponseDTO;
+
+  const ListEpisodeResponseDTO._();
 
   factory ListEpisodeResponseDTO.fromJson(Map<String, dynamic> json) =>
       _$ListEpisodeResponseDTOFromJson(json);
-
-  final String id;
-  final List<Episode> list;
-
-  Map<String, dynamic> toJson() => _$ListEpisodeResponseDTOToJson(this);
 
   @override
   List<Object?> get props => [id, list];
 
   @override
   ListEpisodeResponseEntity toEntity() {
-    return ListEpisodeResponseEntity(id: id, list: list);
+    return ListEpisodeResponseEntity(
+      id: id,
+      list: list,
+    );
   }
 }

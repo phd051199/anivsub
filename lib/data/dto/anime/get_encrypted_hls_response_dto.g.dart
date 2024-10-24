@@ -6,9 +6,9 @@ part of 'get_encrypted_hls_response_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetEncryptedHlsResponseDTO _$GetEncryptedHlsResponseDTOFromJson(
+_$GetEncryptedHlsResponseDTOImpl _$$GetEncryptedHlsResponseDTOImplFromJson(
         Map<String, dynamic> json) =>
-    GetEncryptedHlsResponseDTO(
+    _$GetEncryptedHlsResponseDTOImpl(
       success: (json['success'] as num).toInt(),
       title: json['title'] as String,
       link: (json['link'] as List<dynamic>)
@@ -17,11 +17,11 @@ GetEncryptedHlsResponseDTO _$GetEncryptedHlsResponseDTOFromJson(
       playTech: json['playTech'] as String,
     );
 
-Map<String, dynamic> _$GetEncryptedHlsResponseDTOToJson(
-        GetEncryptedHlsResponseDTO instance) =>
+Map<String, dynamic> _$$GetEncryptedHlsResponseDTOImplToJson(
+        _$GetEncryptedHlsResponseDTOImpl instance) =>
     <String, dynamic>{
       'success': instance.success,
       'title': instance.title,
-      'link': instance.link.map((e) => e.toJson()).toList(),
+      'link': instance.link,
       'playTech': instance.playTech,
     };

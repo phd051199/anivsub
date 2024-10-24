@@ -565,6 +565,8 @@ abstract class _$$SearchLoadedImplCopyWith<$Res> {
       bool hasReachedMax,
       int currentPage,
       List<PreSearchItemEntity>? preSearchItems});
+
+  $SearchResultEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc
@@ -603,6 +605,16 @@ class __$$SearchLoadedImplCopyWithImpl<$Res>
           : preSearchItems // ignore: cast_nullable_to_non_nullable
               as List<PreSearchItemEntity>?,
     ));
+  }
+
+  /// Create a copy of SearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SearchResultEntityCopyWith<$Res> get result {
+    return $SearchResultEntityCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value));
+    });
   }
 }
 

@@ -42,10 +42,10 @@ dependencies:
   supabase_flutter: ^2.8.0
   dio_cache_interceptor: ^3.5.0
   skeletonizer: ^1.4.2
-  uuid: ^4.5.1
   flutter_dotenv: ^5.2.1
   dio_http2_adapter: ^2.5.3
   comment_tree: ^0.3.0
+  flutter_inappwebview: ^6.1.5
 
 dev_dependencies:
   flutter_test:

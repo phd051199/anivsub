@@ -35,6 +35,8 @@ abstract class $GetEncryptedHlsUseCaseInputCopyWith<$Res> {
           GetEncryptedHlsUseCaseInput>;
   @useResult
   $Res call({GetEncryptedHlsRequestEntity data, CancelToken? cancelToken});
+
+  $GetEncryptedHlsRequestEntityCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -67,6 +69,16 @@ class _$GetEncryptedHlsUseCaseInputCopyWithImpl<$Res,
               as CancelToken?,
     ) as $Val);
   }
+
+  /// Create a copy of GetEncryptedHlsUseCaseInput
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $GetEncryptedHlsRequestEntityCopyWith<$Res> get data {
+    return $GetEncryptedHlsRequestEntityCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -79,6 +91,9 @@ abstract class _$$GetEncryptedHlsUseCaseInputImplCopyWith<$Res>
   @override
   @useResult
   $Res call({GetEncryptedHlsRequestEntity data, CancelToken? cancelToken});
+
+  @override
+  $GetEncryptedHlsRequestEntityCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -192,6 +207,8 @@ abstract class $GetEncryptedHlsUseCaseOutputCopyWith<$Res> {
           GetEncryptedHlsUseCaseOutput>;
   @useResult
   $Res call({GetEncryptedHlsResponseEntity result});
+
+  $GetEncryptedHlsResponseEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc
@@ -219,6 +236,16 @@ class _$GetEncryptedHlsUseCaseOutputCopyWithImpl<$Res,
               as GetEncryptedHlsResponseEntity,
     ) as $Val);
   }
+
+  /// Create a copy of GetEncryptedHlsUseCaseOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $GetEncryptedHlsResponseEntityCopyWith<$Res> get result {
+    return $GetEncryptedHlsResponseEntityCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -231,6 +258,9 @@ abstract class _$$GetEncryptedHlsUseCaseOutputImplCopyWith<$Res>
   @override
   @useResult
   $Res call({GetEncryptedHlsResponseEntity result});
+
+  @override
+  $GetEncryptedHlsResponseEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc

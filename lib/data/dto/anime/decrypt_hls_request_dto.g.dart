@@ -6,14 +6,14 @@ part of 'decrypt_hls_request_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DecryptHlsRequestDTO _$DecryptHlsRequestDTOFromJson(
+_$DecryptHlsRequestDTOImpl _$$DecryptHlsRequestDTOImplFromJson(
         Map<String, dynamic> json) =>
-    DecryptHlsRequestDTO(
+    _$DecryptHlsRequestDTOImpl(
       hash: json['hash'] as String,
     );
 
-Map<String, dynamic> _$DecryptHlsRequestDTOToJson(
-        DecryptHlsRequestDTO instance) =>
+Map<String, dynamic> _$$DecryptHlsRequestDTOImplToJson(
+        _$DecryptHlsRequestDTOImpl instance) =>
     <String, dynamic>{
       'hash': instance.hash,
     };

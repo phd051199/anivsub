@@ -23,7 +23,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
   Widget buildPage(BuildContext context) {
     return BlocConsumer<HomeBloc, HomeState>(
       listener: (context, state) {
-        if (state is HomeError) onErrorListener(context, state);
+        if (state is HomeError) onErrorListener(context, state.message);
       },
       builder: (context, state) => RefreshIndicator(
         onRefresh: () async {

@@ -399,6 +399,10 @@ abstract class _$$VideoPlayerLoadedImplCopyWith<$Res> {
       EpisodeSkipResponseEntity? episodeSkip,
       bool? skipIntro,
       bool? showSkipIntroText});
+
+  $ChapDataEntityCopyWith<$Res> get currentChap;
+  $ChapDataEntityCopyWith<$Res>? get nextChap;
+  $EpisodeSkipResponseEntityCopyWith<$Res>? get episodeSkip;
 }
 
 /// @nodoc
@@ -447,6 +451,45 @@ class __$$VideoPlayerLoadedImplCopyWithImpl<$Res>
           : showSkipIntroText // ignore: cast_nullable_to_non_nullable
               as bool?,
     ));
+  }
+
+  /// Create a copy of VideoPlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ChapDataEntityCopyWith<$Res> get currentChap {
+    return $ChapDataEntityCopyWith<$Res>(_value.currentChap, (value) {
+      return _then(_value.copyWith(currentChap: value));
+    });
+  }
+
+  /// Create a copy of VideoPlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ChapDataEntityCopyWith<$Res>? get nextChap {
+    if (_value.nextChap == null) {
+      return null;
+    }
+
+    return $ChapDataEntityCopyWith<$Res>(_value.nextChap!, (value) {
+      return _then(_value.copyWith(nextChap: value));
+    });
+  }
+
+  /// Create a copy of VideoPlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $EpisodeSkipResponseEntityCopyWith<$Res>? get episodeSkip {
+    if (_value.episodeSkip == null) {
+      return null;
+    }
+
+    return $EpisodeSkipResponseEntityCopyWith<$Res>(_value.episodeSkip!,
+        (value) {
+      return _then(_value.copyWith(episodeSkip: value));
+    });
   }
 }
 

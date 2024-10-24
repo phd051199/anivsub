@@ -1,14 +1,14 @@
-import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/data/data_exports.dart';
 import 'package:html/parser.dart' as parser;
 
 class PlayDataParser {
-  static PlayDataEntity parse(String html) {
+  static PlayDataDTO parse(String html) {
     final document = parser.parse(html);
 
     final chaps = document
         .querySelectorAll('#list-server .list-episode .episode a')
         .map((element) {
-      return ChapDataEntity(
+      return ChapDataDTO(
         id: element.attributes['data-id']!,
         play: element.attributes['data-play']!,
         hash: element.attributes['data-hash']!,
@@ -34,7 +34,7 @@ class PlayDataParser {
     final poster =
         document.querySelector('.TPostBg img')?.attributes['src'] ?? '';
 
-    return PlayDataEntity(
+    return PlayDataDTO(
       chaps: chaps,
       image: image,
       poster: poster,

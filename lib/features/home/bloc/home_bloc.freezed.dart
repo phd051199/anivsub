@@ -227,6 +227,8 @@ abstract class _$$HomeInitialImplCopyWith<$Res> {
       __$$HomeInitialImplCopyWithImpl<$Res>;
   @useResult
   $Res call({HomeDataCategoriesEntity? homeData});
+
+  $HomeDataCategoriesEntityCopyWith<$Res>? get homeData;
 }
 
 /// @nodoc
@@ -250,6 +252,20 @@ class __$$HomeInitialImplCopyWithImpl<$Res>
           : homeData // ignore: cast_nullable_to_non_nullable
               as HomeDataCategoriesEntity?,
     ));
+  }
+
+  /// Create a copy of HomeState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $HomeDataCategoriesEntityCopyWith<$Res>? get homeData {
+    if (_value.homeData == null) {
+      return null;
+    }
+
+    return $HomeDataCategoriesEntityCopyWith<$Res>(_value.homeData!, (value) {
+      return _then(_value.copyWith(homeData: value));
+    });
   }
 }
 
@@ -498,6 +514,8 @@ abstract class _$$HomeLoadedImplCopyWith<$Res> {
       __$$HomeLoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({HomeDataCategoriesEntity homeData});
+
+  $HomeDataCategoriesEntityCopyWith<$Res> get homeData;
 }
 
 /// @nodoc
@@ -521,6 +539,16 @@ class __$$HomeLoadedImplCopyWithImpl<$Res>
           : homeData // ignore: cast_nullable_to_non_nullable
               as HomeDataCategoriesEntity,
     ));
+  }
+
+  /// Create a copy of HomeState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $HomeDataCategoriesEntityCopyWith<$Res> get homeData {
+    return $HomeDataCategoriesEntityCopyWith<$Res>(_value.homeData, (value) {
+      return _then(_value.copyWith(homeData: value));
+    });
   }
 }
 

@@ -198,6 +198,8 @@ abstract class $GetListEpisodeUseCaseOutputCopyWith<$Res> {
           GetListEpisodeUseCaseOutput>;
   @useResult
   $Res call({ListEpisodeResponseEntity result});
+
+  $ListEpisodeResponseEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc
@@ -225,6 +227,16 @@ class _$GetListEpisodeUseCaseOutputCopyWithImpl<$Res,
               as ListEpisodeResponseEntity,
     ) as $Val);
   }
+
+  /// Create a copy of GetListEpisodeUseCaseOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ListEpisodeResponseEntityCopyWith<$Res> get result {
+    return $ListEpisodeResponseEntityCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -237,6 +249,9 @@ abstract class _$$GetListEpisodeUseCaseOutputImplCopyWith<$Res>
   @override
   @useResult
   $Res call({ListEpisodeResponseEntity result});
+
+  @override
+  $ListEpisodeResponseEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc

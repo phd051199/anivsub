@@ -1,0 +1,47 @@
+{
+    "__ar": 1,
+    "payload": {
+        "commentID": "555229637084827",
+        "idMap": {
+            "100015524532160": {
+                "id": "100015524532160",
+                "name": "Duy Pham Huu",
+                "thumbSrc": "https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/363794887_1574711579722978_6579943952565904557_n.jpg?stp=cp0_dst-jpg_s48x48&_nc_cat=102&ccb=1-7&_nc_sid=6738e8&_nc_ohc=Wo_EBZUxjeMQ7kNvgEqj8O-&_nc_zt=24&_nc_ht=scontent.fsgn22-1.fna&edm=ABfJT5UEAAAA&_nc_gid=A7lUOBrBjPZlCZ0EsvkeqA8&oh=00_AYArqaUxAiZOpmcSWsLtwYptC2oe9wexZgXDLDjrAKf3bQ&oe=67210FA2",
+                "uri": "https://www.facebook.com/phd951?ref=embed_comment",
+                "isVerified": false,
+                "type": "user"
+            },
+            "8147763175307988": {
+                "id": "8147763175307988",
+                "name": "Dandadan Tập 01 - 02 VietSub",
+                "uri": "https://animevietsub.tube/phim/dandadan-a5406/",
+                "type": "ogobject"
+            },
+            "555229637084827": {
+                "id": "555229637084827",
+                "authorID": "100015524532160",
+                "body": {
+                    "text": "1"
+                },
+                "ranges": [],
+                "timestamp": {
+                    "time": 1729832131,
+                    "text": "25 tháng 10 lúc 11:55"
+                },
+                "targetID": "8147763175307988",
+                "ogURL": "https://animevietsub.tube/phim/dandadan-a5406/",
+                "likeCount": 0,
+                "hasLiked": false,
+                "canLike": true,
+                "canEdit": true,
+                "hidden": false,
+                "highlightedWords": [],
+                "reportURI": "/report/dispatch/?content_type=98&cid=555229637084827&rid=100015524532160&comment_id=555229637084827",
+                "spamCount": 0,
+                "canEmbed": true,
+                "type": "comment"
+            }
+        }
+    },
+    "lid": "7429572431483282977"
+}

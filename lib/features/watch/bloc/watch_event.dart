@@ -6,6 +6,7 @@ abstract class WatchEvent extends BaseBlocEvent {}
 class InitWatch extends WatchEvent with _$InitWatch {
   const factory InitWatch({
     required String id,
+    FBCommentPlugin? fbCommentPlugin,
   }) = _InitWatch;
 }
 
@@ -14,6 +15,25 @@ class LoadWatch extends WatchEvent with _$LoadWatch {
   const factory LoadWatch({
     required String id,
   }) = _LoadWatch;
+}
+
+@freezed
+class PostComment extends WatchEvent with _$PostComment {
+  const factory PostComment({
+    required String comment,
+  }) = _PostComment;
+}
+
+@freezed
+class DeleteComment extends WatchEvent with _$DeleteComment {
+  const factory DeleteComment({
+    required String commentId,
+  }) = _DeleteComment;
+}
+
+@freezed
+class GetFbCookies extends WatchEvent with _$GetFbCookies {
+  const factory GetFbCookies() = _GetFbCookies;
 }
 
 @freezed

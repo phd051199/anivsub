@@ -1,18 +1,42 @@
-class CommentEntity {
-  CommentEntity({
-    required this.id,
-    required this.authorName,
-    required this.authorThumbSrc,
-    required this.body,
-    required this.timestamp,
-    required this.likeCount,
-    this.replies = const [],
-  });
-  final String id;
-  final String authorName;
-  final String authorThumbSrc;
-  final String body;
-  final String timestamp;
-  final int likeCount;
-  final List<CommentEntity> replies;
+import 'package:anivsub/data/data_exports.dart';
+import 'package:anivsub/domain/domain_exports.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'comment_entity.freezed.dart';
+
+@freezed
+class CommentEntity extends BaseEntity<CommentDTO> with _$CommentEntity {
+  const factory CommentEntity({
+    required String id,
+    required String authorName,
+    required String authorThumbSrc,
+    required String body,
+    required String timestamp,
+    required int likeCount,
+    @Default([]) List<CommentEntity> replies,
+  }) = _CommentEntity;
+
+  const CommentEntity._();
+
+  @override
+  List<Object?> get props => [
+        id,
+        authorName,
+        authorThumbSrc,
+        body,
+        timestamp,
+        likeCount,
+        replies,
+      ];
+
+  @override
+  CommentDTO toDTO() => CommentDTO(
+        id: id,
+        authorName: authorName,
+        authorThumbSrc: authorThumbSrc,
+        body: body,
+        timestamp: timestamp,
+        likeCount: likeCount,
+        replies: replies.map((e) => e.toDTO()).toList(),
+      );
 }

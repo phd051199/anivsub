@@ -183,6 +183,8 @@ abstract class $SearchAnimeUseCaseOutputCopyWith<$Res> {
       _$SearchAnimeUseCaseOutputCopyWithImpl<$Res, SearchAnimeUseCaseOutput>;
   @useResult
   $Res call({SearchResultEntity result});
+
+  $SearchResultEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc
@@ -210,6 +212,16 @@ class _$SearchAnimeUseCaseOutputCopyWithImpl<$Res,
               as SearchResultEntity,
     ) as $Val);
   }
+
+  /// Create a copy of SearchAnimeUseCaseOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SearchResultEntityCopyWith<$Res> get result {
+    return $SearchResultEntityCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -222,6 +234,9 @@ abstract class _$$SearchAnimeUseCaseOutputImplCopyWith<$Res>
   @override
   @useResult
   $Res call({SearchResultEntity result});
+
+  @override
+  $SearchResultEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc

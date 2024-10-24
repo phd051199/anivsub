@@ -188,6 +188,8 @@ abstract class $GetEpisodeSkipUsecaseOutputCopyWith<$Res> {
           GetEpisodeSkipUsecaseOutput>;
   @useResult
   $Res call({EpisodeSkipResponseEntity result});
+
+  $EpisodeSkipResponseEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc
@@ -215,6 +217,16 @@ class _$GetEpisodeSkipUsecaseOutputCopyWithImpl<$Res,
               as EpisodeSkipResponseEntity,
     ) as $Val);
   }
+
+  /// Create a copy of GetEpisodeSkipUsecaseOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $EpisodeSkipResponseEntityCopyWith<$Res> get result {
+    return $EpisodeSkipResponseEntityCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -227,6 +239,9 @@ abstract class _$$GetEpisodeSkipUsecaseOutputImplCopyWith<$Res>
   @override
   @useResult
   $Res call({EpisodeSkipResponseEntity result});
+
+  @override
+  $EpisodeSkipResponseEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc

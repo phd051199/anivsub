@@ -6,14 +6,15 @@ part of 'chap_data_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ChapDataDTO _$ChapDataDTOFromJson(Map<String, dynamic> json) => ChapDataDTO(
+_$ChapDataDTOImpl _$$ChapDataDTOImplFromJson(Map<String, dynamic> json) =>
+    _$ChapDataDTOImpl(
       id: json['id'] as String,
       play: json['play'] as String,
       hash: json['hash'] as String,
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$ChapDataDTOToJson(ChapDataDTO instance) =>
+Map<String, dynamic> _$$ChapDataDTOImplToJson(_$ChapDataDTOImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'play': instance.play,

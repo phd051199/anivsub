@@ -1,47 +1,227 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
-
-class FBCommentPluginConfig {
-  FBCommentPluginConfig({
-    this.appId = '',
-    required this.href,
-    this.limit = 10,
-    required this.locale,
-    this.orderBy = 'reverse_time',
-    this.pluginUrl = 'https://www.facebook.com/plugins',
-    this.dialogUrl = 'https://www.facebook.com/dialog',
-    required this.app,
-    this.sdk = 'joey',
-    this.version = 'v15.0',
-    this.headersCustom,
-  });
-  final String? appId;
-  final String href;
-  final int limit;
-  final String locale;
-  final String orderBy;
-  final String pluginUrl;
-  final String dialogUrl;
-  final String app;
-  final String sdk;
-  final String version;
-  final Map<String, String>? headersCustom;
-}
+import 'package:anivsub/core/shared/string_extension.dart';
+import 'package:anivsub/core/utils/log_utils.dart';
+import 'package:anivsub/data/data_exports.dart';
+import 'package:anivsub/domain/domain_exports.dart';
+import 'package:get_it/get_it.dart';
 
 class FBCommentPlugin {
-  FBCommentPlugin(this.config) : _dio = Dio();
-  final FBCommentPluginConfig config;
-  final Dio _dio;
-  Map<String, dynamic>? _setupData;
+  FBCommentPlugin({required this.config});
 
-  Future<Map<String, dynamic>> _parseRT(String data) async {
-    final cleanData = data.replaceAll(RegExp(r'^for \(;;\);'), '');
-    return jsonDecode(cleanData);
+  final FbCommentPluginConfig config;
+  final FbApiClient _fbApiClient = GetIt.I.get<FbApiClient>();
+  SetupDataDTO? _setupData;
+  ActorEntity? loginUser;
+
+  Future<SetupDataDTO> setup({
+    bool post = false,
+    bool force = false,
+  }) async {
+    if (!force && _setupData != null && _setupData!.isNotEmpty) {
+      if (post && _setupData!.setupParams.fbDtsg != null) {
+        return _setupData!;
+      }
+      if (!post) {
+        return _setupData!;
+      }
+    }
+
+    final url = '${config.pluginUrl}/feedback.php';
+    final hostname = Uri.parse(config.app).host;
+
+    final queries = FeedbackQueriesEntity(
+      appId: config.appId,
+      channel: Uri.encodeFull(_buildChannelUrl(hostname)),
+      colorScheme: 'light',
+      containerWidth: '973',
+      height: '100',
+      href: config.href,
+      lazy: 'false',
+      locale: config.locale,
+      numposts: '${config.limit}',
+      orderBy: config.orderBy,
+      sdk: config.sdk,
+      version: config.version,
+      width: '',
+    );
+
+    final mainUrl = '$url?${Uri(queryParameters: queries.toJson()).query}';
+    final html = await _fbApiClient.getFeedback(queries);
+
+    final initResponse = _parseInitialComments(html);
+    final setupParams = _extractSetupParams(html);
+
+    loginUser =
+        initResponse.meta?.actors?[initResponse.meta?.userId]?.toEntity();
+
+    final headers = CustomHeadersDTO(
+      xFbLsd: setupParams.lsd ?? '',
+      origin: Uri.parse(config.pluginUrl).origin,
+      referer: mainUrl,
+      custom: config.headersCustom,
+    );
+
+    _setupData = SetupDataDTO(
+      headers: headers,
+      setupParams: setupParams,
+      initResponse: initResponse,
+    );
+
+    return _setupData!;
   }
 
-  Map<String, dynamic> _parseInitialComments(String html) {
+  Future<CommentDataEntity> getComments() async {
+    try {
+      final setup = await this.setup();
+
+      final parsedComments = CommentParser.parse(
+        setup.initResponse.comments ?? const CommentsDTO(),
+      ).map((e) => e.toEntity()).toList();
+
+      return CommentDataEntity(
+        meta: setup.initResponse.meta?.toEntity(),
+        comments: parsedComments,
+      );
+    } catch (e) {
+      return const CommentDataEntity();
+    }
+  }
+
+  Future<String> postComment(String text) async {
+    final setup = await this.setup(post: true);
+
+    if (setup.setupParams.fbDtsg == null &&
+        _setupData!.setupParams.fbDtsg == null) {
+      throw Exception('fb_dtsg not found');
+    }
+
+    final body = PostCommentRequestDTO(
+      appId: setup.setupParams.appId ?? '',
+      text: text,
+      attachedPhotoFbid: '0',
+      attachedStickerFbid: '0',
+      postToFeed: 'false',
+      privacyOption: 'everyone',
+      user: loginUser?.id ?? '',
+      a: setup.setupParams.a,
+      req: setup.setupParams.req,
+      hs: setup.setupParams.hs ?? '',
+      dpr: setup.setupParams.dpr,
+      ccg: setup.setupParams.ccg,
+      rev: setup.setupParams.rev ?? '',
+      s: setup.setupParams.s,
+      hsi: setup.setupParams.hsi ?? '',
+      dyn: setup.setupParams.dyn,
+      csr: setup.setupParams.csr,
+      locale: setup.setupParams.locale,
+      lsd: setup.setupParams.lsd ?? '',
+      jazoest: setup.setupParams.jazoest,
+      sp: setup.setupParams.sp,
+      fbDtsg: setup.setupParams.fbDtsg ?? _setupData!.setupParams.fbDtsg ?? '',
+    ).toJson();
+
+    final headers = setup.headers;
+
+    final data = await _fbApiClient.postComment(
+      setup.setupParams.targetID ?? '',
+      body,
+      headers.xFbLsd,
+      headers.origin,
+      headers.referer,
+    );
+
+    final json = data.parseRT();
+    final parsedResponse = PostCommentResponseDTO.fromJson(json).toEntity();
+
+    return parsedResponse.payload?.commentID ?? '';
+  }
+
+  Future<void> deleteComment(String commentId) async {
+    final setup = await this.setup(post: true);
+
+    if (setup.setupParams.fbDtsg == null &&
+        _setupData!.setupParams.fbDtsg == null) {
+      throw Exception('fb_dtsg not found');
+    }
+
+    final body = PostCommentRequestDTO(
+      appId: setup.setupParams.appId ?? '',
+      a: setup.setupParams.a,
+      req: setup.setupParams.req,
+      hs: setup.setupParams.hs ?? '',
+      dpr: setup.setupParams.dpr,
+      rev: setup.setupParams.rev ?? '',
+      s: setup.setupParams.s,
+      hsi: setup.setupParams.hsi ?? '',
+      dyn: setup.setupParams.dyn,
+      csr: setup.setupParams.csr,
+      locale: setup.setupParams.locale,
+      lsd: setup.setupParams.lsd ?? '',
+      jazoest: setup.setupParams.jazoest,
+      sp: setup.setupParams.sp,
+      fbDtsg: setup.setupParams.fbDtsg ?? _setupData!.setupParams.fbDtsg ?? '',
+      user: loginUser?.id ?? '',
+      ccg: 'EXCELLENT',
+    ).toJson();
+
+    body['comment_id'] = commentId;
+
+    await _fbApiClient.deleteComment(loginUser?.id ?? '', body);
+  }
+
+  Future<PayloadEntity> getMoreComments([String? afterCursor]) async {
+    final setup = await this.setup();
+
+    final body = PostCommentRequestDTO(
+      appId: setup.setupParams.appId ?? '',
+      limit: setup.setupParams.limit,
+      user: loginUser?.id ?? '',
+      a: setup.setupParams.a,
+      req: setup.setupParams.req,
+      hs: setup.setupParams.hs ?? '',
+      dpr: setup.setupParams.dpr,
+      ccg: setup.setupParams.ccg,
+      rev: setup.setupParams.rev ?? '',
+      s: setup.setupParams.s,
+      hsi: setup.setupParams.hsi ?? '',
+      dyn: setup.setupParams.dyn,
+      csr: setup.setupParams.csr,
+      locale: setup.setupParams.locale,
+      lsd: setup.setupParams.lsd ?? '',
+      jazoest: setup.setupParams.jazoest,
+      sp: setup.setupParams.sp,
+      fbDtsg: setup.setupParams.fbDtsg ?? _setupData!.setupParams.fbDtsg ?? '',
+      afterCursor: afterCursor,
+    ).toJson();
+
+    final headers = setup.headers;
+
+    try {
+      final data = await _fbApiClient.getComments(
+        setup.setupParams.targetID ?? '',
+        config.orderBy,
+        body,
+        headers.xFbLsd,
+        headers.origin,
+        headers.referer,
+      );
+
+      final json = data.parseRT();
+
+      final parsedData = GetMoreCommentResponseDTO.fromJson(json);
+
+      return parsedData.payload?.toEntity() ?? const PayloadEntity();
+    } catch (e) {
+      Log.debug(e);
+      return const PayloadEntity();
+    }
+  }
+
+  GetInitialCommentResponseDTO _parseInitialComments(String html) {
     final propsIndex = html.lastIndexOf('"props"');
     final placeholderIndex = html.lastIndexOf('"placeholderElement"');
 
@@ -49,192 +229,65 @@ class FBCommentPlugin {
       throw Exception('Unable to find comments data in HTML response');
     }
 
-    final jsonStr = html.substring(
-      propsIndex + 8,
-      placeholderIndex - 1,
-    );
+    final jsonStr = html.substring(propsIndex + 8, placeholderIndex - 1);
 
     try {
-      final jsonData = jsonDecode(jsonStr);
+      final json = jsonDecode(jsonStr);
 
-      return jsonData;
+      if (json['meta']['actorsOptIn'] is List) {
+        json['meta']['actorsOptIn'] = null;
+      }
+
+      if (json['meta']['actors'] is List) {
+        json['meta']['actors'] = null;
+      }
+
+      return GetInitialCommentResponseDTO.fromJson(json);
     } catch (e) {
       throw Exception('Failed to parse comments data: $e');
     }
   }
 
-  Future<Map<String, dynamic>> setup() async {
-    if (_setupData != null) return _setupData!;
+  String _buildChannelUrl(String hostname) {
+    return 'https://staticxx.facebook.com/x/connect/xd_arbiter/?version=46'
+        '#cb=fc971c42bd70c0003'
+        '&domain=$hostname'
+        '&is_canvas=false'
+        '&origin=https://${config.app}/fbaf0c74572724fba'
+        '&relation=parent.parent';
+  }
 
-    final url = '${config.pluginUrl}/feedback.php';
-    final hostname = Uri.parse(config.app).host;
+  SetupParamsDTO _extractSetupParams(String html) {
+    final params = SetupParamsDTO(
+      targetID: _extractRegexGroup(html, r'"targetID":"(\d+)"'),
+      appId: _extractRegexGroup(html, r'"appID":"(\d+)"'),
+      hs: _extractRegexGroup(html, r'"haste_session"\:"([^"]+)"'),
+      rev: _extractRegexGroup(html, r'"client_revision":(\d+)'),
+      hsi: _extractRegexGroup(html, r'"hsi":"(\d+)"'),
+      locale: _extractRegexGroup(html, r'"locale":"(\w+)"') ?? config.locale,
+      lsd: _extractRegexGroup(html, r'"LSD",\[\],{"token":"([^"]+)"'),
+      fbDtsg:
+          _extractRegexGroup(html, r'"DTSGInitData",\[\],{"token":"([^"]+)"'),
+      limit: config.limit.toString(),
+      a: '1',
+      req: '1',
+      dpr: '1',
+      ccg: 'GOOD',
+      s: '',
+      dyn: '',
+      csr: '',
+      jazoest: '',
+      sp: '1',
+    );
 
-    final queries = {
-      'app_id': config.appId,
-      'channel':
-          'https://staticxx.facebook.com/x/connect/xd_arbiter/?version=46#cb=fc971c42bd70c0003&domain=$hostname&is_canvas=false&origin=https%3A%2F%2F${config.app}%2Ffbaf0c74572724fba&relation=parent.parent',
-      'color_scheme': 'light',
-      'container_width': '973',
-      'height': '100',
-      'href': config.href,
-      'lazy': 'false',
-      'locale': config.locale,
-      'numposts': config.limit.toString(),
-      'order_by': config.orderBy,
-      'sdk': config.sdk,
-      'version': config.version,
-      'width': '',
-    };
-
-    final mainUrl = '$url?${Uri(queryParameters: queries).query}';
-    final response = await _dio.get(mainUrl);
-    final html = response.data;
-
-    final initialComments = _parseInitialComments(html);
-    final targetID = RegExp(r'"targetID":"(\d+)"').firstMatch(html)?.group(1);
-    final appId = RegExp(r'"appID":"(\d+)"').firstMatch(html)?.group(1);
-    final hs = RegExp(r'"haste_session"\:"([^"]+)"').firstMatch(html)?.group(1);
-    final rev = RegExp(r'"client_revision":(\d+)').firstMatch(html)?.group(1);
-    final hsi = RegExp(r'"hsi":"(\d+)"').firstMatch(html)?.group(1);
-    final localeMatch =
-        RegExp(r'"locale":"(\w+)"').firstMatch(html)?.group(1) ?? config.locale;
-    final lsd =
-        RegExp(r'"LSD",\[\],{"token":"([^"]+)"').firstMatch(html)?.group(1);
-    final fbDtsg = RegExp(r'"DTSGInitData",\[\],{"token":"([^"]+)"')
-        .firstMatch(html)
-        ?.group(1);
-
-    if (targetID == null ||
-        appId == null ||
-        hs == null ||
-        rev == null ||
-        hsi == null ||
-        lsd == null) {
+    if (params.hasNullValues()) {
       throw Exception('Failed to parse required parameters from response');
     }
 
-    final headers = {
-      'content-type': 'application/x-www-form-urlencoded',
-      'dpr': '1',
-      'pragma': 'no-cache',
-      'sec-ch-prefers-color-scheme': 'dark',
-      'sec-ch-ua':
-          '"Chromium";v="122", "Not(A:Brand";v="24", "Google Chrome";v="122"',
-      'sec-ch-ua-mobile': '?0',
-      'sec-ch-ua-platform': '"Windows"',
-      'sec-gpc': '1',
-      'viewport-width': '727',
-      'x-asbd-id': '129477',
-      'x-fb-lsd': lsd,
-      'origin': Uri.parse(config.pluginUrl).origin,
-      'Referer': mainUrl,
-      'Referrer-Policy': 'origin-when-cross-origin',
-      ...?config.headersCustom,
-    };
-
-    _setupData = {
-      'headers': headers,
-      'targetID': targetID,
-      'app_id': appId,
-      'limit': config.limit.toString(),
-      '__a': '1',
-      '__req': '1',
-      '__hs': hs,
-      'dpr': '1',
-      '__ccg': 'GOOD',
-      '__rev': rev,
-      '__s': '',
-      '__hsi': hsi,
-      '__dyn': '',
-      '__csr': '',
-      'locale': localeMatch,
-      'lsd': lsd,
-      'jazoest': '',
-      '__sp': '1',
-      'fb_dtsg': fbDtsg,
-      'comments': initialComments,
-    };
-
-    return _setupData!;
+    return params;
   }
 
-  Future<Map<String, dynamic>> getComments([String? afterCursor]) async {
-    final setup = await this.setup();
-
-    final comments = setup['comments'] as Map<String, dynamic>;
-    final meta = comments['meta'] as Map<String, dynamic>;
-    final userID = meta['userID'] as String;
-    afterCursor ??= meta['afterCursor'] as String?;
-
-    final body = {
-      'app_id': setup['app_id'],
-      'limit': setup['limit'],
-      '__user': userID,
-      '__a': setup['__a'],
-      '__req': setup['__req'],
-      '__hs': setup['__hs'],
-      'dpr': setup['dpr'],
-      '__ccg': 'GOOD',
-      '__rev': setup['__rev'],
-      '__s': setup['__s'],
-      '__hsi': setup['__hsi'],
-      '__dyn': setup['__dyn'],
-      '__csr': setup['__csr'],
-      'locale': setup['locale'],
-      'lsd': setup['lsd'],
-      'jazoest': setup['jazoest'],
-      '__sp': setup['__sp'],
-      'fb_dtsg': setup['fb_dtsg'],
-      if (afterCursor != null) 'after_cursor': afterCursor,
-    };
-
-    final response = await _dio.post(
-      '${config.pluginUrl}/comments/async/${setup['targetID']}/pager/${config.orderBy}/',
-      data: body,
-      options: Options(headers: setup['headers']),
-    );
-
-    return _parseRT(response.data);
-  }
-
-  Future<Map<String, dynamic>> postComment(String text) async {
-    final setup = await this.setup();
-
-    if (setup['fb_dtsg'] == null) {
-      throw Exception('fb_dtsg not found');
-    }
-
-    final body = {
-      'app_id': setup['app_id'],
-      'text': text,
-      'attached_photo_fbid': '0',
-      'attached_sticker_fbid': '0',
-      'post_to_feed': 'false',
-      'privacy_option': 'everyone',
-      '__user': '0',
-      '__a': setup['__a'],
-      '__req': setup['__req'],
-      '__hs': setup['__hs'],
-      'dpr': setup['dpr'],
-      '__ccg': 'EXCELLENT',
-      '__rev': setup['__rev'],
-      '__s': setup['__s'],
-      '__hsi': setup['__hsi'],
-      '__dyn': setup['__dyn'],
-      '__csr': setup['__csr'],
-      'locale': setup['locale'],
-      'fb_dtsg': setup['fb_dtsg'],
-      'jazoest': setup['jazoest'],
-      'lsd': setup['lsd'],
-      '__sp': setup['__sp'],
-    };
-
-    final response = await _dio.post(
-      '${config.pluginUrl}/comments/async/createComment/${setup['targetID']}/?av=0',
-      data: body,
-      options: Options(headers: setup['headers']),
-    );
-
-    return _parseRT(response.data);
+  String? _extractRegexGroup(String input, String pattern) {
+    return RegExp(pattern).firstMatch(input)?.group(1);
   }
 }

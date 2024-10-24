@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$InitWatch {
   String get id => throw _privateConstructorUsedError;
+  FBCommentPlugin? get fbCommentPlugin => throw _privateConstructorUsedError;
 
   /// Create a copy of InitWatch
   /// with the given fields replaced by the non-null parameter values.
@@ -30,7 +31,7 @@ abstract class $InitWatchCopyWith<$Res> {
   factory $InitWatchCopyWith(InitWatch value, $Res Function(InitWatch) then) =
       _$InitWatchCopyWithImpl<$Res, InitWatch>;
   @useResult
-  $Res call({String id});
+  $Res call({String id, FBCommentPlugin? fbCommentPlugin});
 }
 
 /// @nodoc
@@ -49,12 +50,17 @@ class _$InitWatchCopyWithImpl<$Res, $Val extends InitWatch>
   @override
   $Res call({
     Object? id = null,
+    Object? fbCommentPlugin = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      fbCommentPlugin: freezed == fbCommentPlugin
+          ? _value.fbCommentPlugin
+          : fbCommentPlugin // ignore: cast_nullable_to_non_nullable
+              as FBCommentPlugin?,
     ) as $Val);
   }
 }
@@ -67,7 +73,7 @@ abstract class _$$InitWatchImplCopyWith<$Res>
       __$$InitWatchImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id});
+  $Res call({String id, FBCommentPlugin? fbCommentPlugin});
 }
 
 /// @nodoc
@@ -84,12 +90,17 @@ class __$$InitWatchImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? fbCommentPlugin = freezed,
   }) {
     return _then(_$InitWatchImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      fbCommentPlugin: freezed == fbCommentPlugin
+          ? _value.fbCommentPlugin
+          : fbCommentPlugin // ignore: cast_nullable_to_non_nullable
+              as FBCommentPlugin?,
     ));
   }
 }
@@ -97,14 +108,16 @@ class __$$InitWatchImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$InitWatchImpl implements _InitWatch {
-  const _$InitWatchImpl({required this.id});
+  const _$InitWatchImpl({required this.id, this.fbCommentPlugin});
 
   @override
   final String id;
+  @override
+  final FBCommentPlugin? fbCommentPlugin;
 
   @override
   String toString() {
-    return 'InitWatch(id: $id)';
+    return 'InitWatch(id: $id, fbCommentPlugin: $fbCommentPlugin)';
   }
 
   @override
@@ -112,11 +125,13 @@ class _$InitWatchImpl implements _InitWatch {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InitWatchImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.fbCommentPlugin, fbCommentPlugin) ||
+                other.fbCommentPlugin == fbCommentPlugin));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, fbCommentPlugin);
 
   /// Create a copy of InitWatch
   /// with the given fields replaced by the non-null parameter values.
@@ -128,10 +143,14 @@ class _$InitWatchImpl implements _InitWatch {
 }
 
 abstract class _InitWatch implements InitWatch {
-  const factory _InitWatch({required final String id}) = _$InitWatchImpl;
+  const factory _InitWatch(
+      {required final String id,
+      final FBCommentPlugin? fbCommentPlugin}) = _$InitWatchImpl;
 
   @override
   String get id;
+  @override
+  FBCommentPlugin? get fbCommentPlugin;
 
   /// Create a copy of InitWatch
   /// with the given fields replaced by the non-null parameter values.
@@ -266,6 +285,332 @@ abstract class _LoadWatch implements LoadWatch {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoadWatchImplCopyWith<_$LoadWatchImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$PostComment {
+  String get comment => throw _privateConstructorUsedError;
+
+  /// Create a copy of PostComment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $PostCommentCopyWith<PostComment> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PostCommentCopyWith<$Res> {
+  factory $PostCommentCopyWith(
+          PostComment value, $Res Function(PostComment) then) =
+      _$PostCommentCopyWithImpl<$Res, PostComment>;
+  @useResult
+  $Res call({String comment});
+}
+
+/// @nodoc
+class _$PostCommentCopyWithImpl<$Res, $Val extends PostComment>
+    implements $PostCommentCopyWith<$Res> {
+  _$PostCommentCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of PostComment
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? comment = null,
+  }) {
+    return _then(_value.copyWith(
+      comment: null == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$PostCommentImplCopyWith<$Res>
+    implements $PostCommentCopyWith<$Res> {
+  factory _$$PostCommentImplCopyWith(
+          _$PostCommentImpl value, $Res Function(_$PostCommentImpl) then) =
+      __$$PostCommentImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String comment});
+}
+
+/// @nodoc
+class __$$PostCommentImplCopyWithImpl<$Res>
+    extends _$PostCommentCopyWithImpl<$Res, _$PostCommentImpl>
+    implements _$$PostCommentImplCopyWith<$Res> {
+  __$$PostCommentImplCopyWithImpl(
+      _$PostCommentImpl _value, $Res Function(_$PostCommentImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of PostComment
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? comment = null,
+  }) {
+    return _then(_$PostCommentImpl(
+      comment: null == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$PostCommentImpl implements _PostComment {
+  const _$PostCommentImpl({required this.comment});
+
+  @override
+  final String comment;
+
+  @override
+  String toString() {
+    return 'PostComment(comment: $comment)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PostCommentImpl &&
+            (identical(other.comment, comment) || other.comment == comment));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, comment);
+
+  /// Create a copy of PostComment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PostCommentImplCopyWith<_$PostCommentImpl> get copyWith =>
+      __$$PostCommentImplCopyWithImpl<_$PostCommentImpl>(this, _$identity);
+}
+
+abstract class _PostComment implements PostComment {
+  const factory _PostComment({required final String comment}) =
+      _$PostCommentImpl;
+
+  @override
+  String get comment;
+
+  /// Create a copy of PostComment
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PostCommentImplCopyWith<_$PostCommentImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$DeleteComment {
+  String get commentId => throw _privateConstructorUsedError;
+
+  /// Create a copy of DeleteComment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $DeleteCommentCopyWith<DeleteComment> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DeleteCommentCopyWith<$Res> {
+  factory $DeleteCommentCopyWith(
+          DeleteComment value, $Res Function(DeleteComment) then) =
+      _$DeleteCommentCopyWithImpl<$Res, DeleteComment>;
+  @useResult
+  $Res call({String commentId});
+}
+
+/// @nodoc
+class _$DeleteCommentCopyWithImpl<$Res, $Val extends DeleteComment>
+    implements $DeleteCommentCopyWith<$Res> {
+  _$DeleteCommentCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of DeleteComment
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? commentId = null,
+  }) {
+    return _then(_value.copyWith(
+      commentId: null == commentId
+          ? _value.commentId
+          : commentId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$DeleteCommentImplCopyWith<$Res>
+    implements $DeleteCommentCopyWith<$Res> {
+  factory _$$DeleteCommentImplCopyWith(
+          _$DeleteCommentImpl value, $Res Function(_$DeleteCommentImpl) then) =
+      __$$DeleteCommentImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String commentId});
+}
+
+/// @nodoc
+class __$$DeleteCommentImplCopyWithImpl<$Res>
+    extends _$DeleteCommentCopyWithImpl<$Res, _$DeleteCommentImpl>
+    implements _$$DeleteCommentImplCopyWith<$Res> {
+  __$$DeleteCommentImplCopyWithImpl(
+      _$DeleteCommentImpl _value, $Res Function(_$DeleteCommentImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of DeleteComment
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? commentId = null,
+  }) {
+    return _then(_$DeleteCommentImpl(
+      commentId: null == commentId
+          ? _value.commentId
+          : commentId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$DeleteCommentImpl implements _DeleteComment {
+  const _$DeleteCommentImpl({required this.commentId});
+
+  @override
+  final String commentId;
+
+  @override
+  String toString() {
+    return 'DeleteComment(commentId: $commentId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DeleteCommentImpl &&
+            (identical(other.commentId, commentId) ||
+                other.commentId == commentId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, commentId);
+
+  /// Create a copy of DeleteComment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DeleteCommentImplCopyWith<_$DeleteCommentImpl> get copyWith =>
+      __$$DeleteCommentImplCopyWithImpl<_$DeleteCommentImpl>(this, _$identity);
+}
+
+abstract class _DeleteComment implements DeleteComment {
+  const factory _DeleteComment({required final String commentId}) =
+      _$DeleteCommentImpl;
+
+  @override
+  String get commentId;
+
+  /// Create a copy of DeleteComment
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DeleteCommentImplCopyWith<_$DeleteCommentImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$GetFbCookies {}
+
+/// @nodoc
+abstract class $GetFbCookiesCopyWith<$Res> {
+  factory $GetFbCookiesCopyWith(
+          GetFbCookies value, $Res Function(GetFbCookies) then) =
+      _$GetFbCookiesCopyWithImpl<$Res, GetFbCookies>;
+}
+
+/// @nodoc
+class _$GetFbCookiesCopyWithImpl<$Res, $Val extends GetFbCookies>
+    implements $GetFbCookiesCopyWith<$Res> {
+  _$GetFbCookiesCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of GetFbCookies
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$GetFbCookiesImplCopyWith<$Res> {
+  factory _$$GetFbCookiesImplCopyWith(
+          _$GetFbCookiesImpl value, $Res Function(_$GetFbCookiesImpl) then) =
+      __$$GetFbCookiesImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GetFbCookiesImplCopyWithImpl<$Res>
+    extends _$GetFbCookiesCopyWithImpl<$Res, _$GetFbCookiesImpl>
+    implements _$$GetFbCookiesImplCopyWith<$Res> {
+  __$$GetFbCookiesImplCopyWithImpl(
+      _$GetFbCookiesImpl _value, $Res Function(_$GetFbCookiesImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of GetFbCookies
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$GetFbCookiesImpl implements _GetFbCookies {
+  const _$GetFbCookiesImpl();
+
+  @override
+  String toString() {
+    return 'GetFbCookies()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$GetFbCookiesImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+abstract class _GetFbCookies implements GetFbCookies {
+  const factory _GetFbCookies() = _$GetFbCookiesImpl;
 }
 
 /// @nodoc
@@ -416,6 +761,8 @@ abstract class $ChangeEpisodeCopyWith<$Res> {
       _$ChangeEpisodeCopyWithImpl<$Res, ChangeEpisode>;
   @useResult
   $Res call({AnimeDetailEntity animeDetail});
+
+  $AnimeDetailEntityCopyWith<$Res> get animeDetail;
 }
 
 /// @nodoc
@@ -442,6 +789,16 @@ class _$ChangeEpisodeCopyWithImpl<$Res, $Val extends ChangeEpisode>
               as AnimeDetailEntity,
     ) as $Val);
   }
+
+  /// Create a copy of ChangeEpisode
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AnimeDetailEntityCopyWith<$Res> get animeDetail {
+    return $AnimeDetailEntityCopyWith<$Res>(_value.animeDetail, (value) {
+      return _then(_value.copyWith(animeDetail: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -453,6 +810,9 @@ abstract class _$$ChangeEpisodeImplCopyWith<$Res>
   @override
   @useResult
   $Res call({AnimeDetailEntity animeDetail});
+
+  @override
+  $AnimeDetailEntityCopyWith<$Res> get animeDetail;
 }
 
 /// @nodoc
@@ -605,7 +965,10 @@ mixin _$WatchState {
             List<ChapDataEntity>? chaps,
             AnimeDetailEntity detail,
             List<TabViewItem?>? tabViewItems,
-            List<CommentEntity>? comments)
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)
         loaded,
     required TResult Function(String message) error,
   }) =>
@@ -614,8 +977,14 @@ mixin _$WatchState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
+    TResult? Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)?
         loaded,
     TResult? Function(String message)? error,
   }) =>
@@ -624,8 +993,14 @@ mixin _$WatchState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
+    TResult Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -726,7 +1101,10 @@ class _$WatchInitialImpl implements WatchInitial {
             List<ChapDataEntity>? chaps,
             AnimeDetailEntity detail,
             List<TabViewItem?>? tabViewItems,
-            List<CommentEntity>? comments)
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -738,8 +1116,14 @@ class _$WatchInitialImpl implements WatchInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
+    TResult? Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -751,8 +1135,14 @@ class _$WatchInitialImpl implements WatchInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
+    TResult Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -852,7 +1242,10 @@ class _$WatchLoadingImpl implements WatchLoading {
             List<ChapDataEntity>? chaps,
             AnimeDetailEntity detail,
             List<TabViewItem?>? tabViewItems,
-            List<CommentEntity>? comments)
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -864,8 +1257,14 @@ class _$WatchLoadingImpl implements WatchLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
+    TResult? Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -877,8 +1276,14 @@ class _$WatchLoadingImpl implements WatchLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
+    TResult Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -941,7 +1346,13 @@ abstract class _$$WatchLoadedImplCopyWith<$Res> {
       {List<ChapDataEntity>? chaps,
       AnimeDetailEntity detail,
       List<TabViewItem?>? tabViewItems,
-      List<CommentEntity>? comments});
+      List<CommentEntity>? comments,
+      int? totalCommentCount,
+      ActorEntity? fbUser,
+      bool isCmtLoading});
+
+  $AnimeDetailEntityCopyWith<$Res> get detail;
+  $ActorEntityCopyWith<$Res>? get fbUser;
 }
 
 /// @nodoc
@@ -961,6 +1372,9 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
     Object? detail = null,
     Object? tabViewItems = freezed,
     Object? comments = freezed,
+    Object? totalCommentCount = freezed,
+    Object? fbUser = freezed,
+    Object? isCmtLoading = null,
   }) {
     return _then(_$WatchLoadedImpl(
       chaps: freezed == chaps
@@ -979,7 +1393,43 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
           ? _value._comments
           : comments // ignore: cast_nullable_to_non_nullable
               as List<CommentEntity>?,
+      totalCommentCount: freezed == totalCommentCount
+          ? _value.totalCommentCount
+          : totalCommentCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      fbUser: freezed == fbUser
+          ? _value.fbUser
+          : fbUser // ignore: cast_nullable_to_non_nullable
+              as ActorEntity?,
+      isCmtLoading: null == isCmtLoading
+          ? _value.isCmtLoading
+          : isCmtLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
+  }
+
+  /// Create a copy of WatchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AnimeDetailEntityCopyWith<$Res> get detail {
+    return $AnimeDetailEntityCopyWith<$Res>(_value.detail, (value) {
+      return _then(_value.copyWith(detail: value));
+    });
+  }
+
+  /// Create a copy of WatchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ActorEntityCopyWith<$Res>? get fbUser {
+    if (_value.fbUser == null) {
+      return null;
+    }
+
+    return $ActorEntityCopyWith<$Res>(_value.fbUser!, (value) {
+      return _then(_value.copyWith(fbUser: value));
+    });
   }
 }
 
@@ -990,7 +1440,10 @@ class _$WatchLoadedImpl implements WatchLoaded {
       {final List<ChapDataEntity>? chaps,
       required this.detail,
       final List<TabViewItem?>? tabViewItems,
-      final List<CommentEntity>? comments})
+      final List<CommentEntity>? comments,
+      this.totalCommentCount,
+      this.fbUser,
+      this.isCmtLoading = false})
       : _chaps = chaps,
         _tabViewItems = tabViewItems,
         _comments = comments;
@@ -1028,8 +1481,16 @@ class _$WatchLoadedImpl implements WatchLoaded {
   }
 
   @override
+  final int? totalCommentCount;
+  @override
+  final ActorEntity? fbUser;
+  @override
+  @JsonKey()
+  final bool isCmtLoading;
+
+  @override
   String toString() {
-    return 'WatchState.loaded(chaps: $chaps, detail: $detail, tabViewItems: $tabViewItems, comments: $comments)';
+    return 'WatchState.loaded(chaps: $chaps, detail: $detail, tabViewItems: $tabViewItems, comments: $comments, totalCommentCount: $totalCommentCount, fbUser: $fbUser, isCmtLoading: $isCmtLoading)';
   }
 
   @override
@@ -1041,7 +1502,12 @@ class _$WatchLoadedImpl implements WatchLoaded {
             (identical(other.detail, detail) || other.detail == detail) &&
             const DeepCollectionEquality()
                 .equals(other._tabViewItems, _tabViewItems) &&
-            const DeepCollectionEquality().equals(other._comments, _comments));
+            const DeepCollectionEquality().equals(other._comments, _comments) &&
+            (identical(other.totalCommentCount, totalCommentCount) ||
+                other.totalCommentCount == totalCommentCount) &&
+            (identical(other.fbUser, fbUser) || other.fbUser == fbUser) &&
+            (identical(other.isCmtLoading, isCmtLoading) ||
+                other.isCmtLoading == isCmtLoading));
   }
 
   @override
@@ -1050,7 +1516,10 @@ class _$WatchLoadedImpl implements WatchLoaded {
       const DeepCollectionEquality().hash(_chaps),
       detail,
       const DeepCollectionEquality().hash(_tabViewItems),
-      const DeepCollectionEquality().hash(_comments));
+      const DeepCollectionEquality().hash(_comments),
+      totalCommentCount,
+      fbUser,
+      isCmtLoading);
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -1069,11 +1538,15 @@ class _$WatchLoadedImpl implements WatchLoaded {
             List<ChapDataEntity>? chaps,
             AnimeDetailEntity detail,
             List<TabViewItem?>? tabViewItems,
-            List<CommentEntity>? comments)
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)
         loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(chaps, detail, tabViewItems, comments);
+    return loaded(chaps, detail, tabViewItems, comments, totalCommentCount,
+        fbUser, isCmtLoading);
   }
 
   @override
@@ -1081,12 +1554,19 @@ class _$WatchLoadedImpl implements WatchLoaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
+    TResult? Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)?
         loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(chaps, detail, tabViewItems, comments);
+    return loaded?.call(chaps, detail, tabViewItems, comments,
+        totalCommentCount, fbUser, isCmtLoading);
   }
 
   @override
@@ -1094,14 +1574,21 @@ class _$WatchLoadedImpl implements WatchLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
+    TResult Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(chaps, detail, tabViewItems, comments);
+      return loaded(chaps, detail, tabViewItems, comments, totalCommentCount,
+          fbUser, isCmtLoading);
     }
     return orElse();
   }
@@ -1149,12 +1636,18 @@ abstract class WatchLoaded implements WatchState {
       {final List<ChapDataEntity>? chaps,
       required final AnimeDetailEntity detail,
       final List<TabViewItem?>? tabViewItems,
-      final List<CommentEntity>? comments}) = _$WatchLoadedImpl;
+      final List<CommentEntity>? comments,
+      final int? totalCommentCount,
+      final ActorEntity? fbUser,
+      final bool isCmtLoading}) = _$WatchLoadedImpl;
 
   List<ChapDataEntity>? get chaps;
   AnimeDetailEntity get detail;
   List<TabViewItem?>? get tabViewItems;
   List<CommentEntity>? get comments;
+  int? get totalCommentCount;
+  ActorEntity? get fbUser;
+  bool get isCmtLoading;
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -1237,7 +1730,10 @@ class _$WatchErrorImpl implements WatchError {
             List<ChapDataEntity>? chaps,
             AnimeDetailEntity detail,
             List<TabViewItem?>? tabViewItems,
-            List<CommentEntity>? comments)
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -1249,8 +1745,14 @@ class _$WatchErrorImpl implements WatchError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
+    TResult? Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -1262,8 +1764,14 @@ class _$WatchErrorImpl implements WatchError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<ChapDataEntity>? chaps, AnimeDetailEntity detail,
-            List<TabViewItem?>? tabViewItems, List<CommentEntity>? comments)?
+    TResult Function(
+            List<ChapDataEntity>? chaps,
+            AnimeDetailEntity detail,
+            List<TabViewItem?>? tabViewItems,
+            List<CommentEntity>? comments,
+            int? totalCommentCount,
+            ActorEntity? fbUser,
+            bool isCmtLoading)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),

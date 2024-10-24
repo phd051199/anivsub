@@ -6,7 +6,8 @@ part of 'comment_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CommentDTO _$CommentDTOFromJson(Map<String, dynamic> json) => CommentDTO(
+_$CommentDTOImpl _$$CommentDTOImplFromJson(Map<String, dynamic> json) =>
+    _$CommentDTOImpl(
       id: json['id'] as String,
       authorName: json['authorName'] as String,
       authorThumbSrc: json['authorThumbSrc'] as String,
@@ -14,11 +15,12 @@ CommentDTO _$CommentDTOFromJson(Map<String, dynamic> json) => CommentDTO(
       timestamp: json['timestamp'] as String,
       likeCount: (json['likeCount'] as num).toInt(),
       replies: (json['replies'] as List<dynamic>?)
-          ?.map((e) => CommentDTO.fromJson(e as Map<String, dynamic>))
-          .toList(),
+              ?.map((e) => CommentDTO.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
-Map<String, dynamic> _$CommentDTOToJson(CommentDTO instance) =>
+Map<String, dynamic> _$$CommentDTOImplToJson(_$CommentDTOImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'authorName': instance.authorName,
@@ -26,5 +28,5 @@ Map<String, dynamic> _$CommentDTOToJson(CommentDTO instance) =>
       'body': instance.body,
       'timestamp': instance.timestamp,
       'likeCount': instance.likeCount,
-      'replies': instance.replies?.map((e) => e.toJson()).toList(),
+      'replies': instance.replies,
     };

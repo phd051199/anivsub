@@ -8,7 +8,6 @@ import 'package:anivsub/features/watch/widget/empty_player.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:uuid/uuid.dart';
 
 class WatchSkeleton extends StatelessWidget {
   const WatchSkeleton({super.key, this.tag});
@@ -21,7 +20,7 @@ class WatchSkeleton extends StatelessWidget {
     return ListView(
       children: [
         Hero(
-          tag: tag ?? const Uuid().v4(),
+          tag: tag ?? UniqueKey().toString(),
           child: const AspectRatio(
             aspectRatio: 16 / 9,
             child: EmptyPlayer(child: LoadingWidget(color: Colors.white)),

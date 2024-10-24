@@ -1,37 +1,31 @@
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class SearchResultEntity extends BaseEntity<SearchResultDTO> {
-  const SearchResultEntity({
-    required this.items,
-    this.curPage,
-    this.maxPage,
-  });
-  final List<AnimeDataEntity> items;
-  final int? curPage;
-  final int? maxPage;
+part 'search_result_entity.freezed.dart';
 
-  @override
-  List<Object?> get props => [items, curPage, maxPage];
-
-  SearchResultEntity copyWith({
-    List<AnimeDataEntity>? items,
+@freezed
+class SearchResultEntity extends BaseEntity<SearchResultDTO>
+    with _$SearchResultEntity {
+  const factory SearchResultEntity({
+    required List<AnimeDataEntity> items,
     int? curPage,
     int? maxPage,
-  }) {
-    return SearchResultEntity(
-      items: items ?? this.items,
-      curPage: curPage ?? this.curPage,
-      maxPage: maxPage ?? this.maxPage,
-    );
-  }
+  }) = _SearchResultEntity;
+
+  const SearchResultEntity._();
 
   @override
-  SearchResultDTO toDTO() {
-    return SearchResultDTO(
-      items: items.map((dto) => dto.toDTO()).toList(),
-      curPage: curPage,
-      maxPage: maxPage,
-    );
-  }
+  List<Object?> get props => [
+        items,
+        curPage,
+        maxPage,
+      ];
+
+  @override
+  SearchResultDTO toDTO() => SearchResultDTO(
+        items: items.map((dto) => dto.toDTO()).toList(),
+        curPage: curPage,
+        maxPage: maxPage,
+      );
 }

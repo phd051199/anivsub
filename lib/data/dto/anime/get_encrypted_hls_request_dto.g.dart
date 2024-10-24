@@ -6,17 +6,17 @@ part of 'get_encrypted_hls_request_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetEncryptedHlsRequestDTO _$GetEncryptedHlsRequestDTOFromJson(
+_$GetEncryptedHlsRequestDTOImpl _$$GetEncryptedHlsRequestDTOImplFromJson(
         Map<String, dynamic> json) =>
-    GetEncryptedHlsRequestDTO(
+    _$GetEncryptedHlsRequestDTOImpl(
       id: json['id'] as String,
       play: json['play'] as String,
       link: json['link'] as String,
       backuplinks: json['backuplinks'] as String,
     );
 
-Map<String, dynamic> _$GetEncryptedHlsRequestDTOToJson(
-        GetEncryptedHlsRequestDTO instance) =>
+Map<String, dynamic> _$$GetEncryptedHlsRequestDTOImplToJson(
+        _$GetEncryptedHlsRequestDTOImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'play': instance.play,

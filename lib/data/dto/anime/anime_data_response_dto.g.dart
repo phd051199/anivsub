@@ -6,9 +6,9 @@ part of 'anime_data_response_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AnimeDataResponseDTO _$AnimeDataResponseDTOFromJson(
+_$AnimeDataResponseDTOImpl _$$AnimeDataResponseDTOImplFromJson(
         Map<String, dynamic> json) =>
-    AnimeDataResponseDTO(
+    _$AnimeDataResponseDTOImpl(
       path: json['path'] as String,
       image: json['image'] as String,
       name: json['name'] as String,
@@ -26,8 +26,8 @@ AnimeDataResponseDTO _$AnimeDataResponseDTOFromJson(
       timeRelease: (json['timeRelease'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$AnimeDataResponseDTOToJson(
-        AnimeDataResponseDTO instance) =>
+Map<String, dynamic> _$$AnimeDataResponseDTOImplToJson(
+        _$AnimeDataResponseDTOImpl instance) =>
     <String, dynamic>{
       'path': instance.path,
       'image': instance.image,

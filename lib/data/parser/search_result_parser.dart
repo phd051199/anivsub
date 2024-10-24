@@ -1,15 +1,14 @@
-import 'package:anivsub/data/parser/common_parser.dart';
-import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/data/data_exports.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
 
 class SearchResultParser {
-  static SearchResultEntity parse(String html) {
+  static SearchResultDTO parse(String html) {
     final Document document = parser.parse(html);
     final int now = DateTime.now().millisecondsSinceEpoch;
 
     final List<Element> movieList = document.querySelectorAll('.MovieList');
-    List<AnimeDataEntity> items = [];
+    List<AnimeDataResponseDTO> items = [];
 
     if (movieList.isNotEmpty) {
       items = CommonParser.getInfoTPost(
@@ -38,7 +37,7 @@ class SearchResultParser {
         ) ??
         1;
 
-    return SearchResultEntity(
+    return SearchResultDTO(
       items: items,
       curPage: curPage,
       maxPage: maxPage,

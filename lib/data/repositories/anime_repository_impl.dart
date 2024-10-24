@@ -17,7 +17,8 @@ class AnimeRepositoryImpl implements AnimeRepository {
   @override
   Future<HomeDataCategoriesEntity> getHomeData() async {
     final html = await _animeRemoteDataSource.getHomeData();
-    return HomeDataParser.parse(html);
+    final data = HomeDataParser.parse(html);
+    return data.toEntity();
   }
 
   @override
@@ -29,7 +30,8 @@ class AnimeRepositoryImpl implements AnimeRepository {
       id,
       cancelToken: cancelToken,
     );
-    return PlayDataParser.parse(html);
+    final data = PlayDataParser.parse(html);
+    return data.toEntity();
   }
 
   @override
@@ -41,7 +43,8 @@ class AnimeRepositoryImpl implements AnimeRepository {
       id,
       cancelToken: cancelToken,
     );
-    return AnimeDetailParser.parse(html);
+    final data = AnimeDetailParser.parse(html);
+    return data.toEntity();
   }
 
   @override
@@ -101,7 +104,8 @@ class AnimeRepositoryImpl implements AnimeRepository {
       keyword: keyword,
       page: page ?? 1,
     );
-    return SearchResultParser.parse(html);
+    final data = SearchResultParser.parse(html);
+    return data.toEntity();
   }
 
   @override
@@ -109,6 +113,7 @@ class AnimeRepositoryImpl implements AnimeRepository {
     final html = await _animeRemoteDataSource.preSearch(
       keyword: keyword,
     );
-    return PreSearchParser.parse(html);
+    final data = PreSearchParser.parse(html);
+    return data.map((e) => e.toEntity()).toList();
   }
 }

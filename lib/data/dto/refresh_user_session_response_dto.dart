@@ -1,34 +1,35 @@
-import 'package:anivsub/data/dto/base_dto.dart';
-import 'package:anivsub/domain/entities/refresh_user_session_response_entity.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:anivsub/data/data_exports.dart';
+import 'package:anivsub/domain/domain_exports.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'refresh_user_session_response_dto.freezed.dart';
 part 'refresh_user_session_response_dto.g.dart';
 
-@JsonSerializable(
-  createToJson: true,
-  explicitToJson: true,
-)
+@freezed
 class RefreshUserSessionResponseDTO
-    extends BaseDTO<RefreshUserSessionResponseEntity> {
-  const RefreshUserSessionResponseDTO({
-    required this.accessToken,
-    required this.refreshToken,
-  });
+    extends BaseDTO<RefreshUserSessionResponseEntity>
+    with _$RefreshUserSessionResponseDTO {
+  const factory RefreshUserSessionResponseDTO({
+    required String? accessToken,
+    required String? refreshToken,
+  }) = _RefreshUserSessionResponseDTO;
+
+  const RefreshUserSessionResponseDTO._();
 
   factory RefreshUserSessionResponseDTO.fromJson(Map<String, dynamic> json) =>
       _$RefreshUserSessionResponseDTOFromJson(json);
-  final String? accessToken;
-  final String? refreshToken;
 
   @override
-  RefreshUserSessionResponseEntity toEntity() =>
-      RefreshUserSessionResponseEntity(
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-      );
+  List<Object?> get props => [
+        accessToken,
+        refreshToken,
+      ];
 
   @override
-  List<Object?> get props => [accessToken, refreshToken];
-
-  Map<String, dynamic> toJson() => _$RefreshUserSessionResponseDTOToJson(this);
+  RefreshUserSessionResponseEntity toEntity() {
+    return RefreshUserSessionResponseEntity(
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    );
+  }
 }

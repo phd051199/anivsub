@@ -6,9 +6,9 @@ part of 'user_session_response_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserSessionResponseDTO _$UserSessionResponseDTOFromJson(
+_$UserSessionResponseDTOImpl _$$UserSessionResponseDTOImplFromJson(
         Map<String, dynamic> json) =>
-    UserSessionResponseDTO(
+    _$UserSessionResponseDTOImpl(
       accessToken: json['accessToken'] as String?,
       refreshToken: json['refreshToken'] as String?,
       id: (json['id'] as num?)?.toInt(),
@@ -20,8 +20,8 @@ UserSessionResponseDTO _$UserSessionResponseDTOFromJson(
       image: json['image'] as String?,
     );
 
-Map<String, dynamic> _$UserSessionResponseDTOToJson(
-        UserSessionResponseDTO instance) =>
+Map<String, dynamic> _$$UserSessionResponseDTOImplToJson(
+        _$UserSessionResponseDTOImpl instance) =>
     <String, dynamic>{
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,

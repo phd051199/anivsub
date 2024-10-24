@@ -1,21 +1,28 @@
 import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/data/dto/anime/list_episode_response_dto.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class ListEpisodeResponseEntity extends BaseEntity<ListEpisodeResponseDTO> {
-  const ListEpisodeResponseEntity({
-    required this.id,
-    required this.list,
-  });
+part 'list_episode_response_entity.freezed.dart';
 
-  final String id;
-  final List<Episode> list;
+@freezed
+class ListEpisodeResponseEntity extends BaseEntity<ListEpisodeResponseDTO>
+    with _$ListEpisodeResponseEntity {
+  const factory ListEpisodeResponseEntity({
+    required String id,
+    required List<Episode> list,
+  }) = _ListEpisodeResponseEntity;
+
+  const ListEpisodeResponseEntity._();
 
   @override
-  List<Object?> get props => [id, list];
+  List<Object?> get props => [
+        id,
+        list,
+      ];
 
   @override
-  ListEpisodeResponseDTO toDTO() {
-    return ListEpisodeResponseDTO(id: id, list: list);
-  }
+  ListEpisodeResponseDTO toDTO() => ListEpisodeResponseDTO(
+        id: id,
+        list: list,
+      );
 }

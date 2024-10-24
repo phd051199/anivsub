@@ -6,8 +6,8 @@ part of 'anime_detail_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AnimeDetailDTO _$AnimeDetailDTOFromJson(Map<String, dynamic> json) =>
-    AnimeDetailDTO(
+_$AnimeDetailDTOImpl _$$AnimeDetailDTOImplFromJson(Map<String, dynamic> json) =>
+    _$AnimeDetailDTOImpl(
       name: json['name'] as String,
       othername: json['othername'] as String,
       image: json['image'] as String,
@@ -46,7 +46,8 @@ AnimeDetailDTO _$AnimeDetailDTOFromJson(Map<String, dynamic> json) =>
       schedule: json['schedule'] as String?,
     );
 
-Map<String, dynamic> _$AnimeDetailDTOToJson(AnimeDetailDTO instance) =>
+Map<String, dynamic> _$$AnimeDetailDTOImplToJson(
+        _$AnimeDetailDTOImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'othername': instance.othername,
@@ -59,17 +60,17 @@ Map<String, dynamic> _$AnimeDetailDTOToJson(AnimeDetailDTO instance) =>
       'duration': instance.duration,
       'yearOf': instance.yearOf,
       'views': instance.views,
-      'season': instance.season.map((e) => e.toJson()).toList(),
-      'genre': instance.genre.map((e) => e.toJson()).toList(),
+      'season': instance.season,
+      'genre': instance.genre,
       'quality': instance.quality,
       'status': instance.status,
-      'authors': instance.authors.map((e) => e.toJson()).toList(),
-      'countries': instance.countries.map((e) => e.toJson()).toList(),
+      'authors': instance.authors,
+      'countries': instance.countries,
       'follows': instance.follows,
       'language': instance.language,
       'studio': instance.studio,
-      'seasonOf': instance.seasonOf?.toJson(),
+      'seasonOf': instance.seasonOf,
       'trailer': instance.trailer,
-      'toPut': instance.toPut.map((e) => e.toJson()).toList(),
+      'toPut': instance.toPut,
       'schedule': instance.schedule,
     };

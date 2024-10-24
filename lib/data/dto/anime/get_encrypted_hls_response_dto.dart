@@ -2,30 +2,31 @@ import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'get_encrypted_hls_response_dto.freezed.dart';
 part 'get_encrypted_hls_response_dto.g.dart';
 
-@JsonSerializable(
-  createToJson: true,
-  explicitToJson: true,
-)
-class GetEncryptedHlsResponseDTO
-    extends BaseDTO<GetEncryptedHlsResponseEntity> {
-  const GetEncryptedHlsResponseDTO({
-    required this.success,
-    required this.title,
-    required this.link,
-    required this.playTech,
-  });
+@freezed
+class GetEncryptedHlsResponseDTO extends BaseDTO<GetEncryptedHlsResponseEntity>
+    with _$GetEncryptedHlsResponseDTO {
+  const factory GetEncryptedHlsResponseDTO({
+    required int success,
+    required String title,
+    required List<Link> link,
+    required String playTech,
+  }) = _GetEncryptedHlsResponseDTO;
+
+  const GetEncryptedHlsResponseDTO._();
 
   factory GetEncryptedHlsResponseDTO.fromJson(Map<String, dynamic> json) =>
       _$GetEncryptedHlsResponseDTOFromJson(json);
-  final int success;
-  final String title;
-  final List<Link> link;
-  final String playTech;
 
   @override
-  List<Object?> get props => [success, title, link, playTech];
+  List<Object?> get props => [
+        success,
+        title,
+        link,
+        playTech,
+      ];
 
   @override
   GetEncryptedHlsResponseEntity toEntity() {
@@ -36,6 +37,4 @@ class GetEncryptedHlsResponseDTO
       playTech: playTech,
     );
   }
-
-  Map<String, dynamic> toJson() => _$GetEncryptedHlsResponseDTOToJson(this);
 }

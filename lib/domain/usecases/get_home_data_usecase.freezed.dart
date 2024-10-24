@@ -104,6 +104,8 @@ abstract class $GetHomeDataUseCaseOutputCopyWith<$Res> {
       _$GetHomeDataUseCaseOutputCopyWithImpl<$Res, GetHomeDataUseCaseOutput>;
   @useResult
   $Res call({HomeDataCategoriesEntity result});
+
+  $HomeDataCategoriesEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc
@@ -131,6 +133,16 @@ class _$GetHomeDataUseCaseOutputCopyWithImpl<$Res,
               as HomeDataCategoriesEntity,
     ) as $Val);
   }
+
+  /// Create a copy of GetHomeDataUseCaseOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $HomeDataCategoriesEntityCopyWith<$Res> get result {
+    return $HomeDataCategoriesEntityCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -143,6 +155,9 @@ abstract class _$$GetHomeDataUseCaseOutputImplCopyWith<$Res>
   @override
   @useResult
   $Res call({HomeDataCategoriesEntity result});
+
+  @override
+  $HomeDataCategoriesEntityCopyWith<$Res> get result;
 }
 
 /// @nodoc

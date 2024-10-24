@@ -1,20 +1,23 @@
 import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/entities/app_settings_entity.dart';
+import 'package:anivsub/domain/domain_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'app_settings_dto.freezed.dart';
 part 'app_settings_dto.g.dart';
 
-@JsonSerializable(
-  createToJson: true,
-  explicitToJson: true,
-)
-class AppSettingsDTO extends BaseDTO<AppSettingsEntity> {
-  const AppSettingsDTO({
-    required this.themeMode,
-    required this.color,
-    this.skipIntro = false,
-  });
+@freezed
+class AppSettingsDTO extends BaseDTO<AppSettingsEntity> with _$AppSettingsDTO {
+  const factory AppSettingsDTO({
+    required int themeMode,
+    required int color,
+    @Default(false) bool skipIntro,
+  }) = _AppSettingsDTO;
+
+  const AppSettingsDTO._();
+
+  factory AppSettingsDTO.fromJson(Map<String, dynamic> json) =>
+      _$AppSettingsDTOFromJson(json);
 
   factory AppSettingsDTO.initial() {
     return AppSettingsDTO(
@@ -23,12 +26,6 @@ class AppSettingsDTO extends BaseDTO<AppSettingsEntity> {
       skipIntro: false,
     );
   }
-
-  factory AppSettingsDTO.fromJson(Map<String, dynamic> json) =>
-      _$AppSettingsDTOFromJson(json);
-  final int themeMode;
-  final int color;
-  final bool skipIntro;
 
   @override
   List<Object?> get props => [
@@ -45,6 +42,4 @@ class AppSettingsDTO extends BaseDTO<AppSettingsEntity> {
       skipIntro: skipIntro,
     );
   }
-
-  Map<String, dynamic> toJson() => _$AppSettingsDTOToJson(this);
 }
