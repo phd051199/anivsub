@@ -11,23 +11,24 @@ import 'parse_json_interceptor.dart';
 
 class NetworkClient {
   static Dio getDio({
-    required String baseUrl,
+    String? baseUrl,
     CookieManager? cookieManager,
+    bool useCache = true,
     bool isAuthenticated = true,
     Map<String, dynamic>? headers,
   }) {
     final dio = _createDio(baseUrl, headers);
     _configureHttpAdapter(dio);
-    _addInterceptors(dio, isAuthenticated, cookieManager);
+    _addInterceptors(dio, isAuthenticated, cookieManager, useCache);
     return dio;
   }
 
-  static Dio _createDio(String baseUrl, Map<String, dynamic>? headers) {
+  static Dio _createDio(String? baseUrl, Map<String, dynamic>? headers) {
     final timeout = const Duration(seconds: 20);
 
     return Dio(
       BaseOptions(
-        baseUrl: baseUrl,
+        baseUrl: baseUrl ?? '',
         headers: headers,
         followRedirects: false,
         connectTimeout: timeout,
@@ -49,6 +50,7 @@ class NetworkClient {
     Dio dio,
     bool isAuthenticated,
     CookieManager? cookieManager,
+    bool useCache,
   ) {
     dio.interceptors.addAll([
       if (kDebugMode)
@@ -58,7 +60,7 @@ class NetworkClient {
         ),
       if (isAuthenticated) AuthInterceptor(),
       if (cookieManager != null) cookieManager,
-      DioCacheInterceptor(options: GetIt.I.get<CacheOptions>()),
+      if (useCache) DioCacheInterceptor(options: GetIt.I.get<CacheOptions>()),
       ParseJsonInterceptor(),
     ]);
   }

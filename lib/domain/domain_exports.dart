@@ -15,6 +15,7 @@ export 'entities/anime/pre_search_item_entity.dart';
 export 'entities/anime/search_result_entity.dart';
 export 'entities/app_settings_entity.dart';
 export 'entities/base_entity.dart';
+export 'entities/fb/feedback_queries_entity.dart';
 export 'entities/refresh_user_session_request_entity.dart';
 export 'entities/refresh_user_session_response_entity.dart';
 export 'entities/user/address_entity.dart';

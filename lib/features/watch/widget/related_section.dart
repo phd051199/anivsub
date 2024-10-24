@@ -17,7 +17,6 @@ class RelatedSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpansionTile(
       tilePadding: const EdgeInsets.symmetric(horizontal: 16),
-      initiallyExpanded: true,
       title: Text(
         context.l10n.related,
         style: context.textTheme.titleMedium?.copyWith(

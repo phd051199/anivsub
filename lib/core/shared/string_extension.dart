@@ -15,8 +15,7 @@ extension StringExtension on String {
   }
 
   String cleanPath() {
-    final string = this;
-    final cleaned = string.replaceAll('/phim/', '');
+    final cleaned = replaceAll('/phim/', '');
     final lastDashIndex = cleaned.lastIndexOf('-');
     return lastDashIndex != -1 ? cleaned.substring(0, lastDashIndex) : cleaned;
   }
@@ -36,6 +35,11 @@ extension StringExtension on String {
   String parseChapName() {
     final rSpace = RegExp(r' ');
     return 'tap-${_removeAccents()}'.toLowerCase().replaceAll(rSpace, '-');
+  }
+
+  Map<String, dynamic> parseRT() {
+    final cleanData = replaceAll(RegExp(r'^for \(;;\);'), '');
+    return jsonDecode(cleanData);
   }
 
   String? extractId() {

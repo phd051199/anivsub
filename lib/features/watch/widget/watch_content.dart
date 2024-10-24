@@ -1,3 +1,4 @@
+import 'package:anivsub/core/plugin/fb_comment.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/watch.dart';
 import 'package:anivsub/features/watch/widget/comment_section.dart';
@@ -19,6 +20,7 @@ class WatchContent extends StatelessWidget {
     required this.onChapTap,
     required this.onRelatedItemTap,
     required this.showDetailBottomSheet,
+    required this.fbCommentPlugin,
     this.tag,
   });
 
@@ -30,6 +32,7 @@ class WatchContent extends StatelessWidget {
   final Function(BuildContext, bool, ChapDataEntity, WatchLoaded) onChapTap;
   final Function(AnimeDataEntity) onRelatedItemTap;
   final Function(WatchLoaded) showDetailBottomSheet;
+  final FBCommentPlugin fbCommentPlugin;
   final String? tag;
 
   @override
@@ -57,14 +60,14 @@ class WatchContent extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: CommentSection(
-                  state: state,
-                ),
-              ),
-              SliverToBoxAdapter(
                 child: RelatedSection(
                   state: state,
                   onTap: onRelatedItemTap,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: CommentSection(
+                  state: state,
                 ),
               ),
             ],
