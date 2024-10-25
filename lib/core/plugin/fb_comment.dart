@@ -12,8 +12,8 @@ import 'package:get_it/get_it.dart';
 class FBCommentPlugin {
   FBCommentPlugin({required this.config});
 
-  final FbCommentPluginConfig config;
   final FbApiClient _fbApiClient = GetIt.I.get<FbApiClient>();
+  FbCommentPluginConfig config;
   SetupDataDTO? _setupData;
   ActorEntity? loginUser;
 
@@ -89,6 +89,14 @@ class FBCommentPlugin {
     } catch (e) {
       return const CommentDataEntity();
     }
+  }
+
+  Future<CommentDataEntity> updateUrlAndGetComments(String url) {
+    if (url != config.href) {
+      config = config.copyWith(href: url);
+      _setupData = null;
+    }
+    return getComments();
   }
 
   Future<String> postComment(String text) async {
@@ -173,7 +181,40 @@ class FBCommentPlugin {
     await _fbApiClient.deleteComment(loginUser?.id ?? '', body);
   }
 
-  Future<PayloadEntity> getMoreComments([String? afterCursor]) async {
+  Future<void> likeComment(String commentId, bool isLike) async {
+    final setup = await this.setup(post: true);
+
+    final body = PostCommentRequestDTO(
+      appId: setup.setupParams.appId ?? '',
+      user: loginUser?.id ?? '',
+      a: setup.setupParams.a,
+      req: setup.setupParams.req,
+      hs: setup.setupParams.hs ?? '',
+      dpr: setup.setupParams.dpr,
+      ccg: 'EXCELLENT',
+      rev: setup.setupParams.rev ?? '',
+      s: setup.setupParams.s,
+      hsi: setup.setupParams.hsi ?? '',
+      dyn: setup.setupParams.dyn,
+      csr: setup.setupParams.csr,
+      locale: setup.setupParams.locale,
+      lsd: setup.setupParams.lsd ?? '',
+      jazoest: setup.setupParams.jazoest,
+      sp: setup.setupParams.sp,
+      fbDtsg: setup.setupParams.fbDtsg ?? _setupData!.setupParams.fbDtsg ?? '',
+    ).toJson();
+
+    body['comment_id'] = commentId;
+
+    final response =
+        await _fbApiClient.likeComment(isLike, loginUser?.id ?? '', body);
+
+    final json = response.parseRT();
+
+    Log.debug(json);
+  }
+
+  Future<CommentDataEntity> getMoreComments([String? afterCursor]) async {
     final setup = await this.setup();
 
     final body = PostCommentRequestDTO(
@@ -184,7 +225,7 @@ class FBCommentPlugin {
       req: setup.setupParams.req,
       hs: setup.setupParams.hs ?? '',
       dpr: setup.setupParams.dpr,
-      ccg: setup.setupParams.ccg,
+      ccg: 'MODERATE',
       rev: setup.setupParams.rev ?? '',
       s: setup.setupParams.s,
       hsi: setup.setupParams.hsi ?? '',
@@ -211,13 +252,24 @@ class FBCommentPlugin {
       );
 
       final json = data.parseRT();
+      final payload = json['payload'];
 
-      final parsedData = GetMoreCommentResponseDTO.fromJson(json);
+      final comments = CommentsDTO.fromJson(payload);
+      final parsedComments = CommentParser.parse(
+        comments,
+      ).map((e) => e.toEntity()).toList();
+      final meta = MetaDTO(
+        totalCount: payload['totalCount'],
+        afterCursor: payload['afterCursor'],
+      ).toEntity();
 
-      return parsedData.payload?.toEntity() ?? const PayloadEntity();
+      return CommentDataEntity(
+        meta: meta,
+        comments: parsedComments,
+      );
     } catch (e) {
       Log.debug(e);
-      return const PayloadEntity();
+      return const CommentDataEntity();
     }
   }
 

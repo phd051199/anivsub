@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/plugin/fb_comment.dart';
+import 'package:anivsub/core/service/shared_preferences_service.dart';
+import 'package:anivsub/core/shared/constants.dart';
+import 'package:anivsub/core/shared/string_extension.dart';
 import 'package:anivsub/core/utils/log_utils.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:bloc/bloc.dart';
@@ -20,6 +23,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     this._getPlayDataUseCase,
     this._getAnimeDetailUseCase,
     this._episodeListUseCase,
+    this._sharedPreferenceService,
   ) : super(const WatchInitial()) {
     on<InitWatch>(_onInitWatch);
     on<LoadWatch>(_onLoadWatch);
@@ -28,13 +32,18 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     on<PostComment>(_onPostComment);
     on<DeleteComment>(_onDeleteComment);
     on<GetFbCookies>(_onGetFbCookies);
+    on<LoadMoreComments>(_onLoadMoreComments);
+    on<LikeComment>(_onLikeComment);
   }
 
   final GetPlayDataUseCase _getPlayDataUseCase;
   final GetAnimeDetailUseCase _getAnimeDetailUseCase;
   final GetListEpisodeUseCase _episodeListUseCase;
+  final SharedPreferenceService _sharedPreferenceService;
+
   final CancelToken _cancelToken = CancelToken();
   late FBCommentPlugin _fbCommentPlugin;
+  late String _afterCursor = '';
 
   Future<void> _onInitWatch(InitWatch event, Emitter<WatchState> emit) async {
     emit(const WatchLoading());
@@ -42,6 +51,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
 
     try {
       final (initResponse, animeDetail) = await _fetchInitialData(event.id);
+      _afterCursor = initResponse.meta?.afterCursor ?? '';
 
       emit(
         WatchLoaded(
@@ -91,6 +101,48 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     );
   }
 
+  Future<void> _onLoadMoreComments(
+    LoadMoreComments event,
+    Emitter<WatchState> emit,
+  ) async {
+    final currentState = state;
+    if (currentState is! WatchLoaded) {
+      return;
+    }
+
+    if (currentState.isCmtLoading) {
+      return;
+    }
+
+    try {
+      final loadingState = currentState.copyWith(isCmtLoading: true);
+      emit(loadingState);
+
+      final result = await _fbCommentPlugin.getMoreComments(_afterCursor);
+      _afterCursor = result.meta?.afterCursor ?? '';
+
+      final existingCommentIds =
+          Set<String>.from(currentState.comments?.map((c) => c.id) ?? []);
+      final newUniqueComments = result.comments?.where(
+            (newComment) => !existingCommentIds.contains(newComment.id),
+          ) ??
+          [];
+
+      final newComments = [
+        ...?currentState.comments,
+        ...newUniqueComments,
+      ];
+
+      emit(
+        currentState.copyWith(
+          comments: newComments,
+        ),
+      );
+    } catch (e) {
+      Log.debug('Error loading more comments: $e');
+    }
+  }
+
   Future<void> _onPostComment(
     PostComment event,
     Emitter<WatchState> emit,
@@ -100,10 +152,10 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       return;
     }
 
-    final loadingState = currentState.copyWith(isCmtLoading: true);
-    emit(loadingState);
-
     try {
+      final loadingState = currentState.copyWith(isCmtLoading: true);
+      emit(loadingState);
+
       final id = await _fbCommentPlugin.postComment(event.comment);
       final newComment = _createNewComment(id, event.comment);
 
@@ -113,6 +165,64 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     } catch (e) {
       Log.debug('Error posting comment: $e');
     }
+  }
+
+  Future<void> _onLikeComment(
+    LikeComment event,
+    Emitter<WatchState> emit,
+  ) async {
+    final currentState = state;
+    if (currentState is! WatchLoaded) return;
+
+    final likedComments = await _getLikedComments();
+    final isLiked = likedComments.contains(event.commentId);
+
+    await _updateCommentLikeStatus(
+      currentState,
+      event.commentId,
+      isLiked,
+      emit,
+    );
+    await _updateLikedCommentsInStorage(event.commentId, isLiked);
+    await _fbCommentPlugin.likeComment(event.commentId, !isLiked);
+  }
+
+  Future<List<String>> _getLikedComments() async {
+    return await _sharedPreferenceService.getStringList('liked_comments');
+  }
+
+  Future<void> _updateCommentLikeStatus(
+    WatchLoaded currentState,
+    String commentId,
+    bool isLiked,
+    Emitter<WatchState> emit,
+  ) async {
+    final updatedComments = currentState.comments?.map((c) {
+      if (c.id == commentId) {
+        return c.copyWith(likeCount: c.likeCount + (isLiked ? -1 : 1));
+      }
+      return c;
+    }).toList();
+
+    emit(currentState.copyWith(comments: updatedComments));
+  }
+
+  Future<void> _updateLikedCommentsInStorage(
+    String commentId,
+    bool isLiked,
+  ) async {
+    final likedComments = await _getLikedComments();
+
+    if (isLiked) {
+      likedComments.remove(commentId);
+    } else {
+      likedComments.add(commentId);
+    }
+
+    await _sharedPreferenceService.setStringList(
+      'liked_comments',
+      likedComments,
+    );
   }
 
   Future<void> _onDeleteComment(
@@ -299,9 +409,34 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     return playDataOutput.result.chaps;
   }
 
-  void _onChangeEpisode(ChangeEpisode event, Emitter<WatchState> emit) {
+  void _onChangeEpisode(ChangeEpisode event, Emitter<WatchState> emit) async {
     final currentState = state as WatchLoaded;
-    emit(currentState.copyWith(detail: event.animeDetail));
+
+    List<CommentEntity>? comments;
+    int? totalCommentCount;
+    final id = event.animeDetail.pathToView?.cleanPathToView().extractId();
+    final href = '$ogHostCurl/phim/-$id/';
+
+    if (href != _fbCommentPlugin.config.href) {
+      try {
+        final initResponse =
+            await _fbCommentPlugin.updateUrlAndGetComments(href);
+
+        _afterCursor = initResponse.meta?.afterCursor ?? '';
+        comments = initResponse.comments ?? [];
+        totalCommentCount = initResponse.meta?.totalCount ?? 0;
+      } catch (e) {
+        Log.debug('Error updating url and getting comments: $e');
+      }
+    }
+
+    emit(
+      currentState.copyWith(
+        detail: event.animeDetail,
+        comments: comments ?? currentState.comments,
+        totalCommentCount: totalCommentCount ?? currentState.totalCommentCount,
+      ),
+    );
   }
 
   Future<ListEpisodeResponseEntity?> _loadAdditionalAnimeData(

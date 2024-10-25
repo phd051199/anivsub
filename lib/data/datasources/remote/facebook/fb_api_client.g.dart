@@ -285,6 +285,75 @@ class _FbApiClient implements FbApiClient {
     return _value;
   }
 
+  @override
+  Future<String> likeComment(
+    bool actionLike,
+    String av,
+    Map<String, dynamic> body,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'action_like': actionLike,
+      r'av': av,
+    };
+    final _headers = <String, dynamic>{
+      r'content-type': 'application/x-www-form-urlencoded',
+      r'dpr': '1',
+      r'pragma': 'no-cache',
+      r'sec-ch-prefers-color-scheme': 'dark',
+      r'sec-ch-ua-mobile': '?0',
+      r'sec-gpc': '1',
+      r'viewport-width': '727',
+      r'x-asbd-id': '129477',
+      r'Referrer-Policy': 'origin-when-cross-origin',
+      r'user-agent':
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36',
+      r'accept':
+          'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+      r'accept-language': 'en-US,en;q=0.9,vi;q=0.8',
+      r'cache-control': 'max-age=0',
+      r'dnt': '1',
+      r'sec-ch-ua':
+          '"Google Chrome";v="129", "Not?A_Brand";v="8", "Chromium";v="129"',
+      r'sec-ch-ua-platform': 'macOS',
+      r'sec-ch-ua-platform-version': '15.0.1',
+      r'sec-fetch-dest': 'empty',
+      r'sec-fetch-mode': 'cors',
+      r'sec-fetch-site': 'same-origin',
+      r'sec-fetch-user': '?1',
+      r'upgrade-insecure-requests': '1',
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _options = _setStreamType<String>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'application/x-www-form-urlencoded',
+    )
+        .compose(
+          _dio.options,
+          '/plugins/comments/async/like/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<String>(_options);
+    late String _value;
+    try {
+      _value = _result.data!;
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

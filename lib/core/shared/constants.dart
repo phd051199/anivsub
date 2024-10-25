@@ -3,12 +3,18 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 const kSPUserToken = 'kUserToken';
 const kSPThemeMode = 'kThemeMode';
 
-final decryptHlsUrl = 'https://decrypt-hls.dph.workers.dev';
-const skApiUrl1 = 'https://sk-9animetv.dph.workers.dev';
-const skApiUrl2 = 'https://sk-hianime.dph.workers.dev';
+const decryptHlsUrl = 'https://decrypt-hls.dph.workers.dev';
+const sk9animetvApiUrl = 'https://sk-9animetv.dph.workers.dev';
+const skHianimeApiUrl = 'https://sk-hianime.dph.workers.dev';
 const fbBaseUrl = 'https://www.facebook.com';
 
 final hostCurl = dotenv.get('HOST_CURL');
+final ogHostCurl = Uri.parse(hostCurl)
+    .replace(
+      scheme: 'http',
+      host: '${Uri.parse(hostCurl).host.split('.').first}.tv',
+    )
+    .toString();
 
 const headers = {
   'user-agent':

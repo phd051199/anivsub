@@ -32,6 +32,18 @@ class DeleteComment extends WatchEvent with _$DeleteComment {
 }
 
 @freezed
+class LikeComment extends WatchEvent with _$LikeComment {
+  const factory LikeComment({
+    required String commentId,
+  }) = _LikeComment;
+}
+
+@freezed
+class LoadMoreComments extends WatchEvent with _$LoadMoreComments {
+  const factory LoadMoreComments() = _LoadMoreComments;
+}
+
+@freezed
 class GetFbCookies extends WatchEvent with _$GetFbCookies {
   const factory GetFbCookies() = _GetFbCookies;
 }

@@ -181,5 +181,9 @@
   "rating": "rating",
   "@rating": {
     "description": "Label for rating."
+  },
+  "commentHint": "Write a comment...",
+  "@commentHint": {
+    "description": "Hint text for comment input."
   }
 }

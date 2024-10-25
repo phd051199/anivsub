@@ -61,7 +61,7 @@ class _CommentSectionState extends State<CommentSection> {
   }
 
   void _loadMoreComments() {
-    // context.read<WatchBloc>().add(const LoadMoreComments());
+    context.read<WatchBloc>().add(const LoadMoreComments());
   }
 
   @override
@@ -110,7 +110,7 @@ class _CommentSectionState extends State<CommentSection> {
             child: TextField(
               controller: _textController,
               decoration: InputDecoration(
-                hintText: 'Enter your comment',
+                hintText: context.l10n.commentHint,
                 filled: true,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -259,9 +259,19 @@ class _CommentSectionState extends State<CommentSection> {
       ..secure = cookie.isSecure ?? false;
   }
 
+  String getImageNameFromUrl(String url) {
+    final uri = Uri.parse(url);
+    final pathSegments = uri.pathSegments;
+    if (pathSegments.isNotEmpty) {
+      return pathSegments.last;
+    }
+    return '';
+  }
+
   Widget _buildCommentTree(CommentEntity comment, {required Key key}) {
     final selfComment = comment.authorName == widget.state.fbUser?.name &&
-        comment.authorThumbSrc == widget.state.fbUser?.thumbSrc;
+        getImageNameFromUrl(comment.authorThumbSrc) ==
+            getImageNameFromUrl(widget.state.fbUser?.thumbSrc ?? '');
 
     Widget commentWidget = CommentTreeWidget<CommentEntity, CommentEntity>(
       comment,
@@ -338,6 +348,10 @@ class _CommentSectionState extends State<CommentSection> {
     CommentEntity data, {
     required bool isRoot,
   }) {
+    final likeColor = data.likeCount > 0
+        ? context.theme.colorScheme.primary
+        : context.theme.colorScheme.outlineVariant;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -370,18 +384,25 @@ class _CommentSectionState extends State<CommentSection> {
               children: [
                 Text(data.timestamp),
                 const Gap(12),
-                Icon(
-                  Icons.thumb_up_sharp,
-                  size: 12,
-                  color: data.likeCount > 0
-                      ? context.theme.colorScheme.primary
-                      : context.theme.colorScheme.outlineVariant,
-                ),
-                const Gap(4),
-                Text(
-                  '${data.likeCount} ${data.likeCount == 1 ? 'like' : 'likes'}',
-                  style: context.textTheme.bodySmall!.copyWith(
-                    color: context.theme.colorScheme.primary,
+                GestureDetector(
+                  onTap: () => context
+                      .read<WatchBloc>()
+                      .add(LikeComment(commentId: data.id)),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.thumb_up_sharp,
+                        size: 12,
+                        color: likeColor,
+                      ),
+                      const Gap(4),
+                      Text(
+                        '${data.likeCount} ${data.likeCount > 1 ? 'likes' : 'like'}',
+                        style: context.textTheme.bodySmall!.copyWith(
+                          color: likeColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

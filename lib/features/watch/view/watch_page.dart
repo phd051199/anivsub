@@ -1,5 +1,6 @@
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/plugin/fb_comment.dart';
+import 'package:anivsub/core/shared/constants.dart';
 import 'package:anivsub/core/shared/string_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
@@ -34,10 +35,10 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     super.initState();
     _fbCommentPlugin = FBCommentPlugin(
       config: FbCommentPluginConfig(
-        href: 'http://animevietsub.tv/phim/-${widget.path.extractId()}/',
+        href: '$ogHostCurl/phim/-${widget.path.extractId()}/',
         locale: 'vi_VN',
-        app: 'https://animevietsub.tv',
-        limit: 25,
+        app: ogHostCurl,
+        limit: 10,
       ),
     );
     bloc.add(

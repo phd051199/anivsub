@@ -15,13 +15,13 @@ abstract class SkApiClient {
     @CancelRequest() CancelToken? cancelToken,
   });
 
-  @GET('$skApiUrl1/episode-skip/{id}')
+  @GET('$sk9animetvApiUrl/episode-skip/{id}')
   Future<EpisodeSkipResponseDTO> skipEpisode9animetv(
     @Path('id') String id, {
     @CancelRequest() CancelToken? cancelToken,
   });
 
-  @GET('$skApiUrl2/episode-skip/{id}')
+  @GET('$skHianimeApiUrl/episode-skip/{id}')
   Future<EpisodeSkipResponseDTO> skipEpisodeHianime(
     @Path('id') String id, {
     @CancelRequest() CancelToken? cancelToken,

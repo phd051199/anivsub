@@ -14,7 +14,7 @@ void registerHttpClient(Environment environment) {
   GetIt.I.registerSingleton<AuthApiClient>(
     AuthApiClient(
       NetworkClient.getDio(
-        baseUrl: environment.baseUrl,
+        baseUrl: hostCurl,
         headers: headers,
         cookieManager: cookieManager,
       ),
@@ -44,7 +44,7 @@ void registerHttpClient(Environment environment) {
   GetIt.I.registerSingleton<SkApiClient>(
     SkApiClient(
       NetworkClient.getDio(
-        baseUrl: skApiUrl1,
+        baseUrl: sk9animetvApiUrl,
         isAuthenticated: false,
       ),
     ),

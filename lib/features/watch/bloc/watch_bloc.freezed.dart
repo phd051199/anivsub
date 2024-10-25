@@ -547,6 +547,203 @@ abstract class _DeleteComment implements DeleteComment {
 }
 
 /// @nodoc
+mixin _$LikeComment {
+  String get commentId => throw _privateConstructorUsedError;
+
+  /// Create a copy of LikeComment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LikeCommentCopyWith<LikeComment> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LikeCommentCopyWith<$Res> {
+  factory $LikeCommentCopyWith(
+          LikeComment value, $Res Function(LikeComment) then) =
+      _$LikeCommentCopyWithImpl<$Res, LikeComment>;
+  @useResult
+  $Res call({String commentId});
+}
+
+/// @nodoc
+class _$LikeCommentCopyWithImpl<$Res, $Val extends LikeComment>
+    implements $LikeCommentCopyWith<$Res> {
+  _$LikeCommentCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LikeComment
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? commentId = null,
+  }) {
+    return _then(_value.copyWith(
+      commentId: null == commentId
+          ? _value.commentId
+          : commentId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$LikeCommentImplCopyWith<$Res>
+    implements $LikeCommentCopyWith<$Res> {
+  factory _$$LikeCommentImplCopyWith(
+          _$LikeCommentImpl value, $Res Function(_$LikeCommentImpl) then) =
+      __$$LikeCommentImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String commentId});
+}
+
+/// @nodoc
+class __$$LikeCommentImplCopyWithImpl<$Res>
+    extends _$LikeCommentCopyWithImpl<$Res, _$LikeCommentImpl>
+    implements _$$LikeCommentImplCopyWith<$Res> {
+  __$$LikeCommentImplCopyWithImpl(
+      _$LikeCommentImpl _value, $Res Function(_$LikeCommentImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LikeComment
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? commentId = null,
+  }) {
+    return _then(_$LikeCommentImpl(
+      commentId: null == commentId
+          ? _value.commentId
+          : commentId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LikeCommentImpl implements _LikeComment {
+  const _$LikeCommentImpl({required this.commentId});
+
+  @override
+  final String commentId;
+
+  @override
+  String toString() {
+    return 'LikeComment(commentId: $commentId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LikeCommentImpl &&
+            (identical(other.commentId, commentId) ||
+                other.commentId == commentId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, commentId);
+
+  /// Create a copy of LikeComment
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LikeCommentImplCopyWith<_$LikeCommentImpl> get copyWith =>
+      __$$LikeCommentImplCopyWithImpl<_$LikeCommentImpl>(this, _$identity);
+}
+
+abstract class _LikeComment implements LikeComment {
+  const factory _LikeComment({required final String commentId}) =
+      _$LikeCommentImpl;
+
+  @override
+  String get commentId;
+
+  /// Create a copy of LikeComment
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LikeCommentImplCopyWith<_$LikeCommentImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$LoadMoreComments {}
+
+/// @nodoc
+abstract class $LoadMoreCommentsCopyWith<$Res> {
+  factory $LoadMoreCommentsCopyWith(
+          LoadMoreComments value, $Res Function(LoadMoreComments) then) =
+      _$LoadMoreCommentsCopyWithImpl<$Res, LoadMoreComments>;
+}
+
+/// @nodoc
+class _$LoadMoreCommentsCopyWithImpl<$Res, $Val extends LoadMoreComments>
+    implements $LoadMoreCommentsCopyWith<$Res> {
+  _$LoadMoreCommentsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LoadMoreComments
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$LoadMoreCommentsImplCopyWith<$Res> {
+  factory _$$LoadMoreCommentsImplCopyWith(_$LoadMoreCommentsImpl value,
+          $Res Function(_$LoadMoreCommentsImpl) then) =
+      __$$LoadMoreCommentsImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LoadMoreCommentsImplCopyWithImpl<$Res>
+    extends _$LoadMoreCommentsCopyWithImpl<$Res, _$LoadMoreCommentsImpl>
+    implements _$$LoadMoreCommentsImplCopyWith<$Res> {
+  __$$LoadMoreCommentsImplCopyWithImpl(_$LoadMoreCommentsImpl _value,
+      $Res Function(_$LoadMoreCommentsImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LoadMoreComments
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$LoadMoreCommentsImpl implements _LoadMoreComments {
+  const _$LoadMoreCommentsImpl();
+
+  @override
+  String toString() {
+    return 'LoadMoreComments()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoadMoreCommentsImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+abstract class _LoadMoreComments implements LoadMoreComments {
+  const factory _LoadMoreComments() = _$LoadMoreCommentsImpl;
+}
+
+/// @nodoc
 mixin _$GetFbCookies {}
 
 /// @nodoc

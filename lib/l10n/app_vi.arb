@@ -181,5 +181,9 @@
   "rating": "đánh giá",
   "@rating": {
     "description": "Label for rating."
+  },
+  "commentHint": "Viết bình luận...",
+  "@commentHint": {
+    "description": "Hint text for comment input."
   }
 }

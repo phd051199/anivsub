@@ -42,4 +42,12 @@ abstract class FbApiClient {
     @Query('av') String av,
     @Body() Map<String, dynamic> body,
   );
+
+  @POST('/plugins/comments/async/like/')
+  @Headers(fbHeaders)
+  Future<String> likeComment(
+    @Query('action_like') bool actionLike,
+    @Query('av') String av,
+    @Body() Map<String, dynamic> body,
+  );
 }

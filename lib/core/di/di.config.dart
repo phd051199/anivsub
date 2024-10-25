@@ -155,11 +155,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1060.AuthLocalRepository>(() =>
         _i954.AuthLocalRepositoryImpl(
             authLocalDataSource: gh<_i833.AuthLocalDataSource>()));
-    gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
-          gh<_i772.GetPlayDataUseCase>(),
-          gh<_i772.GetAnimeDetailUseCase>(),
-          gh<_i772.GetListEpisodeUseCase>(),
-        ));
     gh.factory<_i187.HomeBloc>(
         () => _i187.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
     gh.factory<_i785.SearchBloc>(() => _i785.SearchBloc(
@@ -172,6 +167,12 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.singleton<_i179.HomeUseCases>(
         () => _i179.HomeUseCases(gh<_i772.AuthLocalRepository>()));
+    gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
+          gh<_i772.GetPlayDataUseCase>(),
+          gh<_i772.GetAnimeDetailUseCase>(),
+          gh<_i772.GetListEpisodeUseCase>(),
+          gh<_i595.SharedPreferenceService>(),
+        ));
     gh.singleton<_i910.AuthNotifier>(
         () => _i910.AuthNotifier(authUseCases: gh<_i772.AuthUseCases>()));
     gh.factory<_i30.LoginCubit>(

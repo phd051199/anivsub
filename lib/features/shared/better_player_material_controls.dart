@@ -92,17 +92,6 @@ class _BetterPlayerCustomMaterialControlsState
             ? cancelAndRestartTimer()
             : changePlayerControlsNotVisible(true);
       },
-      onDoubleTap: () {
-        if (BetterPlayerMultipleGestureDetector.of(context) != null) {
-          BetterPlayerMultipleGestureDetector.of(context)!.onDoubleTap?.call();
-        }
-        cancelAndRestartTimer();
-      },
-      onLongPress: () {
-        if (BetterPlayerMultipleGestureDetector.of(context) != null) {
-          BetterPlayerMultipleGestureDetector.of(context)!.onLongPress?.call();
-        }
-      },
       child: AbsorbPointer(
         absorbing: controlsNotVisible,
         child: Stack(
@@ -398,8 +387,6 @@ class _BetterPlayerCustomMaterialControlsState
                         ? _buildPosition()
                         : const SizedBox(),
                   const Spacer(),
-                  _buildExtraSkipButton(),
-                  const SizedBox(width: 12),
                   if (_controlsConfiguration.enableFullscreen)
                     _buildExpandButton()
                   else
@@ -415,33 +402,6 @@ class _BetterPlayerCustomMaterialControlsState
                   : const SizedBox(),
           ],
         ),
-      ),
-    );
-  }
-
-  BetterPlayerMaterialClickableWidget _buildExtraSkipButton() {
-    return BetterPlayerMaterialClickableWidget(
-      onTap: () {
-        final currentPosition = _betterPlayerController!
-            .videoPlayerController!.value.position.inSeconds;
-        _betterPlayerController!
-            .seekTo(Duration(seconds: currentPosition + 90));
-      },
-      child: Row(
-        children: [
-          Text(
-            '+90s',
-            style: context.theme.textTheme.bodySmall!.copyWith(
-              color: _controlsConfiguration.textColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-            ),
-          ),
-          Icon(
-            Icons.skip_next,
-            color: _controlsConfiguration.textColor,
-          ),
-        ],
       ),
     );
   }

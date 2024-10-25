@@ -39,7 +39,7 @@ class DetailBottomSheet extends StatelessWidget {
               ),
               subtitle: Text(
                 state.detail.description,
-                style: context.textTheme.bodyLarge?.copyWith(
+                style: context.textTheme.bodyMedium?.copyWith(
                   color: context.theme.colorScheme.secondary,
                 ),
               ),
