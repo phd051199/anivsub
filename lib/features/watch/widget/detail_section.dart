@@ -1,5 +1,5 @@
-import 'package:anivsub/core/shared/context_extension.dart';
-import 'package:anivsub/core/shared/number_extension.dart';
+import 'package:anivsub/core/extension/context_extension.dart';
+import 'package:anivsub/core/extension/number_extension.dart';
 import 'package:anivsub/features/watch/watch.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class DetailSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         children: [
           GestureDetector(
@@ -114,7 +114,7 @@ class InfoText {
 
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
         children: [
           if (icon != null)
@@ -123,9 +123,7 @@ class InfoText {
           Expanded(
             child: Text(
               text,
-              style: context.textTheme.bodyMedium?.merge(style).copyWith(
-                    letterSpacing: 0.5,
-                  ),
+              style: context.textTheme.bodyMedium?.merge(style),
               softWrap: true,
             ),
           ),

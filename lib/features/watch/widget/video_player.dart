@@ -1,9 +1,10 @@
 import 'package:anivsub/core/base/base.dart';
-import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/better_player_material_controls.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
+import 'package:anivsub/features/watch/watch.dart';
 import 'package:anivsub/features/watch/widget/empty_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,11 +17,13 @@ class VideoPlayerWidget extends StatefulWidget {
     required this.chaps,
     required this.detail,
     this.listEpisodeSkip,
+    this.initialData,
   });
 
   final List<ChapDataEntity> chaps;
   final AnimeDetailEntity detail;
   final ListEpisodeResponseEntity? listEpisodeSkip;
+  final InitialData? initialData;
 
   @override
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
@@ -31,12 +34,14 @@ class _VideoPlayerWidgetState
   late final BetterPlayerController _betterPlayerController;
   late List<ChapDataEntity> _chaps;
   ListEpisodeResponseEntity? _listEpisodeSkip;
+  InitialData? _initialData;
 
   @override
   void initState() {
     super.initState();
     _chaps = widget.chaps;
     _listEpisodeSkip = widget.listEpisodeSkip;
+    _initialData = widget.initialData;
     _initializeVideoPlayer();
     _initializeCubit();
   }
@@ -50,6 +55,7 @@ class _VideoPlayerWidgetState
   void _initializeVideoPlayer() {
     _betterPlayerController = BetterPlayerController(
       BetterPlayerConfiguration(
+        autoPlay: false,
         fit: BoxFit.contain,
         autoDetectFullscreenAspectRatio: true,
         autoDetectFullscreenDeviceOrientation: true,
@@ -86,6 +92,7 @@ class _VideoPlayerWidgetState
       enableSubtitles: false,
       enablePlaybackSpeed: false,
       enablePip: false,
+      enableMute: false,
       progressBarPlayedColor: context.theme.colorScheme.primary,
       progressBarHandleColor: context.theme.colorScheme.primary,
       loadingWidget: const LoadingWidget(color: Colors.white),
@@ -99,6 +106,7 @@ class _VideoPlayerWidgetState
         animeDetail: widget.detail,
         controller: _betterPlayerController,
         listEpisodeSkip: _listEpisodeSkip,
+        initialData: _initialData,
       );
     }
   }

@@ -1,4 +1,3 @@
-import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/anime_list.dart';
 import 'package:anivsub/features/watch/watch.dart';
@@ -15,23 +14,12 @@ class RelatedSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      tilePadding: const EdgeInsets.symmetric(horizontal: 16),
-      title: Text(
-        context.l10n.related,
-        style: context.textTheme.titleMedium?.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: AnimeList(
+        movies: state.detail.toPut,
+        onTap: onTap,
       ),
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: AnimeList(
-            movies: state.detail.toPut,
-            onTap: onTap,
-          ),
-        ),
-      ],
     );
   }
 }

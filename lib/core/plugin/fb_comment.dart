@@ -3,7 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:anivsub/core/shared/string_extension.dart';
+import 'package:anivsub/core/extension/string_extension.dart';
 import 'package:anivsub/core/utils/log_utils.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';

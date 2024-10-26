@@ -1,4 +1,4 @@
-import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -21,11 +21,13 @@ class AnimeDescription extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Today, 12:00 AM',
+              movie.studio ?? '',
               style: context.textTheme.titleSmall!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: context.theme.colorScheme.primary,
               ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             const Gap(4),
             Text(

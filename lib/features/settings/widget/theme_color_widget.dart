@@ -1,4 +1,4 @@
-import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/core/theme/const/theme_colors.dart';
 import 'package:anivsub/core/theme/cubit/theme_cubit.dart';
 import 'package:anivsub/features/settings/cubit/settings_cubit.dart';

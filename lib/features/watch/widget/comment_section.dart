@@ -1,8 +1,7 @@
 import 'dart:io' as io;
 
+import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/shared/constants.dart';
-import 'package:anivsub/core/shared/context_extension.dart';
-import 'package:anivsub/core/shared/number_extension.dart';
 import 'package:anivsub/core/utils/log_utils.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/watch.dart';
@@ -66,35 +65,26 @@ class _CommentSectionState extends State<CommentSection> {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      tilePadding: const EdgeInsets.symmetric(horizontal: 16),
-      initiallyExpanded: true,
-      title: Text(
-        '${context.l10n.comment} (${widget.state.totalCommentCount?.formatNumber() ?? 0})',
-        style: context.textTheme.titleMedium?.copyWith(
-          fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: context.focusScope.unfocus,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: context.screenSize.height,
+        ),
+        child: ListView(
+          controller: _scrollController,
+          children: [
+            _buildCommentInput(),
+            _buildCommentList(),
+          ],
         ),
       ),
-      children: [
-        ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: context.screenSize.height * 0.6,
-          ),
-          child: ListView(
-            controller: _scrollController,
-            children: [
-              _buildCommentInput(),
-              _buildCommentList(),
-            ],
-          ),
-        ),
-      ],
     );
   }
 
   Widget _buildCommentInput() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
       child: Row(
         children: [
           CircleAvatar(
@@ -276,6 +266,10 @@ class _CommentSectionState extends State<CommentSection> {
     Widget commentWidget = CommentTreeWidget<CommentEntity, CommentEntity>(
       comment,
       comment.replies,
+      treeThemeData: TreeThemeData(
+        lineWidth: 0.5,
+        lineColor: context.theme.colorScheme.outlineVariant,
+      ),
       avatarRoot: (context, data) => PreferredSize(
         preferredSize: const Size.fromRadius(18),
         child: _buildAvatar(context, data, isRoot: true),
@@ -331,15 +325,9 @@ class _CommentSectionState extends State<CommentSection> {
     required bool isRoot,
   }) {
     final double radius = isRoot ? 18 : 12;
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: context.theme.colorScheme.outlineVariant),
-      ),
-      child: CircleAvatar(
-        radius: radius,
-        backgroundImage: CachedNetworkImageProvider(data.authorThumbSrc),
-      ),
+    return CircleAvatar(
+      radius: radius,
+      backgroundImage: CachedNetworkImageProvider(data.authorThumbSrc),
     );
   }
 
@@ -375,7 +363,11 @@ class _CommentSectionState extends State<CommentSection> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 4, left: 8, bottom: 8),
+          padding: const EdgeInsets.only(
+            top: 8,
+            left: 8,
+            bottom: 12,
+          ),
           child: DefaultTextStyle(
             style: context.textTheme.bodySmall!.copyWith(
               color: context.theme.colorScheme.secondary,

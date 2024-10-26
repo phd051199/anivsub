@@ -1,4 +1,4 @@
-import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/features/shared/anime_thumbnail.dart';
 import 'package:anivsub/features/watch/watch.dart';
 import 'package:flutter/material.dart';

@@ -1,17 +1,19 @@
 import 'dart:async';
 
 import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/plugin/fb_comment.dart';
 import 'package:anivsub/core/service/shared_preferences_service.dart';
 import 'package:anivsub/core/shared/constants.dart';
-import 'package:anivsub/core/shared/string_extension.dart';
 import 'package:anivsub/core/utils/log_utils.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'watch_bloc.freezed.dart';
 part 'watch_event.dart';
@@ -282,15 +284,50 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   Future<void> _onLoadWatch(LoadWatch event, Emitter<WatchState> emit) async {
     try {
       final currentState = state as WatchLoaded;
-      final (chaps, listEpisodeSkip) =
-          await _fetchAnimeData(event.id, currentState.detail);
+      final (chaps, listEpisodeSkip) = await _fetchAnimeData(
+        event.id,
+        currentState.detail,
+      );
       final chapterLists = _initializeChapterLists(
         currentState.detail,
         event.id,
         chaps,
         listEpisodeSkip,
       );
-      emit(currentState.copyWith(chaps: chaps, tabViewItems: chapterLists));
+
+      final seasonId = currentState.detail.pathToView?.parseSeasonId();
+      final latestChap = await Supabase.instance.client
+          .rpc(
+            'get_last_chap',
+            params: {
+              'user_uid':
+                  'a3aaca2af18b3e54a02c1cfb727028935cca230889afe8b17cf4b3d9f3b66111',
+              'season_id': seasonId,
+            },
+          )
+          .maybeSingle()
+          .onError((_, __) => null);
+
+      InitialData? initialData;
+
+      if (latestChap != null) {
+        final initialChap = chaps.firstWhereOrNull(
+              (chap) => chap.id == latestChap['chap_id'],
+            ) ??
+            chaps.first;
+        initialData = InitialData(
+          initialChap: initialChap,
+          initialPosition: latestChap['cur'],
+        );
+      }
+
+      emit(
+        currentState.copyWith(
+          chaps: chaps,
+          tabViewItems: chapterLists,
+          initialData: initialData,
+        ),
+      );
     } catch (e) {
       emit(WatchError(e.toString()));
     }
@@ -300,7 +337,9 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     ChangeSeasonTab event,
     Emitter<WatchState> emit,
   ) async {
-    final currentState = state as WatchLoaded;
+    final currentState = state;
+    if (currentState is! WatchLoaded) return;
+
     final newIndex =
         currentState.detail.season.indexWhere((item) => item.path == event.id);
     if (!_shouldUpdateTab(currentState, newIndex)) return;
@@ -410,7 +449,11 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   }
 
   void _onChangeEpisode(ChangeEpisode event, Emitter<WatchState> emit) async {
-    final currentState = state as WatchLoaded;
+    final currentState = state;
+    if (currentState is! WatchLoaded) return;
+
+    final newState = currentState.copyWith(detail: event.animeDetail);
+    emit(newState);
 
     List<CommentEntity>? comments;
     int? totalCommentCount;
@@ -431,8 +474,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     }
 
     emit(
-      currentState.copyWith(
-        detail: event.animeDetail,
+      newState.copyWith(
         comments: comments ?? currentState.comments,
         totalCommentCount: totalCommentCount ?? currentState.totalCommentCount,
       ),

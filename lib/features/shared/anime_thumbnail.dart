@@ -1,7 +1,7 @@
 import 'dart:ui';
 
+import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/shared/constants.dart';
-import 'package:anivsub/core/shared/context_extension.dart';
 import 'package:anivsub/core/utils/log_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class AnimeThumbnail extends StatelessWidget {
     if (imageUrl == null || imageUrl!.isEmpty) {
       Log.debug('Image URL is null');
     }
-    return Card(
+    return Card.filled(
       clipBehavior: Clip.hardEdge,
       child: Stack(
         children: [
@@ -37,7 +37,8 @@ class AnimeThumbnail extends StatelessWidget {
             fit: BoxFit.cover,
             height: height,
             width: width,
-            errorWidget: (context, url, error) => const Icon(Icons.error),
+            errorWidget: (context, url, error) =>
+                const Icon(Icons.no_photography_rounded),
           ),
           if (process?.isNotEmpty ?? false) _buildProcessOverlay(context),
           if (rate != null) _buildRatingOverlay(context),

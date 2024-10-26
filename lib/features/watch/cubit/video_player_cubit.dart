@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:anivsub/core/base/base.dart';
-import 'package:anivsub/core/shared/string_extension.dart';
+import 'package:anivsub/core/extension/string_extension.dart';
 import 'package:anivsub/core/utils/image_url_utils.dart';
 import 'package:anivsub/core/utils/log_utils.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/features/watch/watch.dart';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -88,6 +89,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     required BetterPlayerController controller,
     required AnimeDetailEntity animeDetail,
     required ListEpisodeResponseEntity? listEpisodeSkip,
+    required InitialData? initialData,
   }) async {
     if (episodes.isEmpty) {
       emit(const VideoPlayerError('No episodes available'));
@@ -101,7 +103,11 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         animeDetail: animeDetail,
         listEpisodeSkip: listEpisodeSkip,
       );
-      await _initializeEpisode(episodes.first, episodes);
+      await _initializeEpisode(
+        initialData?.initialChap ?? episodes.first,
+        episodes,
+        initialPosition: initialData?.initialPosition,
+      );
     } catch (e) {
       emit(VideoPlayerError('Initialization failed: $e'));
     }
@@ -115,7 +121,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     if (currentState is! VideoPlayerLoaded) return;
 
     try {
-      final seasonId = _animeDetail.pathToView?.split('/')[2];
+      final seasonId = _animeDetail.pathToView?.parseSeasonId();
       final currentSeason = _getCurrentSeason();
 
       await _updateSupabaseProgress(
@@ -198,21 +204,38 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }
 
   Future<void> loadEpisode(
-    ChapDataEntity episode, {
-    void Function()? onLoad,
-  }) async {
+    ChapDataEntity episode,
+  ) async {
     final currentState = state;
     if (currentState is! VideoPlayerLoaded) return;
-    onLoad?.call();
 
     _cancelToken?.cancel('Loading new episode');
     _cancelToken = CancelToken();
 
     try {
+      final singleProgress = await Supabase.instance.client
+          .rpc(
+            'get_single_progress',
+            params: {
+              'user_uid':
+                  'a3aaca2af18b3e54a02c1cfb727028935cca230889afe8b17cf4b3d9f3b66111',
+              'season_id': _animeDetail.pathToView?.parseSeasonId(),
+              'p_chap_id': episode.id,
+            },
+          )
+          .maybeSingle()
+          .onError((_, __) => null);
+
       await _prepareForNewEpisode();
       emit(currentState.copyWith(currentChap: episode));
 
       await _loadEpisodeData(episode, currentState.chaps);
+
+      if (singleProgress != null) {
+        await _playerController?.seekTo(
+          Duration(seconds: (singleProgress['cur'] as num).toInt()),
+        );
+      }
       await _playEpisode();
 
       await _loadEpisodeSkipInfo(episode);
@@ -242,10 +265,19 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
 
   Future<void> _initializeEpisode(
     ChapDataEntity episode,
-    List<ChapDataEntity> episodes,
-  ) async {
+    List<ChapDataEntity> episodes, {
+    num? initialPosition,
+  }) async {
     await _loadEpisodeData(episode, episodes);
     await _loadInitialSettings();
+
+    if (initialPosition != null) {
+      await _playerController?.seekTo(
+        Duration(
+          seconds: initialPosition.toInt(),
+        ),
+      );
+    }
     await _playEpisode();
 
     await _loadEpisodeSkipInfo(episode);

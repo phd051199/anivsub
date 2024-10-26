@@ -1,4 +1,4 @@
-import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class ChapCard extends StatelessWidget {
           ? context.theme.colorScheme.primaryContainer
           : context.theme.colorScheme.surfaceContainer,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Center(
           child: Text(
             chap.name,

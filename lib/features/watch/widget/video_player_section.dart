@@ -38,6 +38,7 @@ class VideoPlayerSection extends StatelessWidget {
     return VideoPlayerWidget(
       chaps: state.chaps!,
       detail: state.detail,
+      initialData: state.initialData,
       listEpisodeSkip: state.tabViewItems?.first?.listEpisode,
     );
   }

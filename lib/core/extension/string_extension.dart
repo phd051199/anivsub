@@ -32,6 +32,10 @@ extension StringExtension on String {
     return replaceAll('xem-phim.html', '');
   }
 
+  String parseSeasonId() {
+    return split('/')[2];
+  }
+
   String parseChapName() {
     final rSpace = RegExp(r' ');
     return 'tap-${_removeAccents()}'.toLowerCase().replaceAll(rSpace, '-');

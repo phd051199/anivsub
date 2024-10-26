@@ -43,9 +43,9 @@ dependencies:
   dio_cache_interceptor: ^3.5.0
   skeletonizer: ^1.4.2
   flutter_dotenv: ^5.2.1
-  dio_http2_adapter: ^2.5.3
   comment_tree: ^0.3.0
   flutter_inappwebview: ^6.1.5
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:

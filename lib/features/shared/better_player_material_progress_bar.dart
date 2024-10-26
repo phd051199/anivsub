@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
 import 'package:flutter/material.dart';

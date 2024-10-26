@@ -1,5 +1,5 @@
 import 'package:anivsub/core/base/base.dart';
-import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/core/utils/validator.dart';
 import 'package:anivsub/domain/entities/user_session_request_entity.dart';
 import 'package:anivsub/features/login/cubit/login_cubit.dart';

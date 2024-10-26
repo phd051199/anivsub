@@ -1,4 +1,4 @@
-import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/watch.dart';
 import 'package:anivsub/features/watch/widget/chapter_item.dart';

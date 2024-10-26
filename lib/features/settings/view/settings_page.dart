@@ -1,5 +1,5 @@
 import 'package:anivsub/core/base/base.dart';
-import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/features/settings/settings.dart';
 import 'package:anivsub/features/settings/widget/logout_widget.dart';
 import 'package:anivsub/features/settings/widget/theme_color_widget.dart';

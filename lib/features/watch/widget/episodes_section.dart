@@ -1,4 +1,4 @@
-import 'package:anivsub/core/shared/context_extension.dart';
+import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
@@ -65,8 +65,8 @@ class EpisodesSection extends StatelessWidget {
 
   Widget _buildTabBarView(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
-      height: 136,
+      padding: const EdgeInsets.all(16),
+      height: 128,
       child: TabBarView(
         controller: tabController,
         children: state.tabViewItems!.map((item) {
@@ -84,8 +84,8 @@ class EpisodesSection extends StatelessWidget {
 
   Widget _buildSingleSeasonView(BuildContext context) {
     return Container(
-      height: 136,
-      padding: const EdgeInsets.all(12),
+      height: 128,
+      padding: const EdgeInsets.all(16),
       child: _buildChapterHorizontal(
         context: context,
         chaps: state.chaps!,
@@ -105,12 +105,17 @@ class EpisodesSection extends StatelessWidget {
         GestureDetector(
           onTap: () => onEpisodeTap(context, chaps, state),
           child: ListTile(
-            contentPadding: const EdgeInsets.only(left: 6),
+            minTileHeight: 42,
+            contentPadding: const EdgeInsets.only(left: 4),
+            leading: Icon(
+              Icons.playlist_play_rounded,
+              color: context.theme.colorScheme.onSurface,
+            ),
             title: Text(
               context.l10n.episodeList,
-              style: context.textTheme.titleMedium!.copyWith(
+              style: context.textTheme.bodyMedium!.copyWith(
                 fontWeight: FontWeight.bold,
-                color: context.theme.colorScheme.secondary,
+                color: context.theme.colorScheme.onSurface,
               ),
             ),
             trailing: Row(
@@ -118,20 +123,22 @@ class EpisodesSection extends StatelessWidget {
               children: [
                 Text(
                   context.l10n.fullSeason,
-                  style: context.textTheme.bodyMedium,
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    color: context.theme.colorScheme.onSurface,
+                  ),
                 ),
-                const SizedBox(width: 4),
+                const SizedBox(width: 8),
                 const Icon(Icons.chevron_right),
               ],
             ),
           ),
         ),
         SizedBox(
-          height: 56,
+          height: 48,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: chaps.length,
-            separatorBuilder: (_, __) => const Gap(4),
+            separatorBuilder: (_, __) => const Gap(2),
             itemBuilder: (context, index) =>
                 _buildChapterItem(context, chaps[index], index, state),
           ),

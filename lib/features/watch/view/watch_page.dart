@@ -1,7 +1,7 @@
 import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/plugin/fb_comment.dart';
 import 'package:anivsub/core/shared/constants.dart';
-import 'package:anivsub/core/shared/string_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
 import 'package:anivsub/features/watch/watch.dart';
@@ -62,7 +62,6 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
       listener: _watchStateListener,
       builder: (context, state) => Scaffold(
         body: SafeArea(
-          bottom: false,
           child: state is WatchLoaded
               ? WatchContent(
                   state: state,

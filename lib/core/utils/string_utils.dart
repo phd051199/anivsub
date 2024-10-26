@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:anivsub/core/shared/string_extension.dart';
+import 'package:anivsub/core/extension/string_extension.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';

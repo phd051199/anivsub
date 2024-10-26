@@ -1,7 +1,6 @@
-import 'package:anivsub/core/shared/context_extension.dart';
-import 'package:anivsub/core/shared/number_extension.dart';
+import 'package:anivsub/core/extension/context_extension.dart';
+import 'package:anivsub/core/extension/number_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/features/shared/anime_list.dart';
 import 'package:anivsub/features/shared/loading_widget.dart';
 import 'package:anivsub/features/watch/widget/detail_section.dart';
 import 'package:anivsub/features/watch/widget/empty_player.dart';
@@ -44,27 +43,6 @@ class WatchSkeleton extends StatelessWidget {
               context,
               List.generate(6, (_) => ChapDataEntity.mockup()),
             ),
-          ),
-        ),
-        const Gap(4),
-        Skeletonizer(
-          enabled: true,
-          child: ExpansionTile(
-            tilePadding: const EdgeInsets.symmetric(horizontal: 14),
-            initiallyExpanded: true,
-            title: Text(
-              context.l10n.related,
-              style: context.textTheme.titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: AnimeList(
-                  movies: List.generate(3, (_) => AnimeDataEntity.mockup()),
-                ),
-              ),
-            ],
           ),
         ),
       ],
