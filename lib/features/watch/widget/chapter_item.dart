@@ -1,10 +1,10 @@
+import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
 import 'package:anivsub/features/watch/watch.dart';
 import 'package:anivsub/features/watch/widget/chap_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 class ChapterItem extends StatelessWidget {
   const ChapterItem({
@@ -22,11 +22,13 @@ class ChapterItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<VideoPlayerCubit>.value(
-      value: GetIt.I<VideoPlayerCubit>(),
+    return BlocProvider.value(
+      value: videoPlayerCubit,
       child: BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
         builder: (context, videoPlayerState) {
-          final isPlaying = _isChapterPlaying(videoPlayerState);
+          final isPlaying = videoPlayerState is VideoPlayerLoaded &&
+              videoPlayerState.currentChap.id == chap.id;
+
           return GestureDetector(
             onTap: () => onChapTap(context, isPlaying, chap, state),
             child: ChapCard(isPlaying: isPlaying, chap: chap),
@@ -34,13 +36,5 @@ class ChapterItem extends StatelessWidget {
         },
       ),
     );
-  }
-
-  bool _isChapterPlaying(VideoPlayerState state) {
-    final isThisChap =
-        state is VideoPlayerLoaded && state.currentChap.id == chap.id;
-    final isLoading = state is VideoPlayerLoading && index == 0;
-
-    return isThisChap || isLoading;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/plugin/fb_comment.dart';
 import 'package:anivsub/core/shared/constants.dart';
@@ -60,6 +61,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
+            bottom: false,
             child: state is WatchLoaded
                 ? WatchContent(
                     tabController: _tabController,
@@ -89,8 +91,9 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
 
   void _onRelatedItemTap(AnimeDataEntity anime) {
     _needUpdateTabIndex = true;
-    _tabController?.dispose();
     _tabController = null;
+    _tabController?.dispose();
+    videoPlayerCubit.close();
 
     bloc.add(InitWatch(id: anime.path));
   }

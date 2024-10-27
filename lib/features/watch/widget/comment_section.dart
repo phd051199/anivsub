@@ -1,5 +1,6 @@
 import 'dart:io' as io;
 
+import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/shared/constants.dart';
 import 'package:anivsub/core/utils/utils.dart';
@@ -8,12 +9,10 @@ import 'package:anivsub/features/watch/watch.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:comment_tree/comment_tree.dart';
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:gap/gap.dart';
-import 'package:get_it/get_it.dart';
 
 class CommentSection extends StatefulWidget {
   const CommentSection({super.key});
@@ -25,7 +24,6 @@ class CommentSection extends StatefulWidget {
 class _CommentSectionState extends State<CommentSection> {
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final _cookieJar = GetIt.I.get<CookieJar>();
 
   @override
   void initState() {
@@ -50,7 +48,7 @@ class _CommentSectionState extends State<CommentSection> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
 
-    return maxScroll == currentScroll;
+    return currentScroll == maxScroll;
   }
 
   void _loadMoreComments() {
@@ -63,7 +61,7 @@ class _CommentSectionState extends State<CommentSection> {
       onTap: context.focusScope.unfocus,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: context.screenSize.height,
+          maxHeight: context.screenSize.height * 0.6,
         ),
         child: ListView(
           controller: _scrollController,
@@ -77,62 +75,29 @@ class _CommentSectionState extends State<CommentSection> {
   }
 
   Widget _buildCommentInput() {
-    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
-
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundImage: state.fbUser?.thumbSrc != null
-                ? CachedNetworkImageProvider(state.fbUser!.thumbSrc!)
-                : null,
-            child: state.fbUser == null ? const Icon(Icons.person) : null,
-          ),
-          const Gap(8),
-          Expanded(
-            child: TextField(
-              controller: _textController,
-              decoration: InputDecoration(
-                hintText: context.l10n.commentHint,
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                suffixIcon: IconButton(
-                  onPressed: _handleCommentSubmission,
-                  icon: state.isCmtLoading
-                      ? const Icon(Icons.hourglass_bottom_rounded)
-                      : const Icon(Icons.send_rounded),
-                  color: context.theme.colorScheme.primary,
-                ),
-              ),
-              style: const TextStyle(fontSize: 14),
-              maxLines: null,
-              textInputAction: TextInputAction.newline,
-            ),
-          ),
-        ],
-      ),
+    return BlocBuilder<WatchBloc, WatchState>(
+      builder: (context, state) {
+        if (state is! WatchLoaded) return const SizedBox.shrink();
+        return CommentInputField(
+          state: state,
+          textController: _textController,
+          onSubmit: _handleCommentSubmission,
+        );
+      },
     );
   }
 
   Widget _buildCommentList() {
-    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
-
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: state.comments?.length ?? 0,
-      itemBuilder: (context, index) => _buildCommentTree(
-        state.comments![index],
-        key: UniqueKey(),
-      ),
+    return BlocBuilder<WatchBloc, WatchState>(
+      builder: (context, state) {
+        if (state is! WatchLoaded) return const SizedBox.shrink();
+        return CommentList(
+          comments: state.comments ?? [],
+          fbUser: state.fbUser,
+          onDeleteComment: _handleDeleteComment,
+          onLikeComment: _handleLikeComment,
+        );
+      },
     );
   }
 
@@ -140,27 +105,26 @@ class _CommentSectionState extends State<CommentSection> {
     if (!mounted) return;
 
     final state = context.read<WatchBloc>().state;
-    if (state is! WatchLoaded) return;
-    if (state.isCmtLoading) return;
+    if (state is! WatchLoaded || state.isCmtLoading) return;
+
+    await _ensureUserLoggedIn();
+
+    if (_textController.text.trim().isNotEmpty) {
+      final comment = _textController.text.trim();
+      _textController.clear();
+      _postComment(comment);
+    }
+  }
+
+  Future<void> _ensureUserLoggedIn() async {
+    await _silentlyLoadCookies();
 
     final webviewCookies = await CookieManager.instance().getCookies(
       url: WebUri(fbBaseUrl),
     );
 
-    if (webviewCookies.isEmpty ||
-        webviewCookies.firstWhereOrNull((cookie) => cookie.name == 'c_user') ==
-            null) {
+    if (!_isValidCookie(webviewCookies)) {
       _showLoginWebView();
-      return;
-    } else if (webviewCookies.isNotEmpty) {
-      await _silentlyLoadCookies();
-    }
-
-    if (_textController.text.trim().isNotEmpty) {
-      final comment = _textController.text.trim();
-      _textController.clear();
-
-      _postComment(comment);
     }
   }
 
@@ -171,14 +135,28 @@ class _CommentSectionState extends State<CommentSection> {
     }
   }
 
+  bool _isValidCookie(List<Cookie> webviewCookies) {
+    return webviewCookies.isNotEmpty &&
+        webviewCookies.firstWhereOrNull((cookie) => cookie.name == 'c_user') !=
+            null;
+  }
+
   Future<void> _silentlyLoadCookies() async {
-    final cookies = await CookieManager.instance().getCookies(
+    final webviewCookies = await CookieManager.instance().getCookies(
       url: WebUri(fbBaseUrl),
     );
-    await _cookieJar.saveFromResponse(
-      Uri.parse(fbBaseUrl),
-      cookies.map(_convertToIOCookie).toList(),
+
+    if (_isValidCookie(webviewCookies)) return;
+
+    final headlessWebView = HeadlessInAppWebView(
+      initialUrlRequest: URLRequest(url: WebUri(fbBaseUrl)),
+      onLoadStop: (controller, url) async {
+        await _getCookiesAndSetInDio();
+        controller.dispose();
+      },
     );
+
+    await headlessWebView.run();
   }
 
   void _showLoginWebView() {
@@ -187,21 +165,14 @@ class _CommentSectionState extends State<CommentSection> {
         clipBehavior: Clip.hardEdge,
         isScrollControlled: true,
         context: context,
-        builder: (context) => _buildWebView(context),
+        builder: (context) => LoginWebView(
+          onLoadStop: _handleWebViewLoadStop,
+        ),
         constraints: BoxConstraints(
           maxHeight: context.screenSize.height * 0.75,
         ),
       );
     }
-  }
-
-  Widget _buildWebView(BuildContext context) {
-    return InAppWebView(
-      initialUrlRequest: URLRequest(url: WebUri(fbBaseUrl)),
-      initialSettings: InAppWebViewSettings(),
-      onLoadStop: (controller, url) =>
-          _handleWebViewLoadStop(controller, context),
-    );
   }
 
   Future<void> _handleWebViewLoadStop(
@@ -232,7 +203,7 @@ class _CommentSectionState extends State<CommentSection> {
           await CookieManager.instance().getCookies(url: WebUri(fbBaseUrl));
 
       if (cookies.isNotEmpty) {
-        await _cookieJar.saveFromResponse(
+        await cookieJar.saveFromResponse(
           Uri.parse(fbBaseUrl),
           cookies.map(_convertToIOCookie).toList(),
         );
@@ -253,21 +224,123 @@ class _CommentSectionState extends State<CommentSection> {
       ..secure = cookie.isSecure ?? false;
   }
 
-  String getImageNameFromUrl(String url) {
-    final uri = Uri.parse(url);
-    final pathSegments = uri.pathSegments;
-    if (pathSegments.isNotEmpty) {
-      return pathSegments.last;
+  void _handleDeleteComment(String commentId) {
+    if (mounted) {
+      context.read<WatchBloc>().add(DeleteComment(commentId: commentId));
     }
-    return '';
   }
 
-  Widget _buildCommentTree(CommentEntity comment, {required Key key}) {
-    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+  void _handleLikeComment(String commentId) {
+    if (mounted) {
+      context.read<WatchBloc>().add(LikeComment(commentId: commentId));
+    }
+  }
+}
 
-    final selfComment = comment.authorName == state.fbUser?.name &&
+class CommentInputField extends StatelessWidget {
+  const CommentInputField({
+    super.key,
+    required this.state,
+    required this.textController,
+    required this.onSubmit,
+  });
+  final WatchLoaded state;
+  final TextEditingController textController;
+  final VoidCallback onSubmit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 20,
+            backgroundImage: state.fbUser?.thumbSrc != null
+                ? CachedNetworkImageProvider(state.fbUser!.thumbSrc!)
+                : null,
+            child: state.fbUser == null ? const Icon(Icons.person) : null,
+          ),
+          const Gap(8),
+          Expanded(
+            child: TextField(
+              controller: textController,
+              decoration: InputDecoration(
+                hintText: context.l10n.commentHint,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                suffixIcon: IconButton(
+                  onPressed: onSubmit,
+                  icon: state.isCmtLoading
+                      ? const Icon(Icons.hourglass_bottom_rounded)
+                      : const Icon(Icons.send_rounded),
+                  color: context.theme.colorScheme.primary,
+                ),
+              ),
+              style: const TextStyle(fontSize: 14),
+              maxLines: null,
+              textInputAction: TextInputAction.newline,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CommentList extends StatelessWidget {
+  const CommentList({
+    super.key,
+    required this.comments,
+    required this.fbUser,
+    required this.onDeleteComment,
+    required this.onLikeComment,
+  });
+  final List<CommentEntity> comments;
+  final ActorEntity? fbUser;
+  final Function(String) onDeleteComment;
+  final Function(String) onLikeComment;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: comments.length,
+      itemBuilder: (context, index) => CommentTreeItem(
+        comment: comments[index],
+        fbUser: fbUser,
+        onDeleteComment: onDeleteComment,
+        onLikeComment: onLikeComment,
+      ),
+    );
+  }
+}
+
+class CommentTreeItem extends StatelessWidget {
+  const CommentTreeItem({
+    super.key,
+    required this.comment,
+    required this.fbUser,
+    required this.onDeleteComment,
+    required this.onLikeComment,
+  });
+  final CommentEntity comment;
+  final ActorEntity? fbUser;
+  final Function(String) onDeleteComment;
+  final Function(String) onLikeComment;
+
+  @override
+  Widget build(BuildContext context) {
+    final selfComment = comment.authorName == fbUser?.name &&
         getImageNameFromUrl(comment.authorThumbSrc) ==
-            getImageNameFromUrl(state.fbUser?.thumbSrc ?? '');
+            getImageNameFromUrl(fbUser?.thumbSrc ?? '');
 
     Widget commentWidget = CommentTreeWidget<CommentEntity, CommentEntity>(
       comment,
@@ -292,7 +365,7 @@ class _CommentSectionState extends State<CommentSection> {
 
     if (selfComment) {
       return Dismissible(
-        key: key,
+        key: ValueKey(comment.id),
         direction: DismissDirection.endToStart,
         background: Container(
           alignment: Alignment.centerRight,
@@ -305,19 +378,8 @@ class _CommentSectionState extends State<CommentSection> {
             ),
           ),
         ),
-        confirmDismiss: (direction) async {
-          if (state.isCmtLoading) {
-            context.showSnackBar('Please wait...');
-
-            return false;
-          }
-          return true;
-        },
-        onDismissed: (direction) {
-          if (mounted && !state.isCmtLoading) {
-            context.read<WatchBloc>().add(DeleteComment(commentId: comment.id));
-          }
-        },
+        confirmDismiss: (direction) async => true,
+        onDismissed: (direction) => onDeleteComment(comment.id),
         child: commentWidget,
       );
     }
@@ -383,9 +445,7 @@ class _CommentSectionState extends State<CommentSection> {
                 Text(data.timestamp),
                 const Gap(12),
                 GestureDetector(
-                  onTap: () => context
-                      .read<WatchBloc>()
-                      .add(LikeComment(commentId: data.id)),
+                  onTap: () => onLikeComment(data.id),
                   child: Row(
                     children: [
                       Icon(
@@ -408,6 +468,29 @@ class _CommentSectionState extends State<CommentSection> {
           ),
         ),
       ],
+    );
+  }
+
+  String getImageNameFromUrl(String url) {
+    final uri = Uri.parse(url);
+    final pathSegments = uri.pathSegments;
+    if (pathSegments.isNotEmpty) {
+      return pathSegments.last;
+    }
+    return '';
+  }
+}
+
+class LoginWebView extends StatelessWidget {
+  const LoginWebView({super.key, required this.onLoadStop});
+  final Function(InAppWebViewController, BuildContext) onLoadStop;
+
+  @override
+  Widget build(BuildContext context) {
+    return InAppWebView(
+      initialUrlRequest: URLRequest(url: WebUri(fbBaseUrl)),
+      initialSettings: InAppWebViewSettings(),
+      onLoadStop: (controller, url) => onLoadStop(controller, context),
     );
   }
 }

@@ -128,12 +128,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<VideoPlayerCubit, VideoPlayerState>(
-      listener: (context, state) {
-        if (state is VideoPlayerError) {
-          context.showSnackBar(state.message);
-        }
-      },
+    return BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
       builder: (context, state) => switch (state) {
         VideoPlayerInitial() || VideoPlayerLoading() => const EmptyPlayer(
             child: LoadingWidget(color: Colors.white),

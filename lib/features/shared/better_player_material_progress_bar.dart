@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:river_player/river_player.dart';
 import 'package:river_player/src/video_player/video_player.dart';
 import 'package:river_player/src/video_player/video_player_platform_interface.dart';
@@ -71,7 +71,7 @@ class _VideoProgressBarState
       onHorizontalDragEnd: _onDragEnd,
       onTapDown: _onTapDown,
       child: BlocProvider<VideoPlayerCubit>.value(
-        value: GetIt.I<VideoPlayerCubit>(),
+        value: videoPlayerCubit,
         child: BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
           builder: _buildProgressBar,
         ),

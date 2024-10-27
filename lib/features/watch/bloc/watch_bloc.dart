@@ -44,7 +44,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   final GetListEpisodeUseCase _episodeListUseCase;
   final SharedPreferenceService _sharedPreferenceService;
   final AuthUseCases _authUseCases;
-  final CancelToken _cancelToken = CancelToken();
+  final CancelToken cancelToken = CancelToken();
   late FBCommentPlugin _fbCommentPlugin;
   late String _afterCursor = '';
 
@@ -463,14 +463,14 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
 
   Future<AnimeDetailEntity> _fetchDetailData(String id) async {
     final output = await _getAnimeDetailUseCase.send(
-      GetAnimeDetailUseCaseInput(id: id, cancelToken: _cancelToken),
+      GetAnimeDetailUseCaseInput(id: id, cancelToken: cancelToken),
     );
     return output.result;
   }
 
   Future<List<ChapDataEntity>> _fetchChaps(String id) async {
     final playDataOutput = await _getPlayDataUseCase.send(
-      GetPlayDataUseCaseInput(id: id, cancelToken: _cancelToken),
+      GetPlayDataUseCaseInput(id: id, cancelToken: cancelToken),
     );
     return playDataOutput.result.chaps;
   }
@@ -479,7 +479,10 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     final currentState = state;
     if (currentState is! WatchLoaded) return;
 
-    final newState = currentState.copyWith(detail: event.animeDetail);
+    final newState = currentState.copyWith(
+      detail: event.animeDetail,
+      initialData: null,
+    );
     emit(newState);
 
     List<CommentEntity>? comments;
@@ -514,7 +517,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     try {
       final names = _extractAnimeNames(detail);
       final listEpisodeOutput = await _episodeListUseCase.send(
-        GetListEpisodeUseCaseInput(animeName: names, cancelToken: _cancelToken),
+        GetListEpisodeUseCaseInput(animeName: names, cancelToken: cancelToken),
       );
       return listEpisodeOutput.result;
     } catch (e) {
@@ -532,7 +535,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
 
   @override
   Future<void> close() async {
-    _cancelToken.cancel('WatchBloc closed');
+    cancelToken.cancel('WatchBloc closed');
     super.close();
   }
 }

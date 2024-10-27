@@ -3,9 +3,11 @@ import 'package:anivsub/domain/usecases/app_settings_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
 part 'theme_state.dart';
 
+@injectable
 class ThemeCubit extends Cubit<ThemeState> {
   ThemeCubit(this.appSettingsUseCases)
       : super(ThemeInitial(AppSettingsEntity.initial())) {

@@ -22,13 +22,6 @@ class AuthNotifier with ChangeNotifier {
   bool get isLogged =>
       _loginResponseEntity != null && _tokenName != null && _tokenValue != null;
 
-  String? get uid {
-    if (_loginResponseEntity == null) return null;
-    final email = _loginResponseEntity!.email!;
-    final name = _loginResponseEntity!.firstName!;
-    return sha256.convert(utf8.encode(email + name)).toString();
-  }
-
   Future<void> doLogin(UserSessionResponseEntity? loginResponseEntity) async {
     if (loginResponseEntity == null) {
       doLogout();

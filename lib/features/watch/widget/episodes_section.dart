@@ -161,7 +161,7 @@ class EpisodesSection extends StatelessWidget {
     WatchLoaded state,
   ) {
     final videoPlayerState = context.watch<VideoPlayerCubit>().state;
-    final isPlaying = _isChapterPlaying(videoPlayerState, chap, index);
+    final isPlaying = _isChapterPlaying(context, videoPlayerState, chap, index);
 
     return GestureDetector(
       onTap: () => onChapTap(context, isPlaying, chap, state),
@@ -170,12 +170,20 @@ class EpisodesSection extends StatelessWidget {
   }
 
   bool _isChapterPlaying(
+    BuildContext context,
     VideoPlayerState state,
     ChapDataEntity chap,
     int index,
   ) {
-    return (state is VideoPlayerLoaded && state.currentChap.id == chap.id) ||
-        (state is VideoPlayerLoading && index == 0);
+    if (state is VideoPlayerLoaded && state.currentChap.id == chap.id) {
+      return true;
+    }
+    final initialData =
+        context.watchTypedState<WatchBloc, WatchLoaded>().initialData;
+    if (initialData == null) {
+      return state is VideoPlayerInitial && index == 0;
+    }
+    return initialData.initialChap?.id == chap.id;
   }
 
   Widget _buildChapCard(

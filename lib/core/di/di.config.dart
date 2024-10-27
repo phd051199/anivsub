@@ -14,6 +14,7 @@ import 'package:anivsub/core/service/flutter_secure_storage_service.dart'
     as _i723;
 import 'package:anivsub/core/service/location_service.dart' as _i260;
 import 'package:anivsub/core/service/shared_preferences_service.dart' as _i595;
+import 'package:anivsub/core/theme/cubit/theme_cubit.dart' as _i477;
 import 'package:anivsub/data/data_exports.dart' as _i987;
 import 'package:anivsub/data/datasources/local/app_settings_local_data_source.dart'
     as _i306;
@@ -121,6 +122,8 @@ extension GetItInjectableX on _i174.GetIt {
                 gh<_i306.AppSettingsLocalDataSource>()));
     gh.singleton<_i268.AppSettingsUseCases>(() =>
         _i268.AppSettingsUseCases(gh<_i104.AppSettingsLocalRepository>()));
+    gh.factory<_i477.ThemeCubit>(
+        () => _i477.ThemeCubit(gh<_i268.AppSettingsUseCases>()));
     gh.lazySingleton<_i772.AnimeRepository>(() => _i728.AnimeRepositoryImpl(
           gh<_i987.AnimeRemoteDataSource>(),
           gh<_i987.DecryptHlsService>(),

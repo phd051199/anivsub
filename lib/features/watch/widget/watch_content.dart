@@ -1,4 +1,4 @@
-import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/plugin/fb_comment.dart';
 import 'package:anivsub/domain/domain_exports.dart';
@@ -10,8 +10,9 @@ import 'package:anivsub/features/watch/widget/episodes_section.dart';
 import 'package:anivsub/features/watch/widget/related_section.dart';
 import 'package:anivsub/features/watch/widget/video_player_section.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WatchContent extends StatefulWidget {
+class WatchContent extends StatelessWidget {
   const WatchContent({
     super.key,
     required this.tabController,
@@ -36,36 +37,35 @@ class WatchContent extends StatefulWidget {
   final String? tag;
 
   @override
-  State<WatchContent> createState() => _WatchContentState();
-}
-
-class _WatchContentState extends CubitState<WatchContent, VideoPlayerCubit> {
-  @override
-  Widget buildPage(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          VideoPlayerSection(tag: widget.tag),
-          DefaultTabController(
-            length: 3,
-            child: Column(
-              children: [
-                _buildTabBar(context),
-                SizedBox(
-                  height: context.screenSize.height,
-                  child: TabBarView(
-                    children: [
-                      _buildDetailTab(),
-                      _buildCommentTabContent(),
-                      _buildRelatedTabContent(),
-                    ],
+  Widget build(BuildContext context) {
+    return BlocProvider<VideoPlayerCubit>.value(
+      value: videoPlayerCubit,
+      child: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            VideoPlayerSection(tag: tag),
+            DefaultTabController(
+              length: 3,
+              child: Column(
+                children: [
+                  _buildTabBar(context),
+                  SizedBox(
+                    height: context.screenSize.height * 0.6,
+                    child: TabBarView(
+                      children: [
+                        _buildDetailTab(context),
+                        _buildCommentTabContent(),
+                        _buildRelatedTabContent(),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -144,21 +144,21 @@ class _WatchContentState extends CubitState<WatchContent, VideoPlayerCubit> {
     );
   }
 
-  Widget _buildDetailTab() {
+  Widget _buildDetailTab(BuildContext context) {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
           child: DetailSection(
-            onTap: widget.showDetailBottomSheet,
+            onTap: showDetailBottomSheet,
           ),
         ),
         SliverToBoxAdapter(
           child: EpisodesSection(
-            tabController: widget.tabController,
-            currentTabIndex: widget.currentTabIndex,
-            onTabChange: widget.onTabChange,
-            onEpisodeTap: widget.onEpisodeTap,
-            onChapTap: widget.onChapTap,
+            tabController: tabController,
+            currentTabIndex: currentTabIndex,
+            onTabChange: onTabChange,
+            onEpisodeTap: onEpisodeTap,
+            onChapTap: onChapTap,
           ),
         ),
       ],
@@ -174,7 +174,7 @@ class _WatchContentState extends CubitState<WatchContent, VideoPlayerCubit> {
   Widget _buildRelatedTabContent() {
     return SingleChildScrollView(
       child: RelatedSection(
-        onTap: widget.onRelatedItemTap,
+        onTap: onRelatedItemTap,
       ),
     );
   }

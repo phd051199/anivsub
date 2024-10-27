@@ -3,16 +3,14 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/string_extension.dart';
-import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:get_it/get_it.dart';
 
 class FBCommentPlugin {
   FBCommentPlugin({required this.config});
 
-  final FbApiClient _fbApiClient = GetIt.I.get<FbApiClient>();
   FbCommentPluginConfig config;
   SetupDataDTO? _setupData;
   ActorEntity? loginUser;
@@ -50,7 +48,7 @@ class FBCommentPlugin {
     );
 
     final mainUrl = '$url?${Uri(queryParameters: queries.toJson()).query}';
-    final html = await _fbApiClient.getFeedback(queries);
+    final html = await fbApiClient.getFeedback(queries);
 
     final initResponse = _parseInitialComments(html);
     final setupParams = _extractSetupParams(html);
@@ -134,7 +132,7 @@ class FBCommentPlugin {
 
     final headers = setup.headers;
 
-    final data = await _fbApiClient.postComment(
+    final data = await fbApiClient.postComment(
       setup.setupParams.targetID ?? '',
       body,
       headers.xFbLsd,
@@ -178,7 +176,7 @@ class FBCommentPlugin {
 
     body['comment_id'] = commentId;
 
-    await _fbApiClient.deleteComment(loginUser?.id ?? '', body);
+    await fbApiClient.deleteComment(loginUser?.id ?? '', body);
   }
 
   Future<void> likeComment(String commentId, bool isLike) async {
@@ -206,12 +204,7 @@ class FBCommentPlugin {
 
     body['comment_id'] = commentId;
 
-    final response =
-        await _fbApiClient.likeComment(isLike, loginUser?.id ?? '', body);
-
-    final json = response.parseRT();
-
-    Log.debug(json);
+    await fbApiClient.likeComment(isLike, loginUser?.id ?? '', body);
   }
 
   Future<CommentDataEntity> getMoreComments([String? afterCursor]) async {
@@ -242,7 +235,7 @@ class FBCommentPlugin {
     final headers = setup.headers;
 
     try {
-      final data = await _fbApiClient.getComments(
+      final data = await fbApiClient.getComments(
         setup.setupParams.targetID ?? '',
         config.orderBy,
         body,
@@ -268,7 +261,6 @@ class FBCommentPlugin {
         comments: parsedComments,
       );
     } catch (e) {
-      Log.debug(e);
       return const CommentDataEntity();
     }
   }
