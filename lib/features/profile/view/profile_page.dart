@@ -30,7 +30,7 @@ class _ProfilePageState extends CubitState<ProfilePage, ProfileCubit> {
         onRefresh: cubit.getUser,
         child: switch (state) {
           ProfileInitial() || ProfileLoading() => const LoadingWidget(),
-          ProfileLoaded() => ProfileContent(state: state),
+          ProfileLoaded() => const ProfileContent(),
           _ => Container(),
         },
       ),
@@ -38,16 +38,4 @@ class _ProfilePageState extends CubitState<ProfilePage, ProfileCubit> {
   }
 }
 
-Map<DateTime, List<dynamic>> groupHistoryByDate(List<dynamic> history) {
-  final groupedMap = <DateTime, List<dynamic>>{};
-  for (var item in history) {
-    if (item is Map<String, dynamic>) {
-      final date = DateTime.parse(item['created_at']).toLocal();
-      final dateWithoutTime = DateTime(date.year, date.month, date.day);
-      groupedMap.putIfAbsent(dateWithoutTime, () => []).add(item);
-    }
-  }
-  return Map.fromEntries(
-    groupedMap.entries.toList()..sort((a, b) => b.key.compareTo(a.key)),
-  );
-}
+

@@ -5,7 +5,7 @@ import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/plugin/fb_comment.dart';
 import 'package:anivsub/core/service/shared_preferences_service.dart';
 import 'package:anivsub/core/shared/constants.dart';
-import 'package:anivsub/core/utils/log_utils.dart';
+import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
@@ -26,6 +26,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     this._getAnimeDetailUseCase,
     this._episodeListUseCase,
     this._sharedPreferenceService,
+    this._authUseCases,
   ) : super(const WatchInitial()) {
     on<InitWatch>(_onInitWatch);
     on<LoadWatch>(_onLoadWatch);
@@ -42,31 +43,51 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   final GetAnimeDetailUseCase _getAnimeDetailUseCase;
   final GetListEpisodeUseCase _episodeListUseCase;
   final SharedPreferenceService _sharedPreferenceService;
-
+  final AuthUseCases _authUseCases;
   final CancelToken _cancelToken = CancelToken();
   late FBCommentPlugin _fbCommentPlugin;
   late String _afterCursor = '';
 
   Future<void> _onInitWatch(InitWatch event, Emitter<WatchState> emit) async {
     emit(const WatchLoading());
-    _fbCommentPlugin = event.fbCommentPlugin!;
+
+    _initializeFbCommentPlugin(event);
 
     try {
-      final (initResponse, animeDetail) = await _fetchInitialData(event.id);
-      _afterCursor = initResponse.meta?.afterCursor ?? '';
+      final (commentData, animeDetail) = await _fetchInitialData(event.id);
+      _updateAfterCursor(commentData);
 
-      emit(
-        WatchLoaded(
-          detail: animeDetail,
-          comments: initResponse.comments,
-          totalCommentCount: initResponse.meta?.totalCount,
-          fbUser: _fbCommentPlugin.loginUser,
-        ),
-      );
+      emit(_createWatchLoadedState(commentData, animeDetail));
       add(LoadWatch(id: event.id));
     } catch (e) {
       emit(WatchError(e.toString()));
     }
+  }
+
+  void _initializeFbCommentPlugin(InitWatch event) {
+    if (event.fbCommentPlugin != null) {
+      _fbCommentPlugin = event.fbCommentPlugin!;
+    } else {
+      _fbCommentPlugin.updateUrlAndGetComments(
+        '$ogHostCurl/phim/-${event.id.extractId()}/',
+      );
+    }
+  }
+
+  void _updateAfterCursor(CommentDataEntity commentData) {
+    _afterCursor = commentData.meta?.afterCursor ?? '';
+  }
+
+  WatchLoaded _createWatchLoadedState(
+    CommentDataEntity commentData,
+    AnimeDetailEntity animeDetail,
+  ) {
+    return WatchLoaded(
+      detail: animeDetail,
+      comments: commentData.comments,
+      totalCommentCount: commentData.meta?.totalCount,
+      fbUser: _fbCommentPlugin.loginUser,
+    );
   }
 
   Future<(CommentDataEntity, AnimeDetailEntity)> _fetchInitialData(
@@ -88,18 +109,15 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     Emitter<WatchState> emit,
   ) async {
     final currentState = state;
-    if (currentState is! WatchLoaded) {
-      return;
-    }
+    if (currentState is! WatchLoaded) return;
+
     final result = await _fbCommentPlugin.setup(force: true);
     final fbUser = result
         .initResponse.meta?.actors?[result.initResponse.meta?.userId]
         ?.toEntity();
 
     emit(
-      currentState.copyWith(
-        fbUser: fbUser,
-      ),
+      currentState.copyWith(fbUser: fbUser),
     );
   }
 
@@ -108,13 +126,8 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     Emitter<WatchState> emit,
   ) async {
     final currentState = state;
-    if (currentState is! WatchLoaded) {
-      return;
-    }
-
-    if (currentState.isCmtLoading) {
-      return;
-    }
+    if (currentState is! WatchLoaded) return;
+    if (currentState.isCmtLoading) return;
 
     try {
       final loadingState = currentState.copyWith(isCmtLoading: true);
@@ -249,7 +262,9 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     try {
       await _fbCommentPlugin.deleteComment(event.commentId);
 
-      emit(updatedState.copyWith(isCmtLoading: false));
+      emit(
+        updatedState.copyWith(isCmtLoading: false),
+      );
     } catch (e) {
       Log.debug('Error deleting comment: $e');
     }
@@ -264,8 +279,9 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       authorName: _fbCommentPlugin.loginUser?.name ?? '',
       authorThumbSrc: _fbCommentPlugin.loginUser?.thumbSrc ?? '',
       body: commentBody,
-      timestamp:
-          DateFormat('dd \'tháng\' MM \'lúc\' HH:mm').format(DateTime.now()),
+      timestamp: DateFormat('dd \'tháng\' MM \'lúc\' HH:mm').format(
+        DateTime.now(),
+      ),
       likeCount: 0,
     );
   }
@@ -283,7 +299,9 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
 
   Future<void> _onLoadWatch(LoadWatch event, Emitter<WatchState> emit) async {
     try {
-      final currentState = state as WatchLoaded;
+      final currentState = state;
+      if (currentState is! WatchLoaded) return;
+
       final (chaps, listEpisodeSkip) = await _fetchAnimeData(
         event.id,
         currentState.detail,
@@ -296,12 +314,13 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       );
 
       final seasonId = currentState.detail.pathToView?.parseSeasonId();
+      final authUser = await _authUseCases.getLocalUserSession();
+
       final latestChap = await Supabase.instance.client
           .rpc(
             'get_last_chap',
             params: {
-              'user_uid':
-                  'a3aaca2af18b3e54a02c1cfb727028935cca230889afe8b17cf4b3d9f3b66111',
+              'user_uid': authUser.id,
               'season_id': seasonId,
             },
           )
@@ -340,14 +359,17 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     final currentState = state;
     if (currentState is! WatchLoaded) return;
 
-    final newIndex =
-        currentState.detail.season.indexWhere((item) => item.path == event.id);
+    final newIndex = currentState.detail.season.indexWhere(
+      (item) => item.path == event.id,
+    );
     if (!_shouldUpdateTab(currentState, newIndex)) return;
 
     try {
       final animeDetail = await _fetchDetailData(event.id);
-      final (chaps, listEpisodeSkip) =
-          await _fetchAnimeData(event.id, animeDetail);
+      final (chaps, listEpisodeSkip) = await _fetchAnimeData(
+        event.id,
+        animeDetail,
+      );
       final updatedTabViewItems = _updateChapterLists(
         currentState,
         newIndex,
@@ -382,15 +404,20 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       null,
       growable: true,
     );
-    final currentIndex =
-        animeDetail.season.indexWhere((item) => item.path == currentId);
+    final currentIndex = animeDetail.season.indexWhere(
+      (item) => item.path == currentId,
+    );
 
     if (currentIndex != -1) {
-      chapterLists[currentIndex] =
-          _createTabViewItem(currentChaps, animeDetail, listEpisodeSkip);
+      chapterLists[currentIndex] = _createTabViewItem(
+        currentChaps,
+        animeDetail,
+        listEpisodeSkip,
+      );
     } else {
-      chapterLists
-          .add(_createTabViewItem(currentChaps, animeDetail, listEpisodeSkip));
+      chapterLists.add(
+        _createTabViewItem(currentChaps, animeDetail, listEpisodeSkip),
+      );
     }
 
     return chapterLists;
@@ -462,9 +489,9 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
 
     if (href != _fbCommentPlugin.config.href) {
       try {
-        final initResponse =
-            await _fbCommentPlugin.updateUrlAndGetComments(href);
-
+        final initResponse = await _fbCommentPlugin.updateUrlAndGetComments(
+          href,
+        );
         _afterCursor = initResponse.meta?.afterCursor ?? '';
         comments = initResponse.comments ?? [];
         totalCommentCount = initResponse.meta?.totalCount ?? 0;
@@ -508,16 +535,4 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     _cancelToken.cancel('WatchBloc closed');
     super.close();
   }
-}
-
-class TabViewItem {
-  TabViewItem({
-    required this.chaps,
-    required this.animeDetail,
-    required this.listEpisode,
-  });
-
-  final List<ChapDataEntity> chaps;
-  final AnimeDetailEntity animeDetail;
-  final ListEpisodeResponseEntity? listEpisode;
 }

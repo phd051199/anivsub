@@ -1,6 +1,5 @@
 import 'package:anivsub/core/routes/go_router_config.dart';
-import 'package:anivsub/core/utils/image_url_utils.dart';
-import 'package:anivsub/core/utils/string_utils.dart';
+import 'package:anivsub/core/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -43,7 +42,7 @@ class HistoryItem extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(
-          formatTimestamp(item['created_at']),
+          StringUtils.formatTimestamp(item['created_at']),
           style: const TextStyle(fontSize: 14),
         ),
       ),

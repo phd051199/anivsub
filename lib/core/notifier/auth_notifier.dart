@@ -39,6 +39,16 @@ class AuthNotifier with ChangeNotifier {
     //   doLogout();
     //   return;
     // }
+    loginResponseEntity = loginResponseEntity.copyWith(
+      id: sha256
+          .convert(
+            utf8.encode(
+              loginResponseEntity.email! + loginResponseEntity.username!,
+            ),
+          )
+          .toString(),
+    );
+
     await authUseCases.setLocalAuthToken(loginResponseEntity);
     _loginResponseEntity = loginResponseEntity;
     _status = AuthStatus.authenticated;
@@ -46,9 +56,9 @@ class AuthNotifier with ChangeNotifier {
   }
 
   Future<void> checkToken() async {
-    final data = await authUseCases.getLocalUserSession();
-    data.when(
-      (data) {
+    try {
+      final data = await authUseCases.getLocalUserSession();
+      if (data.email != null) {
         if (data.email != null) {
           _loginResponseEntity = data;
           _status = AuthStatus.authenticated;
@@ -56,9 +66,10 @@ class AuthNotifier with ChangeNotifier {
         } else {
           doLogout();
         }
-      },
-      (error) => doLogout(),
-    );
+      }
+    } catch (e) {
+      doLogout();
+    }
   }
 
   Future<void> refreshAuthToken() async {
@@ -99,16 +110,8 @@ class AuthNotifier with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
-    final response = await authUseCases.getLocalUserSession();
-    response.when(
-      (data) async {
-        await doLogin(data);
-        // _setTokenFromCookie(data.cookie);
-      },
-      (error) {
-        // Handle login error
-      },
-    );
+    final data = await authUseCases.getLocalUserSession();
+    await doLogin(data);
   }
 }
 

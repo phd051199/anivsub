@@ -1,5 +1,4 @@
-import 'package:anivsub/core/utils/log_utils.dart';
-import 'package:anivsub/core/utils/string_utils.dart';
+import 'package:anivsub/core/utils/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 
@@ -18,7 +17,7 @@ class CacheRefreshInterceptor extends Interceptor {
       return super.onResponse(response, handler);
     }
 
-    final key = cacheKeyBuilder(response.requestOptions);
+    final key = StringUtils.cacheKeyBuilder(response.requestOptions);
 
     if (!_refreshingKeys.containsKey(key)) {
       _refreshingKeys[key] = true;

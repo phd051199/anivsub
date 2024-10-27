@@ -11,7 +11,6 @@ import 'package:anivsub/features/watch/widget/watch_content.dart';
 import 'package:anivsub/features/watch/widget/watch_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 class WatchPage extends StatefulWidget {
   const WatchPage({super.key, required this.path, this.tag});
@@ -28,19 +27,18 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   int _currentTabIndex = 0;
   bool _needUpdateTabIndex = false;
   late FBCommentPlugin _fbCommentPlugin;
-  final videoPlayerCubit = GetIt.I.get<VideoPlayerCubit>();
 
   @override
   void initState() {
     super.initState();
+
     _fbCommentPlugin = FBCommentPlugin(
       config: FbCommentPluginConfig(
         href: '$ogHostCurl/phim/-${widget.path.extractId()}/',
-        locale: 'vi_VN',
         app: ogHostCurl,
-        limit: 10,
       ),
     );
+
     bloc.add(
       InitWatch(
         id: widget.path,
@@ -52,7 +50,6 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   @override
   void dispose() {
     _tabController?.dispose();
-    videoPlayerCubit.close();
     super.dispose();
   }
 
@@ -60,24 +57,25 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   Widget buildPage(BuildContext context) {
     return BlocConsumer<WatchBloc, WatchState>(
       listener: _watchStateListener,
-      builder: (context, state) => Scaffold(
-        body: SafeArea(
-          child: state is WatchLoaded
-              ? WatchContent(
-                  state: state,
-                  tabController: _tabController,
-                  currentTabIndex: _currentTabIndex,
-                  onTabChange: _onTabChange,
-                  onEpisodeTap: _onEpisodeTap,
-                  onChapTap: _onChapTap,
-                  onRelatedItemTap: _onRelatedItemTap,
-                  showDetailBottomSheet: _showDetailBottomSheet,
-                  tag: widget.tag,
-                  fbCommentPlugin: _fbCommentPlugin,
-                )
-              : WatchSkeleton(tag: widget.tag),
-        ),
-      ),
+      builder: (context, state) {
+        return Scaffold(
+          body: SafeArea(
+            child: state is WatchLoaded
+                ? WatchContent(
+                    tabController: _tabController,
+                    currentTabIndex: _currentTabIndex,
+                    onTabChange: _onTabChange,
+                    onEpisodeTap: _onEpisodeTap,
+                    onChapTap: _onChapTap,
+                    onRelatedItemTap: _onRelatedItemTap,
+                    showDetailBottomSheet: _showDetailBottomSheet,
+                    tag: widget.tag,
+                    fbCommentPlugin: _fbCommentPlugin,
+                  )
+                : WatchSkeleton(tag: widget.tag),
+          ),
+        );
+      },
     );
   }
 
@@ -90,7 +88,6 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   }
 
   void _onRelatedItemTap(AnimeDataEntity anime) {
-    videoPlayerCubit.dispose();
     _needUpdateTabIndex = true;
     _tabController?.dispose();
     _tabController = null;
@@ -187,7 +184,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
 
     bloc.add(ChangeEpisode(animeDetail: currentChaps.animeDetail));
 
-    videoPlayerCubit
+    context.read<VideoPlayerCubit>()
       ..updateEpisodeList(
         currentChaps.chaps,
         currentChaps.listEpisode,

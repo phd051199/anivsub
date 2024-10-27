@@ -2,10 +2,11 @@ import 'dart:io' as io;
 
 import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/shared/constants.dart';
-import 'package:anivsub/core/utils/log_utils.dart';
+import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/watch.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:collection/collection.dart';
 import 'package:comment_tree/comment_tree.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +16,7 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
 class CommentSection extends StatefulWidget {
-  const CommentSection({
-    super.key,
-    required this.state,
-  });
-
-  final WatchLoaded state;
+  const CommentSection({super.key});
 
   @override
   State<CommentSection> createState() => _CommentSectionState();
@@ -29,6 +25,7 @@ class CommentSection extends StatefulWidget {
 class _CommentSectionState extends State<CommentSection> {
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final _cookieJar = GetIt.I.get<CookieJar>();
 
   @override
   void initState() {
@@ -45,10 +42,7 @@ class _CommentSectionState extends State<CommentSection> {
   }
 
   void _onScroll() {
-    if (_isAtBottom) {
-      Log.debug('Near bottom of comment list');
-      _loadMoreComments();
-    }
+    if (_isAtBottom) _loadMoreComments();
   }
 
   bool get _isAtBottom {
@@ -83,17 +77,18 @@ class _CommentSectionState extends State<CommentSection> {
   }
 
   Widget _buildCommentInput() {
+    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
       child: Row(
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: widget.state.fbUser?.thumbSrc != null
-                ? CachedNetworkImageProvider(widget.state.fbUser!.thumbSrc!)
+            backgroundImage: state.fbUser?.thumbSrc != null
+                ? CachedNetworkImageProvider(state.fbUser!.thumbSrc!)
                 : null,
-            child:
-                widget.state.fbUser == null ? const Icon(Icons.person) : null,
+            child: state.fbUser == null ? const Icon(Icons.person) : null,
           ),
           const Gap(8),
           Expanded(
@@ -110,7 +105,7 @@ class _CommentSectionState extends State<CommentSection> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 suffixIcon: IconButton(
                   onPressed: _handleCommentSubmission,
-                  icon: widget.state.isCmtLoading
+                  icon: state.isCmtLoading
                       ? const Icon(Icons.hourglass_bottom_rounded)
                       : const Icon(Icons.send_rounded),
                   color: context.theme.colorScheme.primary,
@@ -127,43 +122,52 @@ class _CommentSectionState extends State<CommentSection> {
   }
 
   Widget _buildCommentList() {
+    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: widget.state.comments?.length ?? 0,
+      itemCount: state.comments?.length ?? 0,
       itemBuilder: (context, index) => _buildCommentTree(
-        widget.state.comments![index],
+        state.comments![index],
         key: UniqueKey(),
       ),
     );
   }
 
   Future<void> _handleCommentSubmission() async {
-    if (widget.state.isCmtLoading) return;
+    if (!mounted) return;
 
-    final cookies =
-        await GetIt.I.get<CookieJar>().loadForRequest(Uri.parse(fbBaseUrl));
+    final state = context.read<WatchBloc>().state;
+    if (state is! WatchLoaded) return;
+    if (state.isCmtLoading) return;
 
     final webviewCookies = await CookieManager.instance().getCookies(
       url: WebUri(fbBaseUrl),
     );
 
-    if (cookies.isEmpty && webviewCookies.isEmpty) {
+    if (webviewCookies.isEmpty ||
+        webviewCookies.firstWhereOrNull((cookie) => cookie.name == 'c_user') ==
+            null) {
       _showLoginWebView();
       return;
-    } else if (cookies.isEmpty && webviewCookies.isNotEmpty) {
+    } else if (webviewCookies.isNotEmpty) {
       await _silentlyLoadCookies();
     }
 
-    if (_textController.text.isNotEmpty) {
-      final comment = _textController.text;
+    if (_textController.text.trim().isNotEmpty) {
+      final comment = _textController.text.trim();
       _textController.clear();
 
-      if (mounted) {
-        context.focusScope.unfocus();
-        context.read<WatchBloc>().add(PostComment(comment: comment));
-      }
+      _postComment(comment);
+    }
+  }
+
+  void _postComment(String comment) {
+    if (mounted) {
+      context.focusScope.unfocus();
+      context.read<WatchBloc>().add(PostComment(comment: comment));
     }
   }
 
@@ -171,10 +175,10 @@ class _CommentSectionState extends State<CommentSection> {
     final cookies = await CookieManager.instance().getCookies(
       url: WebUri(fbBaseUrl),
     );
-    await GetIt.I.get<CookieJar>().saveFromResponse(
-          Uri.parse(fbBaseUrl),
-          cookies.map(_convertToIOCookie).toList(),
-        );
+    await _cookieJar.saveFromResponse(
+      Uri.parse(fbBaseUrl),
+      cookies.map(_convertToIOCookie).toList(),
+    );
   }
 
   void _showLoginWebView() {
@@ -228,7 +232,7 @@ class _CommentSectionState extends State<CommentSection> {
           await CookieManager.instance().getCookies(url: WebUri(fbBaseUrl));
 
       if (cookies.isNotEmpty) {
-        await GetIt.I<CookieJar>().saveFromResponse(
+        await _cookieJar.saveFromResponse(
           Uri.parse(fbBaseUrl),
           cookies.map(_convertToIOCookie).toList(),
         );
@@ -259,9 +263,11 @@ class _CommentSectionState extends State<CommentSection> {
   }
 
   Widget _buildCommentTree(CommentEntity comment, {required Key key}) {
-    final selfComment = comment.authorName == widget.state.fbUser?.name &&
+    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+
+    final selfComment = comment.authorName == state.fbUser?.name &&
         getImageNameFromUrl(comment.authorThumbSrc) ==
-            getImageNameFromUrl(widget.state.fbUser?.thumbSrc ?? '');
+            getImageNameFromUrl(state.fbUser?.thumbSrc ?? '');
 
     Widget commentWidget = CommentTreeWidget<CommentEntity, CommentEntity>(
       comment,
@@ -300,7 +306,7 @@ class _CommentSectionState extends State<CommentSection> {
           ),
         ),
         confirmDismiss: (direction) async {
-          if (widget.state.isCmtLoading) {
+          if (state.isCmtLoading) {
             context.showSnackBar('Please wait...');
 
             return false;
@@ -308,7 +314,7 @@ class _CommentSectionState extends State<CommentSection> {
           return true;
         },
         onDismissed: (direction) {
-          if (mounted && !widget.state.isCmtLoading) {
+          if (mounted && !state.isCmtLoading) {
             context.read<WatchBloc>().add(DeleteComment(commentId: comment.id));
           }
         },

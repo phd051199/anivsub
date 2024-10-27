@@ -25,3 +25,15 @@ class InitialData {
   final ChapDataEntity? initialChap;
   final num? initialPosition;
 }
+
+class TabViewItem {
+  TabViewItem({
+    required this.chaps,
+    required this.animeDetail,
+    required this.listEpisode,
+  });
+
+  final List<ChapDataEntity> chaps;
+  final AnimeDetailEntity animeDetail;
+  final ListEpisodeResponseEntity? listEpisode;
+}

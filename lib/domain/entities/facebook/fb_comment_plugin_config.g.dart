@@ -12,7 +12,7 @@ _$FbCommentPluginConfigImpl _$$FbCommentPluginConfigImplFromJson(
       appId: json['appId'] as String? ?? '',
       href: json['href'] as String,
       limit: (json['limit'] as num?)?.toInt() ?? 10,
-      locale: json['locale'] as String,
+      locale: json['locale'] as String? ?? 'vi_VN',
       orderBy: json['orderBy'] as String? ?? 'reverse_time',
       pluginUrl:
           json['pluginUrl'] as String? ?? 'https://www.facebook.com/plugins',

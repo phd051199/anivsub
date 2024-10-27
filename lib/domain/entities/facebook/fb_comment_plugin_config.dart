@@ -9,7 +9,7 @@ class FbCommentPluginConfig with _$FbCommentPluginConfig {
     @JsonKey(name: 'appId') @Default('') String appId,
     @JsonKey(name: 'href') required String href,
     @JsonKey(name: 'limit') @Default(10) int limit,
-    @JsonKey(name: 'locale') required String locale,
+    @JsonKey(name: 'locale') @Default('vi_VN') String locale,
     @JsonKey(name: 'orderBy') @Default('reverse_time') String orderBy,
     @JsonKey(name: 'pluginUrl')
     @Default('https://www.facebook.com/plugins')

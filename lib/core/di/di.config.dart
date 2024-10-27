@@ -144,14 +144,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i611.GetEpisodeSkipUsecase(gh<_i772.AnimeRepository>()));
     gh.factory<_i743.DecryptHlsUseCase>(
         () => _i743.DecryptHlsUseCase(gh<_i772.AnimeRepository>()));
-    gh.singleton<_i597.VideoPlayerCubit>(() => _i597.VideoPlayerCubit(
-          gh<_i772.GetEncryptedHlsUseCase>(),
-          gh<_i772.DecryptHlsUseCase>(),
-          gh<_i772.GetEpisodeSkipUsecase>(),
-          gh<_i772.AppSettingsUseCases>(),
-        ));
-    gh.factory<_i132.ProfileCubit>(
-        () => _i132.ProfileCubit(gh<_i772.ProfileUseCases>()));
     gh.lazySingleton<_i1060.AuthLocalRepository>(() =>
         _i954.AuthLocalRepositoryImpl(
             authLocalDataSource: gh<_i833.AuthLocalDataSource>()));
@@ -165,18 +157,30 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i870.AuthRepository>(),
           gh<_i1060.AuthLocalRepository>(),
         ));
+    gh.singleton<_i179.HomeUseCases>(
+        () => _i179.HomeUseCases(gh<_i772.AuthLocalRepository>()));
+    gh.singleton<_i910.AuthNotifier>(
+        () => _i910.AuthNotifier(authUseCases: gh<_i772.AuthUseCases>()));
     gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
           gh<_i772.GetPlayDataUseCase>(),
           gh<_i772.GetAnimeDetailUseCase>(),
           gh<_i772.GetListEpisodeUseCase>(),
           gh<_i595.SharedPreferenceService>(),
+          gh<_i772.AuthUseCases>(),
         ));
-    gh.singleton<_i179.HomeUseCases>(
-        () => _i179.HomeUseCases(gh<_i772.AuthLocalRepository>()));
-    gh.singleton<_i910.AuthNotifier>(
-        () => _i910.AuthNotifier(authUseCases: gh<_i772.AuthUseCases>()));
     gh.factory<_i30.LoginCubit>(
         () => _i30.LoginCubit(gh<_i772.AuthUseCases>()));
+    gh.factory<_i132.ProfileCubit>(() => _i132.ProfileCubit(
+          gh<_i772.ProfileUseCases>(),
+          gh<_i772.AuthUseCases>(),
+        ));
+    gh.singleton<_i597.VideoPlayerCubit>(() => _i597.VideoPlayerCubit(
+          gh<_i772.GetEncryptedHlsUseCase>(),
+          gh<_i772.DecryptHlsUseCase>(),
+          gh<_i772.GetEpisodeSkipUsecase>(),
+          gh<_i772.AppSettingsUseCases>(),
+          gh<_i772.AuthUseCases>(),
+        ));
     return this;
   }
 }

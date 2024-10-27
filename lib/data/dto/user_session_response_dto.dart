@@ -11,7 +11,7 @@ class UserSessionResponseDTO extends BaseDTO<UserSessionResponseEntity>
   const factory UserSessionResponseDTO({
     String? accessToken,
     String? refreshToken,
-    int? id,
+    String? id,
     String? username,
     String? email,
     String? firstName,

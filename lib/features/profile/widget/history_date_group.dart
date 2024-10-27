@@ -1,4 +1,4 @@
-import 'package:anivsub/core/utils/string_utils.dart';
+import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/features/profile/widget/history_item.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class HistoryDateGroup extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(
-            formatTimestamp(date, withTime: false),
+            StringUtils.formatTimestamp(date, withTime: false),
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

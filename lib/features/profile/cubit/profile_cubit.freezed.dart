@@ -20,7 +20,8 @@ mixin _$ProfileState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(UserEntity user, List<dynamic>? queryHistory)
+    required TResult Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)
         loaded,
     required TResult Function(String message) error,
   }) =>
@@ -29,7 +30,9 @@ mixin _$ProfileState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(UserEntity user, List<dynamic>? queryHistory)? loaded,
+    TResult? Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)?
+        loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -37,7 +40,9 @@ mixin _$ProfileState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(UserEntity user, List<dynamic>? queryHistory)? loaded,
+    TResult Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -133,7 +138,8 @@ class _$ProfileInitialImpl implements ProfileInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(UserEntity user, List<dynamic>? queryHistory)
+    required TResult Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -145,7 +151,9 @@ class _$ProfileInitialImpl implements ProfileInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(UserEntity user, List<dynamic>? queryHistory)? loaded,
+    TResult? Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -156,7 +164,9 @@ class _$ProfileInitialImpl implements ProfileInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(UserEntity user, List<dynamic>? queryHistory)? loaded,
+    TResult Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -251,7 +261,8 @@ class _$ProfileLoadingImpl implements ProfileLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(UserEntity user, List<dynamic>? queryHistory)
+    required TResult Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -263,7 +274,9 @@ class _$ProfileLoadingImpl implements ProfileLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(UserEntity user, List<dynamic>? queryHistory)? loaded,
+    TResult? Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -274,7 +287,9 @@ class _$ProfileLoadingImpl implements ProfileLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(UserEntity user, List<dynamic>? queryHistory)? loaded,
+    TResult Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -332,7 +347,7 @@ abstract class _$$ProfileLoadedImplCopyWith<$Res> {
           _$ProfileLoadedImpl value, $Res Function(_$ProfileLoadedImpl) then) =
       __$$ProfileLoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({UserEntity user, List<dynamic>? queryHistory});
+  $Res call({UserSessionResponseEntity user, List<dynamic>? queryHistory});
 }
 
 /// @nodoc
@@ -355,7 +370,7 @@ class __$$ProfileLoadedImplCopyWithImpl<$Res>
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as UserEntity,
+              as UserSessionResponseEntity,
       queryHistory: freezed == queryHistory
           ? _value._queryHistory
           : queryHistory // ignore: cast_nullable_to_non_nullable
@@ -372,7 +387,7 @@ class _$ProfileLoadedImpl implements ProfileLoaded {
       : _queryHistory = queryHistory;
 
   @override
-  final UserEntity user;
+  final UserSessionResponseEntity user;
   final List<dynamic>? _queryHistory;
   @override
   List<dynamic>? get queryHistory {
@@ -415,7 +430,8 @@ class _$ProfileLoadedImpl implements ProfileLoaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(UserEntity user, List<dynamic>? queryHistory)
+    required TResult Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -427,7 +443,9 @@ class _$ProfileLoadedImpl implements ProfileLoaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(UserEntity user, List<dynamic>? queryHistory)? loaded,
+    TResult? Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(user, queryHistory);
@@ -438,7 +456,9 @@ class _$ProfileLoadedImpl implements ProfileLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(UserEntity user, List<dynamic>? queryHistory)? loaded,
+    TResult Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -488,10 +508,10 @@ class _$ProfileLoadedImpl implements ProfileLoaded {
 
 abstract class ProfileLoaded implements ProfileState {
   const factory ProfileLoaded(
-      {required final UserEntity user,
+      {required final UserSessionResponseEntity user,
       final List<dynamic>? queryHistory}) = _$ProfileLoadedImpl;
 
-  UserEntity get user;
+  UserSessionResponseEntity get user;
   List<dynamic>? get queryHistory;
 
   /// Create a copy of ProfileState
@@ -571,7 +591,8 @@ class _$ProfileErrorImpl implements ProfileError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(UserEntity user, List<dynamic>? queryHistory)
+    required TResult Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -583,7 +604,9 @@ class _$ProfileErrorImpl implements ProfileError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(UserEntity user, List<dynamic>? queryHistory)? loaded,
+    TResult? Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -594,7 +617,9 @@ class _$ProfileErrorImpl implements ProfileError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(UserEntity user, List<dynamic>? queryHistory)? loaded,
+    TResult Function(
+            UserSessionResponseEntity user, List<dynamic>? queryHistory)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

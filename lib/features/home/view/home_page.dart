@@ -33,7 +33,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
           HomeInitial() ||
           HomeLoading() =>
             const Skeletonizer(child: HomeContent()),
-          HomeLoaded() => HomeContent(state: state),
+          HomeLoaded() => const HomeContent(),
           _ => Container(),
         },
       ),

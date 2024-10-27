@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/extension/string_extension.dart';
-import 'package:anivsub/core/utils/image_url_utils.dart';
-import 'package:anivsub/core/utils/log_utils.dart';
+import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/watch.dart';
@@ -23,12 +22,14 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     this._hlsDecryptionUseCase,
     this._episodeSkipUseCase,
     this._appSettingsUseCases,
+    this._authUseCases,
   ) : super(const VideoPlayerInitial());
 
   final GetEncryptedHlsUseCase _encryptedHlsUseCase;
   final DecryptHlsUseCase _hlsDecryptionUseCase;
   final GetEpisodeSkipUsecase _episodeSkipUseCase;
   final AppSettingsUseCases _appSettingsUseCases;
+  final AuthUseCases _authUseCases;
 
   late AnimeDetailEntity _animeDetail;
   BetterPlayerController? _playerController;
@@ -37,6 +38,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   CancelToken? _cancelToken;
   Timer? _progressUpdateTimer;
   ListEpisodeResponseEntity? _listEpisodeSkip;
+  UserSessionResponseEntity? _authUser;
 
   Future<void> toggleSkipIntro() async {
     final currentState = state;
@@ -103,6 +105,9 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         animeDetail: animeDetail,
         listEpisodeSkip: listEpisodeSkip,
       );
+
+      _authUser = await _authUseCases.getLocalUserSession();
+
       await _initializeEpisode(
         initialData?.initialChap ?? episodes.first,
         episodes,
@@ -157,8 +162,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     await Supabase.instance.client.rpc(
       'set_single_progress',
       params: {
-        'user_uid':
-            'a3aaca2af18b3e54a02c1cfb727028935cca230889afe8b17cf4b3d9f3b66111',
+        'user_uid': _authUser?.id,
         'p_name': _animeDetail.name,
         'p_poster': ImageUrlUtils.removeHostUrlImage(_animeDetail.poster),
         'season_id': seasonId,
@@ -213,21 +217,20 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     _cancelToken = CancelToken();
 
     try {
+      await _prepareForNewEpisode();
+      emit(currentState.copyWith(currentChap: episode));
+
       final singleProgress = await Supabase.instance.client
           .rpc(
             'get_single_progress',
             params: {
-              'user_uid':
-                  'a3aaca2af18b3e54a02c1cfb727028935cca230889afe8b17cf4b3d9f3b66111',
+              'user_uid': _authUser?.id,
               'season_id': _animeDetail.pathToView?.parseSeasonId(),
               'p_chap_id': episode.id,
             },
           )
           .maybeSingle()
           .onError((_, __) => null);
-
-      await _prepareForNewEpisode();
-      emit(currentState.copyWith(currentChap: episode));
 
       await _loadEpisodeData(episode, currentState.chaps);
 
@@ -254,14 +257,6 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
 
   Future<void> nextEpisode() => _changeEpisode(next: true);
   Future<void> previousEpisode() => _changeEpisode(next: false);
-
-  Future<void> dispose() async {
-    _playerController?.dispose();
-    _playerController = null;
-    _cancelToken?.cancel();
-    _cancelToken = null;
-    _progressUpdateTimer?.cancel();
-  }
 
   Future<void> _initializeEpisode(
     ChapDataEntity episode,
@@ -557,6 +552,10 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
 
   @override
   Future<void> close() async {
-    await dispose();
+    _playerController?.dispose();
+    _playerController = null;
+    _cancelToken?.cancel();
+    _cancelToken = null;
+    _progressUpdateTimer?.cancel();
   }
 }

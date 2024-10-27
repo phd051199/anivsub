@@ -256,7 +256,7 @@ class _$FbCommentPluginConfigImpl implements _FbCommentPluginConfig {
       {@JsonKey(name: 'appId') this.appId = '',
       @JsonKey(name: 'href') required this.href,
       @JsonKey(name: 'limit') this.limit = 10,
-      @JsonKey(name: 'locale') required this.locale,
+      @JsonKey(name: 'locale') this.locale = 'vi_VN',
       @JsonKey(name: 'orderBy') this.orderBy = 'reverse_time',
       @JsonKey(name: 'pluginUrl')
       this.pluginUrl = 'https://www.facebook.com/plugins',
@@ -376,7 +376,7 @@ abstract class _FbCommentPluginConfig implements FbCommentPluginConfig {
       {@JsonKey(name: 'appId') final String appId,
       @JsonKey(name: 'href') required final String href,
       @JsonKey(name: 'limit') final int limit,
-      @JsonKey(name: 'locale') required final String locale,
+      @JsonKey(name: 'locale') final String locale,
       @JsonKey(name: 'orderBy') final String orderBy,
       @JsonKey(name: 'pluginUrl') final String pluginUrl,
       @JsonKey(name: 'dialogUrl') final String dialogUrl,

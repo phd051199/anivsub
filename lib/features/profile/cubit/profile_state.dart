@@ -6,7 +6,7 @@ class ProfileState with _$ProfileState {
   const factory ProfileState.loading() = ProfileLoading;
 
   const factory ProfileState.loaded({
-    required UserEntity user,
+    required UserSessionResponseEntity user,
     List<dynamic>? queryHistory,
   }) = ProfileLoaded;
 

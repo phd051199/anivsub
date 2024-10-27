@@ -29,7 +29,6 @@ class NetworkClient {
       BaseOptions(
         baseUrl: baseUrl ?? '',
         headers: headers,
-        followRedirects: false,
         connectTimeout: timeout,
         validateStatus: (status) =>
             status != null && status >= 200 && status < 400,

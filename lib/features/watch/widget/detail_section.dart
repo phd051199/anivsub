@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 class DetailSection extends StatelessWidget {
   const DetailSection({
     super.key,
-    required this.state,
     required this.onTap,
   });
 
-  final WatchLoaded state;
   final Function(WatchLoaded) onTap;
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
@@ -30,6 +30,8 @@ class DetailSection extends StatelessWidget {
   }
 
   Widget _buildDetailTile(BuildContext context) {
+    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+
     return ListTile(
       minVerticalPadding: 16,
       contentPadding: EdgeInsets.zero,
@@ -56,6 +58,8 @@ class DetailSection extends StatelessWidget {
   }
 
   Widget _buildInfoText(BuildContext context) {
+    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+
     final infoTexts = [
       InfoText(
         '${context.l10n.producedBy} ${state.detail.studio}',
@@ -67,7 +71,7 @@ class DetailSection extends StatelessWidget {
       ),
       InfoText(
         state.detail.schedule != ''
-            ? state.detail.schedule ?? ''
+            ? state.detail.schedule!
             : context.l10n.seasonEnd,
         null,
         Icons.calendar_today_outlined,

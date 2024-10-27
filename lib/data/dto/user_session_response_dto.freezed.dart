@@ -23,7 +23,7 @@ UserSessionResponseDTO _$UserSessionResponseDTOFromJson(
 mixin _$UserSessionResponseDTO {
   String? get accessToken => throw _privateConstructorUsedError;
   String? get refreshToken => throw _privateConstructorUsedError;
-  int? get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String? get username => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
@@ -50,7 +50,7 @@ abstract class $UserSessionResponseDTOCopyWith<$Res> {
   $Res call(
       {String? accessToken,
       String? refreshToken,
-      int? id,
+      String? id,
       String? username,
       String? email,
       String? firstName,
@@ -97,7 +97,7 @@ class _$UserSessionResponseDTOCopyWithImpl<$Res,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -138,7 +138,7 @@ abstract class _$$UserSessionResponseDTOImplCopyWith<$Res>
   $Res call(
       {String? accessToken,
       String? refreshToken,
-      int? id,
+      String? id,
       String? username,
       String? email,
       String? firstName,
@@ -184,7 +184,7 @@ class __$$UserSessionResponseDTOImplCopyWithImpl<$Res>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -236,7 +236,7 @@ class _$UserSessionResponseDTOImpl extends _UserSessionResponseDTO {
   @override
   final String? refreshToken;
   @override
-  final int? id;
+  final String? id;
   @override
   final String? username;
   @override
@@ -271,7 +271,7 @@ abstract class _UserSessionResponseDTO extends UserSessionResponseDTO {
   const factory _UserSessionResponseDTO(
       {final String? accessToken,
       final String? refreshToken,
-      final int? id,
+      final String? id,
       final String? username,
       final String? email,
       final String? firstName,
@@ -288,7 +288,7 @@ abstract class _UserSessionResponseDTO extends UserSessionResponseDTO {
   @override
   String? get refreshToken;
   @override
-  int? get id;
+  String? get id;
   @override
   String? get username;
   @override

@@ -29,7 +29,7 @@ class AuthUseCases {
     return _authLocalRepository.setLocalUserSession(auth);
   }
 
-  Future<ResponseWrapper<UserSessionResponseEntity>> getLocalUserSession() {
+  Future<UserSessionResponseEntity> getLocalUserSession() {
     return _authLocalRepository.getLocalUserSession();
   }
 

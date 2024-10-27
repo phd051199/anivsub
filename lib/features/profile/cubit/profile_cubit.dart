@@ -9,34 +9,32 @@ part 'profile_state.dart';
 
 @injectable
 class ProfileCubit extends BaseCubit<ProfileState> {
-  ProfileCubit(this.profileUseCases) : super(const ProfileInitial()) {
+  ProfileCubit(
+    this.profileUseCases,
+    this.authUseCases,
+  ) : super(const ProfileInitial()) {
     getUser();
   }
 
   final ProfileUseCases profileUseCases;
+  final AuthUseCases authUseCases;
 
   Future<void> getUser() async {
     emit(const ProfileLoading());
-    final results = await Future.wait([
-      profileUseCases.getUser(),
-      Future(
-        () => Supabase.instance.client.rpc(
-          'query_history',
-          params: {
-            'user_uid':
-                'a3aaca2af18b3e54a02c1cfb727028935cca230889afe8b17cf4b3d9f3b66111',
-            'page': 1,
-            'size': 30,
-          },
-        ),
-      ),
-    ]);
-    final UserEntity user = results.first;
-    final List<dynamic> queryHistory = results.last;
+
+    final authUser = await authUseCases.getLocalUserSession();
+    final queryHistory = await Supabase.instance.client.rpc(
+      'query_history',
+      params: {
+        'user_uid': authUser.id,
+        'page': 1,
+        'size': 30,
+      },
+    );
 
     emit(
       ProfileLoaded(
-        user: user,
+        user: authUser,
         queryHistory: queryHistory,
       ),
     );

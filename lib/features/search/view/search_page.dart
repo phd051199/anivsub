@@ -81,7 +81,6 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
               const SizedBox(height: 8),
               Expanded(
                 child: SearchResults(
-                  state: state,
                   pagingController: _pagingController,
                 ),
               ),

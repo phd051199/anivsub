@@ -15,7 +15,7 @@ class UserSessionResponseEntity extends BaseEntity {
   });
   final String? accessToken;
   final String? refreshToken;
-  final int? id;
+  final String? id;
   final String? username;
   final String? email;
   final String? firstName;
@@ -43,7 +43,7 @@ class UserSessionResponseEntity extends BaseEntity {
   UserSessionResponseEntity copyWith({
     String? accessToken,
     String? refreshToken,
-    int? id,
+    String? id,
     String? username,
     String? email,
     String? firstName,

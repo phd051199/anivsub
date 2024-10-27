@@ -11,7 +11,7 @@ _$UserSessionResponseDTOImpl _$$UserSessionResponseDTOImplFromJson(
     _$UserSessionResponseDTOImpl(
       accessToken: json['accessToken'] as String?,
       refreshToken: json['refreshToken'] as String?,
-      id: (json['id'] as num?)?.toInt(),
+      id: json['id'] as String?,
       username: json['username'] as String?,
       email: json['email'] as String?,
       firstName: json['firstName'] as String?,

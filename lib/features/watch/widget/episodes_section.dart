@@ -6,12 +6,10 @@ import 'package:anivsub/features/watch/watch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:get_it/get_it.dart';
 
 class EpisodesSection extends StatelessWidget {
   const EpisodesSection({
     super.key,
-    required this.state,
     required this.tabController,
     required this.currentTabIndex,
     required this.onTabChange,
@@ -19,7 +17,6 @@ class EpisodesSection extends StatelessWidget {
     required this.onChapTap,
   });
 
-  final WatchLoaded state;
   final TabController? tabController;
   final int currentTabIndex;
   final VoidCallback onTabChange;
@@ -28,6 +25,8 @@ class EpisodesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+
     if (state.detail.season.isNotEmpty && state.tabViewItems != null) {
       return Column(
         children: [
@@ -43,7 +42,12 @@ class EpisodesSection extends StatelessWidget {
   }
 
   Widget _buildTabBar(BuildContext context) {
-    if (state.detail.season.isEmpty) return const SizedBox.shrink();
+    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+
+    if (state.detail.season.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return TabBar(
       tabAlignment: TabAlignment.start,
       controller: tabController,
@@ -64,6 +68,8 @@ class EpisodesSection extends StatelessWidget {
   }
 
   Widget _buildTabBarView(BuildContext context) {
+    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+
     return Container(
       padding: const EdgeInsets.all(16),
       height: 128,
@@ -75,7 +81,6 @@ class EpisodesSection extends StatelessWidget {
               : _buildChapterHorizontal(
                   context: context,
                   chaps: item!.chaps,
-                  state: state,
                 );
         }).toList(),
       ),
@@ -83,13 +88,14 @@ class EpisodesSection extends StatelessWidget {
   }
 
   Widget _buildSingleSeasonView(BuildContext context) {
+    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+
     return Container(
       height: 128,
       padding: const EdgeInsets.all(16),
       child: _buildChapterHorizontal(
         context: context,
         chaps: state.chaps!,
-        state: state,
       ),
     );
   }
@@ -97,8 +103,9 @@ class EpisodesSection extends StatelessWidget {
   Widget _buildChapterHorizontal({
     required BuildContext context,
     required List<ChapDataEntity> chaps,
-    required WatchLoaded state,
   }) {
+    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -153,17 +160,12 @@ class EpisodesSection extends StatelessWidget {
     int index,
     WatchLoaded state,
   ) {
-    return BlocProvider<VideoPlayerCubit>.value(
-      value: GetIt.I<VideoPlayerCubit>(),
-      child: BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
-        builder: (context, videoPlayerState) {
-          final isPlaying = _isChapterPlaying(videoPlayerState, chap, index);
-          return GestureDetector(
-            onTap: () => onChapTap(context, isPlaying, chap, state),
-            child: _buildChapCard(context, isPlaying, chap),
-          );
-        },
-      ),
+    final videoPlayerState = context.watch<VideoPlayerCubit>().state;
+    final isPlaying = _isChapterPlaying(videoPlayerState, chap, index);
+
+    return GestureDetector(
+      onTap: () => onChapTap(context, isPlaying, chap, state),
+      child: _buildChapCard(context, isPlaying, chap),
     );
   }
 

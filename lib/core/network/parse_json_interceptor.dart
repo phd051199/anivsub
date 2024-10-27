@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:anivsub/core/utils/log_utils.dart';
+import 'package:anivsub/core/utils/utils.dart';
 import 'package:dio/dio.dart';
 
 class ParseJsonInterceptor extends Interceptor {

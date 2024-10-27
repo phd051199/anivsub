@@ -249,52 +249,47 @@ class _BetterPlayerCustomMaterialControlsState
     );
   }
 
-  Row _buildSkipSwitch() {
-    return Row(
-      children: [
-        BlocProvider<VideoPlayerCubit>.value(
-          value: GetIt.I<VideoPlayerCubit>(),
-          child: BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
-            builder: (context, state) {
-              final skipIntro =
-                  state is VideoPlayerLoaded && (state.skipIntro ?? false);
-              return Theme(
-                data: ThemeData(useMaterial3: false),
-                child: Row(
-                  children: [
-                    AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      child: state is VideoPlayerLoaded &&
-                              state.showSkipIntroText == true
-                          ? Text(
-                              '${skipIntro ? 'Enabled' : 'Disabled'} skip intro/outro',
-                              key: const ValueKey('skipIntroText'),
-                              style:
-                                  context.theme.textTheme.bodySmall!.copyWith(
-                                color: _controlsConfiguration.textColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          : const SizedBox.shrink(),
-                    ),
-                    const SizedBox(width: 8),
-                    Switch(
-                      value: skipIntro,
-                      activeColor: Colors.white70,
-                      onChanged: (newValue) {
-                        GetIt.I<VideoPlayerCubit>().toggleSkipIntro();
-                      },
-                      trackColor: WidgetStateProperty.all(
-                        Colors.white38,
-                      ),
-                    ),
-                  ],
+  Widget _buildSkipSwitch() {
+    return BlocProvider<VideoPlayerCubit>.value(
+      value: GetIt.I<VideoPlayerCubit>(),
+      child: BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
+        builder: (context, state) {
+          final skipIntro =
+              state is VideoPlayerLoaded && (state.skipIntro ?? false);
+          return Theme(
+            data: ThemeData(useMaterial3: false),
+            child: Row(
+              children: [
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: state is VideoPlayerLoaded &&
+                          state.showSkipIntroText == true
+                      ? Text(
+                          '${skipIntro ? 'Enabled' : 'Disabled'} skip intro/outro',
+                          key: const ValueKey('skipIntroText'),
+                          style: context.theme.textTheme.bodySmall!.copyWith(
+                            color: _controlsConfiguration.textColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                 ),
-              );
-            },
-          ),
-        ),
-      ],
+                const SizedBox(width: 8),
+                Switch(
+                  value: skipIntro,
+                  activeColor: Colors.white70,
+                  onChanged: (newValue) {
+                    GetIt.I<VideoPlayerCubit>().toggleSkipIntro();
+                  },
+                  trackColor: WidgetStateProperty.all(
+                    Colors.white38,
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 extension ContextExtension on BuildContext {
@@ -16,5 +17,13 @@ extension ContextExtension on BuildContext {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(content: Text(message)),
     );
+  }
+
+  S watchTypedState<B extends BlocBase<Object?>, S>() {
+    final state = watch<B>().state;
+    if (state is S) {
+      return state;
+    }
+    throw StateError('Current state ${state.runtimeType} is not of type $S');
   }
 }

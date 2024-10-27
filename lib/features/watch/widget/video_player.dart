@@ -1,4 +1,3 @@
-import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/shared/better_player_material_controls.dart';
@@ -29,8 +28,8 @@ class VideoPlayerWidget extends StatefulWidget {
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
 }
 
-class _VideoPlayerWidgetState
-    extends CubitState<VideoPlayerWidget, VideoPlayerCubit> {
+class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
+  late final VideoPlayerCubit _cubit;
   late final BetterPlayerController _betterPlayerController;
   late List<ChapDataEntity> _chaps;
   ListEpisodeResponseEntity? _listEpisodeSkip;
@@ -39,6 +38,7 @@ class _VideoPlayerWidgetState
   @override
   void initState() {
     super.initState();
+    _cubit = context.read<VideoPlayerCubit>();
     _chaps = widget.chaps;
     _listEpisodeSkip = widget.listEpisodeSkip;
     _initialData = widget.initialData;
@@ -49,7 +49,7 @@ class _VideoPlayerWidgetState
   @override
   void dispose() {
     super.dispose();
-    cubit.close();
+    _cubit.close();
   }
 
   void _initializeVideoPlayer() {
@@ -101,7 +101,7 @@ class _VideoPlayerWidgetState
 
   void _initializeCubit() {
     if (_chaps.isNotEmpty) {
-      cubit.initialize(
+      _cubit.initialize(
         episodes: _chaps,
         animeDetail: widget.detail,
         controller: _betterPlayerController,
@@ -121,13 +121,13 @@ class _VideoPlayerWidgetState
     if (_chaps.isEmpty && widget.chaps != _chaps) {
       _chaps = widget.chaps;
       _listEpisodeSkip = widget.listEpisodeSkip;
-      cubit.updateEpisodeList(_chaps, _listEpisodeSkip);
+      _cubit.updateEpisodeList(_chaps, _listEpisodeSkip);
       _initializeCubit();
     }
   }
 
   @override
-  Widget buildPage(BuildContext context) {
+  Widget build(BuildContext context) {
     return BlocConsumer<VideoPlayerCubit, VideoPlayerState>(
       listener: (context, state) {
         if (state is VideoPlayerError) {

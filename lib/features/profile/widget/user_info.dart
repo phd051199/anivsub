@@ -5,7 +5,7 @@ import 'package:gap/gap.dart';
 
 class UserInfo extends StatelessWidget {
   const UserInfo({super.key, required this.user});
-  final UserEntity user;
+  final UserSessionResponseEntity user;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class UserInfo extends StatelessWidget {
           ),
           const Gap(16),
           Text(
-            '${user.firstName ?? ''} ${user.lastName ?? ''}',
+            user.username ?? '',
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
