@@ -72,6 +72,11 @@ class FBCommentPlugin {
     return _setupData!;
   }
 
+  Future<void> logout() async {
+    _setupData = null;
+    loginUser = null;
+  }
+
   Future<CommentDataEntity> getComments() async {
     try {
       final setup = await this.setup();

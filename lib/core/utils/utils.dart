@@ -1,3 +1,4 @@
+export 'app_utils.dart';
 export 'image_url_utils.dart';
 export 'log_utils.dart';
 export 'md5_utils.dart';

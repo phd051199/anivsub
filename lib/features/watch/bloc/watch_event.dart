@@ -49,6 +49,11 @@ class GetFbCookies extends WatchEvent with _$GetFbCookies {
 }
 
 @freezed
+class Logout extends WatchEvent with _$Logout {
+  const factory Logout() = _Logout;
+}
+
+@freezed
 class ChangeSeasonTab extends WatchEvent with _$ChangeSeasonTab {
   const factory ChangeSeasonTab({
     required String id,

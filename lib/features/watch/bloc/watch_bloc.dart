@@ -34,9 +34,10 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     on<ChangeEpisode>(_onChangeEpisode);
     on<PostComment>(_onPostComment);
     on<DeleteComment>(_onDeleteComment);
-    on<GetFbCookies>(_onGetFbCookies);
     on<LoadMoreComments>(_onLoadMoreComments);
+    on<GetFbCookies>(_onGetFbCookies);
     on<LikeComment>(_onLikeComment);
+    on<Logout>(_onLogout);
   }
 
   final GetPlayDataUseCase _getPlayDataUseCase;
@@ -119,6 +120,14 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     emit(
       currentState.copyWith(fbUser: fbUser),
     );
+  }
+
+  Future<void> _onLogout(Logout event, Emitter<WatchState> emit) async {
+    final currentState = state;
+    if (currentState is! WatchLoaded) return;
+
+    await _fbCommentPlugin.logout();
+    emit(currentState.copyWith(fbUser: null));
   }
 
   Future<void> _onLoadMoreComments(

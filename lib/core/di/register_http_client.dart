@@ -10,11 +10,12 @@ import 'package:path_provider/path_provider.dart';
 
 void registerHttpClient(Environment environment) {
   final cookieManager = GetIt.I<CustomCookiesManager>();
+  final baseUrl = GetIt.I.get<String>(instanceName: 'HOST_CURL');
 
   GetIt.I.registerSingleton<AuthApiClient>(
     AuthApiClient(
       NetworkClient.getDio(
-        baseUrl: hostCurl,
+        baseUrl: baseUrl,
         headers: headers,
         cookieManager: cookieManager,
       ),
@@ -24,7 +25,7 @@ void registerHttpClient(Environment environment) {
   GetIt.I.registerSingleton<ScrapingClient>(
     ScrapingClient(
       NetworkClient.getDio(
-        baseUrl: hostCurl,
+        baseUrl: baseUrl,
         headers: headers,
         isAuthenticated: false,
         cookieManager: cookieManager,

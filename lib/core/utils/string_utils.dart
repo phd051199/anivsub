@@ -55,4 +55,13 @@ class StringUtils {
     }
     return uri.replace(host: hostParts.join('.')).toString();
   }
+
+  static String getImageNameFromUrl(String url) {
+    final uri = Uri.parse(url);
+    final pathSegments = uri.pathSegments;
+    if (pathSegments.isNotEmpty) {
+      return pathSegments.last;
+    }
+    return '';
+  }
 }

@@ -5,6 +5,7 @@ import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/shared/constants.dart';
 import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/features/shared/web_view.dart';
 import 'package:anivsub/features/watch/watch.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
@@ -165,7 +166,8 @@ class _CommentSectionState extends State<CommentSection> {
         clipBehavior: Clip.hardEdge,
         isScrollControlled: true,
         context: context,
-        builder: (context) => LoginWebView(
+        builder: (context) => WebView(
+          url: fbBaseUrl,
           onLoadStop: _handleWebViewLoadStop,
         ),
         constraints: BoxConstraints(
@@ -254,12 +256,40 @@ class CommentInputField extends StatelessWidget {
       padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundImage: state.fbUser?.thumbSrc != null
-                ? CachedNetworkImageProvider(state.fbUser!.thumbSrc!)
-                : null,
-            child: state.fbUser == null ? const Icon(Icons.person) : null,
+          GestureDetector(
+            onTapDown: (details) {
+              if (state.fbUser == null) return;
+
+              showMenu(
+                context: context,
+                position: RelativeRect.fromLTRB(
+                  details.globalPosition.dx,
+                  details.globalPosition.dy,
+                  details.globalPosition.dx + 1,
+                  details.globalPosition.dy + 1,
+                ),
+                items: [
+                  PopupMenuItem(
+                    onTap: () async {
+                      await CookieManager.instance().deleteAllCookies();
+                      await cookieJar.deleteAll();
+                      if (context.mounted) {
+                        context.showSnackBar('Logged out');
+                        context.read<WatchBloc>().add(const Logout());
+                      }
+                    },
+                    child: const Text('Logout'),
+                  ),
+                ],
+              );
+            },
+            child: CircleAvatar(
+              radius: 20,
+              backgroundImage: state.fbUser?.thumbSrc != null
+                  ? CachedNetworkImageProvider(state.fbUser!.thumbSrc!)
+                  : null,
+              child: state.fbUser == null ? const Icon(Icons.person) : null,
+            ),
           ),
           const Gap(8),
           Expanded(
@@ -339,8 +369,8 @@ class CommentTreeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selfComment = comment.authorName == fbUser?.name &&
-        getImageNameFromUrl(comment.authorThumbSrc) ==
-            getImageNameFromUrl(fbUser?.thumbSrc ?? '');
+        StringUtils.getImageNameFromUrl(comment.authorThumbSrc) ==
+            StringUtils.getImageNameFromUrl(fbUser?.thumbSrc ?? '');
 
     Widget commentWidget = CommentTreeWidget<CommentEntity, CommentEntity>(
       comment,
@@ -468,29 +498,6 @@ class CommentTreeItem extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  String getImageNameFromUrl(String url) {
-    final uri = Uri.parse(url);
-    final pathSegments = uri.pathSegments;
-    if (pathSegments.isNotEmpty) {
-      return pathSegments.last;
-    }
-    return '';
-  }
-}
-
-class LoginWebView extends StatelessWidget {
-  const LoginWebView({super.key, required this.onLoadStop});
-  final Function(InAppWebViewController, BuildContext) onLoadStop;
-
-  @override
-  Widget build(BuildContext context) {
-    return InAppWebView(
-      initialUrlRequest: URLRequest(url: WebUri(fbBaseUrl)),
-      initialSettings: InAppWebViewSettings(),
-      onLoadStop: (controller, url) => onLoadStop(controller, context),
     );
   }
 }

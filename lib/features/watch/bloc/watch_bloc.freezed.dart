@@ -811,6 +811,72 @@ abstract class _GetFbCookies implements GetFbCookies {
 }
 
 /// @nodoc
+mixin _$Logout {}
+
+/// @nodoc
+abstract class $LogoutCopyWith<$Res> {
+  factory $LogoutCopyWith(Logout value, $Res Function(Logout) then) =
+      _$LogoutCopyWithImpl<$Res, Logout>;
+}
+
+/// @nodoc
+class _$LogoutCopyWithImpl<$Res, $Val extends Logout>
+    implements $LogoutCopyWith<$Res> {
+  _$LogoutCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Logout
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$LogoutImplCopyWith<$Res> {
+  factory _$$LogoutImplCopyWith(
+          _$LogoutImpl value, $Res Function(_$LogoutImpl) then) =
+      __$$LogoutImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LogoutImplCopyWithImpl<$Res>
+    extends _$LogoutCopyWithImpl<$Res, _$LogoutImpl>
+    implements _$$LogoutImplCopyWith<$Res> {
+  __$$LogoutImplCopyWithImpl(
+      _$LogoutImpl _value, $Res Function(_$LogoutImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Logout
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$LogoutImpl implements _Logout {
+  const _$LogoutImpl();
+
+  @override
+  String toString() {
+    return 'Logout()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LogoutImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+abstract class _Logout implements Logout {
+  const factory _Logout() = _$LogoutImpl;
+}
+
+/// @nodoc
 mixin _$ChangeSeasonTab {
   String get id => throw _privateConstructorUsedError;
 
