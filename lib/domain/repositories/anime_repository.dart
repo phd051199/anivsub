@@ -15,10 +15,6 @@ abstract class AnimeRepository {
     GetEncryptedHlsRequestEntity body, {
     CancelToken? cancelToken,
   });
-  Future<String> decryptHls(
-    String hash, {
-    CancelToken? cancelToken,
-  });
   Future<ListEpisodeResponseEntity> listEpisodes(
     List<String> name, {
     CancelToken? cancelToken,

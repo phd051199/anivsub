@@ -95,8 +95,8 @@ class AnimeDetailEntity extends BaseEntity<AnimeDetailDTO>
   static AnimeDetailEntity mockup() => AnimeDetailEntity(
         name: 'Anime Title Anime Title Anime Title Anime Title',
         othername: 'Other Name',
-        image: 'https://avatars.githubusercontent.com/u/30114834',
-        poster: 'https://avatars.githubusercontent.com/u/30114834',
+        image: '',
+        poster: '',
         description: 'Sample anime description',
         rate: 5.0,
         countRate: 1000,

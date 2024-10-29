@@ -15,6 +15,8 @@ import 'package:anivsub/core/service/flutter_secure_storage_service.dart'
 import 'package:anivsub/core/service/location_service.dart' as _i260;
 import 'package:anivsub/core/service/shared_preferences_service.dart' as _i595;
 import 'package:anivsub/core/theme/cubit/theme_cubit.dart' as _i477;
+import 'package:anivsub/core/utils/utils.dart' as _i1032;
+import 'package:anivsub/core/utils/wasm/dha_impl.dart' as _i345;
 import 'package:anivsub/data/data_exports.dart' as _i987;
 import 'package:anivsub/data/datasources/local/app_settings_local_data_source.dart'
     as _i306;
@@ -24,24 +26,22 @@ import 'package:anivsub/data/datasources/local/auth_local_data_source.dart'
     as _i833;
 import 'package:anivsub/data/datasources/local/auth_local_data_source_impl.dart'
     as _i278;
-import 'package:anivsub/data/datasources/remote/auth/auth_api_client.dart'
-    as _i502;
-import 'package:anivsub/data/datasources/remote/auth/auth_remote_data_source.dart'
-    as _i540;
 import 'package:anivsub/data/datasources/remote/auth/auth_remote_data_source_impl.dart'
     as _i254;
+import 'package:anivsub/data/datasources/remote/episode_skip/episode_skip_remote_data_source_impl.dart'
+    as _i984;
+import 'package:anivsub/data/datasources/remote/history/history_remote_data_source_impl.dart'
+    as _i201;
 import 'package:anivsub/data/datasources/remote/scraping/anime_remote_data_source_impl.dart'
     as _i603;
-import 'package:anivsub/data/datasources/remote/sk/sk_remote_data_source_impl.dart'
-    as _i387;
-import 'package:anivsub/data/datasources/remote/worker/decrypt_hls_service_impl.dart'
-    as _i274;
 import 'package:anivsub/data/repositories/anime_repository_impl.dart' as _i728;
 import 'package:anivsub/data/repositories/app_settings_local_repository_impl.dart'
     as _i200;
 import 'package:anivsub/data/repositories/auth_local_repository_impl.dart'
     as _i954;
 import 'package:anivsub/data/repositories/auth_repository_impl.dart' as _i792;
+import 'package:anivsub/data/repositories/history_repositoty_impl.dart'
+    as _i469;
 import 'package:anivsub/domain/domain_exports.dart' as _i772;
 import 'package:anivsub/domain/repositories/app_settings_local_repository.dart'
     as _i104;
@@ -50,19 +50,22 @@ import 'package:anivsub/domain/repositories/auth_local_repository.dart'
 import 'package:anivsub/domain/repositories/auth_repository.dart' as _i870;
 import 'package:anivsub/domain/usecases/app_settings_usecase.dart' as _i268;
 import 'package:anivsub/domain/usecases/auth_usecase.dart' as _i586;
-import 'package:anivsub/domain/usecases/decrypt_hls_usecase.dart' as _i743;
 import 'package:anivsub/domain/usecases/get_anime_detail_usecase.dart'
     as _i1040;
 import 'package:anivsub/domain/usecases/get_encrypted_hls_usecase.dart'
     as _i407;
 import 'package:anivsub/domain/usecases/get_episode_skip_usecase.dart' as _i611;
 import 'package:anivsub/domain/usecases/get_home_data_usecase.dart' as _i68;
+import 'package:anivsub/domain/usecases/get_last_chap_usecase.dart' as _i420;
 import 'package:anivsub/domain/usecases/get_list_episode_usecase.dart' as _i72;
 import 'package:anivsub/domain/usecases/get_play_data_usecase.dart' as _i539;
 import 'package:anivsub/domain/usecases/get_pre_search_usecase.dart' as _i32;
-import 'package:anivsub/domain/usecases/home_usecases.dart' as _i179;
-import 'package:anivsub/domain/usecases/profile_usecase.dart' as _i107;
+import 'package:anivsub/domain/usecases/get_single_progress_usecase.dart'
+    as _i1045;
+import 'package:anivsub/domain/usecases/get_user_history_usecase.dart' as _i339;
 import 'package:anivsub/domain/usecases/search_anime_usecase.dart' as _i125;
+import 'package:anivsub/domain/usecases/set_single_progress_usecase.dart'
+    as _i469;
 import 'package:anivsub/features/home/bloc/home_bloc.dart' as _i187;
 import 'package:anivsub/features/login/cubit/login_cubit.dart' as _i30;
 import 'package:anivsub/features/profile/cubit/profile_cubit.dart' as _i132;
@@ -73,6 +76,7 @@ import 'package:anivsub/features/watch/cubit/video_player_cubit.dart' as _i597;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -94,8 +98,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i260.LocationService>(() => _i260.LocationService());
     gh.lazySingleton<_i987.AnimeRemoteDataSource>(() =>
         _i603.AnimeRemoteDataSourceImpl(client: gh<_i987.ScrapingClient>()));
-    gh.lazySingleton<_i987.SkRemoteDataSource>(
-        () => _i387.SkRemoteDataSourceImpl(gh<_i987.SkApiClient>()));
+    gh.lazySingleton<_i1032.DHA>(() => _i345.DHAImpl());
     gh.lazySingleton<_i723.FlutterSecureStorageService>(
         () => _i723.FlutterSecureStorageService(
               externalAndroidOptions: gh<_i558.AndroidOptions>(),
@@ -104,30 +107,34 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i306.AppSettingsLocalDataSource>(() =>
         _i137.AppSettingsLocalDataSourceImpl(
             sharedPreferenceService: gh<_i595.SharedPreferenceService>()));
-    gh.lazySingleton<_i540.AuthRemoteDataSource>(() =>
-        _i254.AuthRemoteDataSourceImpl(client: gh<_i502.AuthApiClient>()));
-    gh.lazySingleton<_i772.AuthRepository>(() => _i792.AuthRepositoryImpl(
-        authRemoteDataSource: gh<_i987.AuthRemoteDataSource>()));
-    gh.lazySingleton<_i987.DecryptHlsService>(
-        () => _i274.DecryptHlsServiceImpl(client: gh<_i987.WorkerApiClient>()));
-    gh.singleton<_i107.ProfileUseCases>(
-        () => _i107.ProfileUseCases(gh<_i772.AuthRepository>()));
-    gh.lazySingleton<_i833.AuthLocalDataSource>(() =>
-        _i278.AuthLocalDataSourceImpl(
-            flutterSecureStorageService:
-                gh<_i723.FlutterSecureStorageService>()));
+    gh.lazySingleton<_i987.HistoryRemoteDataSource>(
+        () => _i201.HistoryRemoteDataSourceImpl(gh<_i454.SupabaseClient>()));
+    gh.lazySingleton<_i987.AuthRemoteDataSource>(() =>
+        _i254.AuthRemoteDataSourceImpl(client: gh<_i987.AuthApiClient>()));
+    gh.lazySingleton<_i987.EpisodeSkipRemoteDataSource>(() =>
+        _i984.EpisodeSkipRemoteDataSourceImpl(
+            gh<_i987.EpisodeSkipApiClient>()));
     gh.lazySingleton<_i104.AppSettingsLocalRepository>(() =>
         _i200.AppSettingsLocalRepositoryImpl(
             appSettingsLocalDataSource:
                 gh<_i306.AppSettingsLocalDataSource>()));
+    gh.lazySingleton<_i987.AuthLocalDataSource>(() =>
+        _i278.AuthLocalDataSourceImpl(
+            flutterSecureStorageService:
+                gh<_i723.FlutterSecureStorageService>()));
     gh.singleton<_i268.AppSettingsUseCases>(() =>
         _i268.AppSettingsUseCases(gh<_i104.AppSettingsLocalRepository>()));
     gh.factory<_i477.ThemeCubit>(
         () => _i477.ThemeCubit(gh<_i268.AppSettingsUseCases>()));
+    gh.lazySingleton<_i772.AuthRepository>(() => _i792.AuthRepositoryImpl(
+        authRemoteDataSource: gh<_i987.AuthRemoteDataSource>()));
     gh.lazySingleton<_i772.AnimeRepository>(() => _i728.AnimeRepositoryImpl(
           gh<_i987.AnimeRemoteDataSource>(),
-          gh<_i987.DecryptHlsService>(),
-          gh<_i987.SkRemoteDataSource>(),
+          gh<_i987.EpisodeSkipRemoteDataSource>(),
+        ));
+    gh.lazySingleton<_i772.HistoryRepository>(() => _i469.HistoryRepositoryImpl(
+          gh<_i987.HistoryRemoteDataSource>(),
+          gh<_i987.AuthLocalDataSource>(),
         ));
     gh.factory<_i125.SearchAnimeUseCase>(
         () => _i125.SearchAnimeUseCase(gh<_i772.AnimeRepository>()));
@@ -145,13 +152,19 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i32.GetPreSearchUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i611.GetEpisodeSkipUsecase>(
         () => _i611.GetEpisodeSkipUsecase(gh<_i772.AnimeRepository>()));
-    gh.factory<_i743.DecryptHlsUseCase>(
-        () => _i743.DecryptHlsUseCase(gh<_i772.AnimeRepository>()));
     gh.lazySingleton<_i1060.AuthLocalRepository>(() =>
         _i954.AuthLocalRepositoryImpl(
             authLocalDataSource: gh<_i833.AuthLocalDataSource>()));
     gh.factory<_i187.HomeBloc>(
         () => _i187.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
+    gh.factory<_i339.GetUserHistoryUseCase>(
+        () => _i339.GetUserHistoryUseCase(gh<_i772.HistoryRepository>()));
+    gh.factory<_i420.GetLastChapUseCase>(
+        () => _i420.GetLastChapUseCase(gh<_i772.HistoryRepository>()));
+    gh.factory<_i469.SetSingleProgressUseCase>(
+        () => _i469.SetSingleProgressUseCase(gh<_i772.HistoryRepository>()));
+    gh.factory<_i1045.GetSingleProgressUseCase>(
+        () => _i1045.GetSingleProgressUseCase(gh<_i772.HistoryRepository>()));
     gh.factory<_i785.SearchBloc>(() => _i785.SearchBloc(
           gh<_i772.SearchAnimeUseCase>(),
           gh<_i772.GetPreSearchUseCase>(),
@@ -160,30 +173,29 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i870.AuthRepository>(),
           gh<_i1060.AuthLocalRepository>(),
         ));
-    gh.singleton<_i179.HomeUseCases>(
-        () => _i179.HomeUseCases(gh<_i772.AuthLocalRepository>()));
     gh.singleton<_i910.AuthNotifier>(
         () => _i910.AuthNotifier(authUseCases: gh<_i772.AuthUseCases>()));
+    gh.factory<_i132.ProfileCubit>(() => _i132.ProfileCubit(
+          gh<_i772.AuthUseCases>(),
+          gh<_i772.GetUserHistoryUseCase>(),
+        ));
     gh.factory<_i451.WatchBloc>(() => _i451.WatchBloc(
           gh<_i772.GetPlayDataUseCase>(),
           gh<_i772.GetAnimeDetailUseCase>(),
           gh<_i772.GetListEpisodeUseCase>(),
           gh<_i595.SharedPreferenceService>(),
-          gh<_i772.AuthUseCases>(),
-        ));
-    gh.factory<_i30.LoginCubit>(
-        () => _i30.LoginCubit(gh<_i772.AuthUseCases>()));
-    gh.factory<_i132.ProfileCubit>(() => _i132.ProfileCubit(
-          gh<_i772.ProfileUseCases>(),
-          gh<_i772.AuthUseCases>(),
+          gh<_i772.GetLastChapUseCase>(),
         ));
     gh.singleton<_i597.VideoPlayerCubit>(() => _i597.VideoPlayerCubit(
           gh<_i772.GetEncryptedHlsUseCase>(),
-          gh<_i772.DecryptHlsUseCase>(),
           gh<_i772.GetEpisodeSkipUsecase>(),
           gh<_i772.AppSettingsUseCases>(),
-          gh<_i772.AuthUseCases>(),
+          gh<_i772.GetSingleProgressUseCase>(),
+          gh<_i772.SetSingleProgressUseCase>(),
+          gh<_i1032.DHA>(),
         ));
+    gh.factory<_i30.LoginCubit>(
+        () => _i30.LoginCubit(gh<_i772.AuthUseCases>()));
     return this;
   }
 }

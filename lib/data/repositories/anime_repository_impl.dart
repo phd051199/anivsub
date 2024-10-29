@@ -1,18 +1,17 @@
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AnimeRepository)
 class AnimeRepositoryImpl implements AnimeRepository {
   AnimeRepositoryImpl(
     this._animeRemoteDataSource,
-    this._decryptHlsService,
-    this._skRemoteDataSource,
+    this._episodeSkipRemoteDataSource,
   );
   final AnimeRemoteDataSource _animeRemoteDataSource;
-  final DecryptHlsService _decryptHlsService;
-  final SkRemoteDataSource _skRemoteDataSource;
+  final EpisodeSkipRemoteDataSource _episodeSkipRemoteDataSource;
 
   @override
   Future<HomeDataCategoriesEntity> getHomeData() async {
@@ -30,7 +29,7 @@ class AnimeRepositoryImpl implements AnimeRepository {
       id,
       cancelToken: cancelToken,
     );
-    final data = PlayDataParser.parse(html);
+    final data = await compute(PlayDataParser.parse, html);
     return data.toEntity();
   }
 
@@ -43,7 +42,7 @@ class AnimeRepositoryImpl implements AnimeRepository {
       id,
       cancelToken: cancelToken,
     );
-    final data = AnimeDetailParser.parse(html);
+    final data = await compute(AnimeDetailParser.parse, html);
     return data.toEntity();
   }
 
@@ -60,23 +59,11 @@ class AnimeRepositoryImpl implements AnimeRepository {
   }
 
   @override
-  Future<String> decryptHls(
-    String hash, {
-    CancelToken? cancelToken,
-  }) async {
-    final link = await _decryptHlsService.decryptHls(
-      DecryptHlsRequestDTO(hash: hash),
-      cancelToken: cancelToken,
-    );
-    return link;
-  }
-
-  @override
   Future<ListEpisodeResponseEntity> listEpisodes(
     List<String> name, {
     CancelToken? cancelToken,
   }) async {
-    final response = await _skRemoteDataSource.listEpisodes(
+    final response = await _episodeSkipRemoteDataSource.listEpisodes(
       name,
       cancelToken: cancelToken,
     );
@@ -88,7 +75,7 @@ class AnimeRepositoryImpl implements AnimeRepository {
     String id, {
     CancelToken? cancelToken,
   }) async {
-    final response = await _skRemoteDataSource.skipEpisode(
+    final response = await _episodeSkipRemoteDataSource.skipEpisode(
       id,
       cancelToken: cancelToken,
     );
@@ -104,7 +91,7 @@ class AnimeRepositoryImpl implements AnimeRepository {
       keyword: keyword,
       page: page ?? 1,
     );
-    final data = SearchResultParser.parse(html);
+    final data = await compute(SearchResultParser.parse, html);
     return data.toEntity();
   }
 
@@ -113,7 +100,7 @@ class AnimeRepositoryImpl implements AnimeRepository {
     final html = await _animeRemoteDataSource.preSearch(
       keyword: keyword,
     );
-    final data = PreSearchParser.parse(html);
+    final data = await compute(PreSearchParser.parse, html);
     return data.map((e) => e.toEntity()).toList();
   }
 }

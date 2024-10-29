@@ -7,7 +7,7 @@ class ProfileState with _$ProfileState {
 
   const factory ProfileState.loaded({
     required UserSessionResponseEntity user,
-    List<dynamic>? queryHistory,
+    List<QueryHistoryEntity?>? queryHistory,
   }) = ProfileLoaded;
 
   const factory ProfileState.error(String message) = ProfileError;

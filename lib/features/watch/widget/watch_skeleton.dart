@@ -37,7 +37,7 @@ class WatchSkeleton extends StatelessWidget {
         Skeletonizer(
           enabled: true,
           child: Container(
-            height: 120,
+            height: 112,
             padding: const EdgeInsets.all(12),
             child: _buildChaptersPlaceholder(
               context,

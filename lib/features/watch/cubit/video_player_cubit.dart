@@ -10,7 +10,6 @@ import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:river_player/river_player.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'video_player_cubit.freezed.dart';
 part 'video_player_state.dart';
@@ -19,17 +18,20 @@ part 'video_player_state.dart';
 class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   VideoPlayerCubit(
     this._encryptedHlsUseCase,
-    this._hlsDecryptionUseCase,
     this._episodeSkipUseCase,
     this._appSettingsUseCases,
-    this._authUseCases,
+    this._getSingleProgressUseCase,
+    this._setSingleProgressUseCase,
+    this._dha,
   ) : super(const VideoPlayerInitial());
 
   final GetEncryptedHlsUseCase _encryptedHlsUseCase;
-  final DecryptHlsUseCase _hlsDecryptionUseCase;
   final GetEpisodeSkipUsecase _episodeSkipUseCase;
   final AppSettingsUseCases _appSettingsUseCases;
-  final AuthUseCases _authUseCases;
+  final GetSingleProgressUseCase _getSingleProgressUseCase;
+  final SetSingleProgressUseCase _setSingleProgressUseCase;
+
+  final DHA _dha;
 
   late AnimeDetailEntity _animeDetail;
   BetterPlayerController? _playerController;
@@ -38,7 +40,6 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   CancelToken? _cancelToken;
   Timer? _progressUpdateTimer;
   ListEpisodeResponseEntity? _listEpisodeSkip;
-  UserSessionResponseEntity? _authUser;
 
   Future<void> toggleSkipIntro() async {
     final currentState = state;
@@ -106,8 +107,6 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         listEpisodeSkip: listEpisodeSkip,
       );
 
-      _authUser = await _authUseCases.getLocalUserSession();
-
       await _initializeEpisode(
         initialData?.initialChap ?? episodes.first,
         episodes,
@@ -159,20 +158,19 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     String? seasonId,
     String currentSeason,
   ) async {
-    await Supabase.instance.client.rpc(
-      'set_single_progress',
-      params: {
-        'user_uid': _authUser?.id,
-        'p_name': _animeDetail.name,
-        'p_poster': ImageUrlUtils.removeHostUrlImage(_animeDetail.poster),
-        'season_id': seasonId,
-        'p_season_name': currentSeason,
-        'e_cur': currentTime,
-        'e_dur': totalDuration,
-        'e_name': currentState.currentChap.name,
-        'e_chap': currentState.currentChap.id,
-        'gmt': 'Asia/Ho_Chi_Minh',
-      },
+    await _setSingleProgressUseCase.send(
+      SetSingleProgressUseCaseInput(
+        data: SetSingleProgressEntity(
+          pName: _animeDetail.name,
+          pPoster: ImageUrlUtils.removeHostUrlImage(_animeDetail.poster),
+          seasonId: seasonId!,
+          pSeasonName: currentSeason,
+          eCur: currentTime,
+          eDur: totalDuration.toInt(),
+          eName: currentState.currentChap.name,
+          eChap: currentState.currentChap.id,
+        ),
+      ),
     );
   }
 
@@ -220,23 +218,18 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
       await _prepareForNewEpisode();
       emit(currentState.copyWith(currentChap: episode));
 
-      final singleProgress = await Supabase.instance.client
-          .rpc(
-            'get_single_progress',
-            params: {
-              'user_uid': _authUser?.id,
-              'season_id': _animeDetail.pathToView?.parseSeasonId(),
-              'p_chap_id': episode.id,
-            },
-          )
-          .maybeSingle()
-          .onError((_, __) => null);
-
+      final getSingleProgressOutput = await _getSingleProgressUseCase.send(
+        GetSingleProgressUseCaseInput(
+          chapId: episode.id,
+          seasonId: _animeDetail.pathToView?.parseSeasonId() ?? '',
+        ),
+      );
+      final singleProgress = getSingleProgressOutput.result;
       await _loadEpisodeData(episode, currentState.chaps);
 
       if (singleProgress != null) {
         await _playerController?.seekTo(
-          Duration(seconds: (singleProgress['cur'] as num).toInt()),
+          Duration(seconds: singleProgress.cur.toInt()),
         );
       }
       await _playEpisode();
@@ -372,16 +365,11 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     try {
       final episodeLink = await _getEpisodeLink(episode);
 
-      if (_playerController == null) {
-        throw Exception('Player controller is not initialized');
-      }
-
-      if (episodeLink.isEmpty) {
-        throw Exception('Invalid episode link: URL is empty');
-      }
-
       await _playerController?.setupDataSource(
-        BetterPlayerDataSource(BetterPlayerDataSourceType.network, episodeLink),
+        BetterPlayerDataSource(
+          BetterPlayerDataSourceType.network,
+          episodeLink,
+        ),
       );
     } catch (e) {
       if (e is DioException) {
@@ -411,13 +399,9 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         throw Exception('No HLS link available');
       }
 
-      final decryptOutput = await _hlsDecryptionUseCase.send(
-        DecryptHlsUseCaseInput(
-          hash: hlsOutput.result.link.first.file,
-          cancelToken: _cancelToken!,
-        ),
-      );
-      return decryptOutput.result;
+      final hash = hlsOutput.result.link.first.file;
+
+      return _dha.getBlobUrl(hash);
     } catch (e) {
       Log.error('Error getting episode link: $e');
       rethrow;
@@ -527,7 +511,9 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     }
 
     await nextEpisode();
-    await _playerController?.seekTo(Duration.zero);
+    await _playerController?.seekTo(
+      const Duration(seconds: 0),
+    );
     await _playEpisode();
   }
 

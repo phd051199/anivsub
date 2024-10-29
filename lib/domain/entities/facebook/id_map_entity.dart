@@ -84,32 +84,6 @@ class IdMapEntity extends BaseEntity<IdMapDTO> with _$IdMapEntity {
         canEmbed: canEmbed,
         publicReplies: publicReplies?.toDTO(),
       );
-
-  static IdMapEntity mockup() => const IdMapEntity(
-        id: '123',
-        name: 'John Doe',
-        thumbSrc: 'https://example.com/thumb.jpg',
-        uri: 'https://example.com/profile',
-        isVerified: true,
-        type: Type.user,
-        authorId: '456',
-        body: BodyEntity(text: 'Hello, world!'),
-        ranges: [],
-        timestamp: TimestampEntity(time: 1625097600, text: '2 hours ago'),
-        targetId: '789',
-        ogUrl: 'https://example.com/post',
-        likeCount: 42,
-        hasLiked: true,
-        canLike: true,
-        canEdit: false,
-        hidden: false,
-        highlightedWords: [],
-        reportUri: 'https://example.com/report',
-        spamCount: 0,
-        canEmbed: true,
-        publicReplies:
-            PublicRepliesEntity(totalCount: 5, commentIDs: ['1', '2', '3']),
-      );
 }
 
 @freezed

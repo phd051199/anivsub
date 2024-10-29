@@ -1,4 +1,5 @@
 import 'package:anivsub/core/extension/extension.dart';
+import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/profile/profile.dart';
 import 'package:flutter/material.dart';
 
@@ -31,13 +32,15 @@ class ProfileContent extends StatelessWidget {
     );
   }
 
-  Map<DateTime, List<dynamic>> _groupHistoryByDate(List<dynamic>? history) {
-    final groupedMap = <DateTime, List<dynamic>>{};
+  Map<DateTime, List<QueryHistoryEntity?>> _groupHistoryByDate(
+    List<QueryHistoryEntity?>? history,
+  ) {
+    final groupedMap = <DateTime, List<QueryHistoryEntity?>>{};
     if (history == null) return groupedMap;
 
     for (var item in history) {
-      if (item is Map<String, dynamic>) {
-        final date = DateTime.parse(item['created_at']).toLocal();
+      if (item is QueryHistoryEntity) {
+        final date = item.createdAt.toLocal();
         final dateWithoutTime = DateTime(date.year, date.month, date.day);
         groupedMap.putIfAbsent(dateWithoutTime, () => []).add(item);
       }

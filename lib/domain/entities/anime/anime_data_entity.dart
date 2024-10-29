@@ -61,7 +61,7 @@ class AnimeDataEntity extends BaseEntity<AnimeDataResponseDTO>
 
   static AnimeDataEntity mockup() => const AnimeDataEntity(
         path: 'path',
-        image: 'https://avatars.githubusercontent.com/u/30114834',
+        image: '',
         name: 'namenamenam',
         chap: 'chap',
         quality: 'quality',

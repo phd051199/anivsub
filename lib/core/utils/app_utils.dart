@@ -7,7 +7,11 @@ Future<String> getBaseUrl() async {
   final completer = Completer<String>();
 
   final headlessWebView = HeadlessInAppWebView(
-    initialUrlRequest: URLRequest(url: WebUri(dotenv.get('HOST_CURL'))),
+    initialUrlRequest: URLRequest(
+      url: WebUri(
+        '${dotenv.get('HOST_CURL')}?_=${DateTime.now().millisecondsSinceEpoch}',
+      ),
+    ),
     onLoadStop: (controller, url) async {
       final currentUrl = await controller.getUrl();
       completer.complete(currentUrl?.baseUrl);

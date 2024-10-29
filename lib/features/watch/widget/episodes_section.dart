@@ -177,13 +177,16 @@ class EpisodesSection extends StatelessWidget {
   ) {
     if (state is VideoPlayerLoaded && state.currentChap.id == chap.id) {
       return true;
+    } else {
+      final initialData =
+          context.watchTypedState<WatchBloc, WatchLoaded>().initialData;
+      if (initialData == null) {
+        return state is VideoPlayerInitial && index == 0;
+      } else {
+        return (state is VideoPlayerInitial || state is VideoPlayerLoading) &&
+            initialData.initialChap?.id == chap.id;
+      }
     }
-    final initialData =
-        context.watchTypedState<WatchBloc, WatchLoaded>().initialData;
-    if (initialData == null) {
-      return state is VideoPlayerInitial && index == 0;
-    }
-    return initialData.initialChap?.id == chap.id;
   }
 
   Widget _buildChapCard(

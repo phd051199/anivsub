@@ -13,7 +13,6 @@ import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'watch_bloc.freezed.dart';
 part 'watch_event.dart';
@@ -26,7 +25,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     this._getAnimeDetailUseCase,
     this._episodeListUseCase,
     this._sharedPreferenceService,
-    this._authUseCases,
+    this._getLastChapUseCase,
   ) : super(const WatchInitial()) {
     on<InitWatch>(_onInitWatch);
     on<LoadWatch>(_onLoadWatch);
@@ -44,7 +43,8 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   final GetAnimeDetailUseCase _getAnimeDetailUseCase;
   final GetListEpisodeUseCase _episodeListUseCase;
   final SharedPreferenceService _sharedPreferenceService;
-  final AuthUseCases _authUseCases;
+  final GetLastChapUseCase _getLastChapUseCase;
+
   final CancelToken cancelToken = CancelToken();
   late FBCommentPlugin _fbCommentPlugin;
   late String _afterCursor = '';
@@ -135,8 +135,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     Emitter<WatchState> emit,
   ) async {
     final currentState = state;
-    if (currentState is! WatchLoaded) return;
-    if (currentState.isCmtLoading) return;
+    if (currentState is! WatchLoaded || currentState.isCmtLoading) return;
 
     try {
       final loadingState = currentState.copyWith(isCmtLoading: true);
@@ -322,32 +321,23 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
         listEpisodeSkip,
       );
 
-      final seasonId = currentState.detail.pathToView?.parseSeasonId();
-      final authUser = await _authUseCases.getLocalUserSession();
-
-      final latestChap = await Supabase.instance.client
-          .rpc(
-            'get_last_chap',
-            params: {
-              'user_uid': authUser.id,
-              'season_id': seasonId,
-            },
-          )
-          .maybeSingle()
-          .onError((_, __) => null);
+      final latestChapUseCaseOutput = await _getLastChapUseCase.send(
+        GetLastChapUseCaseInput(
+          seasonId: currentState.detail.pathToView?.parseSeasonId() ?? '',
+        ),
+      );
+      final latestChap = latestChapUseCaseOutput.result;
 
       InitialData? initialData;
 
-      if (latestChap != null) {
-        final initialChap = chaps.firstWhereOrNull(
-              (chap) => chap.id == latestChap['chap_id'],
-            ) ??
-            chaps.first;
-        initialData = InitialData(
-          initialChap: initialChap,
-          initialPosition: latestChap['cur'],
-        );
-      }
+      final initialChap = chaps.firstWhereOrNull(
+            (chap) => chap.id == latestChap?.chapId,
+          ) ??
+          chaps.first;
+      initialData = InitialData(
+        initialChap: initialChap,
+        initialPosition: latestChap?.cur ?? 0,
+      );
 
       emit(
         currentState.copyWith(

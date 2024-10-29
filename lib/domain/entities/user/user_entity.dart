@@ -1,72 +1,36 @@
 import 'package:anivsub/data/dto/user/user_dto.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class UserEntity extends BaseEntity<UserDTO> {
-  const UserEntity({
-    this.id,
-    this.firstName,
-    this.lastName,
-    this.maidenName,
-    this.age,
-    this.gender,
-    this.email,
-    this.phone,
-    this.username,
-    this.password,
-    this.birthDate,
-    this.image,
-    this.bloodGroup,
-    this.height,
-    this.weight,
-    this.eyeColor,
-    this.hair,
-    this.ip,
-    this.address,
-    this.macAddress,
-    this.university,
-    this.bank,
-    this.company,
-    this.ein,
-    this.ssn,
-    this.userAgent,
-    this.crypto,
-    this.role,
-  });
-  final int? id;
-  final String? firstName;
-  final String? lastName;
-  final String? maidenName;
-  final int? age;
-  final String? gender;
-  final String? email;
-  final String? phone;
-  final String? username;
-  final String? password;
-  final String? birthDate;
-  final String? image;
-  final String? bloodGroup;
-  final double? height;
-  final double? weight;
-  final String? eyeColor;
-  final HairEntity? hair;
-  final String? ip;
-  final AddressEntity? address;
-  final String? macAddress;
-  final String? university;
-  final BankEntity? bank;
-  final CompanyEntity? company;
-  final String? ein;
-  final String? ssn;
-  final String? userAgent;
-  final CryptoEntity? crypto;
-  final String? role;
+part 'user_entity.freezed.dart';
+part 'user_entity.g.dart';
+
+@freezed
+class UserEntity extends BaseEntity<UserDTO> with _$UserEntity {
+  const factory UserEntity({
+    @JsonKey(name: 'id') String? id,
+    @JsonKey(name: 'first_name') String? firstName,
+    @JsonKey(name: 'last_name') String? lastName,
+    @JsonKey(name: 'age') int? age,
+    @JsonKey(name: 'gender') String? gender,
+    @JsonKey(name: 'email') String? email,
+    @JsonKey(name: 'phone') String? phone,
+    @JsonKey(name: 'username') String? username,
+    @JsonKey(name: 'password') String? password,
+    @JsonKey(name: 'birth_date') String? birthDate,
+    @JsonKey(name: 'image') String? image,
+  }) = _UserEntity;
+
+  const UserEntity._();
+
+  factory UserEntity.fromJson(Map<String, dynamic> json) =>
+      _$UserEntityFromJson(json);
 
   @override
   List<Object?> get props => [
         id,
         firstName,
         lastName,
-        maidenName,
         age,
         gender,
         email,
@@ -75,53 +39,20 @@ class UserEntity extends BaseEntity<UserDTO> {
         password,
         birthDate,
         image,
-        bloodGroup,
-        height,
-        weight,
-        eyeColor,
-        hair,
-        ip,
-        address,
-        macAddress,
-        university,
-        bank,
-        company,
-        ein,
-        ssn,
-        userAgent,
-        crypto,
-        role,
       ];
 
   @override
   UserDTO toDTO() => UserDTO(
-        id: id,
-        firstName: firstName,
-        lastName: lastName,
-        maidenName: maidenName,
-        age: age,
-        gender: gender,
-        email: email,
-        phone: phone,
-        username: username,
-        password: password,
-        birthDate: birthDate,
-        image: image,
-        bloodGroup: bloodGroup,
-        height: height,
-        weight: weight,
-        eyeColor: eyeColor,
-        hair: hair?.toDTO(),
-        ip: ip,
-        address: address?.toDTO(),
-        macAddress: macAddress,
-        university: university,
-        bank: bank?.toDTO(),
-        company: company?.toDTO(),
-        ein: ein,
-        ssn: ssn,
-        userAgent: userAgent,
-        crypto: crypto?.toDTO(),
-        role: role,
+        id: id ?? '',
+        firstName: firstName ?? '',
+        lastName: lastName ?? '',
+        age: age ?? 0,
+        gender: gender ?? '',
+        email: email ?? '',
+        phone: phone ?? '',
+        username: username ?? '',
+        password: password ?? '',
+        birthDate: birthDate ?? '',
+        image: image ?? '',
       );
 }

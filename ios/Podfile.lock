@@ -59,6 +59,7 @@ PODS:
     - FlutterMacOS
   - wakelock_plus (0.0.1):
     - Flutter
+  - wasm_run_flutter (0.0.1)
 
 DEPENDENCIES:
   - app_links (from `.symlinks/plugins/app_links/ios`)
@@ -77,6 +78,7 @@ DEPENDENCIES:
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
   - wakelock_plus (from `.symlinks/plugins/wakelock_plus/ios`)
+  - wasm_run_flutter (from `.symlinks/plugins/wasm_run_flutter/ios`)
 
 SPEC REPOS:
   trunk:
@@ -120,6 +122,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/video_player_avfoundation/darwin"
   wakelock_plus:
     :path: ".symlinks/plugins/wakelock_plus/ios"
+  wasm_run_flutter:
+    :path: ".symlinks/plugins/wasm_run_flutter/ios"
 
 SPEC CHECKSUMS:
   app_links: e7a6750a915a9e161c58d91bc610e8cd1d4d0ad0
@@ -144,6 +148,7 @@ SPEC CHECKSUMS:
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
   video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
   wakelock_plus: 78ec7c5b202cab7761af8e2b2b3d0671be6c4ae1
+  wasm_run_flutter: 2f91e8869ddce786e92e3ec99175647fea2284a4
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 

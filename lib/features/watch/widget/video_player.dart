@@ -6,7 +6,6 @@ import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
 import 'package:anivsub/features/watch/watch.dart';
 import 'package:anivsub/features/watch/widget/empty_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:river_player/river_player.dart';
 
@@ -60,12 +59,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         autoDetectFullscreenAspectRatio: true,
         autoDetectFullscreenDeviceOrientation: true,
         controlsConfiguration: _createControlsConfiguration(),
-        deviceOrientationsOnFullScreen: [
-          DeviceOrientation.portraitUp,
-          DeviceOrientation.landscapeLeft,
-          DeviceOrientation.landscapeRight,
-        ],
-        deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitUp],
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:anivsub/core/utils/utils.dart';
+import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/profile/widget/history_item.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ class HistoryDateGroup extends StatelessWidget {
     required this.groupedHistory,
     required this.index,
   });
-  final Map<DateTime, List<dynamic>> groupedHistory;
+  final Map<DateTime, List<QueryHistoryEntity?>> groupedHistory;
   final int index;
 
   @override
@@ -30,7 +31,7 @@ class HistoryDateGroup extends StatelessWidget {
           ),
         ),
         ...items.map(
-          (e) => e is Map<String, dynamic> ? HistoryItem(item: e) : Container(),
+          (e) => e is QueryHistoryEntity ? HistoryItem(item: e) : Container(),
         ),
       ],
     );

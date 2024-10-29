@@ -1,14 +1,13 @@
-import 'package:get_it/get_it.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 const kSPUserToken = 'kUserToken';
 const kSPThemeMode = 'kThemeMode';
 
-const decryptHlsUrl = 'https://decrypt-hls.dph.workers.dev';
 const sk9animetvApiUrl = 'https://sk-9animetv.dph.workers.dev';
 const skHianimeApiUrl = 'https://sk-hianime.dph.workers.dev';
 const fbBaseUrl = 'https://www.facebook.com';
 
-final hostCurl = GetIt.I.get<String>(instanceName: 'HOST_CURL');
+final hostCurl = dotenv.get('HOST_CURL');
 final ogHostCurl = Uri.parse(hostCurl)
     .replace(
       scheme: 'http',

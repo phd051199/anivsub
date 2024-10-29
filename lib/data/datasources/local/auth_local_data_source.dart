@@ -1,4 +1,4 @@
-import 'package:anivsub/data/dto/user_session_response_dto.dart';
+import 'package:anivsub/data/data_exports.dart';
 
 abstract class AuthLocalDataSource {
   Future<void> setLocalUserSession(UserSessionResponseDTO auth);

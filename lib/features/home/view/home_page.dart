@@ -29,13 +29,10 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
         onRefresh: () async {
           bloc.add(const LoadHome());
         },
-        child: switch (state) {
-          HomeInitial() ||
-          HomeLoading() =>
-            const Skeletonizer(child: HomeContent()),
-          HomeLoaded() => const HomeContent(),
-          _ => Container(),
-        },
+        child: Skeletonizer(
+          enabled: state is HomeLoading || state is HomeInitial,
+          child: const HomeContent(),
+        ),
       ),
     );
   }

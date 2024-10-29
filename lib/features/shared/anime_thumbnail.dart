@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/shared/constants.dart';
-import 'package:anivsub/core/utils/log_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -24,22 +23,23 @@ class AnimeThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (imageUrl == null || imageUrl!.isEmpty) {
-      Log.debug('Image URL is null');
-    }
     return Card.filled(
       clipBehavior: Clip.hardEdge,
       child: Stack(
         children: [
-          CachedNetworkImage(
-            imageUrl: imageUrl ?? '',
-            httpHeaders: headers,
-            fit: BoxFit.cover,
-            height: height,
-            width: width,
-            errorWidget: (context, url, error) =>
-                const Icon(Icons.no_photography_rounded),
-          ),
+          if (imageUrl != null && imageUrl!.isNotEmpty)
+            CachedNetworkImage(
+              imageUrl: imageUrl!,
+              httpHeaders: headers,
+              fit: BoxFit.cover,
+              height: height,
+              width: width,
+            )
+          else
+            SizedBox(
+              height: height,
+              width: width,
+            ),
           if (process?.isNotEmpty ?? false) _buildProcessOverlay(context),
           if (rate != null) _buildRatingOverlay(context),
         ],

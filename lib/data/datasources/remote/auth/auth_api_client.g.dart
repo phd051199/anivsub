@@ -6,7 +6,7 @@ part of 'auth_api_client.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
 class _AuthApiClient implements AuthApiClient {
   _AuthApiClient(
@@ -104,7 +104,7 @@ class _AuthApiClient implements AuthApiClient {
     )
         .compose(
           _dio.options,
-          'https://animevietsub.run/account/info',
+          'https://animevietsub.ink/account/info',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -150,7 +150,7 @@ class _AuthApiClient implements AuthApiClient {
     )
         .compose(
           _dio.options,
-          'https://animevietsub.run/account/login',
+          'https://animevietsub.ink/account/login',
           queryParameters: queryParameters,
           data: _data,
         )

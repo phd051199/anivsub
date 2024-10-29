@@ -7,6 +7,7 @@ import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/string_extension.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:flutter/foundation.dart';
 
 class FBCommentPlugin {
   FBCommentPlugin({required this.config});
@@ -81,13 +82,16 @@ class FBCommentPlugin {
     try {
       final setup = await this.setup();
 
-      final parsedComments = CommentParser.parse(
+      final parsedComments = await compute(
+        CommentParser.parse,
         setup.initResponse.comments ?? const CommentsDTO(),
-      ).map((e) => e.toEntity()).toList();
+      );
+      final parsedCommentsEntity =
+          parsedComments.map((e) => e.toEntity()).toList();
 
       return CommentDataEntity(
         meta: setup.initResponse.meta?.toEntity(),
-        comments: parsedComments,
+        comments: parsedCommentsEntity,
       );
     } catch (e) {
       return const CommentDataEntity();
@@ -253,9 +257,10 @@ class FBCommentPlugin {
       final payload = json['payload'];
 
       final comments = CommentsDTO.fromJson(payload);
-      final parsedComments = CommentParser.parse(
-        comments,
-      ).map((e) => e.toEntity()).toList();
+      final parsedComments = await compute(CommentParser.parse, comments);
+      final parsedCommentsEntity =
+          parsedComments.map((e) => e.toEntity()).toList();
+
       final meta = MetaDTO(
         totalCount: payload['totalCount'],
         afterCursor: payload['afterCursor'],
@@ -263,7 +268,7 @@ class FBCommentPlugin {
 
       return CommentDataEntity(
         meta: meta,
-        comments: parsedComments,
+        comments: parsedCommentsEntity,
       );
     } catch (e) {
       return const CommentDataEntity();

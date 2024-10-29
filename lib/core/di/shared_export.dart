@@ -2,6 +2,7 @@ import 'package:anivsub/core/environment/environment.dart';
 import 'package:anivsub/core/notifier/auth_notifier.dart';
 import 'package:anivsub/core/service/flutter_secure_storage_service.dart';
 import 'package:anivsub/core/service/shared_preferences_service.dart';
+import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
@@ -17,11 +18,11 @@ SharedPreferenceService get sharedPreferenceService =>
 FlutterSecureStorageService get flutterSecureStorageService =>
     GetIt.I<FlutterSecureStorageService>();
 CookieJar get cookieJar => GetIt.I<CookieJar>();
+DHA get dha => GetIt.I<DHA>();
 
 // Api Client
 AuthApiClient get authApiClient => GetIt.I<AuthApiClient>();
 ScrapingClient get scrapingClient => GetIt.I<ScrapingClient>();
-WorkerApiClient get workerApiClient => GetIt.I<WorkerApiClient>();
 FbApiClient get fbApiClient => GetIt.I<FbApiClient>();
 
 // Data Source
@@ -39,14 +40,11 @@ AppSettingsLocalRepository get appSettingsLocalRepository =>
 
 // Use Cases
 AuthUseCases get authUseCases => GetIt.I<AuthUseCases>();
-ProfileUseCases get profileUseCases => GetIt.I<ProfileUseCases>();
 AppSettingsUseCases get appSettingsUseCases => GetIt.I<AppSettingsUseCases>();
-HomeUseCases get homeUseCases => GetIt.I<HomeUseCases>();
 GetHomeDataUseCase get getHomeDataUseCase => GetIt.I<GetHomeDataUseCase>();
 GetPlayDataUseCase get getPlayDataUseCase => GetIt.I<GetPlayDataUseCase>();
 GetEncryptedHlsUseCase get getEncryptedHlsUseCase =>
     GetIt.I<GetEncryptedHlsUseCase>();
-DecryptHlsUseCase get decryptHlsUseCase => GetIt.I<DecryptHlsUseCase>();
 GetListEpisodeUseCase get getListEpisodeUseCase =>
     GetIt.I<GetListEpisodeUseCase>();
 GetEpisodeSkipUsecase get getEpisodeSkipUsecase =>

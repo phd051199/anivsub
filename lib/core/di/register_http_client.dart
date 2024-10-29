@@ -10,12 +10,11 @@ import 'package:path_provider/path_provider.dart';
 
 void registerHttpClient(Environment environment) {
   final cookieManager = GetIt.I<CustomCookiesManager>();
-  final baseUrl = GetIt.I.get<String>(instanceName: 'HOST_CURL');
 
   GetIt.I.registerSingleton<AuthApiClient>(
     AuthApiClient(
       NetworkClient.getDio(
-        baseUrl: baseUrl,
+        baseUrl: hostCurl,
         headers: headers,
         cookieManager: cookieManager,
       ),
@@ -25,7 +24,7 @@ void registerHttpClient(Environment environment) {
   GetIt.I.registerSingleton<ScrapingClient>(
     ScrapingClient(
       NetworkClient.getDio(
-        baseUrl: baseUrl,
+        baseUrl: hostCurl,
         headers: headers,
         isAuthenticated: false,
         cookieManager: cookieManager,
@@ -33,17 +32,8 @@ void registerHttpClient(Environment environment) {
     ),
   );
 
-  GetIt.I.registerSingleton<WorkerApiClient>(
-    WorkerApiClient(
-      NetworkClient.getDio(
-        baseUrl: decryptHlsUrl,
-        isAuthenticated: false,
-      ),
-    ),
-  );
-
-  GetIt.I.registerSingleton<SkApiClient>(
-    SkApiClient(
+  GetIt.I.registerSingleton<EpisodeSkipApiClient>(
+    EpisodeSkipApiClient(
       NetworkClient.getDio(
         baseUrl: sk9animetvApiUrl,
         isAuthenticated: false,
@@ -83,7 +73,7 @@ void registerCacheManager() {
     CacheOptions(
       store: cacheStore,
       maxStale: const Duration(minutes: 1),
-      policy: CachePolicy.forceCache,
+      policy: CachePolicy.request,
     ),
   );
 }
