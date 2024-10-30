@@ -1,14 +1,13 @@
-import 'package:anivsub/core/environment/environment.dart';
 import 'package:anivsub/core/network/cookies_manager.dart';
 import 'package:anivsub/core/network/network_client.dart';
 import 'package:anivsub/core/shared/constants.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:get_it/get_it.dart';
-import 'package:path_provider/path_provider.dart';
 
-void registerHttpClient(Environment environment) {
+void registerHttpClient() {
   final cookieManager = GetIt.I<CustomCookiesManager>();
 
   GetIt.I.registerSingleton<AuthApiClient>(
@@ -53,9 +52,11 @@ void registerHttpClient(Environment environment) {
   );
 }
 
-Future<void> registerCookieManager() async {
-  final appDocDir = await getApplicationDocumentsDirectory();
-  final cookiePath = '${appDocDir.path}/.cookies/';
+void registerCookieManager() {
+  final appDocDir = GetIt.I.get<String>(
+    instanceName: 'APP_DOC_DIR',
+  );
+  final cookiePath = '$appDocDir/.cookies/';
   final cookieJar = PersistCookieJar(
     storage: FileStorage(cookiePath),
   );
@@ -67,13 +68,16 @@ Future<void> registerCookieManager() async {
 }
 
 void registerCacheManager() {
-  final CacheStore cacheStore = MemCacheStore();
+  final appDocDir = GetIt.I.get<String>(
+    instanceName: 'APP_DOC_DIR',
+  );
+  final cacheStore = HiveCacheStore('$appDocDir/.cache/');
 
   GetIt.I.registerSingleton<CacheOptions>(
     CacheOptions(
       store: cacheStore,
       maxStale: const Duration(minutes: 1),
-      policy: CachePolicy.request,
+      policy: CachePolicy.forceCache,
     ),
   );
 }

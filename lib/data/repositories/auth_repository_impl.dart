@@ -1,4 +1,3 @@
-import 'package:anivsub/core/network/response.dart';
 import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
@@ -11,40 +10,36 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _authRemoteDataSource;
 
   @override
-  Future<ResponseWrapper<UserSessionResponseEntity>> getUserSession(
+  Future<UserSessionResponseEntity> getUserSession(
     UserSessionRequestEntity authRequestEntity,
-  ) {
-    return execute(() async {
-      final html = await _authRemoteDataSource.loginWithUsernameAndPassword(
-        email: authRequestEntity.username,
-        passwordMd5: Md5Utils.hash(authRequestEntity.password),
-      );
+  ) async {
+    final html = await _authRemoteDataSource.loginWithUsernameAndPassword(
+      email: authRequestEntity.username,
+      passwordMd5: Md5Utils.hash(authRequestEntity.password),
+    );
 
-      if (html.contains('alert-error')) {
-        throw AccountInfoParser.parseError(html);
-      }
+    if (html.contains('alert-error')) {
+      throw AccountInfoParser.parseError(html);
+    }
 
-      final userInfo = await getUser();
+    final userInfo = await getUser();
 
-      return UserSessionResponseEntity(
-        username: userInfo.username,
-        email: userInfo.email,
-        gender: userInfo.gender,
-        image: userInfo.image,
-      );
-    });
+    return UserSessionResponseEntity(
+      username: userInfo.username,
+      email: userInfo.email,
+      gender: userInfo.gender,
+      image: userInfo.image,
+    );
   }
 
   @override
-  Future<ResponseWrapper<RefreshUserSessionResponseEntity>> refreshUserSession(
+  Future<RefreshUserSessionResponseEntity> refreshUserSession(
     RefreshUserSessionRequestEntity refreshTokenRequestEntity,
-  ) {
-    return execute(() async {
-      final response = await _authRemoteDataSource.refreshUserSession(
-        refreshTokenRequestEntity.toDTO(),
-      );
-      return response.toEntity();
-    });
+  ) async {
+    final response = await _authRemoteDataSource.refreshUserSession(
+      refreshTokenRequestEntity.toDTO(),
+    );
+    return response.toEntity();
   }
 
   @override

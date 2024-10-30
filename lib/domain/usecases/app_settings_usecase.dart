@@ -1,16 +1,40 @@
-import 'package:anivsub/domain/entities/app_settings_entity.dart';
-import 'package:anivsub/domain/repositories/app_settings_local_repository.dart';
+import 'package:anivsub/domain/domain_exports.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-@singleton
-class AppSettingsUseCases {
-  const AppSettingsUseCases(this.appSettingsLocalRepository);
-  final AppSettingsLocalRepository appSettingsLocalRepository;
+part 'app_settings_usecase.freezed.dart';
 
-  Future<void> setAppSettings(AppSettingsEntity appSettings) {
-    return appSettingsLocalRepository.setAppSettings(appSettings);
+@injectable
+class AppSettingsUseCase extends BaseFutureUseCase<AppSettingsUseCaseInput,
+    AppSettingsUseCaseOutput> {
+  const AppSettingsUseCase(this._repository);
+  final AppSettingsLocalRepository _repository;
+
+  @protected
+  @override
+  Future<AppSettingsUseCaseOutput> buildUseCase(
+    AppSettingsUseCaseInput input,
+  ) async {
+    if (input.appSettings != null) {
+      await _repository.setAppSettings(input.appSettings!);
+      return const AppSettingsUseCaseOutput();
+    }
+    final result = await _repository.getAppSettings();
+    return AppSettingsUseCaseOutput(result: result);
   }
+}
 
-  Future<AppSettingsEntity> getAppSettings() async =>
-      await appSettingsLocalRepository.getAppSettings();
+@freezed
+class AppSettingsUseCaseInput extends BaseInput with _$AppSettingsUseCaseInput {
+  const factory AppSettingsUseCaseInput({
+    AppSettingsEntity? appSettings,
+  }) = _AppSettingsUseCaseInput;
+}
+
+@freezed
+class AppSettingsUseCaseOutput extends BaseOutput
+    with _$AppSettingsUseCaseOutput {
+  const factory AppSettingsUseCaseOutput({
+    AppSettingsEntity? result,
+  }) = _AppSettingsUseCaseOutput;
 }

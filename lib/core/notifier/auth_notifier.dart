@@ -8,8 +8,9 @@ import 'package:injectable/injectable.dart';
 @singleton
 class AuthNotifier with ChangeNotifier {
   AuthNotifier({required this.authUseCases});
-  final AuthUseCases authUseCases;
-  var _status = AuthStatus.notAuthenticated;
+
+  final AuthUseCase authUseCases;
+  AuthStatus _status = AuthStatus.notAuthenticated;
   UserSessionResponseEntity? _loginResponseEntity;
   String? _tokenName;
   String? _tokenValue;
@@ -27,11 +28,7 @@ class AuthNotifier with ChangeNotifier {
       doLogout();
       return;
     }
-    // if (loginResponseEntity.accessToken == null ||
-    //     loginResponseEntity.refreshToken == null) {
-    //   doLogout();
-    //   return;
-    // }
+
     loginResponseEntity = loginResponseEntity.copyWith(
       id: sha256
           .convert(
@@ -42,7 +39,11 @@ class AuthNotifier with ChangeNotifier {
           .toString(),
     );
 
-    await authUseCases.setLocalAuthToken(loginResponseEntity);
+    await authUseCases.send(
+      SetLocalAuthTokenInput(
+        authRequest: loginResponseEntity,
+      ),
+    );
     _loginResponseEntity = loginResponseEntity;
     _status = AuthStatus.authenticated;
     notifyListeners();
@@ -50,15 +51,15 @@ class AuthNotifier with ChangeNotifier {
 
   Future<void> checkToken() async {
     try {
-      final data = await authUseCases.getLocalUserSession();
-      if (data.email != null) {
-        if (data.email != null) {
-          _loginResponseEntity = data;
-          _status = AuthStatus.authenticated;
-          notifyListeners();
-        } else {
-          doLogout();
-        }
+      final output = await authUseCases.send(
+        const GetLocalAuthTokenInput(),
+      );
+      if (output.localSession?.email != null) {
+        _loginResponseEntity = output.localSession;
+        _status = AuthStatus.authenticated;
+        notifyListeners();
+      } else {
+        doLogout();
       }
     } catch (e) {
       doLogout();
@@ -66,45 +67,50 @@ class AuthNotifier with ChangeNotifier {
   }
 
   Future<void> refreshAuthToken() async {
-    final response = await authUseCases.refreshUserSession(
-      RefreshUserSessionRequestEntity(
-        refreshToken: loginResponseEntity?.refreshToken ?? '',
+    final response = await authUseCases.send(
+      RefreshUserSessionInput(
+        refreshRequest: RefreshUserSessionRequestEntity(
+          refreshToken: loginResponseEntity?.refreshToken ?? '',
+        ),
       ),
     );
-    response.when(
-      (data) {
-        if (data.accessToken != null && data.refreshToken != null) {
-          final newLocalData = loginResponseEntity?.copyWith(
-            accessToken: data.accessToken,
-            refreshToken: data.refreshToken,
-          );
-          if (newLocalData != null) {
-            authUseCases.setLocalAuthToken(newLocalData);
-            _status = AuthStatus.authenticated;
-            notifyListeners();
-          } else {
-            doLogout();
-          }
-        } else {
-          doLogout();
-        }
-      },
-      (error) {
+
+    if (response.refreshResult?.accessToken != null &&
+        response.refreshResult?.refreshToken != null) {
+      final newLocalData = loginResponseEntity?.copyWith(
+        accessToken: response.refreshResult?.accessToken,
+        refreshToken: response.refreshResult?.refreshToken,
+      );
+      if (newLocalData != null) {
+        await authUseCases.send(
+          SetLocalAuthTokenInput(
+            authRequest: newLocalData,
+          ),
+        );
+        _status = AuthStatus.authenticated;
+        notifyListeners();
+      } else {
         doLogout();
-      },
-    );
+      }
+    } else {
+      doLogout();
+    }
   }
 
   Future<void> doLogout() async {
     _status = AuthStatus.notAuthenticated;
     _loginResponseEntity = null;
-    await authUseCases.clearLocalSession();
+    await authUseCases.send(
+      const ClearLocalAuthTokenInput(),
+    );
     notifyListeners();
   }
 
   Future<void> login(String email, String password) async {
-    final data = await authUseCases.getLocalUserSession();
-    await doLogin(data);
+    final output = await authUseCases.send(
+      const GetLocalAuthTokenInput(),
+    );
+    await doLogin(output.localSession);
   }
 }
 

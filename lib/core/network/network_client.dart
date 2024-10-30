@@ -4,7 +4,6 @@ import 'package:anivsub/core/network/redirect_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -19,15 +18,12 @@ class NetworkClient {
   }) {
     final dio = _createDio(baseUrl, headers);
 
-    _addInterceptors(dio, isAuthenticated, cookieManager, useCache);
-
-    dio.httpClientAdapter = Http2Adapter(
-      ConnectionManager(
-        idleTimeout: const Duration(seconds: 5),
-        onClientCreate: (_, config) => config.onBadCertificate = (_) => true,
-      ),
+    _addInterceptors(
+      dio,
+      isAuthenticated,
+      cookieManager,
+      useCache,
     );
-
     return dio;
   }
 
@@ -57,7 +53,9 @@ class NetworkClient {
         ),
       if (isAuthenticated) AuthInterceptor(),
       if (cookieManager != null) cookieManager,
-      if (useCache) DioCacheInterceptor(options: GetIt.I.get<CacheOptions>()),
+      if (useCache) ...[
+        DioCacheInterceptor(options: GetIt.I.get<CacheOptions>()),
+      ],
       ParseJsonInterceptor(),
       RedirectInterceptor(dio),
     ]);

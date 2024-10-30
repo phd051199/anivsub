@@ -1,4 +1,4 @@
-import 'package:anivsub/domain/entities/app_settings_entity.dart';
+import 'package:anivsub/domain/entities/app/app_settings_entity.dart';
 import 'package:anivsub/domain/usecases/app_settings_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -9,30 +9,36 @@ part 'theme_state.dart';
 
 @injectable
 class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit(this.appSettingsUseCases)
+  ThemeCubit(this._appSettingsUseCase)
       : super(ThemeInitial(AppSettingsEntity.initial())) {
     loadAppSettings();
   }
 
-  final AppSettingsUseCases appSettingsUseCases;
+  final AppSettingsUseCase _appSettingsUseCase;
 
   void loadAppSettings() async {
-    final appSettings = await appSettingsUseCases.getAppSettings();
-    emit(ThemeLoaded(appSettings));
+    final output = await _appSettingsUseCase.send(
+      const AppSettingsUseCaseInput(),
+    );
+    emit(ThemeLoaded(output.result!));
   }
 
   void changeThemeMode(ThemeMode themeMode) async {
     final currentAppSettings = state.appSettings;
     final newAppSettings =
         currentAppSettings.copyWith(themeMode: themeMode.index);
-    await appSettingsUseCases.setAppSettings(newAppSettings);
+    await _appSettingsUseCase.send(
+      AppSettingsUseCaseInput(appSettings: newAppSettings),
+    );
     emit(ThemeLoaded(newAppSettings));
   }
 
   void changeThemeColor(Color color) async {
     final currentAppSettings = state.appSettings;
     final newAppSettings = currentAppSettings.copyWith(color: color.value);
-    await appSettingsUseCases.setAppSettings(newAppSettings);
+    await _appSettingsUseCase.send(
+      AppSettingsUseCaseInput(appSettings: newAppSettings),
+    );
     emit(ThemeLoaded(newAppSettings));
   }
 }

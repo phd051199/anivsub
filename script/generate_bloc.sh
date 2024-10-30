@@ -39,7 +39,7 @@ done
 cd ..
 
 # Paths
-feature_dir="lib/features/$feature_name"
+feature_dir="lib/presentation/screen/$feature_name"
 view_dir="$feature_dir/view"
 bloc_dir="$feature_dir/bloc"
 cubit_dir="$feature_dir/cubit"
@@ -66,7 +66,7 @@ EOL
 if [ "$with_bloc" == "true" ]; then
   cat <<EOL >> "$view_dir/${feature_name}_page.dart"
 import 'package:$package_name/core/base/base.dart';
-import 'package:$package_name/features/shared/loading_widget.dart';
+import 'package:$package_name/presentation/shared/loading_widget.dart';
 
 import '../bloc/${feature_name}_bloc.dart';
 
@@ -117,7 +117,7 @@ EOL
 elif [ "$with_cubit" == "true" ]; then
   cat <<EOL >> "$view_dir/${feature_name}_page.dart"
 import 'package:$package_name/core/base/base.dart';
-import 'package:$package_name/features/shared/loading_widget.dart';
+import 'package:$package_name/presentation/shared/loading_widget.dart';
 
 import '../cubit/${feature_name}_cubit.dart';
 

@@ -3,14 +3,16 @@ import 'package:anivsub/core/di/register_http_client.dart';
 import 'package:anivsub/core/environment/environment.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> registerDependencies(
   Environment environment,
 ) async {
-  await registerCookieManager();
+  await registerAppDocDir();
+  registerCookieManager();
   registerCacheManager();
-  registerHttpClient(environment);
+  registerHttpClient();
   registerSupabase();
   configureInjection();
 }
@@ -21,5 +23,13 @@ void registerSupabase() {
       dotenv.get('SUPABASE_URL'),
       dotenv.get('SUPABASE_ANON_KEY'),
     ),
+  );
+}
+
+Future<void> registerAppDocDir() async {
+  final appDocDir = await getApplicationDocumentsDirectory();
+  GetIt.I.registerSingleton<String>(
+    appDocDir.path,
+    instanceName: 'APP_DOC_DIR',
   );
 }

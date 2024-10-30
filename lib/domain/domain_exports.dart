@@ -13,7 +13,7 @@ export 'entities/anime/list_episode_response_entity.dart';
 export 'entities/anime/play_data_entity.dart';
 export 'entities/anime/pre_search_item_entity.dart';
 export 'entities/anime/search_result_entity.dart';
-export 'entities/app_settings_entity.dart';
+export 'entities/app/app_settings_entity.dart';
 export 'entities/base_entity.dart';
 export 'entities/facebook/fb_comment_plugin_config.dart';
 export 'entities/facebook/feedback_queries_entity.dart';

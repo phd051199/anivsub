@@ -1,11 +1,11 @@
 import 'package:anivsub/core/environment/environment.dart';
 import 'package:anivsub/core/notifier/auth_notifier.dart';
+import 'package:anivsub/core/plugin/plugin.dart';
 import 'package:anivsub/core/service/flutter_secure_storage_service.dart';
 import 'package:anivsub/core/service/shared_preferences_service.dart';
-import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/features/watch/cubit/video_player_cubit.dart';
+import 'package:anivsub/presentation/screen/watch/cubit/video_player_cubit.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:get_it/get_it.dart';
 
@@ -39,8 +39,8 @@ AppSettingsLocalRepository get appSettingsLocalRepository =>
     GetIt.I<AppSettingsLocalRepository>();
 
 // Use Cases
-AuthUseCases get authUseCases => GetIt.I<AuthUseCases>();
-AppSettingsUseCases get appSettingsUseCases => GetIt.I<AppSettingsUseCases>();
+AuthUseCase get authUseCase => GetIt.I<AuthUseCase>();
+AppSettingsUseCase get appSettingsUseCase => GetIt.I<AppSettingsUseCase>();
 GetHomeDataUseCase get getHomeDataUseCase => GetIt.I<GetHomeDataUseCase>();
 GetPlayDataUseCase get getPlayDataUseCase => GetIt.I<GetPlayDataUseCase>();
 GetEncryptedHlsUseCase get getEncryptedHlsUseCase =>

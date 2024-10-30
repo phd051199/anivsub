@@ -1,5 +1,5 @@
 import 'package:anivsub/data/datasources/local/app_settings_local_data_source.dart';
-import 'package:anivsub/domain/entities/app_settings_entity.dart';
+import 'package:anivsub/domain/entities/app/app_settings_entity.dart';
 import 'package:anivsub/domain/repositories/app_settings_local_repository.dart';
 import 'package:injectable/injectable.dart';
 
