@@ -161,109 +161,67 @@ abstract class _LoadSearch implements LoadSearch {
 }
 
 /// @nodoc
-mixin _$ErrorSearch {}
-
-/// @nodoc
-abstract class $ErrorSearchCopyWith<$Res> {
-  factory $ErrorSearchCopyWith(
-          ErrorSearch value, $Res Function(ErrorSearch) then) =
-      _$ErrorSearchCopyWithImpl<$Res, ErrorSearch>;
-}
-
-/// @nodoc
-class _$ErrorSearchCopyWithImpl<$Res, $Val extends ErrorSearch>
-    implements $ErrorSearchCopyWith<$Res> {
-  _$ErrorSearchCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ErrorSearch
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-abstract class _$$ErrorSearchImplCopyWith<$Res> {
-  factory _$$ErrorSearchImplCopyWith(
-          _$ErrorSearchImpl value, $Res Function(_$ErrorSearchImpl) then) =
-      __$$ErrorSearchImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ErrorSearchImplCopyWithImpl<$Res>
-    extends _$ErrorSearchCopyWithImpl<$Res, _$ErrorSearchImpl>
-    implements _$$ErrorSearchImplCopyWith<$Res> {
-  __$$ErrorSearchImplCopyWithImpl(
-      _$ErrorSearchImpl _value, $Res Function(_$ErrorSearchImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ErrorSearch
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$ErrorSearchImpl implements _ErrorSearch {
-  const _$ErrorSearchImpl();
-
-  @override
-  String toString() {
-    return 'ErrorSearch()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$ErrorSearchImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class _ErrorSearch implements ErrorSearch {
-  const factory _ErrorSearch() = _$ErrorSearchImpl;
-}
-
-/// @nodoc
 mixin _$SearchState {
+  SearchResultEntity? get result => throw _privateConstructorUsedError;
+  bool? get hasReachedMax => throw _privateConstructorUsedError;
+  int get currentPage => throw _privateConstructorUsedError;
+  List<PreSearchItemEntity>? get preSearchItems =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(SearchResultEntity? result, bool? hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)
+        initial,
     required TResult Function(SearchResultEntity result, bool hasReachedMax,
             int currentPage, List<PreSearchItemEntity>? preSearchItems)
         loaded,
-    required TResult Function(String message) error,
+    required TResult Function(
+            String message,
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems)
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(SearchResultEntity? result, bool? hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+        initial,
     TResult? Function(SearchResultEntity result, bool hasReachedMax,
             int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(
+            String message,
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems)?
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(SearchResultEntity? result, bool? hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+        initial,
     TResult Function(SearchResultEntity result, bool hasReachedMax,
             int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
-    TResult Function(String message)? error,
+    TResult Function(
+            String message,
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems)?
+        error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(SearchInitial value) initial,
-    required TResult Function(SearchLoading value) loading,
     required TResult Function(SearchLoaded value) loaded,
     required TResult Function(SearchError value) error,
   }) =>
@@ -271,7 +229,6 @@ mixin _$SearchState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(SearchInitial value)? initial,
-    TResult? Function(SearchLoading value)? loading,
     TResult? Function(SearchLoaded value)? loaded,
     TResult? Function(SearchError value)? error,
   }) =>
@@ -279,11 +236,16 @@ mixin _$SearchState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(SearchInitial value)? initial,
-    TResult Function(SearchLoading value)? loading,
     TResult Function(SearchLoaded value)? loaded,
     TResult Function(SearchError value)? error,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  /// Create a copy of SearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $SearchStateCopyWith<SearchState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -292,6 +254,14 @@ abstract class $SearchStateCopyWith<$Res> {
   factory $SearchStateCopyWith(
           SearchState value, $Res Function(SearchState) then) =
       _$SearchStateCopyWithImpl<$Res, SearchState>;
+  @useResult
+  $Res call(
+      {SearchResultEntity result,
+      bool hasReachedMax,
+      int currentPage,
+      List<PreSearchItemEntity>? preSearchItems});
+
+  $SearchResultEntityCopyWith<$Res>? get result;
 }
 
 /// @nodoc
@@ -306,13 +276,65 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? result = null,
+    Object? hasReachedMax = null,
+    Object? currentPage = null,
+    Object? preSearchItems = freezed,
+  }) {
+    return _then(_value.copyWith(
+      result: null == result
+          ? _value.result!
+          : result // ignore: cast_nullable_to_non_nullable
+              as SearchResultEntity,
+      hasReachedMax: null == hasReachedMax
+          ? _value.hasReachedMax!
+          : hasReachedMax // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      preSearchItems: freezed == preSearchItems
+          ? _value.preSearchItems
+          : preSearchItems // ignore: cast_nullable_to_non_nullable
+              as List<PreSearchItemEntity>?,
+    ) as $Val);
+  }
+
+  /// Create a copy of SearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SearchResultEntityCopyWith<$Res>? get result {
+    if (_value.result == null) {
+      return null;
+    }
+
+    return $SearchResultEntityCopyWith<$Res>(_value.result!, (value) {
+      return _then(_value.copyWith(result: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$SearchInitialImplCopyWith<$Res> {
+abstract class _$$SearchInitialImplCopyWith<$Res>
+    implements $SearchStateCopyWith<$Res> {
   factory _$$SearchInitialImplCopyWith(
           _$SearchInitialImpl value, $Res Function(_$SearchInitialImpl) then) =
       __$$SearchInitialImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {SearchResultEntity? result,
+      bool? hasReachedMax,
+      int currentPage,
+      List<PreSearchItemEntity>? preSearchItems});
+
+  @override
+  $SearchResultEntityCopyWith<$Res>? get result;
 }
 
 /// @nodoc
@@ -325,66 +347,153 @@ class __$$SearchInitialImplCopyWithImpl<$Res>
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? result = freezed,
+    Object? hasReachedMax = freezed,
+    Object? currentPage = null,
+    Object? preSearchItems = freezed,
+  }) {
+    return _then(_$SearchInitialImpl(
+      result: freezed == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as SearchResultEntity?,
+      hasReachedMax: freezed == hasReachedMax
+          ? _value.hasReachedMax
+          : hasReachedMax // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      preSearchItems: freezed == preSearchItems
+          ? _value._preSearchItems
+          : preSearchItems // ignore: cast_nullable_to_non_nullable
+              as List<PreSearchItemEntity>?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SearchInitialImpl implements SearchInitial {
-  const _$SearchInitialImpl();
+  const _$SearchInitialImpl(
+      {this.result,
+      this.hasReachedMax,
+      this.currentPage = 1,
+      final List<PreSearchItemEntity>? preSearchItems})
+      : _preSearchItems = preSearchItems;
+
+  @override
+  final SearchResultEntity? result;
+  @override
+  final bool? hasReachedMax;
+  @override
+  @JsonKey()
+  final int currentPage;
+  final List<PreSearchItemEntity>? _preSearchItems;
+  @override
+  List<PreSearchItemEntity>? get preSearchItems {
+    final value = _preSearchItems;
+    if (value == null) return null;
+    if (_preSearchItems is EqualUnmodifiableListView) return _preSearchItems;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'SearchState.initial()';
+    return 'SearchState.initial(result: $result, hasReachedMax: $hasReachedMax, currentPage: $currentPage, preSearchItems: $preSearchItems)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SearchInitialImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SearchInitialImpl &&
+            (identical(other.result, result) || other.result == result) &&
+            (identical(other.hasReachedMax, hasReachedMax) ||
+                other.hasReachedMax == hasReachedMax) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            const DeepCollectionEquality()
+                .equals(other._preSearchItems, _preSearchItems));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, result, hasReachedMax,
+      currentPage, const DeepCollectionEquality().hash(_preSearchItems));
+
+  /// Create a copy of SearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SearchInitialImplCopyWith<_$SearchInitialImpl> get copyWith =>
+      __$$SearchInitialImplCopyWithImpl<_$SearchInitialImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(SearchResultEntity? result, bool? hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)
+        initial,
     required TResult Function(SearchResultEntity result, bool hasReachedMax,
             int currentPage, List<PreSearchItemEntity>? preSearchItems)
         loaded,
-    required TResult Function(String message) error,
+    required TResult Function(
+            String message,
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems)
+        error,
   }) {
-    return initial();
+    return initial(result, hasReachedMax, currentPage, preSearchItems);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(SearchResultEntity? result, bool? hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+        initial,
     TResult? Function(SearchResultEntity result, bool hasReachedMax,
             int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(
+            String message,
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems)?
+        error,
   }) {
-    return initial?.call();
+    return initial?.call(result, hasReachedMax, currentPage, preSearchItems);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(SearchResultEntity? result, bool? hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+        initial,
     TResult Function(SearchResultEntity result, bool hasReachedMax,
             int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
-    TResult Function(String message)? error,
+    TResult Function(
+            String message,
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems)?
+        error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(result, hasReachedMax, currentPage, preSearchItems);
     }
     return orElse();
   }
@@ -393,7 +502,6 @@ class _$SearchInitialImpl implements SearchInitial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(SearchInitial value) initial,
-    required TResult Function(SearchLoading value) loading,
     required TResult Function(SearchLoaded value) loaded,
     required TResult Function(SearchError value) error,
   }) {
@@ -404,7 +512,6 @@ class _$SearchInitialImpl implements SearchInitial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(SearchInitial value)? initial,
-    TResult? Function(SearchLoading value)? loading,
     TResult? Function(SearchLoaded value)? loaded,
     TResult? Function(SearchError value)? error,
   }) {
@@ -415,7 +522,6 @@ class _$SearchInitialImpl implements SearchInitial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(SearchInitial value)? initial,
-    TResult Function(SearchLoading value)? loading,
     TResult Function(SearchLoaded value)? loaded,
     TResult Function(SearchError value)? error,
     required TResult orElse(),
@@ -428,137 +534,36 @@ class _$SearchInitialImpl implements SearchInitial {
 }
 
 abstract class SearchInitial implements SearchState {
-  const factory SearchInitial() = _$SearchInitialImpl;
-}
+  const factory SearchInitial(
+      {final SearchResultEntity? result,
+      final bool? hasReachedMax,
+      final int currentPage,
+      final List<PreSearchItemEntity>? preSearchItems}) = _$SearchInitialImpl;
 
-/// @nodoc
-abstract class _$$SearchLoadingImplCopyWith<$Res> {
-  factory _$$SearchLoadingImplCopyWith(
-          _$SearchLoadingImpl value, $Res Function(_$SearchLoadingImpl) then) =
-      __$$SearchLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$SearchLoadingImplCopyWithImpl<$Res>
-    extends _$SearchStateCopyWithImpl<$Res, _$SearchLoadingImpl>
-    implements _$$SearchLoadingImplCopyWith<$Res> {
-  __$$SearchLoadingImplCopyWithImpl(
-      _$SearchLoadingImpl _value, $Res Function(_$SearchLoadingImpl) _then)
-      : super(_value, _then);
+  @override
+  SearchResultEntity? get result;
+  @override
+  bool? get hasReachedMax;
+  @override
+  int get currentPage;
+  @override
+  List<PreSearchItemEntity>? get preSearchItems;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SearchInitialImplCopyWith<_$SearchInitialImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-
-class _$SearchLoadingImpl implements SearchLoading {
-  const _$SearchLoadingImpl();
-
-  @override
-  String toString() {
-    return 'SearchState.loading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SearchLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)
-        loaded,
-    required TResult Function(String message) error,
-  }) {
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
-        loaded,
-    TResult? Function(String message)? error,
-  }) {
-    return loading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
-        loaded,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(SearchInitial value) initial,
-    required TResult Function(SearchLoading value) loading,
-    required TResult Function(SearchLoaded value) loaded,
-    required TResult Function(SearchError value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(SearchInitial value)? initial,
-    TResult? Function(SearchLoading value)? loading,
-    TResult? Function(SearchLoaded value)? loaded,
-    TResult? Function(SearchError value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(SearchInitial value)? initial,
-    TResult Function(SearchLoading value)? loading,
-    TResult Function(SearchLoaded value)? loaded,
-    TResult Function(SearchError value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class SearchLoading implements SearchState {
-  const factory SearchLoading() = _$SearchLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$SearchLoadedImplCopyWith<$Res> {
+abstract class _$$SearchLoadedImplCopyWith<$Res>
+    implements $SearchStateCopyWith<$Res> {
   factory _$$SearchLoadedImplCopyWith(
           _$SearchLoadedImpl value, $Res Function(_$SearchLoadedImpl) then) =
       __$$SearchLoadedImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call(
       {SearchResultEntity result,
@@ -566,6 +571,7 @@ abstract class _$$SearchLoadedImplCopyWith<$Res> {
       int currentPage,
       List<PreSearchItemEntity>? preSearchItems});
 
+  @override
   $SearchResultEntityCopyWith<$Res> get result;
 }
 
@@ -679,12 +685,19 @@ class _$SearchLoadedImpl implements SearchLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(SearchResultEntity? result, bool? hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)
+        initial,
     required TResult Function(SearchResultEntity result, bool hasReachedMax,
             int currentPage, List<PreSearchItemEntity>? preSearchItems)
         loaded,
-    required TResult Function(String message) error,
+    required TResult Function(
+            String message,
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems)
+        error,
   }) {
     return loaded(result, hasReachedMax, currentPage, preSearchItems);
   }
@@ -692,12 +705,19 @@ class _$SearchLoadedImpl implements SearchLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(SearchResultEntity? result, bool? hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+        initial,
     TResult? Function(SearchResultEntity result, bool hasReachedMax,
             int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(
+            String message,
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems)?
+        error,
   }) {
     return loaded?.call(result, hasReachedMax, currentPage, preSearchItems);
   }
@@ -705,12 +725,19 @@ class _$SearchLoadedImpl implements SearchLoaded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(SearchResultEntity? result, bool? hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+        initial,
     TResult Function(SearchResultEntity result, bool hasReachedMax,
             int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
-    TResult Function(String message)? error,
+    TResult Function(
+            String message,
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems)?
+        error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -723,7 +750,6 @@ class _$SearchLoadedImpl implements SearchLoaded {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(SearchInitial value) initial,
-    required TResult Function(SearchLoading value) loading,
     required TResult Function(SearchLoaded value) loaded,
     required TResult Function(SearchError value) error,
   }) {
@@ -734,7 +760,6 @@ class _$SearchLoadedImpl implements SearchLoaded {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(SearchInitial value)? initial,
-    TResult? Function(SearchLoading value)? loading,
     TResult? Function(SearchLoaded value)? loaded,
     TResult? Function(SearchError value)? error,
   }) {
@@ -745,7 +770,6 @@ class _$SearchLoadedImpl implements SearchLoaded {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(SearchInitial value)? initial,
-    TResult Function(SearchLoading value)? loading,
     TResult Function(SearchLoaded value)? loaded,
     TResult Function(SearchError value)? error,
     required TResult orElse(),
@@ -764,25 +788,40 @@ abstract class SearchLoaded implements SearchState {
       final int currentPage,
       final List<PreSearchItemEntity>? preSearchItems}) = _$SearchLoadedImpl;
 
+  @override
   SearchResultEntity get result;
+  @override
   bool get hasReachedMax;
+  @override
   int get currentPage;
+  @override
   List<PreSearchItemEntity>? get preSearchItems;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SearchLoadedImplCopyWith<_$SearchLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SearchErrorImplCopyWith<$Res> {
+abstract class _$$SearchErrorImplCopyWith<$Res>
+    implements $SearchStateCopyWith<$Res> {
   factory _$$SearchErrorImplCopyWith(
           _$SearchErrorImpl value, $Res Function(_$SearchErrorImpl) then) =
       __$$SearchErrorImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({String message});
+  $Res call(
+      {String message,
+      SearchResultEntity? result,
+      bool? hasReachedMax,
+      int currentPage,
+      List<PreSearchItemEntity>? preSearchItems});
+
+  @override
+  $SearchResultEntityCopyWith<$Res>? get result;
 }
 
 /// @nodoc
@@ -799,12 +838,32 @@ class __$$SearchErrorImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? message = null,
+    Object? result = freezed,
+    Object? hasReachedMax = freezed,
+    Object? currentPage = null,
+    Object? preSearchItems = freezed,
   }) {
     return _then(_$SearchErrorImpl(
-      null == message
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      result: freezed == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as SearchResultEntity?,
+      hasReachedMax: freezed == hasReachedMax
+          ? _value.hasReachedMax
+          : hasReachedMax // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      preSearchItems: freezed == preSearchItems
+          ? _value._preSearchItems
+          : preSearchItems // ignore: cast_nullable_to_non_nullable
+              as List<PreSearchItemEntity>?,
     ));
   }
 }
@@ -812,14 +871,36 @@ class __$$SearchErrorImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SearchErrorImpl implements SearchError {
-  const _$SearchErrorImpl(this.message);
+  const _$SearchErrorImpl(
+      {required this.message,
+      this.result,
+      this.hasReachedMax,
+      this.currentPage = 1,
+      final List<PreSearchItemEntity>? preSearchItems})
+      : _preSearchItems = preSearchItems;
 
   @override
   final String message;
+  @override
+  final SearchResultEntity? result;
+  @override
+  final bool? hasReachedMax;
+  @override
+  @JsonKey()
+  final int currentPage;
+  final List<PreSearchItemEntity>? _preSearchItems;
+  @override
+  List<PreSearchItemEntity>? get preSearchItems {
+    final value = _preSearchItems;
+    if (value == null) return null;
+    if (_preSearchItems is EqualUnmodifiableListView) return _preSearchItems;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'SearchState.error(message: $message)';
+    return 'SearchState.error(message: $message, result: $result, hasReachedMax: $hasReachedMax, currentPage: $currentPage, preSearchItems: $preSearchItems)';
   }
 
   @override
@@ -827,11 +908,19 @@ class _$SearchErrorImpl implements SearchError {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchErrorImpl &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.result, result) || other.result == result) &&
+            (identical(other.hasReachedMax, hasReachedMax) ||
+                other.hasReachedMax == hasReachedMax) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            const DeepCollectionEquality()
+                .equals(other._preSearchItems, _preSearchItems));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode => Object.hash(runtimeType, message, result, hasReachedMax,
+      currentPage, const DeepCollectionEquality().hash(_preSearchItems));
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -844,42 +933,64 @@ class _$SearchErrorImpl implements SearchError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(SearchResultEntity? result, bool? hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)
+        initial,
     required TResult Function(SearchResultEntity result, bool hasReachedMax,
             int currentPage, List<PreSearchItemEntity>? preSearchItems)
         loaded,
-    required TResult Function(String message) error,
+    required TResult Function(
+            String message,
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems)
+        error,
   }) {
-    return error(message);
+    return error(message, result, hasReachedMax, currentPage, preSearchItems);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(SearchResultEntity? result, bool? hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+        initial,
     TResult? Function(SearchResultEntity result, bool hasReachedMax,
             int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(
+            String message,
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems)?
+        error,
   }) {
-    return error?.call(message);
+    return error?.call(
+        message, result, hasReachedMax, currentPage, preSearchItems);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(SearchResultEntity? result, bool? hasReachedMax,
+            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+        initial,
     TResult Function(SearchResultEntity result, bool hasReachedMax,
             int currentPage, List<PreSearchItemEntity>? preSearchItems)?
         loaded,
-    TResult Function(String message)? error,
+    TResult Function(
+            String message,
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems)?
+        error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(message);
+      return error(message, result, hasReachedMax, currentPage, preSearchItems);
     }
     return orElse();
   }
@@ -888,7 +999,6 @@ class _$SearchErrorImpl implements SearchError {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(SearchInitial value) initial,
-    required TResult Function(SearchLoading value) loading,
     required TResult Function(SearchLoaded value) loaded,
     required TResult Function(SearchError value) error,
   }) {
@@ -899,7 +1009,6 @@ class _$SearchErrorImpl implements SearchError {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(SearchInitial value)? initial,
-    TResult? Function(SearchLoading value)? loading,
     TResult? Function(SearchLoaded value)? loaded,
     TResult? Function(SearchError value)? error,
   }) {
@@ -910,7 +1019,6 @@ class _$SearchErrorImpl implements SearchError {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(SearchInitial value)? initial,
-    TResult Function(SearchLoading value)? loading,
     TResult Function(SearchLoaded value)? loaded,
     TResult Function(SearchError value)? error,
     required TResult orElse(),
@@ -923,12 +1031,26 @@ class _$SearchErrorImpl implements SearchError {
 }
 
 abstract class SearchError implements SearchState {
-  const factory SearchError(final String message) = _$SearchErrorImpl;
+  const factory SearchError(
+      {required final String message,
+      final SearchResultEntity? result,
+      final bool? hasReachedMax,
+      final int currentPage,
+      final List<PreSearchItemEntity>? preSearchItems}) = _$SearchErrorImpl;
 
   String get message;
+  @override
+  SearchResultEntity? get result;
+  @override
+  bool? get hasReachedMax;
+  @override
+  int get currentPage;
+  @override
+  List<PreSearchItemEntity>? get preSearchItems;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SearchErrorImplCopyWith<_$SearchErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;

@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:anivsub/core/extension/context_extension.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
@@ -19,14 +16,9 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loadingWidget = Center(
-      child: Platform.isIOS
-          ? CupertinoActivityIndicator(
-              color: color ?? context.theme.colorScheme.onSurface,
-              radius: 12,
-            )
-          : CircularProgressIndicator(
-              color: color ?? context.theme.colorScheme.primary,
-            ),
+      child: CircularProgressIndicator(
+        color: color ?? context.theme.colorScheme.primary,
+      ),
     );
 
     return withBox

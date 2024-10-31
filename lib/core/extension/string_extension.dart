@@ -28,12 +28,18 @@ extension StringExtension on String {
     return !RegExp(r'^\d+$').hasMatch(this);
   }
 
-  String cleanPathToView() {
+  String? cleanPathToView() {
+    if (!contains('/phim')) return null;
     return replaceAll('xem-phim.html', '');
   }
 
-  String parseSeasonId() {
-    return split('/')[2];
+  String? parseSeasonId() {
+    if (isEmpty) return null;
+
+    final parts = split('/');
+    if (parts.length < 3) return null;
+
+    return parts[2];
   }
 
   String parseChapName() {

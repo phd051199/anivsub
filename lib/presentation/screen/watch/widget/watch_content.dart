@@ -1,13 +1,12 @@
-import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/screen/watch/widget/comment_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/detail_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/episodes_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/related_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/video_player_section.dart';
+import 'package:anivsub/presentation/widget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,42 +26,39 @@ class WatchContent extends StatelessWidget {
   final TabController? tabController;
   final int currentTabIndex;
   final VoidCallback onTabChange;
-  final Function(BuildContext, List<ChapDataEntity>, WatchLoaded) onEpisodeTap;
-  final Function(BuildContext, bool, ChapDataEntity, WatchLoaded) onChapTap;
+  final Function(BuildContext, List<ChapDataEntity>, WatchState) onEpisodeTap;
+  final Function(BuildContext, bool, ChapDataEntity, WatchState) onChapTap;
   final Function(AnimeDataEntity) onRelatedItemTap;
-  final Function(WatchLoaded) showDetailBottomSheet;
+  final Function(WatchState) showDetailBottomSheet;
   final String? tag;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<VideoPlayerCubit>.value(
-      value: videoPlayerCubit,
-      child: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            VideoPlayerSection(tag: tag),
-            DefaultTabController(
-              length: 3,
-              child: Column(
-                children: [
-                  _buildTabBar(context),
-                  SizedBox(
-                    height: context.screenSize.height * 0.6,
-                    child: TabBarView(
-                      children: [
-                        _buildDetailTab(context),
-                        _buildCommentTabContent(),
-                        _buildRelatedTabContent(),
-                      ],
-                    ),
+    return SingleChildScrollView(
+      physics: const ClampingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          VideoPlayerSection(tag: tag),
+          DefaultTabController(
+            length: 3,
+            child: Column(
+              children: [
+                _buildTabBar(context),
+                SizedBox(
+                  height: context.screenSize.height * 0.6,
+                  child: TabBarView(
+                    children: [
+                      _buildDetailTab(context),
+                      _buildCommentTabContent(context),
+                      _buildRelatedTabContent(context),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -127,10 +123,7 @@ class WatchContent extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
-        context
-                .watchTypedState<WatchBloc, WatchLoaded>()
-                .totalCommentCount
-                ?.formatNumber() ??
+        context.watch<WatchBloc>().state.totalCommentCount?.formatNumber() ??
             '0',
         style: TextStyle(
           color: context.theme.colorScheme.onSecondaryContainer,
@@ -162,13 +155,41 @@ class WatchContent extends StatelessWidget {
     );
   }
 
-  Widget _buildCommentTabContent() {
+  Widget _buildCommentTabContent(BuildContext context) {
+    final state = context.watch<WatchBloc>().state;
+    final comments = state.comments;
+
+    if (comments == null) {
+      return state.isCmtLoading
+          ? const LoadingWidget()
+          : _buildCommentError(context);
+    }
+
     return const SingleChildScrollView(
       child: CommentSection(),
     );
   }
 
-  Widget _buildRelatedTabContent() {
+  Column _buildCommentError(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.error_outline,
+          color: context.theme.colorScheme.onSurface,
+        ),
+        const SizedBox(height: 12),
+        Text(
+          context.l10n.failedToLoadComments,
+          style: context.textTheme.bodyMedium?.copyWith(
+            color: context.theme.colorScheme.onSurface,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRelatedTabContent(BuildContext context) {
     return SingleChildScrollView(
       child: RelatedSection(
         onTap: onRelatedItemTap,

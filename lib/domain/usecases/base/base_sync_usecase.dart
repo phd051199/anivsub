@@ -1,11 +1,11 @@
-import 'package:anivsub/core/shared/log_config.dart';
+import 'package:anivsub/core/config/log_config.dart';
 import 'package:anivsub/domain/usecases/base/base.dart';
 
 abstract class BaseSyncUseCase<Input extends BaseInput,
     Output extends BaseOutput> extends BaseUseCase<Input, Output> {
   const BaseSyncUseCase();
 
-  Output send(Input input) {
+  Output execute(Input input) {
     try {
       if (LogConfig.enableLogUseCaseInput) {
         logDebug('FutureUseCase Input: $input');

@@ -71,6 +71,7 @@ class ChangeSeasonTab extends WatchEvent with _$ChangeSeasonTab {
 class ChangeEpisode extends WatchEvent with _$ChangeEpisode {
   const factory ChangeEpisode({
     required AnimeDetailEntity animeDetail,
+    required List<ChapDataEntity> chaps,
   }) = _ChangeEpisode;
 }
 

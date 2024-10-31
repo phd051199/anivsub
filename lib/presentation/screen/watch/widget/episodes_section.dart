@@ -3,6 +3,7 @@ import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -20,14 +21,14 @@ class EpisodesSection extends StatelessWidget {
   final TabController? tabController;
   final int currentTabIndex;
   final VoidCallback onTabChange;
-  final Function(BuildContext, List<ChapDataEntity>, WatchLoaded) onEpisodeTap;
-  final Function(BuildContext, bool, ChapDataEntity, WatchLoaded) onChapTap;
+  final Function(BuildContext, List<ChapDataEntity>, WatchState) onEpisodeTap;
+  final Function(BuildContext, bool, ChapDataEntity, WatchState) onChapTap;
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+    final state = context.watch<WatchBloc>().state;
 
-    if (state.detail.season.isNotEmpty && state.tabViewItems != null) {
+    if (state.detail!.season.isNotEmpty && state.tabViewItems != null) {
       return Column(
         children: [
           _buildTabBar(context),
@@ -42,9 +43,9 @@ class EpisodesSection extends StatelessWidget {
   }
 
   Widget _buildTabBar(BuildContext context) {
-    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+    final state = context.watch<WatchBloc>().state;
 
-    if (state.detail.season.isEmpty) {
+    if (state.detail!.season.isEmpty) {
       return const SizedBox.shrink();
     }
 
@@ -52,7 +53,7 @@ class EpisodesSection extends StatelessWidget {
       tabAlignment: TabAlignment.start,
       controller: tabController,
       isScrollable: true,
-      tabs: state.detail.season
+      tabs: state.detail!.season
           .map(
             (item) => Tab(
               child: Text(
@@ -68,7 +69,7 @@ class EpisodesSection extends StatelessWidget {
   }
 
   Widget _buildTabBarView(BuildContext context) {
-    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+    final state = context.watch<WatchBloc>().state;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -88,14 +89,14 @@ class EpisodesSection extends StatelessWidget {
   }
 
   Widget _buildSingleSeasonView(BuildContext context) {
-    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+    final state = context.watch<WatchBloc>().state;
 
     return Container(
       height: 128,
       padding: const EdgeInsets.all(16),
       child: _buildChapterHorizontal(
         context: context,
-        chaps: state.chaps!,
+        chaps: state.chaps!.whereNotNull().toList(),
       ),
     );
   }
@@ -104,7 +105,7 @@ class EpisodesSection extends StatelessWidget {
     required BuildContext context,
     required List<ChapDataEntity> chaps,
   }) {
-    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+    final state = context.watch<WatchBloc>().state;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +159,7 @@ class EpisodesSection extends StatelessWidget {
     BuildContext context,
     ChapDataEntity chap,
     int index,
-    WatchLoaded state,
+    WatchState state,
   ) {
     final videoPlayerState = context.watch<VideoPlayerCubit>().state;
     final isPlaying = _isChapterPlaying(context, videoPlayerState, chap, index);
@@ -178,12 +179,11 @@ class EpisodesSection extends StatelessWidget {
     if (state is VideoPlayerLoaded && state.currentChap.id == chap.id) {
       return true;
     } else {
-      final initialData =
-          context.watchTypedState<WatchBloc, WatchLoaded>().initialData;
+      final initialData = context.watch<WatchBloc>().state.initialData;
       if (initialData == null) {
         return state is VideoPlayerInitial && index == 0;
       } else {
-        return (state is VideoPlayerInitial || state is VideoPlayerLoading) &&
+        return state is VideoPlayerInitial &&
             initialData.initialChap?.id == chap.id;
       }
     }

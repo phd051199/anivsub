@@ -1,4 +1,4 @@
-import 'package:anivsub/core/shared/constants.dart';
+import 'package:anivsub/core/const/const.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
 

@@ -1,3 +1,4 @@
+import 'package:anivsub/core/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,7 +16,7 @@ class EmptyPlayer extends StatelessWidget {
       children: [
         Container(
           color: Colors.black,
-          child: child,
+          child: child ?? _buildErrorText(context),
         ),
         Positioned(
           top: 10,
@@ -26,6 +27,18 @@ class EmptyPlayer extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Center _buildErrorText(BuildContext context) {
+    return Center(
+      child: Text(
+        context.l10n.noChaptersFound,
+        style: context.textTheme.bodyMedium?.copyWith(
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

@@ -15,7 +15,6 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
     this._getPreSearchUseCase,
   ) : super(const SearchInitial()) {
     on<LoadSearch>(_onLoadSearch);
-    on<ErrorSearch>(_onErrorSearch);
   }
 
   final SearchAnimeUseCase _searchAnimeUseCase;
@@ -26,7 +25,7 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
   Future<List<PreSearchItemEntity>> suggestionsCallback(String keyword) async {
     if (keyword.isEmpty) return [];
 
-    final output = await _getPreSearchUseCase.send(
+    final output = await _getPreSearchUseCase.execute(
       GetPreSearchUseCaseInput(keyword: keyword),
     );
     return output.result;
@@ -37,9 +36,7 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
     Emitter<SearchState> emit,
   ) async {
     try {
-      emit(const SearchLoading());
-
-      final output = await _searchAnimeUseCase.send(
+      final output = await _searchAnimeUseCase.execute(
         SearchAnimeUseCaseInput(
           keyword: event.keyword,
           page: event.page,
@@ -62,11 +59,15 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
               ),
       );
     } catch (e) {
-      emit(SearchError('An error occurred: $e'));
+      emit(
+        SearchError(
+          message: 'An error occurred: $e',
+          result: state.result,
+          hasReachedMax: state.hasReachedMax,
+          currentPage: state.currentPage,
+          preSearchItems: state.preSearchItems,
+        ),
+      );
     }
-  }
-
-  void _onErrorSearch(ErrorSearch event, Emitter<SearchState> emit) {
-    emit(const SearchError('An error occurred'));
   }
 }

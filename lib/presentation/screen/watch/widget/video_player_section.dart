@@ -2,6 +2,7 @@ import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/screen/watch/widget/empty_player.dart';
 import 'package:anivsub/presentation/screen/watch/widget/video_player.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,12 +33,18 @@ class VideoPlayerSection extends StatelessWidget {
   Widget _buildVideoPlayerWidget(BuildContext context) {
     final state = context.watch<WatchBloc>().state;
 
-    if (state is! WatchLoaded || state.chaps == null || state.chaps!.isEmpty) {
-      return const EmptyPlayer(child: LoadingWidget(color: Colors.white));
+    if (state is! WatchLoaded || state.chaps == null) {
+      return const EmptyPlayer(
+        child: LoadingWidget(color: Colors.white),
+      );
+    }
+
+    if (state.chaps!.isEmpty) {
+      return const EmptyPlayer();
     }
 
     return VideoPlayerWidget(
-      chaps: state.chaps!,
+      chaps: state.chaps!.whereNotNull().toList(),
       detail: state.detail,
       initialData: state.initialData,
       listEpisodeSkip: state.tabViewItems?.first?.listEpisode,

@@ -1,4 +1,3 @@
-import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -39,10 +38,7 @@ class HistoryRemoteDataSourceImpl implements HistoryRemoteDataSource {
           ).toJson(),
         )
         .maybeSingle()
-        .onError((e, __) {
-      Log.debug(e);
-      return null;
-    });
+        .onError((_, __) => null);
 
     if (response == null) return null;
     return ChapterProgressDTO.fromJson(response);
@@ -68,7 +64,7 @@ class HistoryRemoteDataSourceImpl implements HistoryRemoteDataSource {
           params: GetSingleProgressParamsDTO(
             userUid: userUid,
             seasonId: seasonId,
-            chapId: chapId,
+            pChapId: chapId,
           ).toJson(),
         )
         .maybeSingle()

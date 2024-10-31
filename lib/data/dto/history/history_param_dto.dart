@@ -59,7 +59,7 @@ class GetSingleProgressParamsDTO extends BaseDTO<GetSingleProgressParamsEntity>
   const factory GetSingleProgressParamsDTO({
     @JsonKey(name: 'user_uid') String? userUid,
     @JsonKey(name: 'season_id') String? seasonId,
-    @JsonKey(name: 'chap_id') String? chapId,
+    @JsonKey(name: 'p_chap_id') String? pChapId,
   }) = _GetSingleProgressParamsDTO;
 
   const GetSingleProgressParamsDTO._();
@@ -68,12 +68,12 @@ class GetSingleProgressParamsDTO extends BaseDTO<GetSingleProgressParamsEntity>
       _$GetSingleProgressParamsDTOFromJson(json);
 
   @override
-  List<Object?> get props => [userUid, seasonId, chapId];
+  List<Object?> get props => [userUid, seasonId, pChapId];
 
   @override
   GetSingleProgressParamsEntity toEntity() => GetSingleProgressParamsEntity(
         userUid: userUid,
         seasonId: seasonId,
-        chapId: chapId,
+        pChapId: pChapId,
       );
 }

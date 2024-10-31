@@ -19,11 +19,9 @@ class ProfileCubit extends BaseCubit<ProfileState> {
   final GetUserHistoryUseCase _getUserHistoryUseCase;
 
   Future<void> getUser() async {
-    emit(const ProfileLoading());
-
     final authUseCaseOutput =
-        await _authUseCase.send(const GetLocalAuthTokenInput());
-    final getUserHistoryUseCaseOutput = await _getUserHistoryUseCase.send(
+        await _authUseCase.execute(const GetLocalAuthTokenInput());
+    final getUserHistoryUseCaseOutput = await _getUserHistoryUseCase.execute(
       const GetUserHistoryUseCaseInput(
         page: 1,
       ),

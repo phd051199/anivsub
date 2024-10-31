@@ -13,8 +13,8 @@ class ChaptersGrid extends StatelessWidget {
   });
 
   final List<ChapDataEntity> chaps;
-  final WatchLoaded state;
-  final Function(BuildContext, bool, ChapDataEntity, WatchLoaded) onChapTap;
+  final WatchState state;
+  final Function(BuildContext, bool, ChapDataEntity, WatchState) onChapTap;
 
   @override
   Widget build(BuildContext context) {

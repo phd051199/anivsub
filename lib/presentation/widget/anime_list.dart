@@ -1,5 +1,5 @@
+import 'package:anivsub/app/routes/go_router_config.dart';
 import 'package:anivsub/core/extension/extension.dart';
-import 'package:anivsub/core/routes/go_router_config.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

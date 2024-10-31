@@ -1,8 +1,8 @@
-import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/widget/anime_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RelatedSection extends StatelessWidget {
   const RelatedSection({
@@ -16,7 +16,7 @@ class RelatedSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: AnimeList(
-        movies: context.watchTypedState<WatchBloc, WatchLoaded>().detail.toPut,
+        movies: context.watch<WatchBloc>().state.detail!.toPut,
         onTap: onTap,
       ),
     );

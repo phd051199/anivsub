@@ -39,7 +39,7 @@ class AuthNotifier with ChangeNotifier {
           .toString(),
     );
 
-    await authUseCases.send(
+    await authUseCases.execute(
       SetLocalAuthTokenInput(
         authRequest: loginResponseEntity,
       ),
@@ -51,7 +51,7 @@ class AuthNotifier with ChangeNotifier {
 
   Future<void> checkToken() async {
     try {
-      final output = await authUseCases.send(
+      final output = await authUseCases.execute(
         const GetLocalAuthTokenInput(),
       );
       if (output.localSession?.email != null) {
@@ -67,7 +67,7 @@ class AuthNotifier with ChangeNotifier {
   }
 
   Future<void> refreshAuthToken() async {
-    final response = await authUseCases.send(
+    final response = await authUseCases.execute(
       RefreshUserSessionInput(
         refreshRequest: RefreshUserSessionRequestEntity(
           refreshToken: loginResponseEntity?.refreshToken ?? '',
@@ -82,7 +82,7 @@ class AuthNotifier with ChangeNotifier {
         refreshToken: response.refreshResult?.refreshToken,
       );
       if (newLocalData != null) {
-        await authUseCases.send(
+        await authUseCases.execute(
           SetLocalAuthTokenInput(
             authRequest: newLocalData,
           ),
@@ -100,14 +100,14 @@ class AuthNotifier with ChangeNotifier {
   Future<void> doLogout() async {
     _status = AuthStatus.notAuthenticated;
     _loginResponseEntity = null;
-    await authUseCases.send(
+    await authUseCases.execute(
       const ClearLocalAuthTokenInput(),
     );
     notifyListeners();
   }
 
   Future<void> login(String email, String password) async {
-    final output = await authUseCases.send(
+    final output = await authUseCases.execute(
       const GetLocalAuthTokenInput(),
     );
     await doLogin(output.localSession);

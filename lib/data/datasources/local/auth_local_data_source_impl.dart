@@ -1,4 +1,4 @@
-import 'package:anivsub/core/service/flutter_secure_storage_service.dart';
+import 'package:anivsub/core/service/service.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:injectable/injectable.dart';
 

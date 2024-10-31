@@ -371,8 +371,8 @@ mixin _$GetSingleProgressParamsDTO {
   String? get userUid => throw _privateConstructorUsedError;
   @JsonKey(name: 'season_id')
   String? get seasonId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'chap_id')
-  String? get chapId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'p_chap_id')
+  String? get pChapId => throw _privateConstructorUsedError;
 
   /// Serializes this GetSingleProgressParamsDTO to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -394,7 +394,7 @@ abstract class $GetSingleProgressParamsDTOCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'user_uid') String? userUid,
       @JsonKey(name: 'season_id') String? seasonId,
-      @JsonKey(name: 'chap_id') String? chapId});
+      @JsonKey(name: 'p_chap_id') String? pChapId});
 }
 
 /// @nodoc
@@ -415,7 +415,7 @@ class _$GetSingleProgressParamsDTOCopyWithImpl<$Res,
   $Res call({
     Object? userUid = freezed,
     Object? seasonId = freezed,
-    Object? chapId = freezed,
+    Object? pChapId = freezed,
   }) {
     return _then(_value.copyWith(
       userUid: freezed == userUid
@@ -426,9 +426,9 @@ class _$GetSingleProgressParamsDTOCopyWithImpl<$Res,
           ? _value.seasonId
           : seasonId // ignore: cast_nullable_to_non_nullable
               as String?,
-      chapId: freezed == chapId
-          ? _value.chapId
-          : chapId // ignore: cast_nullable_to_non_nullable
+      pChapId: freezed == pChapId
+          ? _value.pChapId
+          : pChapId // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -446,7 +446,7 @@ abstract class _$$GetSingleProgressParamsDTOImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'user_uid') String? userUid,
       @JsonKey(name: 'season_id') String? seasonId,
-      @JsonKey(name: 'chap_id') String? chapId});
+      @JsonKey(name: 'p_chap_id') String? pChapId});
 }
 
 /// @nodoc
@@ -466,7 +466,7 @@ class __$$GetSingleProgressParamsDTOImplCopyWithImpl<$Res>
   $Res call({
     Object? userUid = freezed,
     Object? seasonId = freezed,
-    Object? chapId = freezed,
+    Object? pChapId = freezed,
   }) {
     return _then(_$GetSingleProgressParamsDTOImpl(
       userUid: freezed == userUid
@@ -477,9 +477,9 @@ class __$$GetSingleProgressParamsDTOImplCopyWithImpl<$Res>
           ? _value.seasonId
           : seasonId // ignore: cast_nullable_to_non_nullable
               as String?,
-      chapId: freezed == chapId
-          ? _value.chapId
-          : chapId // ignore: cast_nullable_to_non_nullable
+      pChapId: freezed == pChapId
+          ? _value.pChapId
+          : pChapId // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -491,7 +491,7 @@ class _$GetSingleProgressParamsDTOImpl extends _GetSingleProgressParamsDTO {
   const _$GetSingleProgressParamsDTOImpl(
       {@JsonKey(name: 'user_uid') this.userUid,
       @JsonKey(name: 'season_id') this.seasonId,
-      @JsonKey(name: 'chap_id') this.chapId})
+      @JsonKey(name: 'p_chap_id') this.pChapId})
       : super._();
 
   factory _$GetSingleProgressParamsDTOImpl.fromJson(
@@ -505,8 +505,8 @@ class _$GetSingleProgressParamsDTOImpl extends _GetSingleProgressParamsDTO {
   @JsonKey(name: 'season_id')
   final String? seasonId;
   @override
-  @JsonKey(name: 'chap_id')
-  final String? chapId;
+  @JsonKey(name: 'p_chap_id')
+  final String? pChapId;
 
   /// Create a copy of GetSingleProgressParamsDTO
   /// with the given fields replaced by the non-null parameter values.
@@ -529,7 +529,7 @@ abstract class _GetSingleProgressParamsDTO extends GetSingleProgressParamsDTO {
   const factory _GetSingleProgressParamsDTO(
           {@JsonKey(name: 'user_uid') final String? userUid,
           @JsonKey(name: 'season_id') final String? seasonId,
-          @JsonKey(name: 'chap_id') final String? chapId}) =
+          @JsonKey(name: 'p_chap_id') final String? pChapId}) =
       _$GetSingleProgressParamsDTOImpl;
   const _GetSingleProgressParamsDTO._() : super._();
 
@@ -543,8 +543,8 @@ abstract class _GetSingleProgressParamsDTO extends GetSingleProgressParamsDTO {
   @JsonKey(name: 'season_id')
   String? get seasonId;
   @override
-  @JsonKey(name: 'chap_id')
-  String? get chapId;
+  @JsonKey(name: 'p_chap_id')
+  String? get pChapId;
 
   /// Create a copy of GetSingleProgressParamsDTO
   /// with the given fields replaced by the non-null parameter values.

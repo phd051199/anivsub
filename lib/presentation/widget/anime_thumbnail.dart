@@ -1,7 +1,7 @@
 import 'dart:ui';
 
+import 'package:anivsub/core/const/const.dart';
 import 'package:anivsub/core/extension/extension.dart';
-import 'package:anivsub/core/shared/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 

@@ -9,12 +9,12 @@ part 'chapter_progress_dto.g.dart';
 class ChapterProgressDTO extends BaseDTO<ChapterProgressEntity>
     with _$ChapterProgressDTO {
   const factory ChapterProgressDTO({
-    @JsonKey(name: 'created_at') required DateTime createdAt,
-    @JsonKey(name: 'cur') required double cur,
-    @JsonKey(name: 'dur') required double dur,
-    @JsonKey(name: 'name') required String name,
-    @JsonKey(name: 'updated_at') required DateTime updatedAt,
-    @JsonKey(name: 'chap_id') required String chapId,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
+    @JsonKey(name: 'cur') double? cur,
+    @JsonKey(name: 'dur') double? dur,
+    @JsonKey(name: 'name') String? name,
+    @JsonKey(name: 'updated_at') DateTime? updatedAt,
+    @JsonKey(name: 'chap_id') String? chapId,
   }) = _ChapterProgressDTO;
 
   const ChapterProgressDTO._();

@@ -1,6 +1,6 @@
+import 'package:anivsub/core/const/const.dart';
 import 'package:anivsub/core/network/cookies_manager.dart';
 import 'package:anivsub/core/network/network_client.dart';
-import 'package:anivsub/core/shared/constants.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';

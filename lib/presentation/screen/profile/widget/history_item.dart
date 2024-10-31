@@ -1,5 +1,5 @@
+import 'package:anivsub/app/routes/go_router_config.dart';
 import 'package:anivsub/core/extension/context_extension.dart';
-import 'package:anivsub/core/routes/go_router_config.dart';
 import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -32,7 +32,7 @@ class HistoryItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: CachedNetworkImage(
-              imageUrl: ImageUrlUtils.addHostUrlImage(item.poster),
+              imageUrl: ImageUrlUtils.addHostUrlImage(item.poster ?? ''),
               fit: BoxFit.cover,
             ),
           ),

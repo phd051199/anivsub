@@ -22,17 +22,17 @@ ChapterProgressEntity _$ChapterProgressEntityFromJson(
 /// @nodoc
 mixin _$ChapterProgressEntity {
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'cur')
-  double get cur => throw _privateConstructorUsedError;
+  double? get cur => throw _privateConstructorUsedError;
   @JsonKey(name: 'dur')
-  double get dur => throw _privateConstructorUsedError;
+  double? get dur => throw _privateConstructorUsedError;
   @JsonKey(name: 'name')
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
-  DateTime get updatedAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'chap_id')
-  String get chapId => throw _privateConstructorUsedError;
+  String? get chapId => throw _privateConstructorUsedError;
 
   /// Serializes this ChapterProgressEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -51,12 +51,12 @@ abstract class $ChapterProgressEntityCopyWith<$Res> {
       _$ChapterProgressEntityCopyWithImpl<$Res, ChapterProgressEntity>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'cur') double cur,
-      @JsonKey(name: 'dur') double dur,
-      @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'updated_at') DateTime updatedAt,
-      @JsonKey(name: 'chap_id') String chapId});
+      {@JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'cur') double? cur,
+      @JsonKey(name: 'dur') double? dur,
+      @JsonKey(name: 'name') String? name,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt,
+      @JsonKey(name: 'chap_id') String? chapId});
 }
 
 /// @nodoc
@@ -75,38 +75,38 @@ class _$ChapterProgressEntityCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? createdAt = null,
-    Object? cur = null,
-    Object? dur = null,
-    Object? name = null,
-    Object? updatedAt = null,
-    Object? chapId = null,
+    Object? createdAt = freezed,
+    Object? cur = freezed,
+    Object? dur = freezed,
+    Object? name = freezed,
+    Object? updatedAt = freezed,
+    Object? chapId = freezed,
   }) {
     return _then(_value.copyWith(
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      cur: null == cur
+              as DateTime?,
+      cur: freezed == cur
           ? _value.cur
           : cur // ignore: cast_nullable_to_non_nullable
-              as double,
-      dur: null == dur
+              as double?,
+      dur: freezed == dur
           ? _value.dur
           : dur // ignore: cast_nullable_to_non_nullable
-              as double,
-      name: null == name
+              as double?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      chapId: null == chapId
+              as DateTime?,
+      chapId: freezed == chapId
           ? _value.chapId
           : chapId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -121,12 +121,12 @@ abstract class _$$ChapterProgressEntityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'cur') double cur,
-      @JsonKey(name: 'dur') double dur,
-      @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'updated_at') DateTime updatedAt,
-      @JsonKey(name: 'chap_id') String chapId});
+      {@JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'cur') double? cur,
+      @JsonKey(name: 'dur') double? dur,
+      @JsonKey(name: 'name') String? name,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt,
+      @JsonKey(name: 'chap_id') String? chapId});
 }
 
 /// @nodoc
@@ -143,38 +143,38 @@ class __$$ChapterProgressEntityImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? createdAt = null,
-    Object? cur = null,
-    Object? dur = null,
-    Object? name = null,
-    Object? updatedAt = null,
-    Object? chapId = null,
+    Object? createdAt = freezed,
+    Object? cur = freezed,
+    Object? dur = freezed,
+    Object? name = freezed,
+    Object? updatedAt = freezed,
+    Object? chapId = freezed,
   }) {
     return _then(_$ChapterProgressEntityImpl(
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      cur: null == cur
+              as DateTime?,
+      cur: freezed == cur
           ? _value.cur
           : cur // ignore: cast_nullable_to_non_nullable
-              as double,
-      dur: null == dur
+              as double?,
+      dur: freezed == dur
           ? _value.dur
           : dur // ignore: cast_nullable_to_non_nullable
-              as double,
-      name: null == name
+              as double?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      chapId: null == chapId
+              as DateTime?,
+      chapId: freezed == chapId
           ? _value.chapId
           : chapId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -183,12 +183,12 @@ class __$$ChapterProgressEntityImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ChapterProgressEntityImpl extends _ChapterProgressEntity {
   const _$ChapterProgressEntityImpl(
-      {@JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'cur') required this.cur,
-      @JsonKey(name: 'dur') required this.dur,
-      @JsonKey(name: 'name') required this.name,
-      @JsonKey(name: 'updated_at') required this.updatedAt,
-      @JsonKey(name: 'chap_id') required this.chapId})
+      {@JsonKey(name: 'created_at') this.createdAt,
+      @JsonKey(name: 'cur') this.cur,
+      @JsonKey(name: 'dur') this.dur,
+      @JsonKey(name: 'name') this.name,
+      @JsonKey(name: 'updated_at') this.updatedAt,
+      @JsonKey(name: 'chap_id') this.chapId})
       : super._();
 
   factory _$ChapterProgressEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -196,22 +196,22 @@ class _$ChapterProgressEntityImpl extends _ChapterProgressEntity {
 
   @override
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @override
   @JsonKey(name: 'cur')
-  final double cur;
+  final double? cur;
   @override
   @JsonKey(name: 'dur')
-  final double dur;
+  final double? dur;
   @override
   @JsonKey(name: 'name')
-  final String name;
+  final String? name;
   @override
   @JsonKey(name: 'updated_at')
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   @override
   @JsonKey(name: 'chap_id')
-  final String chapId;
+  final String? chapId;
 
   /// Create a copy of ChapterProgressEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -232,12 +232,12 @@ class _$ChapterProgressEntityImpl extends _ChapterProgressEntity {
 
 abstract class _ChapterProgressEntity extends ChapterProgressEntity {
   const factory _ChapterProgressEntity(
-          {@JsonKey(name: 'created_at') required final DateTime createdAt,
-          @JsonKey(name: 'cur') required final double cur,
-          @JsonKey(name: 'dur') required final double dur,
-          @JsonKey(name: 'name') required final String name,
-          @JsonKey(name: 'updated_at') required final DateTime updatedAt,
-          @JsonKey(name: 'chap_id') required final String chapId}) =
+          {@JsonKey(name: 'created_at') final DateTime? createdAt,
+          @JsonKey(name: 'cur') final double? cur,
+          @JsonKey(name: 'dur') final double? dur,
+          @JsonKey(name: 'name') final String? name,
+          @JsonKey(name: 'updated_at') final DateTime? updatedAt,
+          @JsonKey(name: 'chap_id') final String? chapId}) =
       _$ChapterProgressEntityImpl;
   const _ChapterProgressEntity._() : super._();
 
@@ -246,22 +246,22 @@ abstract class _ChapterProgressEntity extends ChapterProgressEntity {
 
   @override
   @JsonKey(name: 'created_at')
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   @JsonKey(name: 'cur')
-  double get cur;
+  double? get cur;
   @override
   @JsonKey(name: 'dur')
-  double get dur;
+  double? get dur;
   @override
   @JsonKey(name: 'name')
-  String get name;
+  String? get name;
   @override
   @JsonKey(name: 'updated_at')
-  DateTime get updatedAt;
+  DateTime? get updatedAt;
   @override
   @JsonKey(name: 'chap_id')
-  String get chapId;
+  String? get chapId;
 
   /// Create a copy of ChapterProgressEntity
   /// with the given fields replaced by the non-null parameter values.

@@ -1,10 +1,8 @@
-import 'dart:async';
-
 import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/const/const.dart';
 import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/plugin/plugin.dart';
-import 'package:anivsub/core/service/shared_preferences_service.dart';
-import 'package:anivsub/core/shared/constants.dart';
+import 'package:anivsub/core/service/service.dart';
 import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:bloc/bloc.dart';
@@ -51,37 +49,46 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   final CancelToken cancelToken = CancelToken();
 
   Future<void> _onInitWatch(InitWatch event, Emitter<WatchState> emit) async {
-    emit(const WatchLoading());
-
     _initializeFbCommentPlugin(event);
 
     try {
       final animeDetail = await _fetchDetailData(event.id);
       emit(
-        WatchLoaded(detail: animeDetail),
+        WatchLoaded(detail: animeDetail, isCmtLoading: true),
       );
 
       add(LoadWatch(id: event.id));
     } catch (e) {
-      emit(WatchError(e.toString()));
+      emit(_errorState('$e'));
     }
+  }
+
+  WatchState _errorState(String message) {
+    return WatchError(
+      message: message,
+      chaps: state.chaps,
+      initialData: state.initialData,
+      detail: state.detail,
+      tabViewItems: state.tabViewItems,
+      comments: state.comments,
+      totalCommentCount: state.totalCommentCount,
+      fbUser: state.fbUser,
+    );
   }
 
   Future<void> _onLoadComment(
     LoadComment event,
     Emitter<WatchState> emit,
   ) async {
-    final currentState = state;
-    if (currentState is! WatchLoaded) return;
-
     final result = await _fbCommentPlugin.getComments();
     _updateAfterCursor(result);
 
     emit(
-      currentState.copyWith(
+      state.copyWith(
         comments: result.comments,
         totalCommentCount: result.meta?.totalCount,
         fbUser: _fbCommentPlugin.loginUser,
+        isCmtLoading: false,
       ),
     );
   }
@@ -104,66 +111,59 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     GetFbCookies event,
     Emitter<WatchState> emit,
   ) async {
-    final currentState = state;
-    if (currentState is! WatchLoaded) return;
-
     final result = await _fbCommentPlugin.setup(force: true);
     final fbUser = result
         .initResponse.meta?.actors?[result.initResponse.meta?.userId]
         ?.toEntity();
 
     emit(
-      currentState.copyWith(fbUser: fbUser),
+      state.copyWith(fbUser: fbUser),
     );
   }
 
   Future<void> _onLogout(Logout event, Emitter<WatchState> emit) async {
-    final currentState = state;
-    if (currentState is! WatchLoaded) return;
-
     await _fbCommentPlugin.logout();
-    emit(currentState.copyWith(fbUser: null));
+    emit(state.copyWith(fbUser: null));
   }
 
   Future<void> _onLoadMoreComments(
     LoadMoreComments event,
     Emitter<WatchState> emit,
   ) async {
-    final currentState = state;
-    if (currentState is! WatchLoaded || currentState.isCmtLoading) return;
+    if (state.isCmtLoading) return;
+
+    emit(state.copyWith(isCmtLoading: true));
 
     try {
+      final newComments = await _loadAndMergeComments(state);
       emit(
-        currentState.copyWith(isCmtLoading: true),
-      );
-
-      final newComments = await _loadAndMergeComments(currentState);
-      emit(
-        currentState.copyWith(comments: newComments),
+        state.copyWith(comments: newComments),
       );
     } catch (e) {
-      Log.debug('Error loading more comments: $e');
+      emit(_errorState('$e'));
+    } finally {
+      emit(state.copyWith(isCmtLoading: false));
     }
   }
 
   Future<List<CommentEntity>> _loadAndMergeComments(
-    WatchLoaded currentState,
+    WatchState state,
   ) async {
     final result = await _fbCommentPlugin.getMoreComments(_afterCursor);
     _afterCursor = result.meta?.afterCursor ?? '';
 
-    final existingCommentIds = _getExistingCommentIds(currentState);
+    final existingCommentIds = _getExistingCommentIds(state);
     final newUniqueComments =
         _filterNewComments(result.comments, existingCommentIds);
 
     return [
-      ...?currentState.comments,
+      ...state.comments!.whereNotNull(),
       ...newUniqueComments,
     ];
   }
 
-  Set<String> _getExistingCommentIds(WatchLoaded state) {
-    return Set<String>.from(state.comments?.map((c) => c.id) ?? []);
+  Set<String> _getExistingCommentIds(WatchState state) {
+    return Set<String>.from(state.comments?.map((c) => c?.id) ?? []);
   }
 
   List<CommentEntity> _filterNewComments(
@@ -180,23 +180,19 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     PostComment event,
     Emitter<WatchState> emit,
   ) async {
-    final currentState = state;
-    if (currentState is! WatchLoaded) {
-      return;
-    }
+    emit(state.copyWith(isCmtLoading: true));
 
     try {
-      final loadingState = currentState.copyWith(isCmtLoading: true);
-      emit(loadingState);
-
       final id = await _fbCommentPlugin.postComment(event.comment);
       final newComment = _createNewComment(id, event.comment);
 
       emit(
-        _updateStateWithNewComment(currentState, newComment),
+        _updateStateWithNewComment(state, newComment),
       );
     } catch (e) {
-      Log.debug('Error posting comment: $e');
+      emit(_errorState('$e'));
+    } finally {
+      emit(state.copyWith(isCmtLoading: false));
     }
   }
 
@@ -233,8 +229,8 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     Emitter<WatchState> emit,
   ) async {
     final updatedComments = currentState.comments?.map((c) {
-      if (c.id == commentId) {
-        return c.copyWith(likeCount: c.likeCount + (isLiked ? -1 : 1));
+      if (c?.id == commentId) {
+        return c?.copyWith(likeCount: c.likeCount + (isLiked ? -1 : 1));
       }
       return c;
     }).toList();
@@ -264,29 +260,26 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     DeleteComment event,
     Emitter<WatchState> emit,
   ) async {
-    final currentState = state;
-    if (currentState is! WatchLoaded) {
+    if (state is! WatchLoaded) {
       return;
     }
 
     final updatedComments =
-        currentState.comments?.where((c) => c.id != event.commentId).toList();
+        state.comments?.where((c) => c?.id != event.commentId).toList();
 
-    final updatedState = currentState.copyWith(
-      comments: updatedComments,
-      isCmtLoading: true,
+    emit(
+      state.copyWith(
+        comments: updatedComments,
+        isCmtLoading: true,
+      ),
     );
-
-    emit(updatedState);
 
     try {
       await _fbCommentPlugin.deleteComment(event.commentId);
-
-      emit(
-        updatedState.copyWith(isCmtLoading: false),
-      );
     } catch (e) {
-      Log.debug('Error deleting comment: $e');
+      emit(_errorState('$e'));
+    } finally {
+      emit(state.copyWith(isCmtLoading: false));
     }
   }
 
@@ -304,30 +297,27 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     );
   }
 
-  WatchLoaded _updateStateWithNewComment(
-    WatchLoaded currentState,
+  WatchState _updateStateWithNewComment(
+    WatchState state,
     CommentEntity newComment,
   ) {
-    final newComments = [newComment, ...?currentState.comments];
+    final newComments = [newComment, ...?state.comments];
 
-    return currentState.copyWith(
+    return state.copyWith(
       comments: newComments,
     );
   }
 
   Future<void> _onLoadWatch(LoadWatch event, Emitter<WatchState> emit) async {
     try {
-      final currentState = state;
-      if (currentState is! WatchLoaded) return;
-
       final futures = await Future.wait([
         _fetchAnimeData(
           event.id,
-          currentState.detail,
+          state.detail!,
         ),
-        _getLastChapUseCase.send(
+        _getLastChapUseCase.execute(
           GetLastChapUseCaseInput(
-            seasonId: currentState.detail.pathToView?.parseSeasonId() ?? '',
+            seasonId: state.detail?.pathToView?.parseSeasonId() ?? '',
           ),
         ),
       ]);
@@ -337,16 +327,18 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       final latestChapUseCaseOutput = futures.last as GetLastChapUseCaseOutput;
 
       final chapterLists = _initializeChapterLists(
-        currentState.detail,
+        state.detail!,
         event.id,
         chaps,
         listEpisodeSkip,
       );
       final latestChap = latestChapUseCaseOutput.result;
-      final initialChap = chaps.firstWhereOrNull(
-            (chap) => chap.id == latestChap?.chapId,
-          ) ??
-          chaps.first;
+      final initialChap = chaps.isNotEmpty
+          ? (chaps.firstWhereOrNull(
+                (chap) => chap.id == latestChap?.chapId,
+              ) ??
+              chaps.first)
+          : null;
 
       final initialData = InitialData(
         initialChap: initialChap,
@@ -354,7 +346,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       );
 
       emit(
-        currentState.copyWith(
+        state.copyWith(
           chaps: chaps,
           tabViewItems: chapterLists,
           initialData: initialData,
@@ -363,7 +355,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
 
       add(LoadComment(id: event.id));
     } catch (e) {
-      emit(WatchError(e.toString()));
+      emit(_errorState('$e'));
     }
   }
 
@@ -371,13 +363,10 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     ChangeSeasonTab event,
     Emitter<WatchState> emit,
   ) async {
-    final currentState = state;
-    if (currentState is! WatchLoaded) return;
-
-    final newIndex = currentState.detail.season.indexWhere(
+    final newIndex = state.detail!.season.indexWhere(
       (item) => item.path == event.id,
     );
-    if (!_shouldUpdateTab(currentState, newIndex)) return;
+    if (!_shouldUpdateTab(state, newIndex)) return;
 
     try {
       final animeDetail = await _fetchDetailData(event.id);
@@ -386,26 +375,26 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
         animeDetail,
       );
       final updatedTabViewItems = _updateChapterLists(
-        currentState,
+        state,
         newIndex,
         chaps,
         animeDetail,
         listEpisodeSkip,
       );
+
       emit(
-        currentState.copyWith(
-          chaps: chaps,
+        state.copyWith(
           tabViewItems: updatedTabViewItems,
         ),
       );
     } catch (e) {
-      emit(WatchError(e.toString()));
+      emit(_errorState('$e'));
     }
   }
 
-  bool _shouldUpdateTab(WatchLoaded currentState, int newIndex) {
-    return currentState.tabViewItems != null &&
-        (newIndex != -1 && currentState.tabViewItems![newIndex] == null);
+  bool _shouldUpdateTab(WatchState state, int newIndex) {
+    return state.tabViewItems != null &&
+        (newIndex != -1 && state.tabViewItems![newIndex] == null);
   }
 
   List<TabViewItem?>? _initializeChapterLists(
@@ -451,14 +440,13 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   }
 
   List<TabViewItem?>? _updateChapterLists(
-    WatchLoaded currentState,
+    WatchState state,
     int newIndex,
     List<ChapDataEntity> newChaps,
     AnimeDetailEntity newAnimeDetail,
     ListEpisodeResponseEntity? newListEpisodeSkip,
   ) {
-    final updatedTabViewItems =
-        List<TabViewItem?>.from(currentState.tabViewItems!);
+    final updatedTabViewItems = List<TabViewItem?>.from(state.tabViewItems!);
     updatedTabViewItems[newIndex] =
         _createTabViewItem(newChaps, newAnimeDetail, newListEpisodeSkip);
     return updatedTabViewItems;
@@ -469,7 +457,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     AnimeDetailEntity detail,
   ) async {
     final (chaps, listEpisodeSkip) = await (
-      _fetchChaps(id),
+      _fetchChaps(id).catchError((_) => <ChapDataEntity>[]),
       _loadAdditionalAnimeData(detail).catchError((_) => null),
     ).wait;
 
@@ -477,32 +465,33 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   }
 
   Future<AnimeDetailEntity> _fetchDetailData(String id) async {
-    final output = await _getAnimeDetailUseCase.send(
+    final output = await _getAnimeDetailUseCase.execute(
       GetAnimeDetailUseCaseInput(id: id, cancelToken: cancelToken),
     );
     return output.result;
   }
 
   Future<List<ChapDataEntity>> _fetchChaps(String id) async {
-    final playDataOutput = await _getPlayDataUseCase.send(
+    final playDataOutput = await _getPlayDataUseCase.execute(
       GetPlayDataUseCaseInput(id: id, cancelToken: cancelToken),
     );
     return playDataOutput.result.chaps;
   }
 
   void _onChangeEpisode(ChangeEpisode event, Emitter<WatchState> emit) async {
-    final currentState = state;
-    if (currentState is! WatchLoaded) return;
+    if (state is! WatchLoaded) return;
 
-    final newState = currentState.copyWith(
-      detail: event.animeDetail,
-      initialData: null,
+    emit(
+      state.copyWith(
+        detail: event.animeDetail,
+        chaps: event.chaps,
+        initialData: null,
+      ),
     );
-    emit(newState);
 
     List<CommentEntity>? comments;
     int? totalCommentCount;
-    final id = event.animeDetail.pathToView?.cleanPathToView().extractId();
+    final id = event.animeDetail.pathToView?.cleanPathToView()?.extractId();
     final href = '$ogHostCurl/phim/-$id/';
 
     if (href != _fbCommentPlugin.config.href) {
@@ -511,17 +500,18 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
           href,
         );
         _afterCursor = initResponse.meta?.afterCursor ?? '';
-        comments = initResponse.comments ?? [];
+        comments = initResponse.comments;
         totalCommentCount = initResponse.meta?.totalCount ?? 0;
       } catch (e) {
-        Log.debug('Error updating url and getting comments: $e');
+        emit(_errorState('$e'));
       }
     }
 
     emit(
-      newState.copyWith(
-        comments: comments ?? currentState.comments,
-        totalCommentCount: totalCommentCount ?? currentState.totalCommentCount,
+      state.copyWith(
+        comments: comments,
+        totalCommentCount: totalCommentCount,
+        fbUser: _fbCommentPlugin.loginUser,
       ),
     );
   }
@@ -531,12 +521,11 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   ) async {
     try {
       final names = _extractAnimeNames(detail);
-      final listEpisodeOutput = await _episodeListUseCase.send(
+      final listEpisodeOutput = await _episodeListUseCase.execute(
         GetListEpisodeUseCaseInput(animeName: names, cancelToken: cancelToken),
       );
       return listEpisodeOutput.result;
     } catch (e) {
-      Log.debug('Error loading additional data: $e');
       return null;
     }
   }

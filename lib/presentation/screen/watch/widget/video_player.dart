@@ -127,26 +127,16 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
       builder: (context, state) => switch (state) {
-        VideoPlayerInitial() || VideoPlayerLoading() => const EmptyPlayer(
+        VideoPlayerInitial() => const EmptyPlayer(
             child: LoadingWidget(color: Colors.white),
           ),
         VideoPlayerLoaded() => _chaps.isNotEmpty
-            ? BetterPlayer(controller: _betterPlayerController)
-            : EmptyPlayer(child: _buildErrorText(context)),
-        _ => EmptyPlayer(child: _buildErrorText(context)),
+            ? BetterPlayer(
+                controller: _betterPlayerController,
+              )
+            : const EmptyPlayer(),
+        _ => const EmptyPlayer(),
       },
-    );
-  }
-
-  Center _buildErrorText(BuildContext context) {
-    return Center(
-      child: Text(
-        'No chapters found',
-        style: context.textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
     );
   }
 }

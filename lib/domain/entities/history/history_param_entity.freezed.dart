@@ -374,8 +374,8 @@ mixin _$GetSingleProgressParamsEntity {
   String? get userUid => throw _privateConstructorUsedError;
   @JsonKey(name: 'season_id')
   String? get seasonId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'chap_id')
-  String? get chapId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'p_chap_id')
+  String? get pChapId => throw _privateConstructorUsedError;
 
   /// Serializes this GetSingleProgressParamsEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -398,7 +398,7 @@ abstract class $GetSingleProgressParamsEntityCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'user_uid') String? userUid,
       @JsonKey(name: 'season_id') String? seasonId,
-      @JsonKey(name: 'chap_id') String? chapId});
+      @JsonKey(name: 'p_chap_id') String? pChapId});
 }
 
 /// @nodoc
@@ -419,7 +419,7 @@ class _$GetSingleProgressParamsEntityCopyWithImpl<$Res,
   $Res call({
     Object? userUid = freezed,
     Object? seasonId = freezed,
-    Object? chapId = freezed,
+    Object? pChapId = freezed,
   }) {
     return _then(_value.copyWith(
       userUid: freezed == userUid
@@ -430,9 +430,9 @@ class _$GetSingleProgressParamsEntityCopyWithImpl<$Res,
           ? _value.seasonId
           : seasonId // ignore: cast_nullable_to_non_nullable
               as String?,
-      chapId: freezed == chapId
-          ? _value.chapId
-          : chapId // ignore: cast_nullable_to_non_nullable
+      pChapId: freezed == pChapId
+          ? _value.pChapId
+          : pChapId // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -450,7 +450,7 @@ abstract class _$$GetSingleProgressParamsEntityImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'user_uid') String? userUid,
       @JsonKey(name: 'season_id') String? seasonId,
-      @JsonKey(name: 'chap_id') String? chapId});
+      @JsonKey(name: 'p_chap_id') String? pChapId});
 }
 
 /// @nodoc
@@ -470,7 +470,7 @@ class __$$GetSingleProgressParamsEntityImplCopyWithImpl<$Res>
   $Res call({
     Object? userUid = freezed,
     Object? seasonId = freezed,
-    Object? chapId = freezed,
+    Object? pChapId = freezed,
   }) {
     return _then(_$GetSingleProgressParamsEntityImpl(
       userUid: freezed == userUid
@@ -481,9 +481,9 @@ class __$$GetSingleProgressParamsEntityImplCopyWithImpl<$Res>
           ? _value.seasonId
           : seasonId // ignore: cast_nullable_to_non_nullable
               as String?,
-      chapId: freezed == chapId
-          ? _value.chapId
-          : chapId // ignore: cast_nullable_to_non_nullable
+      pChapId: freezed == pChapId
+          ? _value.pChapId
+          : pChapId // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -496,7 +496,7 @@ class _$GetSingleProgressParamsEntityImpl
   const _$GetSingleProgressParamsEntityImpl(
       {@JsonKey(name: 'user_uid') this.userUid,
       @JsonKey(name: 'season_id') this.seasonId,
-      @JsonKey(name: 'chap_id') this.chapId})
+      @JsonKey(name: 'p_chap_id') this.pChapId})
       : super._();
 
   factory _$GetSingleProgressParamsEntityImpl.fromJson(
@@ -510,8 +510,8 @@ class _$GetSingleProgressParamsEntityImpl
   @JsonKey(name: 'season_id')
   final String? seasonId;
   @override
-  @JsonKey(name: 'chap_id')
-  final String? chapId;
+  @JsonKey(name: 'p_chap_id')
+  final String? pChapId;
 
   /// Create a copy of GetSingleProgressParamsEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -536,7 +536,7 @@ abstract class _GetSingleProgressParamsEntity
   const factory _GetSingleProgressParamsEntity(
           {@JsonKey(name: 'user_uid') final String? userUid,
           @JsonKey(name: 'season_id') final String? seasonId,
-          @JsonKey(name: 'chap_id') final String? chapId}) =
+          @JsonKey(name: 'p_chap_id') final String? pChapId}) =
       _$GetSingleProgressParamsEntityImpl;
   const _GetSingleProgressParamsEntity._() : super._();
 
@@ -550,8 +550,8 @@ abstract class _GetSingleProgressParamsEntity
   @JsonKey(name: 'season_id')
   String? get seasonId;
   @override
-  @JsonKey(name: 'chap_id')
-  String? get chapId;
+  @JsonKey(name: 'p_chap_id')
+  String? get pChapId;
 
   /// Create a copy of GetSingleProgressParamsEntity
   /// with the given fields replaced by the non-null parameter values.

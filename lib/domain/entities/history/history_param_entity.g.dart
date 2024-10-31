@@ -41,7 +41,7 @@ _$GetSingleProgressParamsEntityImpl
         _$GetSingleProgressParamsEntityImpl(
           userUid: json['user_uid'] as String?,
           seasonId: json['season_id'] as String?,
-          chapId: json['chap_id'] as String?,
+          pChapId: json['p_chap_id'] as String?,
         );
 
 Map<String, dynamic> _$$GetSingleProgressParamsEntityImplToJson(
@@ -49,5 +49,5 @@ Map<String, dynamic> _$$GetSingleProgressParamsEntityImplToJson(
     <String, dynamic>{
       'user_uid': instance.userUid,
       'season_id': instance.seasonId,
-      'chap_id': instance.chapId,
+      'p_chap_id': instance.pChapId,
     };

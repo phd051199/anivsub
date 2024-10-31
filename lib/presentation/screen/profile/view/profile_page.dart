@@ -29,7 +29,7 @@ class _ProfilePageState extends CubitState<ProfilePage, ProfileCubit> {
       builder: (context, state) => RefreshIndicator(
         onRefresh: cubit.getUser,
         child: switch (state) {
-          ProfileInitial() || ProfileLoading() => const LoadingWidget(),
+          ProfileInitial() => const LoadingWidget(),
           ProfileLoaded() => const ProfileContent(),
           _ => Container(),
         },
@@ -37,5 +37,3 @@ class _ProfilePageState extends CubitState<ProfilePage, ProfileCubit> {
     );
   }
 }
-
-

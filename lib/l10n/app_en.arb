@@ -185,5 +185,13 @@
   "commentHint": "Write a comment...",
   "@commentHint": {
     "description": "Hint text for comment input."
+  },
+  "failedToLoadComments": "Failed to load comments",
+  "@failedToLoadComments": {
+    "description": "Message displayed when failed to load comments."
+  },
+  "noChaptersFound": "No chapters found",
+  "@noChaptersFound": {
+    "description": "Message displayed when no chapters are found."
   }
 }

@@ -269,7 +269,6 @@ class _BetterPlayerCustomMaterialControlsState
                         state.showSkipIntroText == true
                     ? Text(
                         '${skipIntro ? 'Enabled' : 'Disabled'} skip intro/outro',
-                        key: const ValueKey('skipIntroText'),
                         style: context.theme.textTheme.bodySmall!.copyWith(
                           color: _controlsConfiguration.textColor,
                           fontWeight: FontWeight.bold,
@@ -822,8 +821,7 @@ class _BetterPlayerCustomMaterialControlsState
     }
 
     return CircularProgressIndicator(
-      valueColor:
-          AlwaysStoppedAnimation<Color>(_controlsConfiguration.loadingColor),
+      color: _controlsConfiguration.loadingColor,
     );
   }
 }

@@ -21,25 +21,25 @@ QueryHistoryEntity _$QueryHistoryEntityFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$QueryHistoryEntity {
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'season')
-  String get season => throw _privateConstructorUsedError;
+  String? get season => throw _privateConstructorUsedError;
   @JsonKey(name: 'name')
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'poster')
-  String get poster => throw _privateConstructorUsedError;
+  String? get poster => throw _privateConstructorUsedError;
   @JsonKey(name: 'season_name')
-  String get seasonName => throw _privateConstructorUsedError;
+  String? get seasonName => throw _privateConstructorUsedError;
   @JsonKey(name: 'watch_updated_at')
-  DateTime get watchUpdatedAt => throw _privateConstructorUsedError;
+  DateTime? get watchUpdatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'watch_name')
-  String get watchName => throw _privateConstructorUsedError;
+  String? get watchName => throw _privateConstructorUsedError;
   @JsonKey(name: 'watch_id')
-  String get watchId => throw _privateConstructorUsedError;
+  String? get watchId => throw _privateConstructorUsedError;
   @JsonKey(name: 'watch_cur')
-  double get watchCur => throw _privateConstructorUsedError;
+  double? get watchCur => throw _privateConstructorUsedError;
   @JsonKey(name: 'watch_dur')
-  double get watchDur => throw _privateConstructorUsedError;
+  double? get watchDur => throw _privateConstructorUsedError;
 
   /// Serializes this QueryHistoryEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,16 +58,16 @@ abstract class $QueryHistoryEntityCopyWith<$Res> {
       _$QueryHistoryEntityCopyWithImpl<$Res, QueryHistoryEntity>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'season') String season,
-      @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'poster') String poster,
-      @JsonKey(name: 'season_name') String seasonName,
-      @JsonKey(name: 'watch_updated_at') DateTime watchUpdatedAt,
-      @JsonKey(name: 'watch_name') String watchName,
-      @JsonKey(name: 'watch_id') String watchId,
-      @JsonKey(name: 'watch_cur') double watchCur,
-      @JsonKey(name: 'watch_dur') double watchDur});
+      {@JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'season') String? season,
+      @JsonKey(name: 'name') String? name,
+      @JsonKey(name: 'poster') String? poster,
+      @JsonKey(name: 'season_name') String? seasonName,
+      @JsonKey(name: 'watch_updated_at') DateTime? watchUpdatedAt,
+      @JsonKey(name: 'watch_name') String? watchName,
+      @JsonKey(name: 'watch_id') String? watchId,
+      @JsonKey(name: 'watch_cur') double? watchCur,
+      @JsonKey(name: 'watch_dur') double? watchDur});
 }
 
 /// @nodoc
@@ -85,58 +85,58 @@ class _$QueryHistoryEntityCopyWithImpl<$Res, $Val extends QueryHistoryEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? createdAt = null,
-    Object? season = null,
-    Object? name = null,
-    Object? poster = null,
-    Object? seasonName = null,
-    Object? watchUpdatedAt = null,
-    Object? watchName = null,
-    Object? watchId = null,
-    Object? watchCur = null,
-    Object? watchDur = null,
+    Object? createdAt = freezed,
+    Object? season = freezed,
+    Object? name = freezed,
+    Object? poster = freezed,
+    Object? seasonName = freezed,
+    Object? watchUpdatedAt = freezed,
+    Object? watchName = freezed,
+    Object? watchId = freezed,
+    Object? watchCur = freezed,
+    Object? watchDur = freezed,
   }) {
     return _then(_value.copyWith(
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      season: null == season
+              as DateTime?,
+      season: freezed == season
           ? _value.season
           : season // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      poster: null == poster
+              as String?,
+      poster: freezed == poster
           ? _value.poster
           : poster // ignore: cast_nullable_to_non_nullable
-              as String,
-      seasonName: null == seasonName
+              as String?,
+      seasonName: freezed == seasonName
           ? _value.seasonName
           : seasonName // ignore: cast_nullable_to_non_nullable
-              as String,
-      watchUpdatedAt: null == watchUpdatedAt
+              as String?,
+      watchUpdatedAt: freezed == watchUpdatedAt
           ? _value.watchUpdatedAt
           : watchUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      watchName: null == watchName
+              as DateTime?,
+      watchName: freezed == watchName
           ? _value.watchName
           : watchName // ignore: cast_nullable_to_non_nullable
-              as String,
-      watchId: null == watchId
+              as String?,
+      watchId: freezed == watchId
           ? _value.watchId
           : watchId // ignore: cast_nullable_to_non_nullable
-              as String,
-      watchCur: null == watchCur
+              as String?,
+      watchCur: freezed == watchCur
           ? _value.watchCur
           : watchCur // ignore: cast_nullable_to_non_nullable
-              as double,
-      watchDur: null == watchDur
+              as double?,
+      watchDur: freezed == watchDur
           ? _value.watchDur
           : watchDur // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ) as $Val);
   }
 }
@@ -150,16 +150,16 @@ abstract class _$$QueryHistoryEntityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'season') String season,
-      @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'poster') String poster,
-      @JsonKey(name: 'season_name') String seasonName,
-      @JsonKey(name: 'watch_updated_at') DateTime watchUpdatedAt,
-      @JsonKey(name: 'watch_name') String watchName,
-      @JsonKey(name: 'watch_id') String watchId,
-      @JsonKey(name: 'watch_cur') double watchCur,
-      @JsonKey(name: 'watch_dur') double watchDur});
+      {@JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'season') String? season,
+      @JsonKey(name: 'name') String? name,
+      @JsonKey(name: 'poster') String? poster,
+      @JsonKey(name: 'season_name') String? seasonName,
+      @JsonKey(name: 'watch_updated_at') DateTime? watchUpdatedAt,
+      @JsonKey(name: 'watch_name') String? watchName,
+      @JsonKey(name: 'watch_id') String? watchId,
+      @JsonKey(name: 'watch_cur') double? watchCur,
+      @JsonKey(name: 'watch_dur') double? watchDur});
 }
 
 /// @nodoc
@@ -175,58 +175,58 @@ class __$$QueryHistoryEntityImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? createdAt = null,
-    Object? season = null,
-    Object? name = null,
-    Object? poster = null,
-    Object? seasonName = null,
-    Object? watchUpdatedAt = null,
-    Object? watchName = null,
-    Object? watchId = null,
-    Object? watchCur = null,
-    Object? watchDur = null,
+    Object? createdAt = freezed,
+    Object? season = freezed,
+    Object? name = freezed,
+    Object? poster = freezed,
+    Object? seasonName = freezed,
+    Object? watchUpdatedAt = freezed,
+    Object? watchName = freezed,
+    Object? watchId = freezed,
+    Object? watchCur = freezed,
+    Object? watchDur = freezed,
   }) {
     return _then(_$QueryHistoryEntityImpl(
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      season: null == season
+              as DateTime?,
+      season: freezed == season
           ? _value.season
           : season // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
+              as String?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      poster: null == poster
+              as String?,
+      poster: freezed == poster
           ? _value.poster
           : poster // ignore: cast_nullable_to_non_nullable
-              as String,
-      seasonName: null == seasonName
+              as String?,
+      seasonName: freezed == seasonName
           ? _value.seasonName
           : seasonName // ignore: cast_nullable_to_non_nullable
-              as String,
-      watchUpdatedAt: null == watchUpdatedAt
+              as String?,
+      watchUpdatedAt: freezed == watchUpdatedAt
           ? _value.watchUpdatedAt
           : watchUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      watchName: null == watchName
+              as DateTime?,
+      watchName: freezed == watchName
           ? _value.watchName
           : watchName // ignore: cast_nullable_to_non_nullable
-              as String,
-      watchId: null == watchId
+              as String?,
+      watchId: freezed == watchId
           ? _value.watchId
           : watchId // ignore: cast_nullable_to_non_nullable
-              as String,
-      watchCur: null == watchCur
+              as String?,
+      watchCur: freezed == watchCur
           ? _value.watchCur
           : watchCur // ignore: cast_nullable_to_non_nullable
-              as double,
-      watchDur: null == watchDur
+              as double?,
+      watchDur: freezed == watchDur
           ? _value.watchDur
           : watchDur // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ));
   }
 }
@@ -235,16 +235,16 @@ class __$$QueryHistoryEntityImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$QueryHistoryEntityImpl extends _QueryHistoryEntity {
   const _$QueryHistoryEntityImpl(
-      {@JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'season') required this.season,
-      @JsonKey(name: 'name') required this.name,
-      @JsonKey(name: 'poster') required this.poster,
-      @JsonKey(name: 'season_name') required this.seasonName,
-      @JsonKey(name: 'watch_updated_at') required this.watchUpdatedAt,
-      @JsonKey(name: 'watch_name') required this.watchName,
-      @JsonKey(name: 'watch_id') required this.watchId,
-      @JsonKey(name: 'watch_cur') required this.watchCur,
-      @JsonKey(name: 'watch_dur') required this.watchDur})
+      {@JsonKey(name: 'created_at') this.createdAt,
+      @JsonKey(name: 'season') this.season,
+      @JsonKey(name: 'name') this.name,
+      @JsonKey(name: 'poster') this.poster,
+      @JsonKey(name: 'season_name') this.seasonName,
+      @JsonKey(name: 'watch_updated_at') this.watchUpdatedAt,
+      @JsonKey(name: 'watch_name') this.watchName,
+      @JsonKey(name: 'watch_id') this.watchId,
+      @JsonKey(name: 'watch_cur') this.watchCur,
+      @JsonKey(name: 'watch_dur') this.watchDur})
       : super._();
 
   factory _$QueryHistoryEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -252,34 +252,34 @@ class _$QueryHistoryEntityImpl extends _QueryHistoryEntity {
 
   @override
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @override
   @JsonKey(name: 'season')
-  final String season;
+  final String? season;
   @override
   @JsonKey(name: 'name')
-  final String name;
+  final String? name;
   @override
   @JsonKey(name: 'poster')
-  final String poster;
+  final String? poster;
   @override
   @JsonKey(name: 'season_name')
-  final String seasonName;
+  final String? seasonName;
   @override
   @JsonKey(name: 'watch_updated_at')
-  final DateTime watchUpdatedAt;
+  final DateTime? watchUpdatedAt;
   @override
   @JsonKey(name: 'watch_name')
-  final String watchName;
+  final String? watchName;
   @override
   @JsonKey(name: 'watch_id')
-  final String watchId;
+  final String? watchId;
   @override
   @JsonKey(name: 'watch_cur')
-  final double watchCur;
+  final double? watchCur;
   @override
   @JsonKey(name: 'watch_dur')
-  final double watchDur;
+  final double? watchDur;
 
   /// Create a copy of QueryHistoryEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -300,17 +300,17 @@ class _$QueryHistoryEntityImpl extends _QueryHistoryEntity {
 
 abstract class _QueryHistoryEntity extends QueryHistoryEntity {
   const factory _QueryHistoryEntity(
-      {@JsonKey(name: 'created_at') required final DateTime createdAt,
-      @JsonKey(name: 'season') required final String season,
-      @JsonKey(name: 'name') required final String name,
-      @JsonKey(name: 'poster') required final String poster,
-      @JsonKey(name: 'season_name') required final String seasonName,
-      @JsonKey(name: 'watch_updated_at') required final DateTime watchUpdatedAt,
-      @JsonKey(name: 'watch_name') required final String watchName,
-      @JsonKey(name: 'watch_id') required final String watchId,
-      @JsonKey(name: 'watch_cur') required final double watchCur,
-      @JsonKey(name: 'watch_dur')
-      required final double watchDur}) = _$QueryHistoryEntityImpl;
+          {@JsonKey(name: 'created_at') final DateTime? createdAt,
+          @JsonKey(name: 'season') final String? season,
+          @JsonKey(name: 'name') final String? name,
+          @JsonKey(name: 'poster') final String? poster,
+          @JsonKey(name: 'season_name') final String? seasonName,
+          @JsonKey(name: 'watch_updated_at') final DateTime? watchUpdatedAt,
+          @JsonKey(name: 'watch_name') final String? watchName,
+          @JsonKey(name: 'watch_id') final String? watchId,
+          @JsonKey(name: 'watch_cur') final double? watchCur,
+          @JsonKey(name: 'watch_dur') final double? watchDur}) =
+      _$QueryHistoryEntityImpl;
   const _QueryHistoryEntity._() : super._();
 
   factory _QueryHistoryEntity.fromJson(Map<String, dynamic> json) =
@@ -318,34 +318,34 @@ abstract class _QueryHistoryEntity extends QueryHistoryEntity {
 
   @override
   @JsonKey(name: 'created_at')
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   @JsonKey(name: 'season')
-  String get season;
+  String? get season;
   @override
   @JsonKey(name: 'name')
-  String get name;
+  String? get name;
   @override
   @JsonKey(name: 'poster')
-  String get poster;
+  String? get poster;
   @override
   @JsonKey(name: 'season_name')
-  String get seasonName;
+  String? get seasonName;
   @override
   @JsonKey(name: 'watch_updated_at')
-  DateTime get watchUpdatedAt;
+  DateTime? get watchUpdatedAt;
   @override
   @JsonKey(name: 'watch_name')
-  String get watchName;
+  String? get watchName;
   @override
   @JsonKey(name: 'watch_id')
-  String get watchId;
+  String? get watchId;
   @override
   @JsonKey(name: 'watch_cur')
-  double get watchCur;
+  double? get watchCur;
   @override
   @JsonKey(name: 'watch_dur')
-  double get watchDur;
+  double? get watchDur;
 
   /// Create a copy of QueryHistoryEntity
   /// with the given fields replaced by the non-null parameter values.

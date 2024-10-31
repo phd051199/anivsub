@@ -1,4 +1,4 @@
-import 'package:anivsub/core/service/shared_preferences_service.dart';
+import 'package:anivsub/core/service/service.dart';
 import 'package:anivsub/data/datasources/local/app_settings_local_data_source.dart';
 import 'package:anivsub/data/dto/app_settings_dto.dart';
 import 'package:injectable/injectable.dart';

@@ -17,7 +17,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   final AppSettingsUseCase _appSettingsUseCase;
 
   void loadAppSettings() async {
-    final output = await _appSettingsUseCase.send(
+    final output = await _appSettingsUseCase.execute(
       const AppSettingsUseCaseInput(),
     );
     emit(ThemeLoaded(output.result!));
@@ -27,7 +27,7 @@ class ThemeCubit extends Cubit<ThemeState> {
     final currentAppSettings = state.appSettings;
     final newAppSettings =
         currentAppSettings.copyWith(themeMode: themeMode.index);
-    await _appSettingsUseCase.send(
+    await _appSettingsUseCase.execute(
       AppSettingsUseCaseInput(appSettings: newAppSettings),
     );
     emit(ThemeLoaded(newAppSettings));
@@ -36,7 +36,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   void changeThemeColor(Color color) async {
     final currentAppSettings = state.appSettings;
     final newAppSettings = currentAppSettings.copyWith(color: color.value);
-    await _appSettingsUseCase.send(
+    await _appSettingsUseCase.execute(
       AppSettingsUseCaseInput(appSettings: newAppSettings),
     );
     emit(ThemeLoaded(newAppSettings));

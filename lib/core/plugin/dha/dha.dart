@@ -1,5 +1,4 @@
 abstract class DHA {
-  Future<void> initialize();
   Future<String> decryptM3u8(
     String data, {
     bool flag1 = true,

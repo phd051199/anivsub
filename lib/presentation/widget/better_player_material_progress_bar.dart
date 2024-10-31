@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/cubit/video_player_cubit.dart';
@@ -70,11 +69,8 @@ class _VideoProgressBarState
       onHorizontalDragUpdate: _onDragUpdate,
       onHorizontalDragEnd: _onDragEnd,
       onTapDown: _onTapDown,
-      child: BlocProvider<VideoPlayerCubit>.value(
-        value: videoPlayerCubit,
-        child: BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
-          builder: _buildProgressBar,
-        ),
+      child: BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
+        builder: _buildProgressBar,
       ),
     );
   }

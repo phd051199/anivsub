@@ -1,6 +1,3 @@
-// ignore_for_file: avoid_dynamic_calls
-
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:anivsub/core/di/shared_export.dart';
@@ -254,7 +251,7 @@ class FBCommentPlugin {
       );
 
       final json = data.parseRT();
-      final payload = json['payload'];
+      final Map<String, dynamic> payload = json['payload'];
 
       final comments = CommentsDTO.fromJson(payload);
       final parsedComments = await compute(CommentParser.parse, comments);
@@ -286,14 +283,12 @@ class FBCommentPlugin {
     final jsonStr = html.substring(propsIndex + 8, placeholderIndex - 1);
 
     try {
-      final json = jsonDecode(jsonStr);
+      final Map<String, dynamic> json = jsonDecode(jsonStr);
 
-      if (json['meta']['actorsOptIn'] is List) {
-        json['meta']['actorsOptIn'] = null;
-      }
-
-      if (json['meta']['actors'] is List) {
-        json['meta']['actors'] = null;
+      final meta = json['meta'];
+      if (meta is Map<String, dynamic>) {
+        if (meta['actorsOptIn'] is List) meta['actorsOptIn'] = null;
+        if (meta['actors'] is List) meta['actors'] = null;
       }
 
       return GetInitialCommentResponseDTO.fromJson(json);

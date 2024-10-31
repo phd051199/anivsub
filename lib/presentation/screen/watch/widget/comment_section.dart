@@ -1,8 +1,8 @@
 import 'dart:io' as io;
 
+import 'package:anivsub/core/const/const.dart';
 import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/extension.dart';
-import 'package:anivsub/core/shared/constants.dart';
 import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
@@ -94,7 +94,7 @@ class _CommentSectionState extends State<CommentSection> {
       builder: (context, state) {
         if (state is! WatchLoaded) return const SizedBox.shrink();
         return CommentList(
-          comments: state.comments ?? [],
+          comments: state.comments!.whereNotNull().toList(),
           fbUser: state.fbUser,
           onDeleteComment: _handleDeleteComment,
           onLikeComment: _handleLikeComment,
@@ -339,7 +339,7 @@ class CommentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+    final state = context.watch<WatchBloc>().state;
 
     return ListView.builder(
       padding: const EdgeInsets.all(16),

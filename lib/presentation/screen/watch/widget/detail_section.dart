@@ -1,7 +1,7 @@
-import 'package:anivsub/core/extension/context_extension.dart';
-import 'package:anivsub/core/extension/number_extension.dart';
+import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetailSection extends StatelessWidget {
   const DetailSection({
@@ -9,11 +9,11 @@ class DetailSection extends StatelessWidget {
     required this.onTap,
   });
 
-  final Function(WatchLoaded) onTap;
+  final Function(WatchState) onTap;
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+    final state = context.watch<WatchBloc>().state;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -30,13 +30,13 @@ class DetailSection extends StatelessWidget {
   }
 
   Widget _buildDetailTile(BuildContext context) {
-    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+    final state = context.watch<WatchBloc>().state;
 
     return ListTile(
       minVerticalPadding: 16,
       contentPadding: EdgeInsets.zero,
       title: Text(
-        state.detail.name,
+        state.detail!.name,
         style: context.textTheme.titleLarge?.copyWith(
           fontWeight: FontWeight.bold,
           fontSize: 20,
@@ -47,7 +47,7 @@ class DetailSection extends StatelessWidget {
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 8),
         child: Text(
-          '${state.detail.views.formatNumber()} ${context.l10n.views.toLowerCase()}',
+          '${state.detail!.views.formatNumber()} ${context.l10n.views.toLowerCase()}',
           style: context.textTheme.titleSmall?.copyWith(
             color: context.theme.colorScheme.secondary,
           ),
@@ -58,11 +58,11 @@ class DetailSection extends StatelessWidget {
   }
 
   Widget _buildInfoText(BuildContext context) {
-    final state = context.watchTypedState<WatchBloc, WatchLoaded>();
+    final state = context.watch<WatchBloc>().state;
 
     final infoTexts = [
       InfoText(
-        '${context.l10n.producedBy} ${state.detail.studio}',
+        '${context.l10n.producedBy} ${state.detail!.studio}',
         TextStyle(
           color: context.theme.colorScheme.tertiary,
           fontWeight: FontWeight.bold,
@@ -70,24 +70,24 @@ class DetailSection extends StatelessWidget {
         Icons.movie_creation_outlined,
       ),
       InfoText(
-        state.detail.schedule != ''
-            ? state.detail.schedule!
+        state.detail!.schedule != ''
+            ? state.detail!.schedule!
             : context.l10n.seasonEnd,
         null,
         Icons.calendar_today_outlined,
       ),
       InfoText(
-        '${state.detail.yearOf} • ${context.l10n.episode} ${state.detail.duration} • ${state.detail.countries.map((e) => e.name).join(', ')}',
+        '${state.detail!.yearOf} • ${context.l10n.episode} ${state.detail!.duration} • ${state.detail!.countries.map((e) => e.name).join(', ')}',
         null,
         Icons.info_outline,
       ),
       InfoText(
-        '${state.detail.rate}/10 • ${state.detail.countRate} ${context.l10n.rating} • ${state.detail.seasonOf?.name}',
+        '${state.detail!.rate}/10 • ${state.detail!.countRate} ${context.l10n.rating} • ${state.detail!.seasonOf?.name}',
         null,
         Icons.star_outline,
       ),
       InfoText(
-        state.detail.genre.map((e) => e.name).join(', '),
+        state.detail!.genre.map((e) => e.name).join(', '),
         TextStyle(
           color: context.theme.colorScheme.primary,
           fontWeight: FontWeight.bold,

@@ -1,4 +1,5 @@
 import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/presentation/screen/home/home.dart';
 import 'package:anivsub/presentation/screen/home/widget/home_content.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +29,15 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
       builder: (context, state) => RefreshIndicator(
         onRefresh: () async {
           bloc.add(const LoadHome());
+
+          await waitUtil(
+            () =>
+                context.mounted &&
+                context.read<HomeBloc>().state is HomeInitial,
+          );
         },
         child: Skeletonizer(
-          enabled: state is HomeLoading || state is HomeInitial,
+          enabled: state is HomeInitial,
           child: const HomeContent(),
         ),
       ),

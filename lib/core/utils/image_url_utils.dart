@@ -1,4 +1,4 @@
-import 'package:anivsub/core/shared/constants.dart';
+import 'package:anivsub/core/const/const.dart';
 
 class ImageUrlUtils {
   static final RegExp _hostUrlImageRegex = RegExp(

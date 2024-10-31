@@ -19,7 +19,6 @@ class SearchResults extends StatelessWidget {
     final state = context.watch<SearchBloc>().state;
 
     return switch (state) {
-      SearchLoading() ||
       SearchInitial() when pagingController.itemList == null =>
         const SearchSkeleton(),
       _ => RefreshIndicator(
@@ -33,7 +32,6 @@ class SearchResults extends StatelessWidget {
             ),
             builderDelegate: PagedChildBuilderDelegate<AnimeDataEntity>(
               itemBuilder: (_, item, __) => AnimeCard(
-                key: ValueKey(item.path),
                 item: item,
               ),
               newPageProgressIndicatorBuilder: (context) => const SizedBox(

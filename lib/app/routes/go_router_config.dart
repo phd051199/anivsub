@@ -1,5 +1,5 @@
+import 'package:anivsub/app/notifier/auth_notifier.dart';
 import 'package:anivsub/core/di/shared_export.dart';
-import 'package:anivsub/core/notifier/auth_notifier.dart';
 import 'package:anivsub/presentation/screen/home/home.dart';
 import 'package:anivsub/presentation/screen/login/login.dart';
 import 'package:anivsub/presentation/screen/navigation/view/navigation_bar.dart';

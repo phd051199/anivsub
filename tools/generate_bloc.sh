@@ -60,15 +60,13 @@ capitalized_feature_name=$(capitalize_feature_name "$feature_name")
 cat <<EOL > "$view_dir/${feature_name}_page.dart"
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 EOL
 
 if [ "$with_bloc" == "true" ]; then
   cat <<EOL >> "$view_dir/${feature_name}_page.dart"
 import 'package:$package_name/core/base/base.dart';
-import 'package:$package_name/presentation/shared/loading_widget.dart';
-
-import '../bloc/${feature_name}_bloc.dart';
+import 'package:$package_name/presentation/widget/loading_widget.dart';
+import 'package:$package_name/presentation/screen/$feature_name/bloc/${feature_name}_bloc.dart';
 
 class ${capitalized_feature_name}Page extends StatefulWidget {
   const ${capitalized_feature_name}Page({super.key});
@@ -117,9 +115,8 @@ EOL
 elif [ "$with_cubit" == "true" ]; then
   cat <<EOL >> "$view_dir/${feature_name}_page.dart"
 import 'package:$package_name/core/base/base.dart';
-import 'package:$package_name/presentation/shared/loading_widget.dart';
-
-import '../cubit/${feature_name}_cubit.dart';
+import 'package:$package_name/presentation/widget/loading_widget.dart';
+import 'package:$package_name/presentation/screen/$feature_name/cubit/${feature_name}_cubit.dart';
 
 class ${capitalized_feature_name}Page extends StatefulWidget {
   const ${capitalized_feature_name}Page({super.key});
@@ -281,6 +278,7 @@ fi
 
 # Build the project
 echo "Building..."
-dart pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
+dart fix --apply "$feature_dir"
 
 echo "Feature '$feature_name' with $state_management created successfully."

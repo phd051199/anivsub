@@ -1,5 +1,5 @@
 name: anivsub
-description: "A feature-rich Flutter application for anime streaming."
+description: "A Flutter application for anime streaming."
 publish_to: "none"
 version: 0.1.0
 
@@ -26,7 +26,6 @@ dependencies:
   shared_preferences: ^2.3.2
   flutter_secure_storage: ^9.2.2
   path_provider: ^2.1.5
-  dio_cache_interceptor: ^3.5.0
   dio_cache_interceptor_hive_store: ^3.2.2
 
   # Networking & API
@@ -34,6 +33,7 @@ dependencies:
   retrofit: ^4.4.1
   pretty_dio_logger: ^1.4.0
   dio_cookie_manager: ^3.1.1
+  dio_cache_interceptor: ^3.5.0
   cookie_jar: ^4.0.8
   supabase_flutter: ^2.8.0
 

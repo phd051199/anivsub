@@ -1,6 +1,6 @@
+import 'package:anivsub/app/routes/go_router_config.dart';
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/extension/extension.dart';
-import 'package:anivsub/core/routes/go_router_config.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/search/bloc/search_bloc.dart';
 import 'package:anivsub/presentation/screen/search/widget/search_results.dart';

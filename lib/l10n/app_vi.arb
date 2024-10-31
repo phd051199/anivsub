@@ -185,5 +185,13 @@
   "commentHint": "Viết bình luận...",
   "@commentHint": {
     "description": "Hint text for comment input."
+  },
+  "failedToLoadComments": "Không thể tải bình luận",
+  "@failedToLoadComments": {
+    "description": "Message displayed when failed to load comments."
+  },
+  "noChaptersFound": "Không tìm thấy tập phim",
+  "@noChaptersFound": {
+    "description": "Message displayed when no chapters are found."
   }
 }

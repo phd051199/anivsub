@@ -9,27 +9,31 @@ part of 'query_history_dto.dart';
 _$QueryHistoryDTOImpl _$$QueryHistoryDTOImplFromJson(
         Map<String, dynamic> json) =>
     _$QueryHistoryDTOImpl(
-      createdAt: DateTime.parse(json['created_at'] as String),
-      season: json['season'] as String,
-      name: json['name'] as String,
-      poster: json['poster'] as String,
-      seasonName: json['season_name'] as String,
-      watchUpdatedAt: DateTime.parse(json['watch_updated_at'] as String),
-      watchName: json['watch_name'] as String,
-      watchId: json['watch_id'] as String,
-      watchCur: (json['watch_cur'] as num).toDouble(),
-      watchDur: (json['watch_dur'] as num).toDouble(),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      season: json['season'] as String?,
+      name: json['name'] as String?,
+      poster: json['poster'] as String?,
+      seasonName: json['season_name'] as String?,
+      watchUpdatedAt: json['watch_updated_at'] == null
+          ? null
+          : DateTime.parse(json['watch_updated_at'] as String),
+      watchName: json['watch_name'] as String?,
+      watchId: json['watch_id'] as String?,
+      watchCur: (json['watch_cur'] as num?)?.toDouble(),
+      watchDur: (json['watch_dur'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$QueryHistoryDTOImplToJson(
         _$QueryHistoryDTOImpl instance) =>
     <String, dynamic>{
-      'created_at': instance.createdAt.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
       'season': instance.season,
       'name': instance.name,
       'poster': instance.poster,
       'season_name': instance.seasonName,
-      'watch_updated_at': instance.watchUpdatedAt.toIso8601String(),
+      'watch_updated_at': instance.watchUpdatedAt?.toIso8601String(),
       'watch_name': instance.watchName,
       'watch_id': instance.watchId,
       'watch_cur': instance.watchCur,

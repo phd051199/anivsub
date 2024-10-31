@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as dev;
 
-import 'package:anivsub/core/shared/log_config.dart';
+import 'package:anivsub/core/config/log_config.dart';
 
 class Log {
   const Log._();

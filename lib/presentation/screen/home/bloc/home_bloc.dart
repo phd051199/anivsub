@@ -17,12 +17,14 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   final GetHomeDataUseCase _getHomeDataUseCase;
 
   void _onLoadHome(LoadHome event, Emitter<HomeState> emit) async {
-    emit(const HomeLoading());
+    if (state is! HomeInitial) emit(const HomeInitial());
 
-    final GetHomeDataUseCaseOutput output = await _getHomeDataUseCase.send(
+    final GetHomeDataUseCaseOutput output = await _getHomeDataUseCase.execute(
       const GetHomeDataUseCaseInput(),
     );
 
-    emit(HomeLoaded(homeData: output.result));
+    emit(
+      HomeLoaded(homeData: output.result),
+    );
   }
 }

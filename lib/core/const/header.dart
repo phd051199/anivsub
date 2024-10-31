@@ -1,20 +1,3 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-const kSPUserToken = 'kUserToken';
-const kSPThemeMode = 'kThemeMode';
-
-const sk9animetvApiUrl = 'https://sk-9animetv.dph.workers.dev';
-const skHianimeApiUrl = 'https://sk-hianime.dph.workers.dev';
-const fbBaseUrl = 'https://www.facebook.com';
-
-final hostCurl = dotenv.get('HOST_CURL');
-final ogHostCurl = Uri.parse(hostCurl)
-    .replace(
-      scheme: 'http',
-      host: '${Uri.parse(hostCurl).host.split('.').first}.tv',
-    )
-    .toString();
-
 const headers = {
   'user-agent':
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36',

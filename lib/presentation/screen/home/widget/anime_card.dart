@@ -1,4 +1,4 @@
-import 'package:anivsub/core/routes/go_router_config.dart';
+import 'package:anivsub/app/routes/go_router_config.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/widget/anime_description.dart';
 import 'package:anivsub/presentation/widget/anime_thumbnail.dart';

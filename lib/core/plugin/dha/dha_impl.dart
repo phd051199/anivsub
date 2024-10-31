@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -17,13 +16,12 @@ import 'dha.dart';
 @LazySingleton(as: DHA)
 class DHAImpl implements DHA {
   DHAImpl() {
-    initialize();
+    _initialize();
   }
   late WasmInstance instance;
   final Map<int, int> refCounts = {};
 
-  @override
-  Future<void> initialize() async {
+  Future<void> _initialize() async {
     final wasmFile = await rootBundle.load('assets/wasm/dha.wasm');
     final binary = wasmFile.buffer.asUint8List();
 

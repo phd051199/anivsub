@@ -154,7 +154,7 @@ class WatchSkeleton extends StatelessWidget {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: chaps.length,
-            separatorBuilder: (context, index) => const Gap(4),
+            separatorBuilder: (context, index) => const Gap(2),
             itemBuilder: (context, index) =>
                 _buildChapCard(context, chaps[index]),
           ),

@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/const/const.dart';
 import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/plugin/plugin.dart';
-import 'package:anivsub/core/shared/constants.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
@@ -54,32 +54,38 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   @override
   void dispose() {
     _tabController?.dispose();
+
     super.dispose();
   }
 
   @override
   Widget buildPage(BuildContext context) {
-    return BlocConsumer<WatchBloc, WatchState>(
-      listener: _watchStateListener,
-      builder: (context, state) {
-        return Scaffold(
-          body: SafeArea(
-            bottom: false,
-            child: state is WatchLoaded
-                ? WatchContent(
-                    tabController: _tabController,
-                    currentTabIndex: _currentTabIndex,
-                    onTabChange: _onTabChange,
-                    onEpisodeTap: _onEpisodeTap,
-                    onChapTap: _onChapTap,
-                    onRelatedItemTap: _onRelatedItemTap,
-                    showDetailBottomSheet: _showDetailBottomSheet,
-                    tag: widget.tag,
-                  )
-                : WatchSkeleton(tag: widget.tag),
-          ),
-        );
-      },
+    return BlocProvider<VideoPlayerCubit>.value(
+      value: videoPlayerCubit,
+      child: BlocConsumer<WatchBloc, WatchState>(
+        listener: _watchStateListener,
+        builder: (context, state) {
+          return Scaffold(
+            body: SafeArea(
+              bottom: false,
+              child: state is! WatchInitial
+                  ? WatchContent(
+                      tabController: _tabController,
+                      currentTabIndex: _currentTabIndex,
+                      onTabChange: _onTabChange,
+                      onEpisodeTap: _onEpisodeTap,
+                      onChapTap: _onChapTap,
+                      onRelatedItemTap: _onRelatedItemTap,
+                      showDetailBottomSheet: _showDetailBottomSheet,
+                      tag: widget.tag,
+                    )
+                  : WatchSkeleton(
+                      tag: widget.tag,
+                    ),
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -100,7 +106,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     bloc.add(InitWatch(id: anime.path));
   }
 
-  void _showDetailBottomSheet(WatchLoaded state) {
+  void _showDetailBottomSheet(WatchState state) {
     showModalBottomSheet(
       showDragHandle: true,
       isScrollControlled: true,
@@ -110,15 +116,15 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     );
   }
 
-  void _initializeTabController(WatchLoaded state) {
-    if (state.detail.season.isEmpty) return;
+  void _initializeTabController(WatchState state) {
+    if (state.detail!.season.isEmpty) return;
     final initialTabIndex = _getInitialTabIndex(state);
 
     if (_tabController == null ||
-        _tabController!.length != state.detail.season.length) {
+        _tabController!.length != state.detail!.season.length) {
       _tabController?.dispose();
       _tabController = TabController(
-        length: state.detail.season.length,
+        length: state.detail!.season.length,
         vsync: this,
         initialIndex: initialTabIndex,
       );
@@ -134,9 +140,14 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     }
   }
 
-  int _getInitialTabIndex(WatchLoaded state) {
-    final index = state.detail.season.indexWhere(
-      (item) => item.path == state.detail.pathToView?.cleanPathToView(),
+  int _getInitialTabIndex(WatchState state) {
+    final pathToView = state.detail?.pathToView?.cleanPathToView();
+    if (pathToView == null) {
+      return state.detail!.season.length - 1;
+    }
+
+    final index = state.detail!.season.indexWhere(
+      (item) => item.path == pathToView,
     );
     return index >= 0 ? index : 0;
   }
@@ -159,7 +170,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   void _onEpisodeTap(
     BuildContext context,
     List<ChapDataEntity> chaps,
-    WatchLoaded state,
+    WatchState state,
   ) {
     showModalBottomSheet(
       showDragHandle: true,
@@ -178,21 +189,26 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     BuildContext context,
     bool isPlaying,
     ChapDataEntity chap,
-    WatchLoaded state,
+    WatchState state,
   ) {
     if (isPlaying) return;
 
-    final currentChaps = state.tabViewItems?[_currentTabIndex];
-    if (currentChaps == null) {
+    final currentTab = state.tabViewItems?[_currentTabIndex];
+    if (currentTab == null) {
       return;
     }
 
-    bloc.add(ChangeEpisode(animeDetail: currentChaps.animeDetail));
+    bloc.add(
+      ChangeEpisode(
+        animeDetail: currentTab.animeDetail,
+        chaps: currentTab.chaps,
+      ),
+    );
 
     context.read<VideoPlayerCubit>()
       ..updateEpisodeList(
-        currentChaps.chaps,
-        currentChaps.listEpisode,
+        currentTab.chaps,
+        currentTab.listEpisode,
       )
       ..loadEpisode(chap);
   }

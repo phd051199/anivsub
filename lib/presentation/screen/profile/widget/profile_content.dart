@@ -1,7 +1,7 @@
-import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/profile/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'history_date_group.dart';
 import 'user_info.dart';
@@ -11,13 +11,13 @@ class ProfileContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watchTypedState<ProfileCubit, ProfileLoaded>();
+    final state = context.watch<ProfileCubit>().state;
     final groupedHistory = _groupHistoryByDate(state.queryHistory);
 
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: UserInfo(user: state.user),
+          child: UserInfo(user: state.user!),
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
@@ -40,7 +40,9 @@ class ProfileContent extends StatelessWidget {
 
     for (var item in history) {
       if (item is QueryHistoryEntity) {
-        final date = item.createdAt.toLocal();
+        final date = item.createdAt?.toLocal();
+        if (date == null) continue;
+
         final dateWithoutTime = DateTime(date.year, date.month, date.day);
         groupedMap.putIfAbsent(dateWithoutTime, () => []).add(item);
       }

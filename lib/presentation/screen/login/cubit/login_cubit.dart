@@ -33,7 +33,7 @@ class LoginCubit extends BaseCubit<LoginState> {
     );
 
     try {
-      final output = await _authUseCase.send(
+      final output = await _authUseCase.execute(
         GetUserSessionInput(authRequest: request),
       );
 

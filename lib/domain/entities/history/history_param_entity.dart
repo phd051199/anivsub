@@ -60,7 +60,7 @@ class GetSingleProgressParamsEntity
   const factory GetSingleProgressParamsEntity({
     @JsonKey(name: 'user_uid') String? userUid,
     @JsonKey(name: 'season_id') String? seasonId,
-    @JsonKey(name: 'chap_id') String? chapId,
+    @JsonKey(name: 'p_chap_id') String? pChapId,
   }) = _GetSingleProgressParamsEntity;
 
   const GetSingleProgressParamsEntity._();
@@ -69,12 +69,12 @@ class GetSingleProgressParamsEntity
       _$GetSingleProgressParamsEntityFromJson(json);
 
   @override
-  List<Object?> get props => [userUid, seasonId, chapId];
+  List<Object?> get props => [userUid, seasonId, pChapId];
 
   @override
   GetSingleProgressParamsDTO toDTO() => GetSingleProgressParamsDTO(
         userUid: userUid,
         seasonId: seasonId,
-        chapId: chapId,
+        pChapId: pChapId,
       );
 }

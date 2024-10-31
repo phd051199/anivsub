@@ -9,8 +9,3 @@ class LoadSearch extends SearchEvent with _$LoadSearch {
     required int page,
   }) = _LoadSearch;
 }
-
-@freezed
-class ErrorSearch extends SearchEvent with _$ErrorSearch {
-  const factory ErrorSearch() = _ErrorSearch;
-}

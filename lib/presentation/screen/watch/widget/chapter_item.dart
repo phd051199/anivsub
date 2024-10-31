@@ -17,8 +17,8 @@ class ChapterItem extends StatelessWidget {
 
   final ChapDataEntity chap;
   final int index;
-  final WatchLoaded state;
-  final Function(BuildContext, bool, ChapDataEntity, WatchLoaded) onChapTap;
+  final WatchState state;
+  final Function(BuildContext, bool, ChapDataEntity, WatchState) onChapTap;
 
   @override
   Widget build(BuildContext context) {

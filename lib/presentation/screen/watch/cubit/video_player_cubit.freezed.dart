@@ -16,10 +16,30 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$VideoPlayerState {
+  List<ChapDataEntity> get chaps => throw _privateConstructorUsedError;
+  ChapDataEntity? get currentChap => throw _privateConstructorUsedError;
+  ChapDataEntity? get nextChap => throw _privateConstructorUsedError;
+  EpisodeSkipResponseEntity? get episodeSkip =>
+      throw _privateConstructorUsedError;
+  bool? get skipIntro => throw _privateConstructorUsedError;
+  bool? get showSkipIntroText => throw _privateConstructorUsedError;
+  AnimeDetailEntity? get animeDetail => throw _privateConstructorUsedError;
+  ListEpisodeResponseEntity? get listEpisodeSkip =>
+      throw _privateConstructorUsedError;
+  double get loadingProgress => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)
+        initial,
     required TResult Function(
             List<ChapDataEntity> chaps,
             ChapDataEntity currentChap,
@@ -28,15 +48,36 @@ mixin _$VideoPlayerState {
             bool? skipIntro,
             bool? showSkipIntroText,
             AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)
         loaded,
-    required TResult Function(String message) error,
+    required TResult Function(
+            String message,
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        initial,
     TResult? Function(
             List<ChapDataEntity> chaps,
             ChapDataEntity currentChap,
@@ -45,15 +86,36 @@ mixin _$VideoPlayerState {
             bool? skipIntro,
             bool? showSkipIntroText,
             AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)?
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
         loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(
+            String message,
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        initial,
     TResult Function(
             List<ChapDataEntity> chaps,
             ChapDataEntity currentChap,
@@ -62,16 +124,27 @@ mixin _$VideoPlayerState {
             bool? skipIntro,
             bool? showSkipIntroText,
             AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)?
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
         loaded,
-    TResult Function(String message)? error,
+    TResult Function(
+            String message,
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(VideoPlayerInitial value) initial,
-    required TResult Function(VideoPlayerLoading value) loading,
     required TResult Function(VideoPlayerLoaded value) loaded,
     required TResult Function(VideoPlayerError value) error,
   }) =>
@@ -79,7 +152,6 @@ mixin _$VideoPlayerState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(VideoPlayerInitial value)? initial,
-    TResult? Function(VideoPlayerLoading value)? loading,
     TResult? Function(VideoPlayerLoaded value)? loaded,
     TResult? Function(VideoPlayerError value)? error,
   }) =>
@@ -87,11 +159,16 @@ mixin _$VideoPlayerState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(VideoPlayerInitial value)? initial,
-    TResult Function(VideoPlayerLoading value)? loading,
     TResult Function(VideoPlayerLoaded value)? loaded,
     TResult Function(VideoPlayerError value)? error,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  /// Create a copy of VideoPlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $VideoPlayerStateCopyWith<VideoPlayerState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -100,6 +177,23 @@ abstract class $VideoPlayerStateCopyWith<$Res> {
   factory $VideoPlayerStateCopyWith(
           VideoPlayerState value, $Res Function(VideoPlayerState) then) =
       _$VideoPlayerStateCopyWithImpl<$Res, VideoPlayerState>;
+  @useResult
+  $Res call(
+      {List<ChapDataEntity> chaps,
+      ChapDataEntity currentChap,
+      ChapDataEntity? nextChap,
+      EpisodeSkipResponseEntity? episodeSkip,
+      bool? skipIntro,
+      bool? showSkipIntroText,
+      AnimeDetailEntity animeDetail,
+      ListEpisodeResponseEntity? listEpisodeSkip,
+      double loadingProgress});
+
+  $ChapDataEntityCopyWith<$Res>? get currentChap;
+  $ChapDataEntityCopyWith<$Res>? get nextChap;
+  $EpisodeSkipResponseEntityCopyWith<$Res>? get episodeSkip;
+  $AnimeDetailEntityCopyWith<$Res>? get animeDetail;
+  $ListEpisodeResponseEntityCopyWith<$Res>? get listEpisodeSkip;
 }
 
 /// @nodoc
@@ -114,13 +208,161 @@ class _$VideoPlayerStateCopyWithImpl<$Res, $Val extends VideoPlayerState>
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? chaps = null,
+    Object? currentChap = null,
+    Object? nextChap = freezed,
+    Object? episodeSkip = freezed,
+    Object? skipIntro = freezed,
+    Object? showSkipIntroText = freezed,
+    Object? animeDetail = null,
+    Object? listEpisodeSkip = freezed,
+    Object? loadingProgress = null,
+  }) {
+    return _then(_value.copyWith(
+      chaps: null == chaps
+          ? _value.chaps
+          : chaps // ignore: cast_nullable_to_non_nullable
+              as List<ChapDataEntity>,
+      currentChap: null == currentChap
+          ? _value.currentChap!
+          : currentChap // ignore: cast_nullable_to_non_nullable
+              as ChapDataEntity,
+      nextChap: freezed == nextChap
+          ? _value.nextChap
+          : nextChap // ignore: cast_nullable_to_non_nullable
+              as ChapDataEntity?,
+      episodeSkip: freezed == episodeSkip
+          ? _value.episodeSkip
+          : episodeSkip // ignore: cast_nullable_to_non_nullable
+              as EpisodeSkipResponseEntity?,
+      skipIntro: freezed == skipIntro
+          ? _value.skipIntro
+          : skipIntro // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      showSkipIntroText: freezed == showSkipIntroText
+          ? _value.showSkipIntroText
+          : showSkipIntroText // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      animeDetail: null == animeDetail
+          ? _value.animeDetail!
+          : animeDetail // ignore: cast_nullable_to_non_nullable
+              as AnimeDetailEntity,
+      listEpisodeSkip: freezed == listEpisodeSkip
+          ? _value.listEpisodeSkip
+          : listEpisodeSkip // ignore: cast_nullable_to_non_nullable
+              as ListEpisodeResponseEntity?,
+      loadingProgress: null == loadingProgress
+          ? _value.loadingProgress
+          : loadingProgress // ignore: cast_nullable_to_non_nullable
+              as double,
+    ) as $Val);
+  }
+
+  /// Create a copy of VideoPlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ChapDataEntityCopyWith<$Res>? get currentChap {
+    if (_value.currentChap == null) {
+      return null;
+    }
+
+    return $ChapDataEntityCopyWith<$Res>(_value.currentChap!, (value) {
+      return _then(_value.copyWith(currentChap: value) as $Val);
+    });
+  }
+
+  /// Create a copy of VideoPlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ChapDataEntityCopyWith<$Res>? get nextChap {
+    if (_value.nextChap == null) {
+      return null;
+    }
+
+    return $ChapDataEntityCopyWith<$Res>(_value.nextChap!, (value) {
+      return _then(_value.copyWith(nextChap: value) as $Val);
+    });
+  }
+
+  /// Create a copy of VideoPlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $EpisodeSkipResponseEntityCopyWith<$Res>? get episodeSkip {
+    if (_value.episodeSkip == null) {
+      return null;
+    }
+
+    return $EpisodeSkipResponseEntityCopyWith<$Res>(_value.episodeSkip!,
+        (value) {
+      return _then(_value.copyWith(episodeSkip: value) as $Val);
+    });
+  }
+
+  /// Create a copy of VideoPlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AnimeDetailEntityCopyWith<$Res>? get animeDetail {
+    if (_value.animeDetail == null) {
+      return null;
+    }
+
+    return $AnimeDetailEntityCopyWith<$Res>(_value.animeDetail!, (value) {
+      return _then(_value.copyWith(animeDetail: value) as $Val);
+    });
+  }
+
+  /// Create a copy of VideoPlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ListEpisodeResponseEntityCopyWith<$Res>? get listEpisodeSkip {
+    if (_value.listEpisodeSkip == null) {
+      return null;
+    }
+
+    return $ListEpisodeResponseEntityCopyWith<$Res>(_value.listEpisodeSkip!,
+        (value) {
+      return _then(_value.copyWith(listEpisodeSkip: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$VideoPlayerInitialImplCopyWith<$Res> {
+abstract class _$$VideoPlayerInitialImplCopyWith<$Res>
+    implements $VideoPlayerStateCopyWith<$Res> {
   factory _$$VideoPlayerInitialImplCopyWith(_$VideoPlayerInitialImpl value,
           $Res Function(_$VideoPlayerInitialImpl) then) =
       __$$VideoPlayerInitialImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<ChapDataEntity> chaps,
+      ChapDataEntity? currentChap,
+      ChapDataEntity? nextChap,
+      EpisodeSkipResponseEntity? episodeSkip,
+      bool? skipIntro,
+      bool? showSkipIntroText,
+      AnimeDetailEntity? animeDetail,
+      ListEpisodeResponseEntity? listEpisodeSkip,
+      double loadingProgress});
+
+  @override
+  $ChapDataEntityCopyWith<$Res>? get currentChap;
+  @override
+  $ChapDataEntityCopyWith<$Res>? get nextChap;
+  @override
+  $EpisodeSkipResponseEntityCopyWith<$Res>? get episodeSkip;
+  @override
+  $AnimeDetailEntityCopyWith<$Res>? get animeDetail;
+  @override
+  $ListEpisodeResponseEntityCopyWith<$Res>? get listEpisodeSkip;
 }
 
 /// @nodoc
@@ -133,32 +375,170 @@ class __$$VideoPlayerInitialImplCopyWithImpl<$Res>
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? chaps = null,
+    Object? currentChap = freezed,
+    Object? nextChap = freezed,
+    Object? episodeSkip = freezed,
+    Object? skipIntro = freezed,
+    Object? showSkipIntroText = freezed,
+    Object? animeDetail = freezed,
+    Object? listEpisodeSkip = freezed,
+    Object? loadingProgress = null,
+  }) {
+    return _then(_$VideoPlayerInitialImpl(
+      chaps: null == chaps
+          ? _value._chaps
+          : chaps // ignore: cast_nullable_to_non_nullable
+              as List<ChapDataEntity>,
+      currentChap: freezed == currentChap
+          ? _value.currentChap
+          : currentChap // ignore: cast_nullable_to_non_nullable
+              as ChapDataEntity?,
+      nextChap: freezed == nextChap
+          ? _value.nextChap
+          : nextChap // ignore: cast_nullable_to_non_nullable
+              as ChapDataEntity?,
+      episodeSkip: freezed == episodeSkip
+          ? _value.episodeSkip
+          : episodeSkip // ignore: cast_nullable_to_non_nullable
+              as EpisodeSkipResponseEntity?,
+      skipIntro: freezed == skipIntro
+          ? _value.skipIntro
+          : skipIntro // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      showSkipIntroText: freezed == showSkipIntroText
+          ? _value.showSkipIntroText
+          : showSkipIntroText // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      animeDetail: freezed == animeDetail
+          ? _value.animeDetail
+          : animeDetail // ignore: cast_nullable_to_non_nullable
+              as AnimeDetailEntity?,
+      listEpisodeSkip: freezed == listEpisodeSkip
+          ? _value.listEpisodeSkip
+          : listEpisodeSkip // ignore: cast_nullable_to_non_nullable
+              as ListEpisodeResponseEntity?,
+      loadingProgress: null == loadingProgress
+          ? _value.loadingProgress
+          : loadingProgress // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$VideoPlayerInitialImpl implements VideoPlayerInitial {
-  const _$VideoPlayerInitialImpl();
+class _$VideoPlayerInitialImpl extends VideoPlayerInitial {
+  const _$VideoPlayerInitialImpl(
+      {final List<ChapDataEntity> chaps = const [],
+      this.currentChap,
+      this.nextChap,
+      this.episodeSkip,
+      this.skipIntro = false,
+      this.showSkipIntroText = false,
+      this.animeDetail,
+      this.listEpisodeSkip,
+      this.loadingProgress = 0.0})
+      : _chaps = chaps,
+        super._();
+
+  final List<ChapDataEntity> _chaps;
+  @override
+  @JsonKey()
+  List<ChapDataEntity> get chaps {
+    if (_chaps is EqualUnmodifiableListView) return _chaps;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_chaps);
+  }
+
+  @override
+  final ChapDataEntity? currentChap;
+  @override
+  final ChapDataEntity? nextChap;
+  @override
+  final EpisodeSkipResponseEntity? episodeSkip;
+  @override
+  @JsonKey()
+  final bool? skipIntro;
+  @override
+  @JsonKey()
+  final bool? showSkipIntroText;
+  @override
+  final AnimeDetailEntity? animeDetail;
+  @override
+  final ListEpisodeResponseEntity? listEpisodeSkip;
+  @override
+  @JsonKey()
+  final double loadingProgress;
 
   @override
   String toString() {
-    return 'VideoPlayerState.initial()';
+    return 'VideoPlayerState.initial(chaps: $chaps, currentChap: $currentChap, nextChap: $nextChap, episodeSkip: $episodeSkip, skipIntro: $skipIntro, showSkipIntroText: $showSkipIntroText, animeDetail: $animeDetail, listEpisodeSkip: $listEpisodeSkip, loadingProgress: $loadingProgress)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$VideoPlayerInitialImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$VideoPlayerInitialImpl &&
+            const DeepCollectionEquality().equals(other._chaps, _chaps) &&
+            (identical(other.currentChap, currentChap) ||
+                other.currentChap == currentChap) &&
+            (identical(other.nextChap, nextChap) ||
+                other.nextChap == nextChap) &&
+            (identical(other.episodeSkip, episodeSkip) ||
+                other.episodeSkip == episodeSkip) &&
+            (identical(other.skipIntro, skipIntro) ||
+                other.skipIntro == skipIntro) &&
+            (identical(other.showSkipIntroText, showSkipIntroText) ||
+                other.showSkipIntroText == showSkipIntroText) &&
+            (identical(other.animeDetail, animeDetail) ||
+                other.animeDetail == animeDetail) &&
+            (identical(other.listEpisodeSkip, listEpisodeSkip) ||
+                other.listEpisodeSkip == listEpisodeSkip) &&
+            (identical(other.loadingProgress, loadingProgress) ||
+                other.loadingProgress == loadingProgress));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_chaps),
+      currentChap,
+      nextChap,
+      episodeSkip,
+      skipIntro,
+      showSkipIntroText,
+      animeDetail,
+      listEpisodeSkip,
+      loadingProgress);
+
+  /// Create a copy of VideoPlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$VideoPlayerInitialImplCopyWith<_$VideoPlayerInitialImpl> get copyWith =>
+      __$$VideoPlayerInitialImplCopyWithImpl<_$VideoPlayerInitialImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)
+        initial,
     required TResult Function(
             List<ChapDataEntity> chaps,
             ChapDataEntity currentChap,
@@ -167,18 +547,40 @@ class _$VideoPlayerInitialImpl implements VideoPlayerInitial {
             bool? skipIntro,
             bool? showSkipIntroText,
             AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)
         loaded,
-    required TResult Function(String message) error,
+    required TResult Function(
+            String message,
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)
+        error,
   }) {
-    return initial();
+    return initial(chaps, currentChap, nextChap, episodeSkip, skipIntro,
+        showSkipIntroText, animeDetail, listEpisodeSkip, loadingProgress);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        initial,
     TResult? Function(
             List<ChapDataEntity> chaps,
             ChapDataEntity currentChap,
@@ -187,18 +589,40 @@ class _$VideoPlayerInitialImpl implements VideoPlayerInitial {
             bool? skipIntro,
             bool? showSkipIntroText,
             AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)?
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
         loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(
+            String message,
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        error,
   }) {
-    return initial?.call();
+    return initial?.call(chaps, currentChap, nextChap, episodeSkip, skipIntro,
+        showSkipIntroText, animeDetail, listEpisodeSkip, loadingProgress);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        initial,
     TResult Function(
             List<ChapDataEntity> chaps,
             ChapDataEntity currentChap,
@@ -207,13 +631,26 @@ class _$VideoPlayerInitialImpl implements VideoPlayerInitial {
             bool? skipIntro,
             bool? showSkipIntroText,
             AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)?
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
         loaded,
-    TResult Function(String message)? error,
+    TResult Function(
+            String message,
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(chaps, currentChap, nextChap, episodeSkip, skipIntro,
+          showSkipIntroText, animeDetail, listEpisodeSkip, loadingProgress);
     }
     return orElse();
   }
@@ -222,7 +659,6 @@ class _$VideoPlayerInitialImpl implements VideoPlayerInitial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(VideoPlayerInitial value) initial,
-    required TResult Function(VideoPlayerLoading value) loading,
     required TResult Function(VideoPlayerLoaded value) loaded,
     required TResult Function(VideoPlayerError value) error,
   }) {
@@ -233,7 +669,6 @@ class _$VideoPlayerInitialImpl implements VideoPlayerInitial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(VideoPlayerInitial value)? initial,
-    TResult? Function(VideoPlayerLoading value)? loading,
     TResult? Function(VideoPlayerLoaded value)? loaded,
     TResult? Function(VideoPlayerError value)? error,
   }) {
@@ -244,7 +679,6 @@ class _$VideoPlayerInitialImpl implements VideoPlayerInitial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(VideoPlayerInitial value)? initial,
-    TResult Function(VideoPlayerLoading value)? loading,
     TResult Function(VideoPlayerLoaded value)? loaded,
     TResult Function(VideoPlayerError value)? error,
     required TResult orElse(),
@@ -256,159 +690,53 @@ class _$VideoPlayerInitialImpl implements VideoPlayerInitial {
   }
 }
 
-abstract class VideoPlayerInitial implements VideoPlayerState {
-  const factory VideoPlayerInitial() = _$VideoPlayerInitialImpl;
-}
+abstract class VideoPlayerInitial extends VideoPlayerState {
+  const factory VideoPlayerInitial(
+      {final List<ChapDataEntity> chaps,
+      final ChapDataEntity? currentChap,
+      final ChapDataEntity? nextChap,
+      final EpisodeSkipResponseEntity? episodeSkip,
+      final bool? skipIntro,
+      final bool? showSkipIntroText,
+      final AnimeDetailEntity? animeDetail,
+      final ListEpisodeResponseEntity? listEpisodeSkip,
+      final double loadingProgress}) = _$VideoPlayerInitialImpl;
+  const VideoPlayerInitial._() : super._();
 
-/// @nodoc
-abstract class _$$VideoPlayerLoadingImplCopyWith<$Res> {
-  factory _$$VideoPlayerLoadingImplCopyWith(_$VideoPlayerLoadingImpl value,
-          $Res Function(_$VideoPlayerLoadingImpl) then) =
-      __$$VideoPlayerLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$VideoPlayerLoadingImplCopyWithImpl<$Res>
-    extends _$VideoPlayerStateCopyWithImpl<$Res, _$VideoPlayerLoadingImpl>
-    implements _$$VideoPlayerLoadingImplCopyWith<$Res> {
-  __$$VideoPlayerLoadingImplCopyWithImpl(_$VideoPlayerLoadingImpl _value,
-      $Res Function(_$VideoPlayerLoadingImpl) _then)
-      : super(_value, _then);
+  @override
+  List<ChapDataEntity> get chaps;
+  @override
+  ChapDataEntity? get currentChap;
+  @override
+  ChapDataEntity? get nextChap;
+  @override
+  EpisodeSkipResponseEntity? get episodeSkip;
+  @override
+  bool? get skipIntro;
+  @override
+  bool? get showSkipIntroText;
+  @override
+  AnimeDetailEntity? get animeDetail;
+  @override
+  ListEpisodeResponseEntity? get listEpisodeSkip;
+  @override
+  double get loadingProgress;
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$VideoPlayerInitialImplCopyWith<_$VideoPlayerInitialImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-
-class _$VideoPlayerLoadingImpl implements VideoPlayerLoading {
-  const _$VideoPlayerLoadingImpl();
-
-  @override
-  String toString() {
-    return 'VideoPlayerState.loading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$VideoPlayerLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(
-            List<ChapDataEntity> chaps,
-            ChapDataEntity currentChap,
-            ChapDataEntity? nextChap,
-            EpisodeSkipResponseEntity? episodeSkip,
-            bool? skipIntro,
-            bool? showSkipIntroText,
-            AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)
-        loaded,
-    required TResult Function(String message) error,
-  }) {
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(
-            List<ChapDataEntity> chaps,
-            ChapDataEntity currentChap,
-            ChapDataEntity? nextChap,
-            EpisodeSkipResponseEntity? episodeSkip,
-            bool? skipIntro,
-            bool? showSkipIntroText,
-            AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)?
-        loaded,
-    TResult? Function(String message)? error,
-  }) {
-    return loading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(
-            List<ChapDataEntity> chaps,
-            ChapDataEntity currentChap,
-            ChapDataEntity? nextChap,
-            EpisodeSkipResponseEntity? episodeSkip,
-            bool? skipIntro,
-            bool? showSkipIntroText,
-            AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)?
-        loaded,
-    TResult Function(String message)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(VideoPlayerInitial value) initial,
-    required TResult Function(VideoPlayerLoading value) loading,
-    required TResult Function(VideoPlayerLoaded value) loaded,
-    required TResult Function(VideoPlayerError value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(VideoPlayerInitial value)? initial,
-    TResult? Function(VideoPlayerLoading value)? loading,
-    TResult? Function(VideoPlayerLoaded value)? loaded,
-    TResult? Function(VideoPlayerError value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(VideoPlayerInitial value)? initial,
-    TResult Function(VideoPlayerLoading value)? loading,
-    TResult Function(VideoPlayerLoaded value)? loaded,
-    TResult Function(VideoPlayerError value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class VideoPlayerLoading implements VideoPlayerState {
-  const factory VideoPlayerLoading() = _$VideoPlayerLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$VideoPlayerLoadedImplCopyWith<$Res> {
+abstract class _$$VideoPlayerLoadedImplCopyWith<$Res>
+    implements $VideoPlayerStateCopyWith<$Res> {
   factory _$$VideoPlayerLoadedImplCopyWith(_$VideoPlayerLoadedImpl value,
           $Res Function(_$VideoPlayerLoadedImpl) then) =
       __$$VideoPlayerLoadedImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call(
       {List<ChapDataEntity> chaps,
@@ -418,12 +746,18 @@ abstract class _$$VideoPlayerLoadedImplCopyWith<$Res> {
       bool? skipIntro,
       bool? showSkipIntroText,
       AnimeDetailEntity animeDetail,
-      ListEpisodeResponseEntity? listEpisodeSkip});
+      ListEpisodeResponseEntity? listEpisodeSkip,
+      double loadingProgress});
 
+  @override
   $ChapDataEntityCopyWith<$Res> get currentChap;
+  @override
   $ChapDataEntityCopyWith<$Res>? get nextChap;
+  @override
   $EpisodeSkipResponseEntityCopyWith<$Res>? get episodeSkip;
+  @override
   $AnimeDetailEntityCopyWith<$Res> get animeDetail;
+  @override
   $ListEpisodeResponseEntityCopyWith<$Res>? get listEpisodeSkip;
 }
 
@@ -448,6 +782,7 @@ class __$$VideoPlayerLoadedImplCopyWithImpl<$Res>
     Object? showSkipIntroText = freezed,
     Object? animeDetail = null,
     Object? listEpisodeSkip = freezed,
+    Object? loadingProgress = null,
   }) {
     return _then(_$VideoPlayerLoadedImpl(
       chaps: null == chaps
@@ -482,6 +817,10 @@ class __$$VideoPlayerLoadedImplCopyWithImpl<$Res>
           ? _value.listEpisodeSkip
           : listEpisodeSkip // ignore: cast_nullable_to_non_nullable
               as ListEpisodeResponseEntity?,
+      loadingProgress: null == loadingProgress
+          ? _value.loadingProgress
+          : loadingProgress // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 
@@ -499,60 +838,16 @@ class __$$VideoPlayerLoadedImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ChapDataEntityCopyWith<$Res>? get nextChap {
-    if (_value.nextChap == null) {
-      return null;
-    }
-
-    return $ChapDataEntityCopyWith<$Res>(_value.nextChap!, (value) {
-      return _then(_value.copyWith(nextChap: value));
-    });
-  }
-
-  /// Create a copy of VideoPlayerState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $EpisodeSkipResponseEntityCopyWith<$Res>? get episodeSkip {
-    if (_value.episodeSkip == null) {
-      return null;
-    }
-
-    return $EpisodeSkipResponseEntityCopyWith<$Res>(_value.episodeSkip!,
-        (value) {
-      return _then(_value.copyWith(episodeSkip: value));
-    });
-  }
-
-  /// Create a copy of VideoPlayerState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
   $AnimeDetailEntityCopyWith<$Res> get animeDetail {
     return $AnimeDetailEntityCopyWith<$Res>(_value.animeDetail, (value) {
       return _then(_value.copyWith(animeDetail: value));
-    });
-  }
-
-  /// Create a copy of VideoPlayerState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ListEpisodeResponseEntityCopyWith<$Res>? get listEpisodeSkip {
-    if (_value.listEpisodeSkip == null) {
-      return null;
-    }
-
-    return $ListEpisodeResponseEntityCopyWith<$Res>(_value.listEpisodeSkip!,
-        (value) {
-      return _then(_value.copyWith(listEpisodeSkip: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
+class _$VideoPlayerLoadedImpl extends VideoPlayerLoaded {
   const _$VideoPlayerLoadedImpl(
       {required final List<ChapDataEntity> chaps,
       required this.currentChap,
@@ -561,8 +856,10 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
       this.skipIntro = false,
       this.showSkipIntroText = false,
       required this.animeDetail,
-      this.listEpisodeSkip})
-      : _chaps = chaps;
+      this.listEpisodeSkip,
+      this.loadingProgress = 0.0})
+      : _chaps = chaps,
+        super._();
 
   final List<ChapDataEntity> _chaps;
   @override
@@ -588,10 +885,13 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
   final AnimeDetailEntity animeDetail;
   @override
   final ListEpisodeResponseEntity? listEpisodeSkip;
+  @override
+  @JsonKey()
+  final double loadingProgress;
 
   @override
   String toString() {
-    return 'VideoPlayerState.loaded(chaps: $chaps, currentChap: $currentChap, nextChap: $nextChap, episodeSkip: $episodeSkip, skipIntro: $skipIntro, showSkipIntroText: $showSkipIntroText, animeDetail: $animeDetail, listEpisodeSkip: $listEpisodeSkip)';
+    return 'VideoPlayerState.loaded(chaps: $chaps, currentChap: $currentChap, nextChap: $nextChap, episodeSkip: $episodeSkip, skipIntro: $skipIntro, showSkipIntroText: $showSkipIntroText, animeDetail: $animeDetail, listEpisodeSkip: $listEpisodeSkip, loadingProgress: $loadingProgress)';
   }
 
   @override
@@ -613,7 +913,9 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
             (identical(other.animeDetail, animeDetail) ||
                 other.animeDetail == animeDetail) &&
             (identical(other.listEpisodeSkip, listEpisodeSkip) ||
-                other.listEpisodeSkip == listEpisodeSkip));
+                other.listEpisodeSkip == listEpisodeSkip) &&
+            (identical(other.loadingProgress, loadingProgress) ||
+                other.loadingProgress == loadingProgress));
   }
 
   @override
@@ -626,7 +928,8 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
       skipIntro,
       showSkipIntroText,
       animeDetail,
-      listEpisodeSkip);
+      listEpisodeSkip,
+      loadingProgress);
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -640,8 +943,17 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)
+        initial,
     required TResult Function(
             List<ChapDataEntity> chaps,
             ChapDataEntity currentChap,
@@ -650,19 +962,40 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
             bool? skipIntro,
             bool? showSkipIntroText,
             AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)
         loaded,
-    required TResult Function(String message) error,
+    required TResult Function(
+            String message,
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)
+        error,
   }) {
     return loaded(chaps, currentChap, nextChap, episodeSkip, skipIntro,
-        showSkipIntroText, animeDetail, listEpisodeSkip);
+        showSkipIntroText, animeDetail, listEpisodeSkip, loadingProgress);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        initial,
     TResult? Function(
             List<ChapDataEntity> chaps,
             ChapDataEntity currentChap,
@@ -671,19 +1004,40 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
             bool? skipIntro,
             bool? showSkipIntroText,
             AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)?
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
         loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(
+            String message,
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        error,
   }) {
     return loaded?.call(chaps, currentChap, nextChap, episodeSkip, skipIntro,
-        showSkipIntroText, animeDetail, listEpisodeSkip);
+        showSkipIntroText, animeDetail, listEpisodeSkip, loadingProgress);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        initial,
     TResult Function(
             List<ChapDataEntity> chaps,
             ChapDataEntity currentChap,
@@ -692,14 +1046,26 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
             bool? skipIntro,
             bool? showSkipIntroText,
             AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)?
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
         loaded,
-    TResult Function(String message)? error,
+    TResult Function(
+            String message,
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
       return loaded(chaps, currentChap, nextChap, episodeSkip, skipIntro,
-          showSkipIntroText, animeDetail, listEpisodeSkip);
+          showSkipIntroText, animeDetail, listEpisodeSkip, loadingProgress);
     }
     return orElse();
   }
@@ -708,7 +1074,6 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(VideoPlayerInitial value) initial,
-    required TResult Function(VideoPlayerLoading value) loading,
     required TResult Function(VideoPlayerLoaded value) loaded,
     required TResult Function(VideoPlayerError value) error,
   }) {
@@ -719,7 +1084,6 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(VideoPlayerInitial value)? initial,
-    TResult? Function(VideoPlayerLoading value)? loading,
     TResult? Function(VideoPlayerLoaded value)? loaded,
     TResult? Function(VideoPlayerError value)? error,
   }) {
@@ -730,7 +1094,6 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(VideoPlayerInitial value)? initial,
-    TResult Function(VideoPlayerLoading value)? loading,
     TResult Function(VideoPlayerLoaded value)? loaded,
     TResult Function(VideoPlayerError value)? error,
     required TResult orElse(),
@@ -742,41 +1105,76 @@ class _$VideoPlayerLoadedImpl implements VideoPlayerLoaded {
   }
 }
 
-abstract class VideoPlayerLoaded implements VideoPlayerState {
+abstract class VideoPlayerLoaded extends VideoPlayerState {
   const factory VideoPlayerLoaded(
-          {required final List<ChapDataEntity> chaps,
-          required final ChapDataEntity currentChap,
-          final ChapDataEntity? nextChap,
-          final EpisodeSkipResponseEntity? episodeSkip,
-          final bool? skipIntro,
-          final bool? showSkipIntroText,
-          required final AnimeDetailEntity animeDetail,
-          final ListEpisodeResponseEntity? listEpisodeSkip}) =
-      _$VideoPlayerLoadedImpl;
+      {required final List<ChapDataEntity> chaps,
+      required final ChapDataEntity currentChap,
+      final ChapDataEntity? nextChap,
+      final EpisodeSkipResponseEntity? episodeSkip,
+      final bool? skipIntro,
+      final bool? showSkipIntroText,
+      required final AnimeDetailEntity animeDetail,
+      final ListEpisodeResponseEntity? listEpisodeSkip,
+      final double loadingProgress}) = _$VideoPlayerLoadedImpl;
+  const VideoPlayerLoaded._() : super._();
 
+  @override
   List<ChapDataEntity> get chaps;
+  @override
   ChapDataEntity get currentChap;
+  @override
   ChapDataEntity? get nextChap;
+  @override
   EpisodeSkipResponseEntity? get episodeSkip;
+  @override
   bool? get skipIntro;
+  @override
   bool? get showSkipIntroText;
+  @override
   AnimeDetailEntity get animeDetail;
+  @override
   ListEpisodeResponseEntity? get listEpisodeSkip;
+  @override
+  double get loadingProgress;
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VideoPlayerLoadedImplCopyWith<_$VideoPlayerLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$VideoPlayerErrorImplCopyWith<$Res> {
+abstract class _$$VideoPlayerErrorImplCopyWith<$Res>
+    implements $VideoPlayerStateCopyWith<$Res> {
   factory _$$VideoPlayerErrorImplCopyWith(_$VideoPlayerErrorImpl value,
           $Res Function(_$VideoPlayerErrorImpl) then) =
       __$$VideoPlayerErrorImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({String message});
+  $Res call(
+      {String message,
+      List<ChapDataEntity> chaps,
+      ChapDataEntity? currentChap,
+      ChapDataEntity? nextChap,
+      EpisodeSkipResponseEntity? episodeSkip,
+      bool? skipIntro,
+      bool? showSkipIntroText,
+      AnimeDetailEntity? animeDetail,
+      ListEpisodeResponseEntity? listEpisodeSkip,
+      double loadingProgress});
+
+  @override
+  $ChapDataEntityCopyWith<$Res>? get currentChap;
+  @override
+  $ChapDataEntityCopyWith<$Res>? get nextChap;
+  @override
+  $EpisodeSkipResponseEntityCopyWith<$Res>? get episodeSkip;
+  @override
+  $AnimeDetailEntityCopyWith<$Res>? get animeDetail;
+  @override
+  $ListEpisodeResponseEntityCopyWith<$Res>? get listEpisodeSkip;
 }
 
 /// @nodoc
@@ -793,27 +1191,112 @@ class __$$VideoPlayerErrorImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? message = null,
+    Object? chaps = null,
+    Object? currentChap = freezed,
+    Object? nextChap = freezed,
+    Object? episodeSkip = freezed,
+    Object? skipIntro = freezed,
+    Object? showSkipIntroText = freezed,
+    Object? animeDetail = freezed,
+    Object? listEpisodeSkip = freezed,
+    Object? loadingProgress = null,
   }) {
     return _then(_$VideoPlayerErrorImpl(
-      null == message
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      chaps: null == chaps
+          ? _value._chaps
+          : chaps // ignore: cast_nullable_to_non_nullable
+              as List<ChapDataEntity>,
+      currentChap: freezed == currentChap
+          ? _value.currentChap
+          : currentChap // ignore: cast_nullable_to_non_nullable
+              as ChapDataEntity?,
+      nextChap: freezed == nextChap
+          ? _value.nextChap
+          : nextChap // ignore: cast_nullable_to_non_nullable
+              as ChapDataEntity?,
+      episodeSkip: freezed == episodeSkip
+          ? _value.episodeSkip
+          : episodeSkip // ignore: cast_nullable_to_non_nullable
+              as EpisodeSkipResponseEntity?,
+      skipIntro: freezed == skipIntro
+          ? _value.skipIntro
+          : skipIntro // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      showSkipIntroText: freezed == showSkipIntroText
+          ? _value.showSkipIntroText
+          : showSkipIntroText // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      animeDetail: freezed == animeDetail
+          ? _value.animeDetail
+          : animeDetail // ignore: cast_nullable_to_non_nullable
+              as AnimeDetailEntity?,
+      listEpisodeSkip: freezed == listEpisodeSkip
+          ? _value.listEpisodeSkip
+          : listEpisodeSkip // ignore: cast_nullable_to_non_nullable
+              as ListEpisodeResponseEntity?,
+      loadingProgress: null == loadingProgress
+          ? _value.loadingProgress
+          : loadingProgress // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
 
 /// @nodoc
 
-class _$VideoPlayerErrorImpl implements VideoPlayerError {
-  const _$VideoPlayerErrorImpl(this.message);
+class _$VideoPlayerErrorImpl extends VideoPlayerError {
+  const _$VideoPlayerErrorImpl(
+      {required this.message,
+      final List<ChapDataEntity> chaps = const [],
+      this.currentChap,
+      this.nextChap,
+      this.episodeSkip,
+      this.skipIntro = false,
+      this.showSkipIntroText = false,
+      this.animeDetail,
+      this.listEpisodeSkip,
+      this.loadingProgress = 0.0})
+      : _chaps = chaps,
+        super._();
 
   @override
   final String message;
+  final List<ChapDataEntity> _chaps;
+  @override
+  @JsonKey()
+  List<ChapDataEntity> get chaps {
+    if (_chaps is EqualUnmodifiableListView) return _chaps;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_chaps);
+  }
+
+  @override
+  final ChapDataEntity? currentChap;
+  @override
+  final ChapDataEntity? nextChap;
+  @override
+  final EpisodeSkipResponseEntity? episodeSkip;
+  @override
+  @JsonKey()
+  final bool? skipIntro;
+  @override
+  @JsonKey()
+  final bool? showSkipIntroText;
+  @override
+  final AnimeDetailEntity? animeDetail;
+  @override
+  final ListEpisodeResponseEntity? listEpisodeSkip;
+  @override
+  @JsonKey()
+  final double loadingProgress;
 
   @override
   String toString() {
-    return 'VideoPlayerState.error(message: $message)';
+    return 'VideoPlayerState.error(message: $message, chaps: $chaps, currentChap: $currentChap, nextChap: $nextChap, episodeSkip: $episodeSkip, skipIntro: $skipIntro, showSkipIntroText: $showSkipIntroText, animeDetail: $animeDetail, listEpisodeSkip: $listEpisodeSkip, loadingProgress: $loadingProgress)';
   }
 
   @override
@@ -821,11 +1304,39 @@ class _$VideoPlayerErrorImpl implements VideoPlayerError {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VideoPlayerErrorImpl &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            const DeepCollectionEquality().equals(other._chaps, _chaps) &&
+            (identical(other.currentChap, currentChap) ||
+                other.currentChap == currentChap) &&
+            (identical(other.nextChap, nextChap) ||
+                other.nextChap == nextChap) &&
+            (identical(other.episodeSkip, episodeSkip) ||
+                other.episodeSkip == episodeSkip) &&
+            (identical(other.skipIntro, skipIntro) ||
+                other.skipIntro == skipIntro) &&
+            (identical(other.showSkipIntroText, showSkipIntroText) ||
+                other.showSkipIntroText == showSkipIntroText) &&
+            (identical(other.animeDetail, animeDetail) ||
+                other.animeDetail == animeDetail) &&
+            (identical(other.listEpisodeSkip, listEpisodeSkip) ||
+                other.listEpisodeSkip == listEpisodeSkip) &&
+            (identical(other.loadingProgress, loadingProgress) ||
+                other.loadingProgress == loadingProgress));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode => Object.hash(
+      runtimeType,
+      message,
+      const DeepCollectionEquality().hash(_chaps),
+      currentChap,
+      nextChap,
+      episodeSkip,
+      skipIntro,
+      showSkipIntroText,
+      animeDetail,
+      listEpisodeSkip,
+      loadingProgress);
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -839,8 +1350,17 @@ class _$VideoPlayerErrorImpl implements VideoPlayerError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
+    required TResult Function(
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)
+        initial,
     required TResult Function(
             List<ChapDataEntity> chaps,
             ChapDataEntity currentChap,
@@ -849,18 +1369,40 @@ class _$VideoPlayerErrorImpl implements VideoPlayerError {
             bool? skipIntro,
             bool? showSkipIntroText,
             AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)
         loaded,
-    required TResult Function(String message) error,
+    required TResult Function(
+            String message,
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)
+        error,
   }) {
-    return error(message);
+    return error(message, chaps, currentChap, nextChap, episodeSkip, skipIntro,
+        showSkipIntroText, animeDetail, listEpisodeSkip, loadingProgress);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
+    TResult? Function(
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        initial,
     TResult? Function(
             List<ChapDataEntity> chaps,
             ChapDataEntity currentChap,
@@ -869,18 +1411,49 @@ class _$VideoPlayerErrorImpl implements VideoPlayerError {
             bool? skipIntro,
             bool? showSkipIntroText,
             AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)?
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
         loaded,
-    TResult? Function(String message)? error,
+    TResult? Function(
+            String message,
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        error,
   }) {
-    return error?.call(message);
+    return error?.call(
+        message,
+        chaps,
+        currentChap,
+        nextChap,
+        episodeSkip,
+        skipIntro,
+        showSkipIntroText,
+        animeDetail,
+        listEpisodeSkip,
+        loadingProgress);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
+    TResult Function(
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        initial,
     TResult Function(
             List<ChapDataEntity> chaps,
             ChapDataEntity currentChap,
@@ -889,13 +1462,35 @@ class _$VideoPlayerErrorImpl implements VideoPlayerError {
             bool? skipIntro,
             bool? showSkipIntroText,
             AnimeDetailEntity animeDetail,
-            ListEpisodeResponseEntity? listEpisodeSkip)?
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
         loaded,
-    TResult Function(String message)? error,
+    TResult Function(
+            String message,
+            List<ChapDataEntity> chaps,
+            ChapDataEntity? currentChap,
+            ChapDataEntity? nextChap,
+            EpisodeSkipResponseEntity? episodeSkip,
+            bool? skipIntro,
+            bool? showSkipIntroText,
+            AnimeDetailEntity? animeDetail,
+            ListEpisodeResponseEntity? listEpisodeSkip,
+            double loadingProgress)?
+        error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(message);
+      return error(
+          message,
+          chaps,
+          currentChap,
+          nextChap,
+          episodeSkip,
+          skipIntro,
+          showSkipIntroText,
+          animeDetail,
+          listEpisodeSkip,
+          loadingProgress);
     }
     return orElse();
   }
@@ -904,7 +1499,6 @@ class _$VideoPlayerErrorImpl implements VideoPlayerError {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(VideoPlayerInitial value) initial,
-    required TResult Function(VideoPlayerLoading value) loading,
     required TResult Function(VideoPlayerLoaded value) loaded,
     required TResult Function(VideoPlayerError value) error,
   }) {
@@ -915,7 +1509,6 @@ class _$VideoPlayerErrorImpl implements VideoPlayerError {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(VideoPlayerInitial value)? initial,
-    TResult? Function(VideoPlayerLoading value)? loading,
     TResult? Function(VideoPlayerLoaded value)? loaded,
     TResult? Function(VideoPlayerError value)? error,
   }) {
@@ -926,7 +1519,6 @@ class _$VideoPlayerErrorImpl implements VideoPlayerError {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(VideoPlayerInitial value)? initial,
-    TResult Function(VideoPlayerLoading value)? loading,
     TResult Function(VideoPlayerLoaded value)? loaded,
     TResult Function(VideoPlayerError value)? error,
     required TResult orElse(),
@@ -938,13 +1530,43 @@ class _$VideoPlayerErrorImpl implements VideoPlayerError {
   }
 }
 
-abstract class VideoPlayerError implements VideoPlayerState {
-  const factory VideoPlayerError(final String message) = _$VideoPlayerErrorImpl;
+abstract class VideoPlayerError extends VideoPlayerState {
+  const factory VideoPlayerError(
+      {required final String message,
+      final List<ChapDataEntity> chaps,
+      final ChapDataEntity? currentChap,
+      final ChapDataEntity? nextChap,
+      final EpisodeSkipResponseEntity? episodeSkip,
+      final bool? skipIntro,
+      final bool? showSkipIntroText,
+      final AnimeDetailEntity? animeDetail,
+      final ListEpisodeResponseEntity? listEpisodeSkip,
+      final double loadingProgress}) = _$VideoPlayerErrorImpl;
+  const VideoPlayerError._() : super._();
 
   String get message;
+  @override
+  List<ChapDataEntity> get chaps;
+  @override
+  ChapDataEntity? get currentChap;
+  @override
+  ChapDataEntity? get nextChap;
+  @override
+  EpisodeSkipResponseEntity? get episodeSkip;
+  @override
+  bool? get skipIntro;
+  @override
+  bool? get showSkipIntroText;
+  @override
+  AnimeDetailEntity? get animeDetail;
+  @override
+  ListEpisodeResponseEntity? get listEpisodeSkip;
+  @override
+  double get loadingProgress;
 
   /// Create a copy of VideoPlayerState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VideoPlayerErrorImplCopyWith<_$VideoPlayerErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;

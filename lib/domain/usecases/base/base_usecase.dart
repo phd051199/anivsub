@@ -1,4 +1,4 @@
-import 'package:anivsub/core/mixin/log.dart';
+import 'package:anivsub/core/mixin/mixin.dart';
 import 'package:anivsub/domain/usecases/base/base.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

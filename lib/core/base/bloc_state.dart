@@ -2,7 +2,6 @@ import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 
 import 'bloc/base_bloc.dart';
 
@@ -27,7 +26,5 @@ abstract class BlocState<T extends StatefulWidget, B extends BaseBloc>
     if (message != null && message.isNotEmpty) {
       context.showSnackBar(message);
     }
-
-    context.pop();
   }
 }
