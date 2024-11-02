@@ -1,3 +1,4 @@
+import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/utils/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
@@ -34,7 +35,7 @@ class CacheRefreshInterceptor extends Interceptor {
       await cacheOptions.store?.delete(key);
       await dio.fetch(options);
     } catch (e) {
-      Log.error('Error refreshing in background: $e');
+      logger.e('Error refreshing in background: $e');
     }
   }
 }

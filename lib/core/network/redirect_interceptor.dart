@@ -1,5 +1,5 @@
 import 'package:anivsub/core/const/const.dart';
-import 'package:anivsub/core/utils/utils.dart';
+import 'package:anivsub/core/di/shared_export.dart';
 import 'package:dio/dio.dart';
 
 class RedirectInterceptor extends Interceptor {
@@ -20,7 +20,7 @@ class RedirectInterceptor extends Interceptor {
       throw Exception('Redirect location is null');
     }
 
-    Log.debug('Redirecting to: $location');
+    logger.d('Redirecting to: $location');
 
     final requestOptions = response.requestOptions;
     final redirectUrl =

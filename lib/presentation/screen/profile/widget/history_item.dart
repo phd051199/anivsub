@@ -39,13 +39,13 @@ class HistoryItem extends StatelessWidget {
         ),
         title: Text(
           '${item.name}\n${item.seasonName} ${context.l10n.episode} ${item.watchName}',
-          style: const TextStyle(fontSize: 14),
+          style: const TextStyle(fontSize: kDefaultFontSize),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(
           StringUtils.formatTimestamp(item.createdAt),
-          style: const TextStyle(fontSize: 14),
+          style: const TextStyle(fontSize: kDefaultFontSize),
         ),
       ),
     );

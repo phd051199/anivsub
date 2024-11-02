@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:anivsub/core/utils/utils.dart';
+import 'package:anivsub/core/di/shared_export.dart';
 import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
@@ -51,7 +51,7 @@ class DHAImpl implements DHA {
           final file = _getString(filePtr >>> 0);
           line = line >>> 0;
           col = col >>> 0;
-          Log.error('$msg in $file:$line:$col');
+          logger.e('$msg in $file:$line:$col');
         },
         params: const [ValueTy.i32, ValueTy.i32, ValueTy.i32, ValueTy.i32],
         results: const [],
@@ -95,7 +95,7 @@ class DHAImpl implements DHA {
       final decodedStr = latin1.decode(bytes);
       return _allocateString(decodedStr);
     } catch (e) {
-      Log.error('Base64 decode error: $e');
+      logger.e('Base64 decode error: $e');
       return 0;
     }
   }

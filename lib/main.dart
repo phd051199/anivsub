@@ -8,5 +8,8 @@ void main() async {
   await bootstrap(
     kReleaseMode ? Environment.prod : Environment.dev,
   );
-  runApp(const MyApp());
+
+  runApp(
+    const MyApp(),
+  );
 }

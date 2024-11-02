@@ -13,7 +13,6 @@ class VideoPlayerState with _$VideoPlayerState {
     @Default(false) bool? showSkipIntroText,
     AnimeDetailEntity? animeDetail,
     ListEpisodeResponseEntity? listEpisodeSkip,
-    @Default(0.0) double loadingProgress,
   }) = VideoPlayerInitial;
 
   const factory VideoPlayerState.loaded({
@@ -25,7 +24,6 @@ class VideoPlayerState with _$VideoPlayerState {
     @Default(false) bool? showSkipIntroText,
     required AnimeDetailEntity animeDetail,
     ListEpisodeResponseEntity? listEpisodeSkip,
-    @Default(0.0) double loadingProgress,
   }) = VideoPlayerLoaded;
 
   const factory VideoPlayerState.error({
@@ -38,6 +36,5 @@ class VideoPlayerState with _$VideoPlayerState {
     @Default(false) bool? showSkipIntroText,
     AnimeDetailEntity? animeDetail,
     ListEpisodeResponseEntity? listEpisodeSkip,
-    @Default(0.0) double loadingProgress,
   }) = VideoPlayerError;
 }

@@ -7,9 +7,10 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class EpisodesSection extends StatelessWidget {
-  const EpisodesSection({
+  EpisodesSection({
     super.key,
     required this.tabController,
     required this.currentTabIndex,
@@ -23,6 +24,7 @@ class EpisodesSection extends StatelessWidget {
   final VoidCallback onTabChange;
   final Function(BuildContext, List<ChapDataEntity>, WatchState) onEpisodeTap;
   final Function(BuildContext, bool, ChapDataEntity, WatchState) onChapTap;
+  final ItemScrollController itemScrollController = ItemScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +108,9 @@ class EpisodesSection extends StatelessWidget {
     required List<ChapDataEntity> chaps,
   }) {
     final state = context.watch<WatchBloc>().state;
+    final initialIndex = chaps.indexWhere(
+      (chap) => chap.id == state.initialData?.initialChap?.id,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +119,7 @@ class EpisodesSection extends StatelessWidget {
           onTap: () => onEpisodeTap(context, chaps, state),
           child: ListTile(
             minTileHeight: 42,
-            contentPadding: const EdgeInsets.only(left: 4),
+            contentPadding: const EdgeInsets.only(left: 4, bottom: 4),
             leading: Icon(
               Icons.playlist_play_rounded,
               color: context.theme.colorScheme.onSurface,
@@ -143,30 +148,41 @@ class EpisodesSection extends StatelessWidget {
         ),
         SizedBox(
           height: 48,
-          child: ListView.separated(
+          child: ScrollablePositionedList.separated(
+            physics: const ClampingScrollPhysics(),
+            itemScrollController: itemScrollController,
+            initialScrollIndex: initialIndex,
             scrollDirection: Axis.horizontal,
             itemCount: chaps.length,
-            separatorBuilder: (_, __) => const Gap(2),
-            itemBuilder: (context, index) =>
-                _buildChapterItem(context, chaps[index], index, state),
+            separatorBuilder: (context, index) => const Gap(12),
+            itemBuilder: (context, index) {
+              final isPlaying = _isChapterPlaying(
+                context,
+                context.watch<VideoPlayerCubit>().state,
+                chaps[index],
+                index,
+              );
+
+              return ChoiceChip.elevated(
+                elevation: 0,
+                label: Text(
+                  chaps[index].name,
+                  style: context.theme.textTheme.bodySmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                selected: isPlaying,
+                onSelected: (_) => onChapTap(
+                  context,
+                  isPlaying,
+                  chaps[index],
+                  state,
+                ),
+              );
+            },
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildChapterItem(
-    BuildContext context,
-    ChapDataEntity chap,
-    int index,
-    WatchState state,
-  ) {
-    final videoPlayerState = context.watch<VideoPlayerCubit>().state;
-    final isPlaying = _isChapterPlaying(context, videoPlayerState, chap, index);
-
-    return GestureDetector(
-      onTap: () => onChapTap(context, isPlaying, chap, state),
-      child: _buildChapCard(context, isPlaying, chap),
     );
   }
 
@@ -187,28 +203,5 @@ class EpisodesSection extends StatelessWidget {
             initialData.initialChap?.id == chap.id;
       }
     }
-  }
-
-  Widget _buildChapCard(
-    BuildContext context,
-    bool isPlaying,
-    ChapDataEntity chap,
-  ) {
-    return Card.filled(
-      color: isPlaying
-          ? context.theme.colorScheme.primaryContainer
-          : context.theme.colorScheme.surfaceContainer,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: Center(
-          child: Text(
-            chap.name,
-            style: context.textTheme.bodySmall!.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }

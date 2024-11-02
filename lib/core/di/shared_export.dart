@@ -6,6 +6,7 @@ import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/presentation/screen/watch/cubit/video_player_cubit.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 
 Environment get environment => GetIt.I<Environment>();
 AuthNotifier get authNotifier => GetIt.I<AuthNotifier>();
@@ -18,3 +19,4 @@ CookieJar get cookieJar => GetIt.I<CookieJar>();
 DHA get dha => GetIt.I<DHA>();
 FbApiClient get fbApiClient => GetIt.I<FbApiClient>();
 VideoPlayerCubit get videoPlayerCubit => GetIt.I<VideoPlayerCubit>();
+Logger get logger => GetIt.I<Logger>();

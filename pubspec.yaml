@@ -73,6 +73,8 @@ dependencies:
       url: https://github.com/phd051199/wasm_run.git
       ref: fix-namespace
       path: packages/wasm_run_flutter
+  scrollable_positioned_list: ^0.3.8
+  logger: ^2.4.0
 
 dev_dependencies:
   # Testing

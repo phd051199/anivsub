@@ -30,11 +30,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
         onRefresh: () async {
           bloc.add(const LoadHome());
 
-          await waitUtil(
-            () =>
-                context.mounted &&
-                context.read<HomeBloc>().state is HomeInitial,
-          );
+          await waitWhile(() => context.read<HomeBloc>().state is HomeInitial);
         },
         child: Skeletonizer(
           enabled: state is HomeInitial,

@@ -502,18 +502,18 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
         _afterCursor = initResponse.meta?.afterCursor ?? '';
         comments = initResponse.comments;
         totalCommentCount = initResponse.meta?.totalCount ?? 0;
+
+        emit(
+          state.copyWith(
+            comments: comments,
+            totalCommentCount: totalCommentCount,
+            fbUser: _fbCommentPlugin.loginUser,
+          ),
+        );
       } catch (e) {
         emit(_errorState('$e'));
       }
     }
-
-    emit(
-      state.copyWith(
-        comments: comments,
-        totalCommentCount: totalCommentCount,
-        fbUser: _fbCommentPlugin.loginUser,
-      ),
-    );
   }
 
   Future<ListEpisodeResponseEntity?> _loadAdditionalAnimeData(

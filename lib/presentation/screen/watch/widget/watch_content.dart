@@ -39,7 +39,10 @@ class WatchContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          VideoPlayerSection(tag: tag),
+          VideoPlayerSection(
+            tag: tag,
+            currentTabIndex: currentTabIndex,
+          ),
           DefaultTabController(
             length: 3,
             child: Column(

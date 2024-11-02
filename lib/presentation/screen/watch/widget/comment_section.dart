@@ -212,7 +212,7 @@ class _CommentSectionState extends State<CommentSection> {
         );
       }
     } catch (e) {
-      Log.debug('Error getting cookies and setting in dio $e');
+      logger.e('Error getting cookies and setting in dio $e');
     }
   }
 
@@ -313,7 +313,7 @@ class CommentInputField extends StatelessWidget {
                   color: context.theme.colorScheme.primary,
                 ),
               ),
-              style: const TextStyle(fontSize: 14),
+              style: const TextStyle(fontSize: kDefaultFontSize),
               maxLines: null,
               textInputAction: TextInputAction.newline,
             ),
@@ -467,7 +467,7 @@ class CommentTreeItem extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 4),
-              Text(data.body, style: context.textTheme.bodyMedium),
+              SelectableText(data.body, style: context.textTheme.bodyMedium),
             ],
           ),
         ),

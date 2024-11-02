@@ -48,7 +48,7 @@ class NetworkClient {
     dio.interceptors.addAll([
       if (kDebugMode)
         PrettyDioLogger(
-          requestBody: false,
+          requestBody: true,
           responseBody: false,
         ),
       if (isAuthenticated) AuthInterceptor(),

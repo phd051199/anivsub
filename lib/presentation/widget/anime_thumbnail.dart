@@ -23,7 +23,7 @@ class AnimeThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card.filled(
+    return Card(
       clipBehavior: Clip.hardEdge,
       child: Stack(
         children: [

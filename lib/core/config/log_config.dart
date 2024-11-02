@@ -5,7 +5,7 @@ class LogConfig {
 
   static const enableGeneralLog = kDebugMode;
   static const isPrettyJson = kDebugMode;
-  static const enableLogUseCaseInput = false;
+  static const enableLogUseCaseInput = kDebugMode;
   static const enableLogUseCaseOutput = false;
   static const enableLogUseCaseError = kDebugMode;
 }

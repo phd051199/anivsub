@@ -663,7 +663,7 @@ class _BetterPlayerCustomMaterialControlsState
         text: TextSpan(
           text: BetterPlayerUtils.formatDuration(position),
           style: TextStyle(
-            fontSize: 14.0,
+            fontSize: kDefaultFontSize,
             color: _controlsConfiguration.textColor,
             decoration: TextDecoration.none,
           ),
@@ -671,7 +671,7 @@ class _BetterPlayerCustomMaterialControlsState
             TextSpan(
               text: ' / ${BetterPlayerUtils.formatDuration(duration)}',
               style: TextStyle(
-                fontSize: 14.0,
+                fontSize: kDefaultFontSize,
                 color: _controlsConfiguration.textColor,
                 decoration: TextDecoration.none,
               ),

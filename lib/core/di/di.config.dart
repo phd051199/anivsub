@@ -82,6 +82,7 @@ import 'package:anivsub/presentation/screen/watch/cubit/video_player_cubit.dart'
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:logger/logger.dart' as _i974;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -101,6 +102,7 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i595.SharedPreferenceService());
     gh.lazySingleton<_i558.AndroidOptions>(() => registerModule.androidOptions);
     gh.lazySingleton<_i558.IOSOptions>(() => registerModule.iosOptions);
+    gh.lazySingleton<_i974.Logger>(() => registerModule.logger);
     gh.lazySingleton<_i987.AnimeRemoteDataSource>(() =>
         _i603.AnimeRemoteDataSourceImpl(client: gh<_i987.ScrapingClient>()));
     gh.lazySingleton<_i160.DHA>(() => _i537.DHAImpl());

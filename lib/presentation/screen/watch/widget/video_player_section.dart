@@ -10,9 +10,11 @@ class VideoPlayerSection extends StatelessWidget {
   const VideoPlayerSection({
     super.key,
     this.tag,
+    this.currentTabIndex = 0,
   });
 
   final String? tag;
+  final int currentTabIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class VideoPlayerSection extends StatelessWidget {
       chaps: state.chaps!.whereNotNull().toList(),
       detail: state.detail,
       initialData: state.initialData,
-      listEpisodeSkip: state.tabViewItems?.first?.listEpisode,
+      listEpisodeSkip: state.tabViewItems?[currentTabIndex]?.listEpisode,
     );
   }
 }

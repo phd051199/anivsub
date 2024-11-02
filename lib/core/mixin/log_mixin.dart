@@ -1,8 +1,8 @@
-import 'package:anivsub/core/utils/utils.dart';
+import 'package:anivsub/core/di/shared_export.dart';
 
 mixin LogMixin on Object {
   void logDebug(String message, {DateTime? time}) {
-    Log.debug(message, name: runtimeType.toString(), time: time);
+    logger.d(message, time: time);
   }
 
   void logError(
@@ -12,10 +12,9 @@ mixin LogMixin on Object {
     StackTrace? stackTrace,
     DateTime? time,
   }) {
-    Log.error(
+    logger.e(
       errorMessage,
-      name: runtimeType.toString(),
-      errorObject: errorObject,
+      error: errorObject,
       stackTrace: stackTrace,
       time: time,
     );

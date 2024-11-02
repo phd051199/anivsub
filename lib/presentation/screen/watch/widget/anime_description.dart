@@ -43,7 +43,7 @@ class AnimeDescription extends StatelessWidget {
               movie.description,
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
-              style: context.textTheme.labelMedium!.copyWith(
+              style: context.textTheme.bodySmall!.copyWith(
                 color: context.theme.colorScheme.secondary,
               ),
             ),
@@ -52,7 +52,7 @@ class AnimeDescription extends StatelessWidget {
               movie.genre?.map((e) => e['name']).join(', ') ?? '',
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: context.textTheme.labelMedium!.copyWith(
+              style: context.textTheme.bodySmall!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: context.theme.colorScheme.tertiary,
               ),

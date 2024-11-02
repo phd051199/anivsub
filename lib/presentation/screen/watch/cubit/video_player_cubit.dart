@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:anivsub/core/base/base.dart';
+import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/string_extension.dart';
 import 'package:anivsub/core/plugin/plugin.dart';
 import 'package:anivsub/core/utils/utils.dart';
@@ -63,6 +64,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         episodes: episodes,
         animeDetail: animeDetail,
         initialPosition: initialData?.initialPosition,
+        listEpisodeSkip: listEpisodeSkip,
       );
     } catch (e) {
       emit(_errorState('Initialization failed: $e'));
@@ -177,7 +179,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         ),
       );
     } catch (e) {
-      Log.debug('Failed to update watch progress: $e');
+      logger.e('Failed to update watch progress: $e');
     }
   }
 
@@ -221,6 +223,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         episode,
         state.chaps,
         state.animeDetail!,
+        state.listEpisodeSkip,
       );
 
       if (next == true) {
@@ -267,8 +270,14 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     required List<ChapDataEntity> episodes,
     required AnimeDetailEntity animeDetail,
     num? initialPosition,
+    ListEpisodeResponseEntity? listEpisodeSkip,
   }) async {
-    await _loadEpisodeData(episode, episodes, animeDetail);
+    await _loadEpisodeData(
+      episode,
+      episodes,
+      animeDetail,
+      listEpisodeSkip,
+    );
     await _loadInitialSettings();
 
     if (initialPosition != null) {
@@ -298,6 +307,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     ChapDataEntity episode,
     List<ChapDataEntity> episodes,
     AnimeDetailEntity animeDetail,
+    ListEpisodeResponseEntity? listEpisodeSkip,
   ) async {
     await _setupVideoSource(episode);
     final nextEpisode = _getAdjacentEpisode(episodes, episode, next: true);
@@ -308,6 +318,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         episode: episode,
         nextEpisode: nextEpisode,
         animeDetail: animeDetail,
+        listEpisodeSkip: listEpisodeSkip,
       ),
     );
   }
@@ -317,6 +328,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     required ChapDataEntity episode,
     ChapDataEntity? nextEpisode,
     required AnimeDetailEntity animeDetail,
+    ListEpisodeResponseEntity? listEpisodeSkip,
   }) {
     if (state is VideoPlayerLoaded) {
       return state.copyWith(
@@ -324,6 +336,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         currentChap: episode,
         nextChap: nextEpisode,
         animeDetail: animeDetail,
+        listEpisodeSkip: listEpisodeSkip,
       );
     } else {
       return VideoPlayerLoaded(
@@ -331,6 +344,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         currentChap: episode,
         nextChap: nextEpisode,
         animeDetail: animeDetail,
+        listEpisodeSkip: listEpisodeSkip,
       );
     }
   }
@@ -419,7 +433,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
       );
     } catch (e) {
       if (e is DioException) {
-        Log.error('DioException details: ${e.message}, ${e.response}');
+        logger.e('DioException details: ${e.message}, ${e.response}');
         return;
       }
       emit(_errorState('Failed to set up video source: $e'));
@@ -449,7 +463,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         hlsOutput.result.link.first.file,
       );
     } catch (e) {
-      Log.error('Error getting episode link: $e');
+      logger.e('Error getting episode link: $e');
       rethrow;
     }
   }
@@ -479,7 +493,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         state.copyWith(episodeSkip: episodeSkipOutput.result),
       );
     } catch (e) {
-      Log.debug('Error loading episode skip info: $e');
+      logger.e('Error loading episode skip info: $e');
     }
   }
 
@@ -540,11 +554,6 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
 
   void _setupEventListener() {
     _playerController?.addEventsListener(_onPlayerEvent);
-  }
-
-  void updateLoadingProgress(double progress) {
-    emit(state.copyWith(loadingProgress: progress));
-    Log.debug('Loading progress: $progress');
   }
 
   @override
