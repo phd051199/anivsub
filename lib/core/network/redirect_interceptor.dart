@@ -20,7 +20,7 @@ class RedirectInterceptor extends Interceptor {
       throw Exception('Redirect location is null');
     }
 
-    logger.d('Redirecting to: $location');
+    log.d('Redirecting to: $location');
 
     final requestOptions = response.requestOptions;
     final redirectUrl =

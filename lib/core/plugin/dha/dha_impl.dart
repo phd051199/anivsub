@@ -51,7 +51,7 @@ class DHAImpl implements DHA {
           final file = _getString(filePtr >>> 0);
           line = line >>> 0;
           col = col >>> 0;
-          logger.e('$msg in $file:$line:$col');
+          log.e('$msg in $file:$line:$col');
         },
         params: const [ValueTy.i32, ValueTy.i32, ValueTy.i32, ValueTy.i32],
         results: const [],
@@ -95,7 +95,7 @@ class DHAImpl implements DHA {
       final decodedStr = latin1.decode(bytes);
       return _allocateString(decodedStr);
     } catch (e) {
-      logger.e('Base64 decode error: $e');
+      log.e('Base64 decode error: $e');
       return 0;
     }
   }

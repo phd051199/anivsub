@@ -9,7 +9,5 @@ void main() async {
     kReleaseMode ? Environment.prod : Environment.dev,
   );
 
-  runApp(
-    const MyApp(),
-  );
+  runApp(const MyApp());
 }

@@ -1,9 +1,9 @@
 import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
+import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/screen/watch/widget/empty_player.dart';
-import 'package:anivsub/presentation/widget/better_player_material_controls.dart';
+import 'package:anivsub/presentation/widget/better_player/better_player_material_controls.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,7 +29,7 @@ class VideoPlayerWidget extends StatefulWidget {
 }
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
-  late final VideoPlayerCubit _cubit;
+  late final VideoPlayerCubit cubit;
   late final BetterPlayerController _betterPlayerController;
   late List<ChapDataEntity> _chaps;
   ListEpisodeResponseEntity? _listEpisodeSkip;
@@ -38,18 +38,13 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   @override
   void initState() {
     super.initState();
-    _cubit = context.read<VideoPlayerCubit>();
+
+    cubit = context.read<VideoPlayerCubit>();
     _chaps = widget.chaps;
     _listEpisodeSkip = widget.listEpisodeSkip;
     _initialData = widget.initialData;
     _initializeVideoPlayer();
     _initializeCubit();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _cubit.close();
   }
 
   void _initializeVideoPlayer() {
@@ -74,7 +69,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         return BetterPlayerCustomMaterialControls(
           onControlsVisibilityChanged: onControlsVisibilityChanged,
           controlsConfiguration: _createCustomControlsConfiguration(),
-          betterPlayerGlobalKey: GlobalKey(),
         );
       },
     );
@@ -98,7 +92,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   void _initializeCubit() {
     if (_chaps.isNotEmpty) {
-      _cubit.initialize(
+      cubit.initialize(
         episodes: _chaps,
         animeDetail: widget.detail,
         controller: _betterPlayerController,
@@ -118,7 +112,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     if (_chaps.isEmpty && widget.chaps != _chaps) {
       _chaps = widget.chaps;
       _listEpisodeSkip = widget.listEpisodeSkip;
-      _cubit.updateEpisodeList(_chaps, _listEpisodeSkip);
+      cubit.updateEpisodeList(_chaps, _listEpisodeSkip);
       _initializeCubit();
     }
   }

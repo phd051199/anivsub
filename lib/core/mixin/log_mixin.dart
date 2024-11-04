@@ -2,7 +2,7 @@ import 'package:anivsub/core/di/shared_export.dart';
 
 mixin LogMixin on Object {
   void logDebug(String message, {DateTime? time}) {
-    logger.d(message, time: time);
+    log.d(message, time: time);
   }
 
   void logError(
@@ -12,7 +12,7 @@ mixin LogMixin on Object {
     StackTrace? stackTrace,
     DateTime? time,
   }) {
-    logger.e(
+    log.e(
       errorMessage,
       error: errorObject,
       stackTrace: stackTrace,

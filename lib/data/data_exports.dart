@@ -60,4 +60,4 @@ export 'repositories/anime_repository_impl.dart';
 export 'repositories/app_settings_local_repository_impl.dart';
 export 'repositories/auth_local_repository_impl.dart';
 export 'repositories/auth_repository_impl.dart';
-export 'repositories/history_repositoty_impl.dart';
+export 'repositories/history_repository_impl.dart';

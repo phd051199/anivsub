@@ -1,5 +1,6 @@
 import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/core/const/const.dart';
+import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/core/plugin/plugin.dart';
 import 'package:anivsub/core/service/service.dart';
@@ -345,6 +346,10 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
         initialPosition: latestChap?.cur ?? 0,
       );
 
+      videoPlayerCubit.updateCurrentChap(
+        initialChap,
+      );
+
       emit(
         state.copyWith(
           chaps: chaps,
@@ -479,7 +484,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   }
 
   void _onChangeEpisode(ChangeEpisode event, Emitter<WatchState> emit) async {
-    if (state is! WatchLoaded) return;
+    if (state is! WatchLoaded || state.detail == event.animeDetail) return;
 
     emit(
       state.copyWith(

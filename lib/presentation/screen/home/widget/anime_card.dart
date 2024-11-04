@@ -1,7 +1,7 @@
 import 'package:anivsub/app/routes/go_router_config.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/widget/anime_description.dart';
-import 'package:anivsub/presentation/widget/anime_thumbnail.dart';
+import 'package:anivsub/presentation/widget/anime/anime_thumbnail.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

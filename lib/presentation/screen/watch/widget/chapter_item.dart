@@ -1,8 +1,8 @@
 import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/screen/watch/widget/chap_card.dart';
+import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

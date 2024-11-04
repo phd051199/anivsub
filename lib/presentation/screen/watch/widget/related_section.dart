@@ -1,6 +1,6 @@
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/presentation/widget/anime_list.dart';
+import 'package:anivsub/presentation/widget/anime/anime_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

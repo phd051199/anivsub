@@ -1,8 +1,8 @@
 import 'package:anivsub/core/base/base.dart';
-import 'package:anivsub/presentation/screen/settings/settings.dart';
-import 'package:anivsub/presentation/screen/settings/widget/logout_widget.dart';
-import 'package:anivsub/presentation/screen/settings/widget/theme_color_widget.dart';
-import 'package:anivsub/presentation/screen/settings/widget/theme_mode_widget.dart';
+import 'package:anivsub/presentation/screen/setting/settings.dart';
+import 'package:anivsub/presentation/screen/setting/widget/logout_widget.dart';
+import 'package:anivsub/presentation/screen/setting/widget/theme_color_widget.dart';
+import 'package:anivsub/presentation/screen/setting/widget/theme_mode_widget.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {

@@ -1,4 +1,3 @@
-import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/home/home.dart';
 import 'package:anivsub/presentation/screen/home/widget/airing_list.dart';
@@ -16,36 +15,6 @@ class HomeContent extends StatelessWidget {
     return CustomScrollView(
       shrinkWrap: true,
       slivers: [
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-            child: Wrap(
-              spacing: 8,
-              children: [
-                _buildFilterChip(
-                  context: context,
-                  label: 'All',
-                  selected: true,
-                ),
-                _buildFilterChip(
-                  context: context,
-                  label: 'Movies',
-                  selected: false,
-                ),
-                _buildFilterChip(
-                  context: context,
-                  label: 'TV Series',
-                  selected: false,
-                ),
-                _buildFilterChip(
-                  context: context,
-                  label: 'OVA',
-                  selected: false,
-                ),
-              ],
-            ),
-          ),
-        ),
         SliverPadding(
           padding: const EdgeInsets.all(12),
           sliver: SliverList(
@@ -73,24 +42,6 @@ class HomeContent extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  ChoiceChip _buildFilterChip({
-    required BuildContext context,
-    required String label,
-    required bool selected,
-  }) {
-    return ChoiceChip.elevated(
-      elevation: 0,
-      label: Text(
-        label,
-        style: context.theme.textTheme.bodyMedium!.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      selected: selected,
-      onSelected: (_) {},
     );
   }
 }

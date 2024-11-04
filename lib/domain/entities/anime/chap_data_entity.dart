@@ -32,7 +32,7 @@ class ChapDataEntity extends BaseEntity<ChapDataDTO> with _$ChapDataEntity {
       );
 
   static ChapDataEntity mockup() => const ChapDataEntity(
-        id: 'id',
+        id: '-1',
         play: 'play',
         hash: 'hash',
         name: 'name',

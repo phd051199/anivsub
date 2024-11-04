@@ -41,8 +41,8 @@ import 'package:anivsub/data/repositories/app_settings_local_repository_impl.dar
 import 'package:anivsub/data/repositories/auth_local_repository_impl.dart'
     as _i954;
 import 'package:anivsub/data/repositories/auth_repository_impl.dart' as _i792;
-import 'package:anivsub/data/repositories/history_repositoty_impl.dart'
-    as _i469;
+import 'package:anivsub/data/repositories/history_repository_impl.dart'
+    as _i604;
 import 'package:anivsub/domain/domain_exports.dart' as _i772;
 import 'package:anivsub/domain/repositories/app_settings_local_repository.dart'
     as _i104;
@@ -77,8 +77,8 @@ import 'package:anivsub/presentation/screen/settings/cubit/settings_cubit.dart'
     as _i657;
 import 'package:anivsub/presentation/screen/watch/bloc/watch_bloc.dart'
     as _i835;
-import 'package:anivsub/presentation/screen/watch/cubit/video_player_cubit.dart'
-    as _i218;
+import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart'
+    as _i711;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -138,10 +138,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i987.AnimeRemoteDataSource>(),
           gh<_i987.EpisodeSkipRemoteDataSource>(),
         ));
-    gh.lazySingleton<_i772.HistoryRepository>(() => _i469.HistoryRepositoryImpl(
-          gh<_i987.HistoryRemoteDataSource>(),
-          gh<_i987.AuthLocalDataSource>(),
-        ));
     gh.factory<_i125.SearchAnimeUseCase>(
         () => _i125.SearchAnimeUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i407.GetEncryptedHlsUseCase>(
@@ -158,10 +154,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i32.GetPreSearchUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i611.GetEpisodeSkipUsecase>(
         () => _i611.GetEpisodeSkipUsecase(gh<_i772.AnimeRepository>()));
-    gh.factory<_i268.AppSettingsUseCase>(
-        () => _i268.AppSettingsUseCase(gh<_i772.AppSettingsLocalRepository>()));
-    gh.factory<_i865.HomeBloc>(
-        () => _i865.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
+    gh.lazySingleton<_i772.HistoryRepository>(() => _i604.HistoryRepositoryImpl(
+          gh<_i987.HistoryRemoteDataSource>(),
+          gh<_i987.AuthLocalDataSource>(),
+        ));
     gh.factory<_i420.GetLastChapUseCase>(
         () => _i420.GetLastChapUseCase(gh<_i772.HistoryRepository>()));
     gh.factory<_i1045.GetSingleProgressUseCase>(
@@ -170,6 +166,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i339.GetUserHistoryUseCase(gh<_i772.HistoryRepository>()));
     gh.factory<_i469.SetSingleProgressUseCase>(
         () => _i469.SetSingleProgressUseCase(gh<_i772.HistoryRepository>()));
+    gh.factory<_i268.AppSettingsUseCase>(
+        () => _i268.AppSettingsUseCase(gh<_i772.AppSettingsLocalRepository>()));
+    gh.factory<_i865.HomeBloc>(
+        () => _i865.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
     gh.factory<_i342.SearchBloc>(() => _i342.SearchBloc(
           gh<_i772.SearchAnimeUseCase>(),
           gh<_i772.GetPreSearchUseCase>(),
@@ -187,7 +187,7 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i976.ThemeCubit>(
         () => _i976.ThemeCubit(gh<_i268.AppSettingsUseCase>()));
-    gh.lazySingleton<_i218.VideoPlayerCubit>(() => _i218.VideoPlayerCubit(
+    gh.singleton<_i711.VideoPlayerCubit>(() => _i711.VideoPlayerCubit(
           gh<_i772.GetEncryptedHlsUseCase>(),
           gh<_i772.GetEpisodeSkipUsecase>(),
           gh<_i772.AppSettingsUseCase>(),

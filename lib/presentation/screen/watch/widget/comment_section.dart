@@ -212,7 +212,7 @@ class _CommentSectionState extends State<CommentSection> {
         );
       }
     } catch (e) {
-      logger.e('Error getting cookies and setting in dio $e');
+      log.e('Error getting cookies and setting in dio $e');
     }
   }
 

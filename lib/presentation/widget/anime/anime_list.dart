@@ -66,37 +66,40 @@ class AnimeCard extends StatelessWidget {
         },
         child: SizedBox(
           width: 120,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AnimeThumbnail(
-                imageUrl: item.image,
-                process: item.process,
-                rate: item.rate,
-                height: 160,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                item.name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              if (item.views != null && item.views != 0)
-                Padding(
-                  padding: const EdgeInsets.only(top: 2),
-                  child: Text(
-                    '${context.l10n.views}: ${item.views?.formatNumber()}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.textTheme.labelSmall!.copyWith(
-                      color: context.theme.colorScheme.secondary,
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AnimeThumbnail(
+                  imageUrl: item.image,
+                  process: item.process,
+                  rate: item.rate,
+                  height: 160,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  item.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                if (item.views != null && item.views != 0)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Text(
+                      '${context.l10n.views}: ${item.views?.formatNumber()}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.textTheme.labelSmall!.copyWith(
+                        color: context.theme.colorScheme.secondary,
+                      ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

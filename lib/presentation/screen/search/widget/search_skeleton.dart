@@ -1,5 +1,5 @@
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/widget/anime_list.dart';
+import 'package:anivsub/presentation/widget/anime/anime_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 

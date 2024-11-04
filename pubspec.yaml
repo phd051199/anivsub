@@ -20,7 +20,7 @@ dependencies:
   injectable: ^2.5.0
 
   # Navigation
-  go_router: ^14.3.0
+  go_router: ^14.4.1
 
   # Storage
   shared_preferences: ^2.3.2
@@ -46,6 +46,7 @@ dependencies:
   skeletonizer: ^1.4.2
   comment_tree: ^0.3.0
   flutter_inappwebview: ^6.1.5
+  scrollable_positioned_list: ^0.3.8
 
   # Video Player
   video_player: ^2.9.2
@@ -66,6 +67,7 @@ dependencies:
 
   # Configuration
   flutter_dotenv: ^5.2.1
+  logger: ^2.4.0
 
   # WebAssembly
   wasm_run_flutter:
@@ -73,8 +75,6 @@ dependencies:
       url: https://github.com/phd051199/wasm_run.git
       ref: fix-namespace
       path: packages/wasm_run_flutter
-  scrollable_positioned_list: ^0.3.8
-  logger: ^2.4.0
 
 dev_dependencies:
   # Testing

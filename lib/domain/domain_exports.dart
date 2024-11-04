@@ -35,7 +35,7 @@ export 'repositories/anime_repository.dart';
 export 'repositories/app_settings_local_repository.dart';
 export 'repositories/auth_local_repository.dart';
 export 'repositories/auth_repository.dart';
-export 'repositories/history_repositoty.dart';
+export 'repositories/history_repository.dart';
 export 'usecases/app_settings_usecase.dart';
 export 'usecases/auth_usecase.dart';
 export 'usecases/base/base.dart';

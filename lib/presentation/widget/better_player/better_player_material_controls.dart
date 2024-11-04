@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/core/extension/context_extension.dart';
-import 'package:anivsub/presentation/screen/watch/cubit/video_player_cubit.dart';
+import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

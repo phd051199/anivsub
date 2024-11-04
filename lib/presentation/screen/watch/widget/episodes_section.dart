@@ -1,7 +1,8 @@
 import 'package:anivsub/core/extension/context_extension.dart';
+import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
+import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import 'package:gap/gap.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class EpisodesSection extends StatelessWidget {
-  EpisodesSection({
+  const EpisodesSection({
     super.key,
     required this.tabController,
     required this.currentTabIndex,
@@ -24,27 +25,69 @@ class EpisodesSection extends StatelessWidget {
   final VoidCallback onTabChange;
   final Function(BuildContext, List<ChapDataEntity>, WatchState) onEpisodeTap;
   final Function(BuildContext, bool, ChapDataEntity, WatchState) onChapTap;
-  final ItemScrollController itemScrollController = ItemScrollController();
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<WatchBloc>().state;
+    return BlocBuilder<WatchBloc, WatchState>(
+      builder: (context, state) {
+        if (state.detail == null) {
+          return const SizedBox(height: 100, child: LoadingWidget());
+        }
 
-    if (state.detail!.season.isNotEmpty && state.tabViewItems != null) {
-      return Column(
-        children: [
-          _buildTabBar(context),
-          _buildTabBarView(context),
-        ],
-      );
-    } else if (state.chaps != null && state.chaps!.isNotEmpty) {
-      return _buildSingleSeasonView(context);
-    } else {
-      return const SizedBox(height: 100, child: LoadingWidget());
-    }
+        if (state.detail!.season.isNotEmpty && state.tabViewItems != null) {
+          return _MultiSeasonView(
+            tabController: tabController,
+            onEpisodeTap: onEpisodeTap,
+            onChapTap: onChapTap,
+          );
+        }
+
+        if (state.chaps != null && state.chaps!.isNotEmpty) {
+          return _SingleSeasonView(
+            onEpisodeTap: onEpisodeTap,
+            onChapTap: onChapTap,
+          );
+        }
+
+        return const SizedBox(height: 100, child: LoadingWidget());
+      },
+    );
   }
+}
 
-  Widget _buildTabBar(BuildContext context) {
+class _MultiSeasonView extends StatelessWidget {
+  const _MultiSeasonView({
+    required this.tabController,
+    required this.onEpisodeTap,
+    required this.onChapTap,
+  });
+
+  final TabController? tabController;
+  final Function(BuildContext, List<ChapDataEntity>, WatchState) onEpisodeTap;
+  final Function(BuildContext, bool, ChapDataEntity, WatchState) onChapTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _SeasonTabBar(tabController: tabController),
+        _SeasonTabView(
+          tabController: tabController,
+          onEpisodeTap: onEpisodeTap,
+          onChapTap: onChapTap,
+        ),
+      ],
+    );
+  }
+}
+
+class _SeasonTabBar extends StatelessWidget {
+  const _SeasonTabBar({required this.tabController});
+
+  final TabController? tabController;
+
+  @override
+  Widget build(BuildContext context) {
     final state = context.watch<WatchBloc>().state;
 
     if (state.detail!.season.isEmpty) {
@@ -55,22 +98,36 @@ class EpisodesSection extends StatelessWidget {
       tabAlignment: TabAlignment.start,
       controller: tabController,
       isScrollable: true,
-      tabs: state.detail!.season
-          .map(
-            (item) => Tab(
-              child: Text(
-                item.name,
-                style: context.textTheme.titleSmall!.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          )
-          .toList(),
+      tabs:
+          state.detail!.season.map((item) => _buildTab(context, item)).toList(),
     );
   }
 
-  Widget _buildTabBarView(BuildContext context) {
+  Widget _buildTab(BuildContext context, Anchor item) {
+    return Tab(
+      child: Text(
+        item.name,
+        style: context.textTheme.titleSmall!.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}
+
+class _SeasonTabView extends StatelessWidget {
+  const _SeasonTabView({
+    required this.tabController,
+    required this.onEpisodeTap,
+    required this.onChapTap,
+  });
+
+  final TabController? tabController;
+  final Function(BuildContext, List<ChapDataEntity>, WatchState) onEpisodeTap;
+  final Function(BuildContext, bool, ChapDataEntity, WatchState) onChapTap;
+
+  @override
+  Widget build(BuildContext context) {
     final state = context.watch<WatchBloc>().state;
 
     return Container(
@@ -81,108 +138,191 @@ class EpisodesSection extends StatelessWidget {
         children: state.tabViewItems!.map((item) {
           return item?.chaps == null
               ? const LoadingWidget(withBox: false)
-              : _buildChapterHorizontal(
-                  context: context,
+              : _EpisodeList(
                   chaps: item!.chaps,
+                  onEpisodeTap: onEpisodeTap,
+                  onChapTap: onChapTap,
                 );
         }).toList(),
       ),
     );
   }
+}
 
-  Widget _buildSingleSeasonView(BuildContext context) {
+class _SingleSeasonView extends StatelessWidget {
+  const _SingleSeasonView({
+    required this.onEpisodeTap,
+    required this.onChapTap,
+  });
+
+  final Function(BuildContext, List<ChapDataEntity>, WatchState) onEpisodeTap;
+  final Function(BuildContext, bool, ChapDataEntity, WatchState) onChapTap;
+
+  @override
+  Widget build(BuildContext context) {
     final state = context.watch<WatchBloc>().state;
+    final chaps = state.chaps!.whereNotNull().toList();
 
     return Container(
       height: 128,
       padding: const EdgeInsets.all(16),
-      child: _buildChapterHorizontal(
-        context: context,
-        chaps: state.chaps!.whereNotNull().toList(),
+      child: _EpisodeList(
+        chaps: chaps,
+        onEpisodeTap: onEpisodeTap,
+        onChapTap: onChapTap,
       ),
     );
   }
+}
 
-  Widget _buildChapterHorizontal({
-    required BuildContext context,
-    required List<ChapDataEntity> chaps,
-  }) {
+class _EpisodeList extends StatelessWidget {
+  _EpisodeList({
+    required this.chaps,
+    required this.onEpisodeTap,
+    required this.onChapTap,
+  });
+
+  final List<ChapDataEntity> chaps;
+  final Function(BuildContext, List<ChapDataEntity>, WatchState) onEpisodeTap;
+  final Function(BuildContext, bool, ChapDataEntity, WatchState) onChapTap;
+  final itemScrollController = ItemScrollController();
+
+  @override
+  Widget build(BuildContext context) {
     final state = context.watch<WatchBloc>().state;
-    final initialIndex = chaps.indexWhere(
-      (chap) => chap.id == state.initialData?.initialChap?.id,
-    );
+    final initialIndex = _getInitialIndex(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GestureDetector(
+        _EpisodeHeader(
           onTap: () => onEpisodeTap(context, chaps, state),
-          child: ListTile(
-            minTileHeight: 42,
-            contentPadding: const EdgeInsets.only(left: 4, bottom: 4),
-            leading: Icon(
-              Icons.playlist_play_rounded,
-              color: context.theme.colorScheme.onSurface,
-            ),
-            title: Text(
-              context.l10n.episodeList,
-              style: context.textTheme.bodyMedium!.copyWith(
-                fontWeight: FontWeight.bold,
+        ),
+        if (chaps.isNotEmpty)
+          _EpisodeScrollList(
+            chaps: chaps,
+            initialIndex: initialIndex,
+            itemScrollController: itemScrollController,
+            onChapTap: onChapTap,
+          ),
+      ],
+    );
+  }
+
+  int _getInitialIndex(BuildContext context) {
+    final state = context.watch<WatchBloc>().state;
+    final initialIndex = chaps.indexWhere(
+      (chap) => chap.id == state.initialData?.initialChap?.id,
+    );
+    return initialIndex > 0 ? initialIndex : 0;
+  }
+}
+
+class _EpisodeHeader extends StatelessWidget {
+  const _EpisodeHeader({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: ListTile(
+        minTileHeight: 42,
+        contentPadding: const EdgeInsets.only(left: 4, bottom: 4),
+        leading: Icon(
+          Icons.playlist_play_rounded,
+          color: context.theme.colorScheme.onSurface,
+        ),
+        title: Text(
+          context.l10n.episodeList,
+          style: context.textTheme.bodyMedium!.copyWith(
+            fontWeight: FontWeight.bold,
+            color: context.theme.colorScheme.onSurface,
+          ),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              context.l10n.fullSeason,
+              style: context.textTheme.bodyMedium?.copyWith(
                 color: context.theme.colorScheme.onSurface,
               ),
             ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.l10n.fullSeason,
-                  style: context.textTheme.bodyMedium?.copyWith(
-                    color: context.theme.colorScheme.onSurface,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                const Icon(Icons.chevron_right),
-              ],
-            ),
-          ),
+            const SizedBox(width: 8),
+            const Icon(Icons.chevron_right),
+          ],
         ),
-        SizedBox(
-          height: 48,
-          child: ScrollablePositionedList.separated(
-            physics: const ClampingScrollPhysics(),
-            itemScrollController: itemScrollController,
-            initialScrollIndex: initialIndex,
-            scrollDirection: Axis.horizontal,
-            itemCount: chaps.length,
-            separatorBuilder: (context, index) => const Gap(12),
-            itemBuilder: (context, index) {
-              final isPlaying = _isChapterPlaying(
-                context,
-                context.watch<VideoPlayerCubit>().state,
-                chaps[index],
-                index,
-              );
+      ),
+    );
+  }
+}
 
-              return ChoiceChip.elevated(
-                elevation: 0,
-                label: Text(
-                  chaps[index].name,
-                  style: context.theme.textTheme.bodySmall!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                selected: isPlaying,
-                onSelected: (_) => onChapTap(
-                  context,
-                  isPlaying,
-                  chaps[index],
-                  state,
-                ),
-              );
-            },
-          ),
+class _EpisodeScrollList extends StatelessWidget {
+  const _EpisodeScrollList({
+    required this.chaps,
+    required this.initialIndex,
+    required this.itemScrollController,
+    required this.onChapTap,
+  });
+
+  final List<ChapDataEntity> chaps;
+  final int initialIndex;
+  final ItemScrollController itemScrollController;
+  final Function(BuildContext, bool, ChapDataEntity, WatchState) onChapTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 48,
+      child: ScrollablePositionedList.separated(
+        itemScrollController: itemScrollController,
+        initialScrollIndex: initialIndex,
+        scrollDirection: Axis.horizontal,
+        itemCount: chaps.length,
+        separatorBuilder: (_, __) => const Gap(12),
+        itemBuilder: (context, index) => _EpisodeChip(
+          chap: chaps[index],
+          index: index,
+          onChapTap: onChapTap,
         ),
-      ],
+      ),
+    );
+  }
+}
+
+class _EpisodeChip extends StatelessWidget {
+  const _EpisodeChip({
+    required this.chap,
+    required this.index,
+    required this.onChapTap,
+  });
+
+  final ChapDataEntity chap;
+  final int index;
+  final Function(BuildContext, bool, ChapDataEntity, WatchState) onChapTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = context.watch<WatchBloc>().state;
+    final isPlaying = _isChapterPlaying(
+      context,
+      context.watch<VideoPlayerCubit>().state,
+      chap,
+      index,
+    );
+
+    return ChoiceChip.elevated(
+      elevation: 0,
+      label: Text(
+        chap.name,
+        style: context.theme.textTheme.bodySmall!.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      selected: isPlaying,
+      onSelected: (_) => onChapTap(context, isPlaying, chap, state),
     );
   }
 
@@ -194,14 +334,16 @@ class EpisodesSection extends StatelessWidget {
   ) {
     if (state is VideoPlayerLoaded && state.currentChap.id == chap.id) {
       return true;
-    } else {
-      final initialData = context.watch<WatchBloc>().state.initialData;
-      if (initialData == null) {
-        return state is VideoPlayerInitial && index == 0;
-      } else {
-        return state is VideoPlayerInitial &&
-            initialData.initialChap?.id == chap.id;
-      }
     }
+
+    if (state is VideoPlayerInitial) {
+      final initialData = context.watch<WatchBloc>().state.initialData;
+      if (initialData?.initialChap == null) {
+        return index == 0;
+      }
+      return initialData?.initialChap!.id == chap.id;
+    }
+
+    return false;
   }
 }

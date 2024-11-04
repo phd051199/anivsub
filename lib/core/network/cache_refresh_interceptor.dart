@@ -35,7 +35,7 @@ class CacheRefreshInterceptor extends Interceptor {
       await cacheOptions.store?.delete(key);
       await dio.fetch(options);
     } catch (e) {
-      logger.e('Error refreshing in background: $e');
+      log.e('Error refreshing in background: $e');
     }
   }
 }

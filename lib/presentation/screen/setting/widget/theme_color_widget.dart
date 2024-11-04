@@ -1,7 +1,7 @@
 import 'package:anivsub/app/theme/const/theme_colors.dart';
 import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
 import 'package:anivsub/core/extension/context_extension.dart';
-import 'package:anivsub/presentation/screen/settings/cubit/settings_cubit.dart';
+import 'package:anivsub/presentation/screen/setting/cubit/settings_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,7 +38,6 @@ class _ThemeColorWidgetState extends State<ThemeColorWidget>
                 },
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  physics: const ClampingScrollPhysics(),
                   child: ToggleButtons(
                     isSelected: kThemeColors
                         .map(
