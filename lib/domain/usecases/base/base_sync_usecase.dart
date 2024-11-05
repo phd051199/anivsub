@@ -1,5 +1,5 @@
-import 'package:anivsub/core/config/log_config.dart';
 import 'package:anivsub/domain/usecases/base/base.dart';
+import 'package:anivsub/shared/config/log_config.dart';
 
 abstract class BaseSyncUseCase<Input extends BaseInput,
     Output extends BaseOutput> extends BaseUseCase<Input, Output> {

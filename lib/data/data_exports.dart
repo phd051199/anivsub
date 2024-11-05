@@ -1,8 +1,8 @@
 // Auto-generated file. Do not modify.
 
 export 'data_exports.dart';
-export 'datasources/local/app_settings_local_data_source.dart';
-export 'datasources/local/app_settings_local_data_source_impl.dart';
+export 'datasources/local/app_setting_local_data_source.dart';
+export 'datasources/local/app_setting_local_data_source_impl.dart';
 export 'datasources/local/auth_local_data_source.dart';
 export 'datasources/local/auth_local_data_source_impl.dart';
 export 'datasources/mapper/dto_mapper_mixin.dart';
@@ -32,7 +32,7 @@ export 'dto/anime/list_episode_response_dto.dart';
 export 'dto/anime/play_data_dto.dart';
 export 'dto/anime/pre_search_item_dto.dart';
 export 'dto/anime/search_result_dto.dart';
-export 'dto/app_settings_dto.dart';
+export 'dto/app_setting_dto.dart';
 export 'dto/base_dto.dart';
 export 'dto/facebook/get_initial_comment_response_dto.dart';
 export 'dto/facebook/get_more_comment_response_dto.dart';
@@ -57,7 +57,7 @@ export 'parsers/play_data_parser.dart';
 export 'parsers/pre_search_parser.dart';
 export 'parsers/search_result_parser.dart';
 export 'repositories/anime_repository_impl.dart';
-export 'repositories/app_settings_local_repository_impl.dart';
+export 'repositories/app_setting_local_repository_impl.dart';
 export 'repositories/auth_local_repository_impl.dart';
 export 'repositories/auth_repository_impl.dart';
 export 'repositories/history_repository_impl.dart';

@@ -1,5 +1,5 @@
 import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
-import 'package:anivsub/core/extension/context_extension.dart';
+import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +20,7 @@ class ThemeModeWidget extends StatelessWidget {
             .map(
               (mode) =>
                   mode ==
-                  context.read<ThemeCubit>().state.appSettings.themeModeEnum,
+                  context.read<ThemeCubit>().state.appSetting.themeModeEnum,
             )
             .toList(),
         borderRadius: const BorderRadius.all(Radius.circular(8)),

@@ -1,7 +1,6 @@
-import 'package:anivsub/core/base/base.dart';
-import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/presentation/screen/home/home.dart';
 import 'package:anivsub/presentation/screen/home/widget/home_content.dart';
+import 'package:anivsub/shared/base/base.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -29,8 +28,6 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
       builder: (context, state) => RefreshIndicator(
         onRefresh: () async {
           bloc.add(const LoadHome());
-
-          await waitWhile(() => context.read<HomeBloc>().state is HomeInitial);
         },
         child: Skeletonizer(
           enabled: state is HomeInitial,

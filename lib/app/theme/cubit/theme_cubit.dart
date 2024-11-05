@@ -1,5 +1,6 @@
-import 'package:anivsub/domain/entities/app/app_settings_entity.dart';
-import 'package:anivsub/domain/usecases/app_settings_usecase.dart';
+import 'package:anivsub/domain/entities/app/app_setting_entity.dart';
+import 'package:anivsub/domain/usecases/app_setting_usecase.dart';
+import 'package:anivsub/shared/extension/extension.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -9,36 +10,36 @@ part 'theme_state.dart';
 
 @injectable
 class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit(this._appSettingsUseCase)
-      : super(ThemeInitial(AppSettingsEntity.initial())) {
-    loadAppSettings();
+  ThemeCubit(this._appSettingUseCase)
+      : super(ThemeInitial(AppSettingEntity.initial())) {
+    loadAppSetting();
   }
 
-  final AppSettingsUseCase _appSettingsUseCase;
+  final AppSettingUseCase _appSettingUseCase;
 
-  void loadAppSettings() async {
-    final output = await _appSettingsUseCase.execute(
-      const AppSettingsUseCaseInput(),
+  void loadAppSetting() async {
+    final output = await _appSettingUseCase.execute(
+      const AppSettingUseCaseInput(),
     );
-    emit(ThemeLoaded(output.result!));
+    safeEmit(ThemeLoaded(output.result!));
   }
 
   void changeThemeMode(ThemeMode themeMode) async {
-    final currentAppSettings = state.appSettings;
-    final newAppSettings =
-        currentAppSettings.copyWith(themeMode: themeMode.index);
-    await _appSettingsUseCase.execute(
-      AppSettingsUseCaseInput(appSettings: newAppSettings),
+    final currentAppSetting = state.appSetting;
+    final newAppSetting =
+        currentAppSetting.copyWith(themeMode: themeMode.index);
+    await _appSettingUseCase.execute(
+      AppSettingUseCaseInput(appSetting: newAppSetting),
     );
-    emit(ThemeLoaded(newAppSettings));
+    safeEmit(ThemeLoaded(newAppSetting));
   }
 
   void changeThemeColor(Color color) async {
-    final currentAppSettings = state.appSettings;
-    final newAppSettings = currentAppSettings.copyWith(color: color.value);
-    await _appSettingsUseCase.execute(
-      AppSettingsUseCaseInput(appSettings: newAppSettings),
+    final currentAppSetting = state.appSetting;
+    final newAppSetting = currentAppSetting.copyWith(color: color.value);
+    await _appSettingUseCase.execute(
+      AppSettingUseCaseInput(appSetting: newAppSetting),
     );
-    emit(ThemeLoaded(newAppSettings));
+    safeEmit(ThemeLoaded(newAppSetting));
   }
 }

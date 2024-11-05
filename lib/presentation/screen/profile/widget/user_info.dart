@@ -1,5 +1,5 @@
-import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/shared/extension/extension.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';

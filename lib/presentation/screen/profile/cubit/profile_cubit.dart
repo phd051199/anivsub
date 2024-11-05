@@ -1,5 +1,6 @@
-import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/shared/base/base.dart';
+import 'package:anivsub/shared/extension/extension.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -27,7 +28,7 @@ class ProfileCubit extends BaseCubit<ProfileState> {
       ),
     );
 
-    emit(
+    safeEmit(
       ProfileLoaded(
         user: authUseCaseOutput.localSession!,
         queryHistory: getUserHistoryUseCaseOutput.result,

@@ -1,11 +1,11 @@
-import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/shared/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl({required AuthRemoteDataSource authRemoteDataSource})
+  const AuthRepositoryImpl({required AuthRemoteDataSource authRemoteDataSource})
       : _authRemoteDataSource = authRemoteDataSource;
   final AuthRemoteDataSource _authRemoteDataSource;
 

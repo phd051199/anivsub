@@ -1,4 +1,3 @@
-import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/screen/watch/widget/comment_section.dart';
@@ -7,6 +6,7 @@ import 'package:anivsub/presentation/screen/watch/widget/episodes_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/related_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/video_player_section.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

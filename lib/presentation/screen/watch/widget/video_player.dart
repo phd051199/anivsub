@@ -1,10 +1,10 @@
-import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/screen/watch/widget/empty_player.dart';
 import 'package:anivsub/presentation/widget/better_player/better_player_material_controls.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

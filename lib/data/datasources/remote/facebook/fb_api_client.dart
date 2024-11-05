@@ -1,5 +1,5 @@
-import 'package:anivsub/core/const/const.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/shared/const/const.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 

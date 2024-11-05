@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: HistoryRepository)
 class HistoryRepositoryImpl implements HistoryRepository {
-  HistoryRepositoryImpl(
+  const HistoryRepositoryImpl(
     this._historyRemoteDataSource,
     this._authLocalDataSource,
   );

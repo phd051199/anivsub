@@ -2,6 +2,8 @@ import 'package:anivsub/data/data_exports.dart';
 import 'package:html/dom.dart' as dom;
 
 class CommonParser {
+  const CommonParser._();
+
   static String getPathName(String url) {
     try {
       final uri = Uri.parse(url);

@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  AuthRemoteDataSourceImpl({required this.client});
+  const AuthRemoteDataSourceImpl({required this.client});
   final AuthApiClient client;
 
   @override

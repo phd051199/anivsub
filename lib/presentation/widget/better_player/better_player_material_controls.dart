@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:anivsub/core/di/shared_export.dart';
-import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:river_player/src/configuration/better_player_controls_configuration.dart';
 import 'package:river_player/src/controls/better_player_clickable_widget.dart';
@@ -72,10 +71,7 @@ class _BetterPlayerCustomMaterialControlsState
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<VideoPlayerCubit>.value(
-      value: videoPlayerCubit,
-      child: buildLTRDirectionality(_buildMainWidget()),
-    );
+    return buildLTRDirectionality(_buildMainWidget());
   }
 
   ///Builds main widget of the controls.
@@ -213,9 +209,8 @@ class _BetterPlayerCustomMaterialControlsState
               duration: _controlsConfiguration.controlsHideTime,
               child: SizedBox(
                 height: _controlsConfiguration.controlBarHeight,
-                width: double.infinity,
+                width: context.screenSize.width,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
                       icon: const Icon(
@@ -231,7 +226,34 @@ class _BetterPlayerCustomMaterialControlsState
                         }
                       },
                     ),
-                    const Spacer(),
+                    Expanded(
+                      child: videoPlayerCubit.state.showSkipIntroText == false
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  videoPlayerCubit.state.animeDetail?.name ??
+                                      '',
+                                  style: context.theme.textTheme.titleMedium!
+                                      .copyWith(
+                                    color: _controlsConfiguration.textColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  '${context.l10n.episode} ${videoPlayerCubit.state.currentChap?.name}',
+                                  style: context.theme.textTheme.titleSmall!
+                                      .copyWith(
+                                    color: _controlsConfiguration.textColor
+                                        .withOpacity(0.5),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
+                    ),
                     _buildSkipSwitch(),
                     if (_controlsConfiguration.enableMute)
                       _buildMuteButton(_controller)
@@ -254,43 +276,38 @@ class _BetterPlayerCustomMaterialControlsState
   }
 
   Widget _buildSkipSwitch() {
-    return BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
-      builder: (context, state) {
-        final skipIntro =
-            state is VideoPlayerLoaded && (state.skipIntro ?? false);
+    final skipIntro = videoPlayerCubit.state is VideoPlayerLoaded &&
+        (videoPlayerCubit.state.skipIntro ?? false);
 
-        return Theme(
-          data: ThemeData(useMaterial3: false),
-          child: Row(
-            children: [
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                child: state is VideoPlayerLoaded &&
-                        state.showSkipIntroText == true
-                    ? Text(
-                        '${skipIntro ? 'Enabled' : 'Disabled'} skip intro/outro',
-                        style: context.theme.textTheme.bodySmall!.copyWith(
-                          color: _controlsConfiguration.textColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-              ),
-              const SizedBox(width: 8),
-              Switch(
-                value: skipIntro,
-                activeColor: Colors.white70,
-                onChanged: (newValue) {
-                  videoPlayerCubit.toggleSkipIntro();
-                },
-                trackColor: WidgetStateProperty.all(
-                  Colors.white38,
-                ),
-              ),
-            ],
+    return Theme(
+      data: ThemeData(useMaterial3: false),
+      child: Row(
+        children: [
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: videoPlayerCubit.state.showSkipIntroText == true
+                ? Text(
+                    '${skipIntro ? 'Enabled' : 'Disabled'} skip intro/outro',
+                    style: context.theme.textTheme.bodySmall!.copyWith(
+                      color: _controlsConfiguration.textColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ),
-        );
-      },
+          const SizedBox(width: 8),
+          Switch(
+            value: skipIntro,
+            activeColor: Colors.white70,
+            onChanged: (newValue) {
+              videoPlayerCubit.toggleSkipIntro();
+            },
+            trackColor: WidgetStateProperty.all(
+              Colors.white38,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -514,48 +531,45 @@ class _BetterPlayerCustomMaterialControlsState
   Widget _buildReplayButton(VideoPlayerController controller) {
     final bool isFinished = isVideoFinished(_latestValue);
 
-    return BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
-      builder: (context, state) {
-        final showReplay = state is VideoPlayerLoaded && state.nextChap == null;
-        final Widget icon;
+    final showReplay = videoPlayerCubit.state is VideoPlayerLoaded &&
+        videoPlayerCubit.state.nextChap == null;
+    final Widget icon;
 
-        if (!isFinished) {
-          icon = Icon(
-            controller.value.isPlaying
-                ? _controlsConfiguration.pauseIcon
-                : _controlsConfiguration.playIcon,
-            size: 62,
-            color: _controlsConfiguration.iconsColor,
-          );
-        } else if (showReplay) {
-          icon = Icon(
-            Icons.replay,
-            size: 62,
-            color: _controlsConfiguration.iconsColor,
-          );
-        } else {
-          icon = const LoadingWidget(color: Colors.white, withBox: false);
-        }
+    if (!isFinished) {
+      icon = Icon(
+        controller.value.isPlaying
+            ? _controlsConfiguration.pauseIcon
+            : _controlsConfiguration.playIcon,
+        size: 62,
+        color: _controlsConfiguration.iconsColor,
+      );
+    } else if (showReplay) {
+      icon = Icon(
+        Icons.replay,
+        size: 62,
+        color: _controlsConfiguration.iconsColor,
+      );
+    } else {
+      icon = const LoadingWidget(color: Colors.white, withBox: false);
+    }
 
-        return _buildHitAreaClickableButton(
-          icon: icon,
-          onClicked: () {
-            if (isFinished) {
-              if (_latestValue != null && _latestValue!.isPlaying) {
-                if (_displayTapped) {
-                  changePlayerControlsNotVisible(true);
-                } else {
-                  cancelAndRestartTimer();
-                }
-              } else {
-                _onPlayPause();
-                changePlayerControlsNotVisible(true);
-              }
+    return _buildHitAreaClickableButton(
+      icon: icon,
+      onClicked: () {
+        if (isFinished) {
+          if (_latestValue != null && _latestValue!.isPlaying) {
+            if (_displayTapped) {
+              changePlayerControlsNotVisible(true);
             } else {
-              _onPlayPause();
+              cancelAndRestartTimer();
             }
-          },
-        );
+          } else {
+            _onPlayPause();
+            changePlayerControlsNotVisible(true);
+          }
+        } else {
+          _onPlayPause();
+        }
       },
     );
   }

@@ -28,8 +28,8 @@
   "@profile": {
     "description": "Label for the profile navigation item."
   },
-  "settings": "Setting",
-  "@settings": {
+  "setting": "Setting",
+  "@setting": {
     "description": "Label for the settings navigation item."
   },
   "light": "Light",
@@ -193,5 +193,13 @@
   "noChaptersFound": "No chapters found",
   "@noChaptersFound": {
     "description": "Message displayed when no chapters are found."
+  },
+  "today": "Today",
+  "@today": {
+    "description": "Label for today."
+  },
+  "yesterday": "Yesterday",
+  "@yesterday": {
+    "description": "Label for yesterday."
   }
 }

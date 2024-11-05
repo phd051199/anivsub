@@ -1,4 +1,4 @@
-import 'package:anivsub/core/extension/context_extension.dart';
+import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class SectionHeader extends StatelessWidget {

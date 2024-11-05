@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:anivsub/core/base/base.dart';
-import 'package:anivsub/core/di/shared_export.dart';
-import 'package:anivsub/core/extension/string_extension.dart';
-import 'package:anivsub/core/plugin/plugin.dart';
-import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
+import 'package:anivsub/shared/base/base.dart';
+import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/extension/extension.dart';
+import 'package:anivsub/shared/plugin/plugin.dart';
+import 'package:anivsub/shared/utils/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -21,7 +21,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   VideoPlayerCubit(
     this._encryptedHlsUseCase,
     this._episodeSkipUseCase,
-    this._appSettingsUseCase,
+    this._appSettingUseCase,
     this._getSingleProgressUseCase,
     this._setSingleProgressUseCase,
     this._dha,
@@ -29,7 +29,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
 
   final GetEncryptedHlsUseCase _encryptedHlsUseCase;
   final GetEpisodeSkipUsecase _episodeSkipUseCase;
-  final AppSettingsUseCase _appSettingsUseCase;
+  final AppSettingUseCase _appSettingUseCase;
   final GetSingleProgressUseCase _getSingleProgressUseCase;
   final SetSingleProgressUseCase _setSingleProgressUseCase;
   final DHA _dha;
@@ -69,7 +69,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     if (state is! VideoPlayerLoaded) return;
 
     final newSkipIntroValue = !(state.skipIntro ?? false);
-    emit(
+    safeEmit(
       state.copyWith(
         skipIntro: newSkipIntroValue,
         showSkipIntroText: true,
@@ -79,7 +79,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     _skipIntroDebounceTimer?.cancel();
     _skipIntroDebounceTimer = Timer(
       const Duration(seconds: 1),
-      () => _updateAppSettings(skipIntro: newSkipIntroValue),
+      () => _updateAppSetting(skipIntro: newSkipIntroValue),
     );
 
     _scheduleHideSkipIntroText();
@@ -90,7 +90,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     ListEpisodeResponseEntity? listEpisodeSkip,
   ) {
     if (state is! VideoPlayerLoaded || episodes.isEmpty) return;
-    emit(
+    safeEmit(
       state.copyWith(
         chaps: episodes,
         listEpisodeSkip: listEpisodeSkip,
@@ -103,6 +103,9 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
 
     cancelToken?.cancel('Loading new episode');
     cancelToken = CancelToken();
+    safeEmit(
+      state.copyWith(episodeSkip: null),
+    );
 
     try {
       await _prepareForNewEpisode();
@@ -127,7 +130,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
 
   void updateCurrentChap(ChapDataEntity? chap) {
     if (chap == null) return;
-    emit(state.copyWith(currentChap: chap));
+    safeEmit(state.copyWith(currentChap: chap));
   }
 
   @override
@@ -163,6 +166,8 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
       await playerController?.seekTo(
         Duration(seconds: progress.result!.cur!.toInt()),
       );
+    } else {
+      await playerController?.seekTo(Duration.zero);
     }
   }
 
@@ -178,17 +183,17 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   void _scheduleHideSkipIntroText() {
     Future.delayed(
       const Duration(seconds: 2),
-      () => emit(state.copyWith(showSkipIntroText: false)),
+      () => safeEmit(state.copyWith(showSkipIntroText: false)),
     );
   }
 
-  Future<void> _updateAppSettings({required bool skipIntro}) async {
-    final settings = await _appSettingsUseCase.execute(
-      const AppSettingsUseCaseInput(),
+  Future<void> _updateAppSetting({required bool skipIntro}) async {
+    final setting = await _appSettingUseCase.execute(
+      const AppSettingUseCaseInput(),
     );
-    await _appSettingsUseCase.execute(
-      AppSettingsUseCaseInput(
-        appSettings: settings.result?.copyWith(skipIntro: skipIntro),
+    await _appSettingUseCase.execute(
+      AppSettingUseCaseInput(
+        appSetting: setting.result?.copyWith(skipIntro: skipIntro),
       ),
     );
   }
@@ -196,14 +201,8 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   void _updateWatchProgress() async {
     if (state is! VideoPlayerLoaded) return;
 
-    final totalDuration = playerController
-            ?.videoPlayerController?.value.duration?.inSeconds
-            .toDouble() ??
-        0.0;
-    final currentTime = playerController
-            ?.videoPlayerController?.value.position.inSeconds
-            .toDouble() ??
-        0.0;
+    final totalDuration = _getVideoDurationInSeconds().toDouble();
+    final currentTime = _getCurrentPositionInSeconds().toDouble();
 
     try {
       final seasonId = state.animeDetail!.pathToView?.parseSeasonId();
@@ -219,7 +218,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
             seasonId: seasonId!,
             pSeasonName: currentSeason,
             eCur: currentTime,
-            eDur: totalDuration.toInt(),
+            eDur: totalDuration,
             eName: state.currentChap!.name,
             eChap: state.currentChap!.id,
           ),
@@ -269,7 +268,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     ListEpisodeResponseEntity? listEpisodeSkip,
   }) async {
     await _loadEpisodeData(episode, episodes, animeDetail, listEpisodeSkip);
-    await _loadInitialSettings();
+    await _loadInitialSetting();
 
     if (initialPosition != null) {
       await playerController
@@ -281,13 +280,13 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     _setupEventListener();
   }
 
-  Future<void> _loadInitialSettings() async {
+  Future<void> _loadInitialSetting() async {
     if (state is! VideoPlayerLoaded) return;
 
-    final appSettings = await _appSettingsUseCase.execute(
-      const AppSettingsUseCaseInput(),
+    final appSetting = await _appSettingUseCase.execute(
+      const AppSettingUseCaseInput(),
     );
-    emit(state.copyWith(skipIntro: appSettings.result?.skipIntro));
+    safeEmit(state.copyWith(skipIntro: appSetting.result?.skipIntro));
   }
 
   Future<void> _loadEpisodeData(
@@ -299,7 +298,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     await _setupVideoSource(episode);
     final nextEpisode = _getAdjacentEpisode(episodes, episode, next: true);
 
-    emit(
+    safeEmit(
       _getVideoPlayerLoadedState(
         episodes: episodes,
         episode: episode,
@@ -388,12 +387,12 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     return (state.skipIntro ?? false) && !_isSkipTriggered;
   }
 
-  void _trySkipSection(Duration position, InOutro section) {
+  void _trySkipSection(Duration position, InOutro section) async {
     if (position.inSeconds >= section.start &&
         position.inSeconds < section.end &&
         section.end > section.start) {
       _isSkipTriggered = true;
-      playerController?.seekTo(Duration(seconds: section.end));
+      await playerController?.seekTo(Duration(seconds: section.end));
       _isSkipTriggered = false;
     }
   }
@@ -462,7 +461,9 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
         ),
       );
 
-      emit(state.copyWith(episodeSkip: episodeSkipOutput.result));
+      final result = _adjustOutroEndTime(episodeSkipOutput.result);
+
+      safeEmit(state.copyWith(episodeSkip: result));
     } catch (e) {
       log.e('Error loading episode skip info: $e');
     }
@@ -490,7 +491,15 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     if (element.name.extractFirstInt() == episode.name.extractFirstInt()) {
       return true;
     }
-    return episodes.length == 1 && episode.name.isNotNumeric();
+
+    if (state.chaps.length == episodes.length) {
+      final currentIndex = state.chaps.indexOf(episode);
+      final episodeIndex = episodes.indexOf(element);
+
+      return currentIndex == episodeIndex;
+    }
+
+    return false;
   }
 
   void _onPlayerEvent(BetterPlayerEvent event) async {
@@ -498,9 +507,11 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
       case BetterPlayerEventType.finished:
         await _handleEpisodeFinished();
         break;
+
       case BetterPlayerEventType.progress:
         _handleVideoProgress();
         break;
+
       default:
         break;
     }
@@ -522,10 +533,33 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }
 
   void _resetState() {
-    emit(
+    safeEmit(
       state.copyWith(
         chaps: [],
         currentChap: ChapDataEntity.mockup(),
+        nextChap: null,
+        episodeSkip: null,
+      ),
+    );
+  }
+
+  int _getCurrentPositionInSeconds() =>
+      playerController?.videoPlayerController?.value.position.inSeconds ?? 0;
+
+  int _getVideoDurationInSeconds() =>
+      playerController?.videoPlayerController?.value.duration?.inSeconds ?? 0;
+
+  EpisodeSkipResponseEntity _adjustOutroEndTime(
+    EpisodeSkipResponseEntity episodeSkipResult,
+  ) {
+    final videoDuration = _getVideoDurationInSeconds().toInt();
+    final outroEnd = episodeSkipResult.outro.end;
+    final adjustedOutroEnd =
+        outroEnd > videoDuration ? videoDuration : outroEnd;
+
+    return episodeSkipResult.copyWith(
+      outro: episodeSkipResult.outro.copyWith(
+        end: adjustedOutroEnd,
       ),
     );
   }

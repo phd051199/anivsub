@@ -1,11 +1,11 @@
 import 'package:anivsub/app/routes/go_router_config.dart';
-import 'package:anivsub/core/base/base.dart';
-import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/search/bloc/search_bloc.dart';
 import 'package:anivsub/presentation/screen/search/widget/search_results.dart';
 import 'package:anivsub/presentation/screen/search/widget/suggestion_image.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/shared/base/base.dart';
+import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -29,6 +29,17 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
     super.initState();
     _initPagingController();
     _onPageRequest(_initPage);
+    _setupInputListener();
+  }
+
+  void _setupInputListener() {
+    _searchInputController.addListener(() {
+      bloc.add(
+        SetClearButton(
+          show: _searchInputController.text.isNotEmpty,
+        ),
+      );
+    });
   }
 
   void _initPagingController() {
@@ -39,7 +50,12 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
   }
 
   void _onPageRequest(int pageKey) {
-    bloc.add(LoadSearch(keyword: _searchInputController.text, page: pageKey));
+    bloc.add(
+      LoadSearch(
+        keyword: _searchInputController.text,
+        page: pageKey,
+      ),
+    );
   }
 
   @override
@@ -66,26 +82,23 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
   }
 
   Widget _buildContent(BuildContext context, SearchState state) {
-    return GestureDetector(
-      onTap: context.focusScope.unfocus,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
-          child: Column(
-            children: [
-              SearchForm(
-                controller: _searchInputController,
-                onSearch: () => _onSearch(context),
-                suggestionsCallback: bloc.suggestionsCallback,
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
+        child: Column(
+          children: [
+            SearchForm(
+              controller: _searchInputController,
+              onSearch: () => _onSearch(context),
+              suggestionsCallback: bloc.suggestionsCallback,
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: SearchResults(
+                pagingController: _pagingController,
               ),
-              const SizedBox(height: 8),
-              Expanded(
-                child: SearchResults(
-                  pagingController: _pagingController,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -138,15 +151,18 @@ class SearchForm extends StatelessWidget {
     FocusNode focusNode,
   ) {
     return TextFormField(
+      onTapOutside: (_) => context.focusScope.unfocus(),
       focusNode: focusNode,
       controller: controller,
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.search),
         hintText: context.l10n.searchHint,
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.clear),
-          onPressed: controller.clear,
-        ),
+        suffixIcon: context.read<SearchBloc>().state.showClearButton
+            ? IconButton(
+                icon: const Icon(Icons.clear),
+                onPressed: controller.clear,
+              )
+            : null,
       ),
       onFieldSubmitted: (_) => onSearch(),
     );

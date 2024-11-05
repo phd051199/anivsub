@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AnimeRepository)
 class AnimeRepositoryImpl implements AnimeRepository {
-  AnimeRepositoryImpl(
+  const AnimeRepositoryImpl(
     this._animeRemoteDataSource,
     this._episodeSkipRemoteDataSource,
   );

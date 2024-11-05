@@ -38,7 +38,7 @@ class ProfileContent extends StatelessWidget {
     final groupedMap = <DateTime, List<QueryHistoryEntity?>>{};
     if (history == null) return groupedMap;
 
-    for (var item in history) {
+    for (final item in history) {
       if (item is QueryHistoryEntity) {
         final date = item.createdAt?.toLocal();
         if (date == null) continue;

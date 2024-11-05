@@ -6,7 +6,9 @@ part 'refresh_user_session_request_dto.freezed.dart';
 part 'refresh_user_session_request_dto.g.dart';
 
 @freezed
-class RefreshUserSessionRequestDTO extends BaseDTO<RefreshUserSessionRequestEntity> with _$RefreshUserSessionRequestDTO {
+class RefreshUserSessionRequestDTO
+    extends BaseDTO<RefreshUserSessionRequestEntity>
+    with _$RefreshUserSessionRequestDTO {
   const factory RefreshUserSessionRequestDTO({
     required String refreshToken,
     int? expiresInMins,

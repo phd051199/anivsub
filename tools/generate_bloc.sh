@@ -64,7 +64,7 @@ EOL
 
 if [ "$with_bloc" == "true" ]; then
   cat <<EOL >> "$view_dir/${feature_name}_page.dart"
-import 'package:$package_name/core/base/base.dart';
+import 'package:$package_name/shared/base/base.dart';
 import 'package:$package_name/presentation/widget/loading_widget.dart';
 import 'package:$package_name/presentation/screen/$feature_name/bloc/${feature_name}_bloc.dart';
 
@@ -114,7 +114,7 @@ EOL
 
 elif [ "$with_cubit" == "true" ]; then
   cat <<EOL >> "$view_dir/${feature_name}_page.dart"
-import 'package:$package_name/core/base/base.dart';
+import 'package:$package_name/shared/base/base.dart';
 import 'package:$package_name/presentation/widget/loading_widget.dart';
 import 'package:$package_name/presentation/screen/$feature_name/cubit/${feature_name}_cubit.dart';
 
@@ -162,7 +162,8 @@ if [ "$with_bloc" == "true" ]; then
   
   # Create bloc, event, state files
   cat <<EOL > "$bloc_dir/${feature_name}_bloc.dart"
-import 'package:$package_name/core/base/base.dart';
+import 'package:$package_name/shared/base/base.dart';
+import 'package:$package_name/shared/extension/extension.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -179,11 +180,11 @@ class ${capitalized_feature_name}Bloc extends BaseBloc<${capitalized_feature_nam
   }
 
   void _onLoad${capitalized_feature_name}(Load${capitalized_feature_name} event, Emitter<${capitalized_feature_name}State> emit) {
-    emit(${capitalized_feature_name}Loaded());
+    safeEmit(${capitalized_feature_name}Loaded());
   }
 
   void _onError${capitalized_feature_name}(Error${capitalized_feature_name} event, Emitter<${capitalized_feature_name}State> emit) {
-    emit(${capitalized_feature_name}Error('An error occurred'));
+    safeEmit(${capitalized_feature_name}Error('An error occurred'));
   }
 }
 EOL
@@ -191,7 +192,7 @@ EOL
   cat <<EOL > "$bloc_dir/${feature_name}_event.dart"
 part of '${feature_name}_bloc.dart';
 
-abstract class ${capitalized_feature_name}Event extends BaseBlocEvent {}
+sealed class ${capitalized_feature_name}Event extends BaseBlocEvent {}
 
 @freezed
 class Load${capitalized_feature_name} extends ${capitalized_feature_name}Event with _\$Load${capitalized_feature_name} {
@@ -223,7 +224,8 @@ if [ "$with_cubit" == "true" ]; then
 
   # Create cubit and state files
   cat <<EOL > "$cubit_dir/${feature_name}_cubit.dart"
-import 'package:$package_name/core/base/base.dart';
+import 'package:$package_name/shared/base/base.dart';
+import 'package:$package_name/shared/extension/extension.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -235,13 +237,13 @@ class ${capitalized_feature_name}Cubit extends BaseCubit<${capitalized_feature_n
   ${capitalized_feature_name}Cubit() : super(${capitalized_feature_name}Initial());
 
   void load() {
-    emit(${capitalized_feature_name}Loading());
+    safeEmit(${capitalized_feature_name}Loading());
     // Add your loading logic here
-    emit(${capitalized_feature_name}Loaded());
+    safeEmit(${capitalized_feature_name}Loaded());
   }
 
   void error() {
-    emit(${capitalized_feature_name}Error('An error occurred'));
+    safeEmit(${capitalized_feature_name}Error('An error occurred'));
   }
 }
 EOL

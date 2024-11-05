@@ -1,9 +1,9 @@
-import 'package:anivsub/core/extension/context_extension.dart';
-import 'package:anivsub/core/extension/number_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/widget/detail_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/empty_player.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/shared/extension/context_extension.dart';
+import 'package:anivsub/shared/extension/number_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:skeletonizer/skeletonizer.dart';

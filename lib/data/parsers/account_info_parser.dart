@@ -1,8 +1,10 @@
-import 'package:anivsub/core/const/const.dart';
+import 'package:anivsub/shared/const/const.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
 
 class AccountInfoParser {
+  const AccountInfoParser._();
+
   static String parseError(String html) {
     final document = parser.parse(html);
     return document.querySelector('.alert-error')?.text.split(':')[1].trim() ??

@@ -7,6 +7,7 @@ class SearchState extends BaseBlocState with _$SearchState {
     bool? hasReachedMax,
     @Default(1) int currentPage,
     List<PreSearchItemEntity>? preSearchItems,
+    @Default(false) showClearButton,
   }) = SearchInitial;
 
   const factory SearchState.loaded({
@@ -14,6 +15,7 @@ class SearchState extends BaseBlocState with _$SearchState {
     required bool hasReachedMax,
     @Default(1) int currentPage,
     List<PreSearchItemEntity>? preSearchItems,
+    @Default(false) showClearButton,
   }) = SearchLoaded;
 
   const factory SearchState.error({
@@ -22,5 +24,6 @@ class SearchState extends BaseBlocState with _$SearchState {
     bool? hasReachedMax,
     @Default(1) int currentPage,
     List<PreSearchItemEntity>? preSearchItems,
+    @Default(false) showClearButton,
   }) = SearchError;
 }

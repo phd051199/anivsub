@@ -1,6 +1,7 @@
-import 'package:anivsub/core/base/base.dart';
-import 'package:anivsub/core/di/shared_export.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/shared/base/base.dart';
+import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/extension/extension.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -18,7 +19,7 @@ class LoginCubit extends BaseCubit<LoginState> {
 
   void togglePasswordVisibility() {
     final isPasswordVisible = !state.isPasswordObscured;
-    emit(
+    safeEmit(
       LoginLoaded(
         isPasswordObscured: isPasswordVisible,
       ),
@@ -26,7 +27,7 @@ class LoginCubit extends BaseCubit<LoginState> {
   }
 
   void getUserSession(UserSessionRequestEntity request) async {
-    emit(
+    safeEmit(
       LoginLoading(
         isPasswordObscured: state.isPasswordObscured,
       ),
@@ -39,7 +40,7 @@ class LoginCubit extends BaseCubit<LoginState> {
 
       await authNotifier.doLogin(output.sessionResult);
     } catch (error) {
-      emit(
+      safeEmit(
         LoginError(
           message: error.toString(),
           isPasswordObscured: state.isPasswordObscured,

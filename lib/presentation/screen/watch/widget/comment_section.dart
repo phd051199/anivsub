@@ -1,13 +1,11 @@
-import 'dart:io' as io;
-
-import 'package:anivsub/core/const/const.dart';
-import 'package:anivsub/core/di/shared_export.dart';
-import 'package:anivsub/core/extension/extension.dart';
-import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
 import 'package:anivsub/presentation/widget/web_view.dart';
+import 'package:anivsub/shared/const/const.dart';
+import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/extension/extension.dart';
+import 'package:anivsub/shared/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:comment_tree/comment_tree.dart';
@@ -59,19 +57,16 @@ class _CommentSectionState extends State<CommentSection> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: context.focusScope.unfocus,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxHeight: context.screenSize.height * 0.6,
-        ),
-        child: ListView(
-          controller: _scrollController,
-          children: [
-            _buildCommentInput(),
-            _buildCommentList(),
-          ],
-        ),
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: context.screenSize.height * 0.6,
+      ),
+      child: ListView(
+        controller: _scrollController,
+        children: [
+          _buildCommentInput(),
+          _buildCommentList(),
+        ],
       ),
     );
   }
@@ -153,7 +148,7 @@ class _CommentSectionState extends State<CommentSection> {
     final headlessWebView = HeadlessInAppWebView(
       initialUrlRequest: URLRequest(url: WebUri(fbBaseUrl)),
       onLoadStop: (controller, url) async {
-        await _getCookiesAndSetInDio();
+        await CookiesUtils.getCookiesAndSetInDio(fbBaseUrl);
         controller.dispose();
       },
     );
@@ -185,7 +180,7 @@ class _CommentSectionState extends State<CommentSection> {
     final html = await controller.getHtml();
 
     if (html?.contains('password') == false) {
-      await _getCookiesAndSetInDio();
+      await CookiesUtils.getCookiesAndSetInDio(fbBaseUrl);
 
       if (context.mounted) {
         Navigator.of(context).pop();
@@ -198,33 +193,6 @@ class _CommentSectionState extends State<CommentSection> {
     if (mounted) {
       context.read<WatchBloc>().add(const GetFbCookies());
     }
-  }
-
-  Future<void> _getCookiesAndSetInDio() async {
-    try {
-      List<Cookie> cookies =
-          await CookieManager.instance().getCookies(url: WebUri(fbBaseUrl));
-
-      if (cookies.isNotEmpty) {
-        await cookieJar.saveFromResponse(
-          Uri.parse(fbBaseUrl),
-          cookies.map(_convertToIOCookie).toList(),
-        );
-      }
-    } catch (e) {
-      log.e('Error getting cookies and setting in dio $e');
-    }
-  }
-
-  io.Cookie _convertToIOCookie(Cookie cookie) {
-    return io.Cookie(cookie.name, cookie.value)
-      ..domain = cookie.domain
-      ..path = cookie.path
-      ..expires = cookie.expiresDate != null
-          ? DateTime.fromMillisecondsSinceEpoch(cookie.expiresDate!.toInt())
-          : null
-      ..httpOnly = cookie.isHttpOnly ?? false
-      ..secure = cookie.isSecure ?? false;
   }
 
   void _handleDeleteComment(String commentId) {
@@ -276,7 +244,7 @@ class CommentInputField extends StatelessWidget {
                       await cookieJar.deleteAll();
                       if (context.mounted) {
                         context.showSnackBar('Logged out');
-                        context.read<WatchBloc>().add(const Logout());
+                        context.read<WatchBloc>().add(const LogoutFb());
                       }
                     },
                     child: const Text('Logout'),
@@ -295,6 +263,7 @@ class CommentInputField extends StatelessWidget {
           const Gap(8),
           Expanded(
             child: TextField(
+              onTapOutside: (_) => context.focusScope.unfocus(),
               controller: textController,
               decoration: InputDecoration(
                 hintText: context.l10n.commentHint,

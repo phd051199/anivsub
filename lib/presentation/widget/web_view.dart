@@ -10,7 +10,6 @@ class WebView extends StatelessWidget {
   Widget build(BuildContext context) {
     return InAppWebView(
       initialUrlRequest: URLRequest(url: WebUri(url)),
-      initialSettings: InAppWebViewSettings(),
       onLoadStop: (controller, url) => onLoadStop(controller, context),
     );
   }

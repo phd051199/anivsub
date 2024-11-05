@@ -1,6 +1,6 @@
 part of 'search_bloc.dart';
 
-abstract class SearchEvent extends BaseBlocEvent {}
+sealed class SearchEvent extends BaseBlocEvent {}
 
 @freezed
 class LoadSearch extends SearchEvent with _$LoadSearch {
@@ -8,4 +8,11 @@ class LoadSearch extends SearchEvent with _$LoadSearch {
     required String keyword,
     required int page,
   }) = _LoadSearch;
+}
+
+@freezed
+class SetClearButton extends SearchEvent with _$SetClearButton {
+  const factory SetClearButton({
+    required bool show,
+  }) = _SetClearButton;
 }

@@ -1,7 +1,7 @@
 import 'package:anivsub/app/theme/const/theme_colors.dart';
 import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
-import 'package:anivsub/core/extension/context_extension.dart';
-import 'package:anivsub/presentation/screen/setting/cubit/settings_cubit.dart';
+import 'package:anivsub/presentation/screen/setting/cubit/setting_cubit.dart';
+import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,11 +28,11 @@ class _ThemeColorWidgetState extends State<ThemeColorWidget>
               const SizedBox(height: 8),
               NotificationListener<ScrollNotification>(
                 onNotification: (scrollNotification) {
-                  final settingsCubit = context.read<SettingsCubit>();
+                  final settingCubit = context.read<SettingCubit>();
                   if (scrollNotification is ScrollStartNotification) {
-                    settingsCubit.toggleHintVisibility();
+                    settingCubit.toggleHintVisibility();
                   } else if (scrollNotification is ScrollEndNotification) {
-                    settingsCubit.toggleHintVisibility();
+                    settingCubit.toggleHintVisibility();
                   }
                   return true;
                 },
@@ -43,11 +43,7 @@ class _ThemeColorWidgetState extends State<ThemeColorWidget>
                         .map(
                           (color) =>
                               color.value ==
-                              context
-                                  .read<ThemeCubit>()
-                                  .state
-                                  .appSettings
-                                  .color,
+                              context.read<ThemeCubit>().state.appSetting.color,
                         )
                         .toList(),
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -83,7 +79,7 @@ class _ThemeColorWidgetState extends State<ThemeColorWidget>
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut,
           child: Visibility(
-            visible: context.watch<SettingsCubit>().state.isHintVisible,
+            visible: context.watch<SettingCubit>().state.isHintVisible,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(

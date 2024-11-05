@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: EpisodeSkipRemoteDataSource)
 class EpisodeSkipRemoteDataSourceImpl implements EpisodeSkipRemoteDataSource {
-  EpisodeSkipRemoteDataSourceImpl(this.client);
+  const EpisodeSkipRemoteDataSourceImpl(this.client);
   final EpisodeSkipApiClient client;
 
   @override

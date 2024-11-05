@@ -15,7 +15,7 @@ class SetSingleProgressEntity extends BaseEntity<SetSingleProgressDTO>
     @JsonKey(name: 'season_id') String? seasonId,
     @JsonKey(name: 'p_season_name') String? pSeasonName,
     @JsonKey(name: 'e_cur') double? eCur,
-    @JsonKey(name: 'e_dur') int? eDur,
+    @JsonKey(name: 'e_dur') double? eDur,
     @JsonKey(name: 'e_name') String? eName,
     @JsonKey(name: 'e_chap') String? eChap,
     @JsonKey(name: 'gmt') @Default('Asia/Ho_Chi_Minh') String? gmt,

@@ -288,36 +288,36 @@ abstract class _LoadWatch implements LoadWatch {
 }
 
 /// @nodoc
-mixin _$LoadComment {
+mixin _$LoadComments {
   String get id => throw _privateConstructorUsedError;
 
-  /// Create a copy of LoadComment
+  /// Create a copy of LoadComments
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $LoadCommentCopyWith<LoadComment> get copyWith =>
+  $LoadCommentsCopyWith<LoadComments> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $LoadCommentCopyWith<$Res> {
-  factory $LoadCommentCopyWith(
-          LoadComment value, $Res Function(LoadComment) then) =
-      _$LoadCommentCopyWithImpl<$Res, LoadComment>;
+abstract class $LoadCommentsCopyWith<$Res> {
+  factory $LoadCommentsCopyWith(
+          LoadComments value, $Res Function(LoadComments) then) =
+      _$LoadCommentsCopyWithImpl<$Res, LoadComments>;
   @useResult
   $Res call({String id});
 }
 
 /// @nodoc
-class _$LoadCommentCopyWithImpl<$Res, $Val extends LoadComment>
-    implements $LoadCommentCopyWith<$Res> {
-  _$LoadCommentCopyWithImpl(this._value, this._then);
+class _$LoadCommentsCopyWithImpl<$Res, $Val extends LoadComments>
+    implements $LoadCommentsCopyWith<$Res> {
+  _$LoadCommentsCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of LoadComment
+  /// Create a copy of LoadComments
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -334,32 +334,32 @@ class _$LoadCommentCopyWithImpl<$Res, $Val extends LoadComment>
 }
 
 /// @nodoc
-abstract class _$$LoadCommentImplCopyWith<$Res>
-    implements $LoadCommentCopyWith<$Res> {
-  factory _$$LoadCommentImplCopyWith(
-          _$LoadCommentImpl value, $Res Function(_$LoadCommentImpl) then) =
-      __$$LoadCommentImplCopyWithImpl<$Res>;
+abstract class _$$LoadCommentsImplCopyWith<$Res>
+    implements $LoadCommentsCopyWith<$Res> {
+  factory _$$LoadCommentsImplCopyWith(
+          _$LoadCommentsImpl value, $Res Function(_$LoadCommentsImpl) then) =
+      __$$LoadCommentsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id});
 }
 
 /// @nodoc
-class __$$LoadCommentImplCopyWithImpl<$Res>
-    extends _$LoadCommentCopyWithImpl<$Res, _$LoadCommentImpl>
-    implements _$$LoadCommentImplCopyWith<$Res> {
-  __$$LoadCommentImplCopyWithImpl(
-      _$LoadCommentImpl _value, $Res Function(_$LoadCommentImpl) _then)
+class __$$LoadCommentsImplCopyWithImpl<$Res>
+    extends _$LoadCommentsCopyWithImpl<$Res, _$LoadCommentsImpl>
+    implements _$$LoadCommentsImplCopyWith<$Res> {
+  __$$LoadCommentsImplCopyWithImpl(
+      _$LoadCommentsImpl _value, $Res Function(_$LoadCommentsImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LoadComment
+  /// Create a copy of LoadComments
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
   }) {
-    return _then(_$LoadCommentImpl(
+    return _then(_$LoadCommentsImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -370,48 +370,48 @@ class __$$LoadCommentImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadCommentImpl implements _LoadComment {
-  const _$LoadCommentImpl({required this.id});
+class _$LoadCommentsImpl implements _LoadComments {
+  const _$LoadCommentsImpl({required this.id});
 
   @override
   final String id;
 
   @override
   String toString() {
-    return 'LoadComment(id: $id)';
+    return 'LoadComments(id: $id)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadCommentImpl &&
+            other is _$LoadCommentsImpl &&
             (identical(other.id, id) || other.id == id));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id);
 
-  /// Create a copy of LoadComment
+  /// Create a copy of LoadComments
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$LoadCommentImplCopyWith<_$LoadCommentImpl> get copyWith =>
-      __$$LoadCommentImplCopyWithImpl<_$LoadCommentImpl>(this, _$identity);
+  _$$LoadCommentsImplCopyWith<_$LoadCommentsImpl> get copyWith =>
+      __$$LoadCommentsImplCopyWithImpl<_$LoadCommentsImpl>(this, _$identity);
 }
 
-abstract class _LoadComment implements LoadComment {
-  const factory _LoadComment({required final String id}) = _$LoadCommentImpl;
+abstract class _LoadComments implements LoadComments {
+  const factory _LoadComments({required final String id}) = _$LoadCommentsImpl;
 
   @override
   String get id;
 
-  /// Create a copy of LoadComment
+  /// Create a copy of LoadComments
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoadCommentImplCopyWith<_$LoadCommentImpl> get copyWith =>
+  _$$LoadCommentsImplCopyWith<_$LoadCommentsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -939,69 +939,69 @@ abstract class _GetFbCookies implements GetFbCookies {
 }
 
 /// @nodoc
-mixin _$Logout {}
+mixin _$LogoutFb {}
 
 /// @nodoc
-abstract class $LogoutCopyWith<$Res> {
-  factory $LogoutCopyWith(Logout value, $Res Function(Logout) then) =
-      _$LogoutCopyWithImpl<$Res, Logout>;
+abstract class $LogoutFbCopyWith<$Res> {
+  factory $LogoutFbCopyWith(LogoutFb value, $Res Function(LogoutFb) then) =
+      _$LogoutFbCopyWithImpl<$Res, LogoutFb>;
 }
 
 /// @nodoc
-class _$LogoutCopyWithImpl<$Res, $Val extends Logout>
-    implements $LogoutCopyWith<$Res> {
-  _$LogoutCopyWithImpl(this._value, this._then);
+class _$LogoutFbCopyWithImpl<$Res, $Val extends LogoutFb>
+    implements $LogoutFbCopyWith<$Res> {
+  _$LogoutFbCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Logout
+  /// Create a copy of LogoutFb
   /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
-abstract class _$$LogoutImplCopyWith<$Res> {
-  factory _$$LogoutImplCopyWith(
-          _$LogoutImpl value, $Res Function(_$LogoutImpl) then) =
-      __$$LogoutImplCopyWithImpl<$Res>;
+abstract class _$$LogoutFbImplCopyWith<$Res> {
+  factory _$$LogoutFbImplCopyWith(
+          _$LogoutFbImpl value, $Res Function(_$LogoutFbImpl) then) =
+      __$$LogoutFbImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LogoutImplCopyWithImpl<$Res>
-    extends _$LogoutCopyWithImpl<$Res, _$LogoutImpl>
-    implements _$$LogoutImplCopyWith<$Res> {
-  __$$LogoutImplCopyWithImpl(
-      _$LogoutImpl _value, $Res Function(_$LogoutImpl) _then)
+class __$$LogoutFbImplCopyWithImpl<$Res>
+    extends _$LogoutFbCopyWithImpl<$Res, _$LogoutFbImpl>
+    implements _$$LogoutFbImplCopyWith<$Res> {
+  __$$LogoutFbImplCopyWithImpl(
+      _$LogoutFbImpl _value, $Res Function(_$LogoutFbImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Logout
+  /// Create a copy of LogoutFb
   /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$LogoutImpl implements _Logout {
-  const _$LogoutImpl();
+class _$LogoutFbImpl implements _LogoutFb {
+  const _$LogoutFbImpl();
 
   @override
   String toString() {
-    return 'Logout()';
+    return 'LogoutFb()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LogoutImpl);
+        (other.runtimeType == runtimeType && other is _$LogoutFbImpl);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class _Logout implements Logout {
-  const factory _Logout() = _$LogoutImpl;
+abstract class _LogoutFb implements LogoutFb {
+  const factory _LogoutFb() = _$LogoutFbImpl;
 }
 
 /// @nodoc

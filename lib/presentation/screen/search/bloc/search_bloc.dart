@@ -1,5 +1,6 @@
-import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/shared/base/base.dart';
+import 'package:anivsub/shared/extension/extension.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -15,6 +16,7 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
     this._getPreSearchUseCase,
   ) : super(const SearchInitial()) {
     on<LoadSearch>(_onLoadSearch);
+    on<SetClearButton>(_onSetClearButton);
   }
 
   final SearchAnimeUseCase _searchAnimeUseCase;
@@ -35,6 +37,12 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
     LoadSearch event,
     Emitter<SearchState> emit,
   ) async {
+    safeEmit(
+      SearchInitial(
+        showClearButton: event.keyword.isNotEmpty,
+      ),
+    );
+
     try {
       final output = await _searchAnimeUseCase.execute(
         SearchAnimeUseCaseInput(
@@ -46,20 +54,23 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
       final items = output.result.items;
       final hasReachedMax = items.length < _pageSize;
 
-      emit(
+      safeEmit(
         items.isNotEmpty
             ? SearchLoaded(
                 result: output.result,
                 hasReachedMax: hasReachedMax,
                 currentPage: event.page,
+                showClearButton: event.keyword.isNotEmpty,
               )
-            : const SearchLoaded(
+            : SearchLoaded(
                 hasReachedMax: true,
-                result: SearchResultEntity(items: []),
+                result: const SearchResultEntity(items: []),
+                currentPage: 0,
+                showClearButton: event.keyword.isNotEmpty,
               ),
       );
     } catch (e) {
-      emit(
+      safeEmit(
         SearchError(
           message: 'An error occurred: $e',
           result: state.result,
@@ -69,5 +80,14 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
         ),
       );
     }
+  }
+
+  void _onSetClearButton(
+    SetClearButton event,
+    Emitter<SearchState> emit,
+  ) {
+    safeEmit(
+      state.copyWith(showClearButton: event.show),
+    );
   }
 }

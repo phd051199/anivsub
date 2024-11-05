@@ -2,6 +2,8 @@ import 'package:anivsub/data/data_exports.dart';
 import 'package:html/parser.dart' as parser;
 
 class PlayDataParser {
+  const PlayDataParser._();
+
   static PlayDataDTO parse(String html) {
     final document = parser.parse(html);
 

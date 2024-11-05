@@ -1,12 +1,12 @@
 import 'package:anivsub/app/notifier/auth_notifier.dart';
-import 'package:anivsub/core/di/shared_export.dart';
+import 'package:anivsub/presentation/screen/bottom_navigation.dart';
 import 'package:anivsub/presentation/screen/home/home.dart';
 import 'package:anivsub/presentation/screen/login/login.dart';
-import 'package:anivsub/presentation/screen/navigation_bar.dart';
 import 'package:anivsub/presentation/screen/profile/profile.dart';
 import 'package:anivsub/presentation/screen/search/search.dart';
-import 'package:anivsub/presentation/screen/setting/settings.dart';
+import 'package:anivsub/presentation/screen/setting/setting.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
+import 'package:anivsub/shared/di/shared_export.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -70,7 +70,7 @@ final _bottomNavigationRoute = StatefulShellRoute.indexedStack(
       routes: [_profileRoute],
     ),
     StatefulShellBranch(
-      routes: [_settingsRoute],
+      routes: [_settingRoute],
     ),
   ],
 );
@@ -93,8 +93,8 @@ final _profileRoute = GoRoute(
   builder: (context, state) => const ProfilePage(),
 );
 
-final _settingsRoute = GoRoute(
-  name: ScreenNames.settings,
-  path: ScreenPaths.settings,
-  builder: (context, state) => const SettingsPage(),
+final _settingRoute = GoRoute(
+  name: ScreenNames.setting,
+  path: ScreenPaths.setting,
+  builder: (context, state) => const SettingPage(),
 );

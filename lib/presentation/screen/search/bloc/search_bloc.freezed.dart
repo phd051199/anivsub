@@ -161,60 +161,218 @@ abstract class _LoadSearch implements LoadSearch {
 }
 
 /// @nodoc
+mixin _$SetClearButton {
+  bool get show => throw _privateConstructorUsedError;
+
+  /// Create a copy of SetClearButton
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $SetClearButtonCopyWith<SetClearButton> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SetClearButtonCopyWith<$Res> {
+  factory $SetClearButtonCopyWith(
+          SetClearButton value, $Res Function(SetClearButton) then) =
+      _$SetClearButtonCopyWithImpl<$Res, SetClearButton>;
+  @useResult
+  $Res call({bool show});
+}
+
+/// @nodoc
+class _$SetClearButtonCopyWithImpl<$Res, $Val extends SetClearButton>
+    implements $SetClearButtonCopyWith<$Res> {
+  _$SetClearButtonCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of SetClearButton
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? show = null,
+  }) {
+    return _then(_value.copyWith(
+      show: null == show
+          ? _value.show
+          : show // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$SetClearButtonImplCopyWith<$Res>
+    implements $SetClearButtonCopyWith<$Res> {
+  factory _$$SetClearButtonImplCopyWith(_$SetClearButtonImpl value,
+          $Res Function(_$SetClearButtonImpl) then) =
+      __$$SetClearButtonImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool show});
+}
+
+/// @nodoc
+class __$$SetClearButtonImplCopyWithImpl<$Res>
+    extends _$SetClearButtonCopyWithImpl<$Res, _$SetClearButtonImpl>
+    implements _$$SetClearButtonImplCopyWith<$Res> {
+  __$$SetClearButtonImplCopyWithImpl(
+      _$SetClearButtonImpl _value, $Res Function(_$SetClearButtonImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SetClearButton
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? show = null,
+  }) {
+    return _then(_$SetClearButtonImpl(
+      show: null == show
+          ? _value.show
+          : show // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SetClearButtonImpl implements _SetClearButton {
+  const _$SetClearButtonImpl({required this.show});
+
+  @override
+  final bool show;
+
+  @override
+  String toString() {
+    return 'SetClearButton(show: $show)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SetClearButtonImpl &&
+            (identical(other.show, show) || other.show == show));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, show);
+
+  /// Create a copy of SetClearButton
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SetClearButtonImplCopyWith<_$SetClearButtonImpl> get copyWith =>
+      __$$SetClearButtonImplCopyWithImpl<_$SetClearButtonImpl>(
+          this, _$identity);
+}
+
+abstract class _SetClearButton implements SetClearButton {
+  const factory _SetClearButton({required final bool show}) =
+      _$SetClearButtonImpl;
+
+  @override
+  bool get show;
+
+  /// Create a copy of SetClearButton
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SetClearButtonImplCopyWith<_$SetClearButtonImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$SearchState {
   SearchResultEntity? get result => throw _privateConstructorUsedError;
   bool? get hasReachedMax => throw _privateConstructorUsedError;
   int get currentPage => throw _privateConstructorUsedError;
   List<PreSearchItemEntity>? get preSearchItems =>
       throw _privateConstructorUsedError;
+  dynamic get showClearButton => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(SearchResultEntity? result, bool? hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)
+    required TResult Function(
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)
         initial,
-    required TResult Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)
+    required TResult Function(
+            SearchResultEntity result,
+            bool hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)
         loaded,
     required TResult Function(
             String message,
             SearchResultEntity? result,
             bool? hasReachedMax,
             int currentPage,
-            List<PreSearchItemEntity>? preSearchItems)
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SearchResultEntity? result, bool? hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult? Function(
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         initial,
-    TResult? Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult? Function(
+            SearchResultEntity result,
+            bool hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         loaded,
     TResult? Function(
             String message,
             SearchResultEntity? result,
             bool? hasReachedMax,
             int currentPage,
-            List<PreSearchItemEntity>? preSearchItems)?
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SearchResultEntity? result, bool? hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult Function(
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         initial,
-    TResult Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult Function(
+            SearchResultEntity result,
+            bool hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         loaded,
     TResult Function(
             String message,
             SearchResultEntity? result,
             bool? hasReachedMax,
             int currentPage,
-            List<PreSearchItemEntity>? preSearchItems)?
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         error,
     required TResult orElse(),
   }) =>
@@ -259,7 +417,8 @@ abstract class $SearchStateCopyWith<$Res> {
       {SearchResultEntity result,
       bool hasReachedMax,
       int currentPage,
-      List<PreSearchItemEntity>? preSearchItems});
+      List<PreSearchItemEntity>? preSearchItems,
+      dynamic showClearButton});
 
   $SearchResultEntityCopyWith<$Res>? get result;
 }
@@ -283,6 +442,7 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     Object? hasReachedMax = null,
     Object? currentPage = null,
     Object? preSearchItems = freezed,
+    Object? showClearButton = freezed,
   }) {
     return _then(_value.copyWith(
       result: null == result
@@ -301,6 +461,10 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           ? _value.preSearchItems
           : preSearchItems // ignore: cast_nullable_to_non_nullable
               as List<PreSearchItemEntity>?,
+      showClearButton: freezed == showClearButton
+          ? _value.showClearButton
+          : showClearButton // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
   }
 
@@ -331,7 +495,8 @@ abstract class _$$SearchInitialImplCopyWith<$Res>
       {SearchResultEntity? result,
       bool? hasReachedMax,
       int currentPage,
-      List<PreSearchItemEntity>? preSearchItems});
+      List<PreSearchItemEntity>? preSearchItems,
+      dynamic showClearButton});
 
   @override
   $SearchResultEntityCopyWith<$Res>? get result;
@@ -354,6 +519,7 @@ class __$$SearchInitialImplCopyWithImpl<$Res>
     Object? hasReachedMax = freezed,
     Object? currentPage = null,
     Object? preSearchItems = freezed,
+    Object? showClearButton = freezed,
   }) {
     return _then(_$SearchInitialImpl(
       result: freezed == result
@@ -372,6 +538,9 @@ class __$$SearchInitialImplCopyWithImpl<$Res>
           ? _value._preSearchItems
           : preSearchItems // ignore: cast_nullable_to_non_nullable
               as List<PreSearchItemEntity>?,
+      showClearButton: freezed == showClearButton
+          ? _value.showClearButton!
+          : showClearButton,
     ));
   }
 }
@@ -383,7 +552,8 @@ class _$SearchInitialImpl implements SearchInitial {
       {this.result,
       this.hasReachedMax,
       this.currentPage = 1,
-      final List<PreSearchItemEntity>? preSearchItems})
+      final List<PreSearchItemEntity>? preSearchItems,
+      this.showClearButton = false})
       : _preSearchItems = preSearchItems;
 
   @override
@@ -404,8 +574,12 @@ class _$SearchInitialImpl implements SearchInitial {
   }
 
   @override
+  @JsonKey()
+  final dynamic showClearButton;
+
+  @override
   String toString() {
-    return 'SearchState.initial(result: $result, hasReachedMax: $hasReachedMax, currentPage: $currentPage, preSearchItems: $preSearchItems)';
+    return 'SearchState.initial(result: $result, hasReachedMax: $hasReachedMax, currentPage: $currentPage, preSearchItems: $preSearchItems, showClearButton: $showClearButton)';
   }
 
   @override
@@ -419,12 +593,19 @@ class _$SearchInitialImpl implements SearchInitial {
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             const DeepCollectionEquality()
-                .equals(other._preSearchItems, _preSearchItems));
+                .equals(other._preSearchItems, _preSearchItems) &&
+            const DeepCollectionEquality()
+                .equals(other.showClearButton, showClearButton));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, result, hasReachedMax,
-      currentPage, const DeepCollectionEquality().hash(_preSearchItems));
+  int get hashCode => Object.hash(
+      runtimeType,
+      result,
+      hasReachedMax,
+      currentPage,
+      const DeepCollectionEquality().hash(_preSearchItems),
+      const DeepCollectionEquality().hash(showClearButton));
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -437,63 +618,93 @@ class _$SearchInitialImpl implements SearchInitial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(SearchResultEntity? result, bool? hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)
+    required TResult Function(
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)
         initial,
-    required TResult Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)
+    required TResult Function(
+            SearchResultEntity result,
+            bool hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)
         loaded,
     required TResult Function(
             String message,
             SearchResultEntity? result,
             bool? hasReachedMax,
             int currentPage,
-            List<PreSearchItemEntity>? preSearchItems)
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)
         error,
   }) {
-    return initial(result, hasReachedMax, currentPage, preSearchItems);
+    return initial(
+        result, hasReachedMax, currentPage, preSearchItems, showClearButton);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SearchResultEntity? result, bool? hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult? Function(
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         initial,
-    TResult? Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult? Function(
+            SearchResultEntity result,
+            bool hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         loaded,
     TResult? Function(
             String message,
             SearchResultEntity? result,
             bool? hasReachedMax,
             int currentPage,
-            List<PreSearchItemEntity>? preSearchItems)?
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         error,
   }) {
-    return initial?.call(result, hasReachedMax, currentPage, preSearchItems);
+    return initial?.call(
+        result, hasReachedMax, currentPage, preSearchItems, showClearButton);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SearchResultEntity? result, bool? hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult Function(
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         initial,
-    TResult Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult Function(
+            SearchResultEntity result,
+            bool hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         loaded,
     TResult Function(
             String message,
             SearchResultEntity? result,
             bool? hasReachedMax,
             int currentPage,
-            List<PreSearchItemEntity>? preSearchItems)?
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(result, hasReachedMax, currentPage, preSearchItems);
+      return initial(
+          result, hasReachedMax, currentPage, preSearchItems, showClearButton);
     }
     return orElse();
   }
@@ -538,7 +749,8 @@ abstract class SearchInitial implements SearchState {
       {final SearchResultEntity? result,
       final bool? hasReachedMax,
       final int currentPage,
-      final List<PreSearchItemEntity>? preSearchItems}) = _$SearchInitialImpl;
+      final List<PreSearchItemEntity>? preSearchItems,
+      final dynamic showClearButton}) = _$SearchInitialImpl;
 
   @override
   SearchResultEntity? get result;
@@ -548,6 +760,8 @@ abstract class SearchInitial implements SearchState {
   int get currentPage;
   @override
   List<PreSearchItemEntity>? get preSearchItems;
+  @override
+  dynamic get showClearButton;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -569,7 +783,8 @@ abstract class _$$SearchLoadedImplCopyWith<$Res>
       {SearchResultEntity result,
       bool hasReachedMax,
       int currentPage,
-      List<PreSearchItemEntity>? preSearchItems});
+      List<PreSearchItemEntity>? preSearchItems,
+      dynamic showClearButton});
 
   @override
   $SearchResultEntityCopyWith<$Res> get result;
@@ -592,6 +807,7 @@ class __$$SearchLoadedImplCopyWithImpl<$Res>
     Object? hasReachedMax = null,
     Object? currentPage = null,
     Object? preSearchItems = freezed,
+    Object? showClearButton = freezed,
   }) {
     return _then(_$SearchLoadedImpl(
       result: null == result
@@ -610,6 +826,9 @@ class __$$SearchLoadedImplCopyWithImpl<$Res>
           ? _value._preSearchItems
           : preSearchItems // ignore: cast_nullable_to_non_nullable
               as List<PreSearchItemEntity>?,
+      showClearButton: freezed == showClearButton
+          ? _value.showClearButton!
+          : showClearButton,
     ));
   }
 
@@ -631,7 +850,8 @@ class _$SearchLoadedImpl implements SearchLoaded {
       {required this.result,
       required this.hasReachedMax,
       this.currentPage = 1,
-      final List<PreSearchItemEntity>? preSearchItems})
+      final List<PreSearchItemEntity>? preSearchItems,
+      this.showClearButton = false})
       : _preSearchItems = preSearchItems;
 
   @override
@@ -652,8 +872,12 @@ class _$SearchLoadedImpl implements SearchLoaded {
   }
 
   @override
+  @JsonKey()
+  final dynamic showClearButton;
+
+  @override
   String toString() {
-    return 'SearchState.loaded(result: $result, hasReachedMax: $hasReachedMax, currentPage: $currentPage, preSearchItems: $preSearchItems)';
+    return 'SearchState.loaded(result: $result, hasReachedMax: $hasReachedMax, currentPage: $currentPage, preSearchItems: $preSearchItems, showClearButton: $showClearButton)';
   }
 
   @override
@@ -667,12 +891,19 @@ class _$SearchLoadedImpl implements SearchLoaded {
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             const DeepCollectionEquality()
-                .equals(other._preSearchItems, _preSearchItems));
+                .equals(other._preSearchItems, _preSearchItems) &&
+            const DeepCollectionEquality()
+                .equals(other.showClearButton, showClearButton));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, result, hasReachedMax,
-      currentPage, const DeepCollectionEquality().hash(_preSearchItems));
+  int get hashCode => Object.hash(
+      runtimeType,
+      result,
+      hasReachedMax,
+      currentPage,
+      const DeepCollectionEquality().hash(_preSearchItems),
+      const DeepCollectionEquality().hash(showClearButton));
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -685,63 +916,93 @@ class _$SearchLoadedImpl implements SearchLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(SearchResultEntity? result, bool? hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)
+    required TResult Function(
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)
         initial,
-    required TResult Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)
+    required TResult Function(
+            SearchResultEntity result,
+            bool hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)
         loaded,
     required TResult Function(
             String message,
             SearchResultEntity? result,
             bool? hasReachedMax,
             int currentPage,
-            List<PreSearchItemEntity>? preSearchItems)
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)
         error,
   }) {
-    return loaded(result, hasReachedMax, currentPage, preSearchItems);
+    return loaded(
+        result, hasReachedMax, currentPage, preSearchItems, showClearButton);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SearchResultEntity? result, bool? hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult? Function(
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         initial,
-    TResult? Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult? Function(
+            SearchResultEntity result,
+            bool hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         loaded,
     TResult? Function(
             String message,
             SearchResultEntity? result,
             bool? hasReachedMax,
             int currentPage,
-            List<PreSearchItemEntity>? preSearchItems)?
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         error,
   }) {
-    return loaded?.call(result, hasReachedMax, currentPage, preSearchItems);
+    return loaded?.call(
+        result, hasReachedMax, currentPage, preSearchItems, showClearButton);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SearchResultEntity? result, bool? hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult Function(
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         initial,
-    TResult Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult Function(
+            SearchResultEntity result,
+            bool hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         loaded,
     TResult Function(
             String message,
             SearchResultEntity? result,
             bool? hasReachedMax,
             int currentPage,
-            List<PreSearchItemEntity>? preSearchItems)?
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(result, hasReachedMax, currentPage, preSearchItems);
+      return loaded(
+          result, hasReachedMax, currentPage, preSearchItems, showClearButton);
     }
     return orElse();
   }
@@ -786,7 +1047,8 @@ abstract class SearchLoaded implements SearchState {
       {required final SearchResultEntity result,
       required final bool hasReachedMax,
       final int currentPage,
-      final List<PreSearchItemEntity>? preSearchItems}) = _$SearchLoadedImpl;
+      final List<PreSearchItemEntity>? preSearchItems,
+      final dynamic showClearButton}) = _$SearchLoadedImpl;
 
   @override
   SearchResultEntity get result;
@@ -796,6 +1058,8 @@ abstract class SearchLoaded implements SearchState {
   int get currentPage;
   @override
   List<PreSearchItemEntity>? get preSearchItems;
+  @override
+  dynamic get showClearButton;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -818,7 +1082,8 @@ abstract class _$$SearchErrorImplCopyWith<$Res>
       SearchResultEntity? result,
       bool? hasReachedMax,
       int currentPage,
-      List<PreSearchItemEntity>? preSearchItems});
+      List<PreSearchItemEntity>? preSearchItems,
+      dynamic showClearButton});
 
   @override
   $SearchResultEntityCopyWith<$Res>? get result;
@@ -842,6 +1107,7 @@ class __$$SearchErrorImplCopyWithImpl<$Res>
     Object? hasReachedMax = freezed,
     Object? currentPage = null,
     Object? preSearchItems = freezed,
+    Object? showClearButton = freezed,
   }) {
     return _then(_$SearchErrorImpl(
       message: null == message
@@ -864,6 +1130,9 @@ class __$$SearchErrorImplCopyWithImpl<$Res>
           ? _value._preSearchItems
           : preSearchItems // ignore: cast_nullable_to_non_nullable
               as List<PreSearchItemEntity>?,
+      showClearButton: freezed == showClearButton
+          ? _value.showClearButton!
+          : showClearButton,
     ));
   }
 }
@@ -876,7 +1145,8 @@ class _$SearchErrorImpl implements SearchError {
       this.result,
       this.hasReachedMax,
       this.currentPage = 1,
-      final List<PreSearchItemEntity>? preSearchItems})
+      final List<PreSearchItemEntity>? preSearchItems,
+      this.showClearButton = false})
       : _preSearchItems = preSearchItems;
 
   @override
@@ -899,8 +1169,12 @@ class _$SearchErrorImpl implements SearchError {
   }
 
   @override
+  @JsonKey()
+  final dynamic showClearButton;
+
+  @override
   String toString() {
-    return 'SearchState.error(message: $message, result: $result, hasReachedMax: $hasReachedMax, currentPage: $currentPage, preSearchItems: $preSearchItems)';
+    return 'SearchState.error(message: $message, result: $result, hasReachedMax: $hasReachedMax, currentPage: $currentPage, preSearchItems: $preSearchItems, showClearButton: $showClearButton)';
   }
 
   @override
@@ -915,12 +1189,20 @@ class _$SearchErrorImpl implements SearchError {
             (identical(other.currentPage, currentPage) ||
                 other.currentPage == currentPage) &&
             const DeepCollectionEquality()
-                .equals(other._preSearchItems, _preSearchItems));
+                .equals(other._preSearchItems, _preSearchItems) &&
+            const DeepCollectionEquality()
+                .equals(other.showClearButton, showClearButton));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message, result, hasReachedMax,
-      currentPage, const DeepCollectionEquality().hash(_preSearchItems));
+  int get hashCode => Object.hash(
+      runtimeType,
+      message,
+      result,
+      hasReachedMax,
+      currentPage,
+      const DeepCollectionEquality().hash(_preSearchItems),
+      const DeepCollectionEquality().hash(showClearButton));
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -933,64 +1215,93 @@ class _$SearchErrorImpl implements SearchError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(SearchResultEntity? result, bool? hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)
+    required TResult Function(
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)
         initial,
-    required TResult Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)
+    required TResult Function(
+            SearchResultEntity result,
+            bool hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)
         loaded,
     required TResult Function(
             String message,
             SearchResultEntity? result,
             bool? hasReachedMax,
             int currentPage,
-            List<PreSearchItemEntity>? preSearchItems)
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)
         error,
   }) {
-    return error(message, result, hasReachedMax, currentPage, preSearchItems);
+    return error(message, result, hasReachedMax, currentPage, preSearchItems,
+        showClearButton);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(SearchResultEntity? result, bool? hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult? Function(
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         initial,
-    TResult? Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult? Function(
+            SearchResultEntity result,
+            bool hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         loaded,
     TResult? Function(
             String message,
             SearchResultEntity? result,
             bool? hasReachedMax,
             int currentPage,
-            List<PreSearchItemEntity>? preSearchItems)?
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         error,
   }) {
-    return error?.call(
-        message, result, hasReachedMax, currentPage, preSearchItems);
+    return error?.call(message, result, hasReachedMax, currentPage,
+        preSearchItems, showClearButton);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(SearchResultEntity? result, bool? hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult Function(
+            SearchResultEntity? result,
+            bool? hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         initial,
-    TResult Function(SearchResultEntity result, bool hasReachedMax,
-            int currentPage, List<PreSearchItemEntity>? preSearchItems)?
+    TResult Function(
+            SearchResultEntity result,
+            bool hasReachedMax,
+            int currentPage,
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         loaded,
     TResult Function(
             String message,
             SearchResultEntity? result,
             bool? hasReachedMax,
             int currentPage,
-            List<PreSearchItemEntity>? preSearchItems)?
+            List<PreSearchItemEntity>? preSearchItems,
+            dynamic showClearButton)?
         error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(message, result, hasReachedMax, currentPage, preSearchItems);
+      return error(message, result, hasReachedMax, currentPage, preSearchItems,
+          showClearButton);
     }
     return orElse();
   }
@@ -1036,7 +1347,8 @@ abstract class SearchError implements SearchState {
       final SearchResultEntity? result,
       final bool? hasReachedMax,
       final int currentPage,
-      final List<PreSearchItemEntity>? preSearchItems}) = _$SearchErrorImpl;
+      final List<PreSearchItemEntity>? preSearchItems,
+      final dynamic showClearButton}) = _$SearchErrorImpl;
 
   String get message;
   @override
@@ -1047,6 +1359,8 @@ abstract class SearchError implements SearchState {
   int get currentPage;
   @override
   List<PreSearchItemEntity>? get preSearchItems;
+  @override
+  dynamic get showClearButton;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:anivsub/core/const/const.dart';
-import 'package:anivsub/core/extension/extension.dart';
+import 'package:anivsub/shared/const/const.dart';
+import 'package:anivsub/shared/extension/extension.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +23,7 @@ class AnimeThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Card.filled(
       clipBehavior: Clip.hardEdge,
       child: Stack(
         children: [

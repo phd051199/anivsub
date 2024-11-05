@@ -1,10 +1,10 @@
-import 'package:anivsub/core/service/service.dart';
 import 'package:anivsub/data/data_exports.dart';
+import 'package:anivsub/shared/service/service.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthLocalDataSource)
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
-  AuthLocalDataSourceImpl({required this.flutterSecureStorageService});
+  const AuthLocalDataSourceImpl({required this.flutterSecureStorageService});
   static const authKey = 'auth_token';
   final FlutterSecureStorageService flutterSecureStorageService;
 

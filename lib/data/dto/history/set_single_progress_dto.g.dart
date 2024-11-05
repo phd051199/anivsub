@@ -15,7 +15,7 @@ _$SetSingleProgressDTOImpl _$$SetSingleProgressDTOImplFromJson(
       seasonId: json['season_id'] as String?,
       pSeasonName: json['p_season_name'] as String?,
       eCur: (json['e_cur'] as num?)?.toDouble(),
-      eDur: (json['e_dur'] as num?)?.toInt(),
+      eDur: (json['e_dur'] as num?)?.toDouble(),
       eName: json['e_name'] as String?,
       eChap: json['e_chap'] as String?,
       gmt: json['gmt'] as String? ?? 'Asia/Ho_Chi_Minh',

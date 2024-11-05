@@ -3,6 +3,8 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
 class PreSearchParser {
+  const PreSearchParser._();
+
   static List<PreSearchItemDTO> parse(String htmlString) {
     final document = parser.parse(htmlString);
     final items = document.querySelectorAll('li:not(.ss-bottom)');

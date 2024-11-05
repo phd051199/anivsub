@@ -1,6 +1,8 @@
 import 'package:anivsub/data/data_exports.dart';
 
 class CommentParser {
+  const CommentParser._();
+
   static List<CommentDTO> parse(CommentsDTO data) {
     try {
       return _parseComments(data.idMap, data.commentIDs);

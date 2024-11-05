@@ -33,7 +33,7 @@ mixin _$SetSingleProgressDTO {
   @JsonKey(name: 'e_cur')
   double? get eCur => throw _privateConstructorUsedError;
   @JsonKey(name: 'e_dur')
-  int? get eDur => throw _privateConstructorUsedError;
+  double? get eDur => throw _privateConstructorUsedError;
   @JsonKey(name: 'e_name')
   String? get eName => throw _privateConstructorUsedError;
   @JsonKey(name: 'e_chap')
@@ -64,7 +64,7 @@ abstract class $SetSingleProgressDTOCopyWith<$Res> {
       @JsonKey(name: 'season_id') String? seasonId,
       @JsonKey(name: 'p_season_name') String? pSeasonName,
       @JsonKey(name: 'e_cur') double? eCur,
-      @JsonKey(name: 'e_dur') int? eDur,
+      @JsonKey(name: 'e_dur') double? eDur,
       @JsonKey(name: 'e_name') String? eName,
       @JsonKey(name: 'e_chap') String? eChap,
       @JsonKey(name: 'gmt') String? gmt});
@@ -125,7 +125,7 @@ class _$SetSingleProgressDTOCopyWithImpl<$Res,
       eDur: freezed == eDur
           ? _value.eDur
           : eDur // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       eName: freezed == eName
           ? _value.eName
           : eName // ignore: cast_nullable_to_non_nullable
@@ -157,7 +157,7 @@ abstract class _$$SetSingleProgressDTOImplCopyWith<$Res>
       @JsonKey(name: 'season_id') String? seasonId,
       @JsonKey(name: 'p_season_name') String? pSeasonName,
       @JsonKey(name: 'e_cur') double? eCur,
-      @JsonKey(name: 'e_dur') int? eDur,
+      @JsonKey(name: 'e_dur') double? eDur,
       @JsonKey(name: 'e_name') String? eName,
       @JsonKey(name: 'e_chap') String? eChap,
       @JsonKey(name: 'gmt') String? gmt});
@@ -215,7 +215,7 @@ class __$$SetSingleProgressDTOImplCopyWithImpl<$Res>
       eDur: freezed == eDur
           ? _value.eDur
           : eDur // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       eName: freezed == eName
           ? _value.eName
           : eName // ignore: cast_nullable_to_non_nullable
@@ -271,7 +271,7 @@ class _$SetSingleProgressDTOImpl extends _SetSingleProgressDTO {
   final double? eCur;
   @override
   @JsonKey(name: 'e_dur')
-  final int? eDur;
+  final double? eDur;
   @override
   @JsonKey(name: 'e_name')
   final String? eName;
@@ -308,7 +308,7 @@ abstract class _SetSingleProgressDTO extends SetSingleProgressDTO {
       @JsonKey(name: 'season_id') final String? seasonId,
       @JsonKey(name: 'p_season_name') final String? pSeasonName,
       @JsonKey(name: 'e_cur') final double? eCur,
-      @JsonKey(name: 'e_dur') final int? eDur,
+      @JsonKey(name: 'e_dur') final double? eDur,
       @JsonKey(name: 'e_name') final String? eName,
       @JsonKey(name: 'e_chap') final String? eChap,
       @JsonKey(name: 'gmt') final String? gmt}) = _$SetSingleProgressDTOImpl;
@@ -337,7 +337,7 @@ abstract class _SetSingleProgressDTO extends SetSingleProgressDTO {
   double? get eCur;
   @override
   @JsonKey(name: 'e_dur')
-  int? get eDur;
+  double? get eDur;
   @override
   @JsonKey(name: 'e_name')
   String? get eName;

@@ -16,9 +16,7 @@ class SearchResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<SearchBloc>().state;
-
-    return switch (state) {
+    return switch (context.read<SearchBloc>().state) {
       SearchInitial() when pagingController.itemList == null =>
         const SearchSkeleton(),
       _ => RefreshIndicator(

@@ -1,4 +1,4 @@
-import 'package:anivsub/core/extension/extension.dart';
+import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

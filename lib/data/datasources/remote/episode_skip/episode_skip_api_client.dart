@@ -1,5 +1,5 @@
-import 'package:anivsub/core/const/const.dart';
 import 'package:anivsub/data/data_exports.dart';
+import 'package:anivsub/shared/const/const.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 

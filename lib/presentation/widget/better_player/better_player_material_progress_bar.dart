@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:anivsub/core/extension/context_extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
+import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:river_player/river_player.dart';
 import 'package:river_player/src/video_player/video_player.dart';
 import 'package:river_player/src/video_player/video_player_platform_interface.dart';
@@ -69,22 +69,22 @@ class _VideoProgressBarState
       onHorizontalDragUpdate: _onDragUpdate,
       onHorizontalDragEnd: _onDragEnd,
       onTapDown: _onTapDown,
-      child: BlocBuilder<VideoPlayerCubit, VideoPlayerState>(
-        builder: _buildProgressBar,
-      ),
+      child: _buildProgressBar(context),
     );
   }
 
-  Widget _buildProgressBar(BuildContext context, VideoPlayerState state) {
-    if (state is! VideoPlayerLoaded) {
+  Widget _buildProgressBar(BuildContext context) {
+    if (videoPlayerCubit.state is! VideoPlayerLoaded) {
       return const SizedBox.shrink();
     }
 
     final duration = _betterPlayerController
             ?.videoPlayerController?.value.duration?.inSeconds ??
         1;
-    final introOutroSegment =
-        _calculateIntroOutroSegment(state.episodeSkip, duration);
+    final introOutroSegment = _calculateIntroOutroSegment(
+      videoPlayerCubit.state.episodeSkip,
+      duration,
+    );
 
     return Center(
       child: Container(

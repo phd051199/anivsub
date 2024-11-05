@@ -3,6 +3,8 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
 
 class SearchResultParser {
+  const SearchResultParser._();
+
   static SearchResultDTO parse(String html) {
     final Document document = parser.parse(html);
     final int now = DateTime.now().millisecondsSinceEpoch;

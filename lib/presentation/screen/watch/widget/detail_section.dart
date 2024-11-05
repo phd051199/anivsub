@@ -1,5 +1,5 @@
-import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
+import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

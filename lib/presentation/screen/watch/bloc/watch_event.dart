@@ -1,6 +1,6 @@
 part of 'watch_bloc.dart';
 
-abstract class WatchEvent extends BaseBlocEvent {}
+sealed class WatchEvent extends BaseBlocEvent {}
 
 @freezed
 class InitWatch extends WatchEvent with _$InitWatch {
@@ -18,10 +18,10 @@ class LoadWatch extends WatchEvent with _$LoadWatch {
 }
 
 @freezed
-class LoadComment extends WatchEvent with _$LoadComment {
-  const factory LoadComment({
+class LoadComments extends WatchEvent with _$LoadComments {
+  const factory LoadComments({
     required String id,
-  }) = _LoadComment;
+  }) = _LoadComments;
 }
 
 @freezed
@@ -56,8 +56,8 @@ class GetFbCookies extends WatchEvent with _$GetFbCookies {
 }
 
 @freezed
-class Logout extends WatchEvent with _$Logout {
-  const factory Logout() = _Logout;
+class LogoutFb extends WatchEvent with _$LogoutFb {
+  const factory LogoutFb() = _LogoutFb;
 }
 
 @freezed

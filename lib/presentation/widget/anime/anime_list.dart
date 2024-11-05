@@ -1,6 +1,6 @@
 import 'package:anivsub/app/routes/go_router_config.dart';
-import 'package:anivsub/core/extension/extension.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -39,7 +39,7 @@ class AnimeList extends StatelessWidget {
 }
 
 class AnimeCard extends StatelessWidget {
-  AnimeCard({
+  const AnimeCard({
     super.key,
     required this.item,
     this.onTap,
@@ -47,10 +47,11 @@ class AnimeCard extends StatelessWidget {
 
   final AnimeDataEntity item;
   final void Function(AnimeDataEntity)? onTap;
-  final tag = UniqueKey().toString();
 
   @override
   Widget build(BuildContext context) {
+    final tag = UniqueKey().toString();
+
     return Hero(
       tag: tag,
       child: GestureDetector(

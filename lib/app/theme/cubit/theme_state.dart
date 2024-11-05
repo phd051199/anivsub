@@ -1,18 +1,18 @@
 part of 'theme_cubit.dart';
 
 sealed class ThemeState extends Equatable {
-  const ThemeState(this.appSettings);
+  const ThemeState(this.appSetting);
 
-  final AppSettingsEntity appSettings;
+  final AppSettingEntity appSetting;
 
   @override
-  List<Object> get props => [appSettings];
+  List<Object> get props => [appSetting];
 }
 
 class ThemeInitial extends ThemeState {
-  const ThemeInitial(super.appSettings);
+  const ThemeInitial(super.appSetting);
 }
 
 class ThemeLoaded extends ThemeState {
-  const ThemeLoaded(super.appSettings);
+  const ThemeLoaded(super.appSetting);
 }

@@ -1,11 +1,11 @@
-import 'package:anivsub/core/base/base.dart';
-import 'package:anivsub/core/const/const.dart';
-import 'package:anivsub/core/di/shared_export.dart';
-import 'package:anivsub/core/extension/extension.dart';
-import 'package:anivsub/core/plugin/plugin.dart';
-import 'package:anivsub/core/service/service.dart';
-import 'package:anivsub/core/utils/utils.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/shared/base/base.dart';
+import 'package:anivsub/shared/const/const.dart';
+import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/extension/extension.dart';
+import 'package:anivsub/shared/plugin/plugin.dart';
+import 'package:anivsub/shared/service/service.dart';
+import 'package:anivsub/shared/utils/utils.dart';
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
@@ -28,15 +28,16 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   ) : super(const WatchInitial()) {
     on<InitWatch>(_onInitWatch);
     on<LoadWatch>(_onLoadWatch);
-    on<LoadComment>(_onLoadComment);
     on<ChangeSeasonTab>(_onChangeSeasonTab);
     on<ChangeEpisode>(_onChangeEpisode);
+
+    on<LoadComments>(_onLoadComments);
     on<PostComment>(_onPostComment);
     on<DeleteComment>(_onDeleteComment);
     on<LoadMoreComments>(_onLoadMoreComments);
     on<GetFbCookies>(_onGetFbCookies);
     on<LikeComment>(_onLikeComment);
-    on<Logout>(_onLogout);
+    on<LogoutFb>(_onLogoutFb);
   }
 
   final GetPlayDataUseCase _getPlayDataUseCase;
@@ -54,13 +55,13 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
 
     try {
       final animeDetail = await _fetchDetailData(event.id);
-      emit(
+      safeEmit(
         WatchLoaded(detail: animeDetail, isCmtLoading: true),
       );
 
       add(LoadWatch(id: event.id));
     } catch (e) {
-      emit(_errorState('$e'));
+      safeEmit(_errorState('$e'));
     }
   }
 
@@ -77,14 +78,14 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     );
   }
 
-  Future<void> _onLoadComment(
-    LoadComment event,
+  Future<void> _onLoadComments(
+    LoadComments event,
     Emitter<WatchState> emit,
   ) async {
     final result = await _fbCommentPlugin.getComments();
     _updateAfterCursor(result);
 
-    emit(
+    safeEmit(
       state.copyWith(
         comments: result.comments,
         totalCommentCount: result.meta?.totalCount,
@@ -117,14 +118,14 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
         .initResponse.meta?.actors?[result.initResponse.meta?.userId]
         ?.toEntity();
 
-    emit(
+    safeEmit(
       state.copyWith(fbUser: fbUser),
     );
   }
 
-  Future<void> _onLogout(Logout event, Emitter<WatchState> emit) async {
+  Future<void> _onLogoutFb(LogoutFb event, Emitter<WatchState> emit) async {
     await _fbCommentPlugin.logout();
-    emit(state.copyWith(fbUser: null));
+    safeEmit(state.copyWith(fbUser: null));
   }
 
   Future<void> _onLoadMoreComments(
@@ -133,17 +134,17 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   ) async {
     if (state.isCmtLoading) return;
 
-    emit(state.copyWith(isCmtLoading: true));
+    safeEmit(state.copyWith(isCmtLoading: true));
 
     try {
       final newComments = await _loadAndMergeComments(state);
-      emit(
+      safeEmit(
         state.copyWith(comments: newComments),
       );
     } catch (e) {
-      emit(_errorState('$e'));
+      safeEmit(_errorState('$e'));
     } finally {
-      emit(state.copyWith(isCmtLoading: false));
+      safeEmit(state.copyWith(isCmtLoading: false));
     }
   }
 
@@ -181,19 +182,19 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     PostComment event,
     Emitter<WatchState> emit,
   ) async {
-    emit(state.copyWith(isCmtLoading: true));
+    safeEmit(state.copyWith(isCmtLoading: true));
 
     try {
       final id = await _fbCommentPlugin.postComment(event.comment);
       final newComment = _createNewComment(id, event.comment);
 
-      emit(
+      safeEmit(
         _updateStateWithNewComment(state, newComment),
       );
     } catch (e) {
-      emit(_errorState('$e'));
+      safeEmit(_errorState('$e'));
     } finally {
-      emit(state.copyWith(isCmtLoading: false));
+      safeEmit(state.copyWith(isCmtLoading: false));
     }
   }
 
@@ -236,7 +237,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       return c;
     }).toList();
 
-    emit(currentState.copyWith(comments: updatedComments));
+    safeEmit(currentState.copyWith(comments: updatedComments));
   }
 
   Future<void> _updateLikedCommentsInStorage(
@@ -268,7 +269,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     final updatedComments =
         state.comments?.where((c) => c?.id != event.commentId).toList();
 
-    emit(
+    safeEmit(
       state.copyWith(
         comments: updatedComments,
         isCmtLoading: true,
@@ -278,9 +279,9 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     try {
       await _fbCommentPlugin.deleteComment(event.commentId);
     } catch (e) {
-      emit(_errorState('$e'));
+      safeEmit(_errorState('$e'));
     } finally {
-      emit(state.copyWith(isCmtLoading: false));
+      safeEmit(state.copyWith(isCmtLoading: false));
     }
   }
 
@@ -293,7 +294,9 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
       authorName: _fbCommentPlugin.loginUser?.name ?? '',
       authorThumbSrc: _fbCommentPlugin.loginUser?.thumbSrc ?? '',
       body: commentBody,
-      timestamp: DateFormat(getFBDateFormat()).format(DateTime.now()),
+      timestamp: DateFormat(
+        DateTimeUtils.getFBDateFormat(),
+      ).format(DateTime.now()),
       likeCount: 0,
     );
   }
@@ -350,7 +353,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
         initialChap,
       );
 
-      emit(
+      safeEmit(
         state.copyWith(
           chaps: chaps,
           tabViewItems: chapterLists,
@@ -358,9 +361,9 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
         ),
       );
 
-      add(LoadComment(id: event.id));
+      add(LoadComments(id: event.id));
     } catch (e) {
-      emit(_errorState('$e'));
+      safeEmit(_errorState('$e'));
     }
   }
 
@@ -387,13 +390,13 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
         listEpisodeSkip,
       );
 
-      emit(
+      safeEmit(
         state.copyWith(
           tabViewItems: updatedTabViewItems,
         ),
       );
     } catch (e) {
-      emit(_errorState('$e'));
+      safeEmit(_errorState('$e'));
     }
   }
 
@@ -486,7 +489,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   void _onChangeEpisode(ChangeEpisode event, Emitter<WatchState> emit) async {
     if (state is! WatchLoaded || state.detail == event.animeDetail) return;
 
-    emit(
+    safeEmit(
       state.copyWith(
         detail: event.animeDetail,
         chaps: event.chaps,
@@ -508,7 +511,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
         comments = initResponse.comments;
         totalCommentCount = initResponse.meta?.totalCount ?? 0;
 
-        emit(
+        safeEmit(
           state.copyWith(
             comments: comments,
             totalCommentCount: totalCommentCount,
@@ -516,7 +519,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
           ),
         );
       } catch (e) {
-        emit(_errorState('$e'));
+        safeEmit(_errorState('$e'));
       }
     }
   }

@@ -20,17 +20,13 @@ class MyApp extends StatelessWidget {
   }
 
   Widget _buildApp(BuildContext context, ThemeState state) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: FocusManager.instance.primaryFocus?.unfocus,
-      child: MaterialApp.router(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        theme: _buildTheme(Brightness.light, state.appSettings.colorEnum),
-        darkTheme: _buildTheme(Brightness.dark, state.appSettings.colorEnum),
-        themeMode: state.appSettings.themeModeEnum,
-        routerConfig: goRouter,
-      ),
+    return MaterialApp.router(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      theme: _buildTheme(Brightness.light, state.appSetting.colorEnum),
+      darkTheme: _buildTheme(Brightness.dark, state.appSetting.colorEnum),
+      themeMode: state.appSetting.themeModeEnum,
+      routerConfig: goRouter,
     );
   }
 

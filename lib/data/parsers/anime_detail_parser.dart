@@ -3,6 +3,8 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
 class AnimeDetailParser {
+  const AnimeDetailParser._();
+
   static AnimeDetailDTO parse(String html) {
     final dom.Document document = parser.parse(html);
     final int now = DateTime.now().millisecondsSinceEpoch;

@@ -1,8 +1,8 @@
-import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/presentation/screen/profile/profile.dart';
 import 'package:anivsub/presentation/screen/profile/widget/profile_content.dart';
 import 'package:anivsub/presentation/widget/error_dialog.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/shared/base/base.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,5 +1,6 @@
-import 'package:anivsub/core/base/base.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/shared/base/base.dart';
+import 'package:anivsub/shared/extension/extension.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -17,13 +18,13 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   final GetHomeDataUseCase _getHomeDataUseCase;
 
   void _onLoadHome(LoadHome event, Emitter<HomeState> emit) async {
-    if (state is! HomeInitial) emit(const HomeInitial());
+    if (state is! HomeInitial) safeEmit(const HomeInitial());
 
     final GetHomeDataUseCaseOutput output = await _getHomeDataUseCase.execute(
       const GetHomeDataUseCaseInput(),
     );
 
-    emit(
+    safeEmit(
       HomeLoaded(homeData: output.result),
     );
   }

@@ -28,8 +28,8 @@
   "@profile": {
     "description": "Label for the profile navigation item."
   },
-  "settings": "Cài đặt",
-  "@settings": {
+  "setting": "Cài đặt",
+  "@setting": {
     "description": "Label for the settings navigation item."
   },
   "light": "Sáng",
@@ -193,5 +193,13 @@
   "noChaptersFound": "Không tìm thấy tập phim",
   "@noChaptersFound": {
     "description": "Message displayed when no chapters are found."
+  },
+  "today": "Hôm nay",
+  "@today": {
+    "description": "Label for today."
+  },
+  "yesterday": "Hôm qua",
+  "@yesterday": {
+    "description": "Label for yesterday."
   }
 }
