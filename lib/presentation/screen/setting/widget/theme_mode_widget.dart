@@ -12,7 +12,7 @@ class ThemeModeWidget extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       title: Text(context.l10n.theme),
       subtitle: Text(context.l10n.themeMessage),
-      titleTextStyle: context.textTheme.titleMedium!.copyWith(
+      titleTextStyle: context.textTheme.titleMedium?.copyWith(
         fontWeight: FontWeight.bold,
       ),
       trailing: ToggleButtons(
@@ -28,7 +28,7 @@ class ThemeModeWidget extends StatelessWidget {
           context.read<ThemeCubit>().changeThemeMode(ThemeMode.values[index]);
         },
         textStyle:
-            context.textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+            context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
         children: const [
           Padding(
             padding: EdgeInsets.all(8.0),

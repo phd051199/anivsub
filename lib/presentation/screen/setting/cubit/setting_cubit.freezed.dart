@@ -16,23 +16,22 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SettingState {
-  bool get isHintVisible => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isHintVisible) initial,
-    required TResult Function(bool isHintVisible) changed,
+    required TResult Function() initial,
+    required TResult Function() changed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isHintVisible)? initial,
-    TResult? Function(bool isHintVisible)? changed,
+    TResult? Function()? initial,
+    TResult? Function()? changed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isHintVisible)? initial,
-    TResult Function(bool isHintVisible)? changed,
+    TResult Function()? initial,
+    TResult Function()? changed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -55,12 +54,6 @@ mixin _$SettingState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-
-  /// Create a copy of SettingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $SettingStateCopyWith<SettingState> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -68,8 +61,6 @@ abstract class $SettingStateCopyWith<$Res> {
   factory $SettingStateCopyWith(
           SettingState value, $Res Function(SettingState) then) =
       _$SettingStateCopyWithImpl<$Res, SettingState>;
-  @useResult
-  $Res call({bool isHintVisible});
 }
 
 /// @nodoc
@@ -84,29 +75,13 @@ class _$SettingStateCopyWithImpl<$Res, $Val extends SettingState>
 
   /// Create a copy of SettingState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? isHintVisible = null,
-  }) {
-    return _then(_value.copyWith(
-      isHintVisible: null == isHintVisible
-          ? _value.isHintVisible
-          : isHintVisible // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$SettingInitialImplCopyWith<$Res>
-    implements $SettingStateCopyWith<$Res> {
+abstract class _$$SettingInitialImplCopyWith<$Res> {
   factory _$$SettingInitialImplCopyWith(_$SettingInitialImpl value,
           $Res Function(_$SettingInitialImpl) then) =
       __$$SettingInitialImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({bool isHintVisible});
 }
 
 /// @nodoc
@@ -119,81 +94,54 @@ class __$$SettingInitialImplCopyWithImpl<$Res>
 
   /// Create a copy of SettingState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? isHintVisible = null,
-  }) {
-    return _then(_$SettingInitialImpl(
-      isHintVisible: null == isHintVisible
-          ? _value.isHintVisible
-          : isHintVisible // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$SettingInitialImpl implements SettingInitial {
-  const _$SettingInitialImpl({required this.isHintVisible});
-
-  @override
-  final bool isHintVisible;
+  const _$SettingInitialImpl();
 
   @override
   String toString() {
-    return 'SettingState.initial(isHintVisible: $isHintVisible)';
+    return 'SettingState.initial()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SettingInitialImpl &&
-            (identical(other.isHintVisible, isHintVisible) ||
-                other.isHintVisible == isHintVisible));
+        (other.runtimeType == runtimeType && other is _$SettingInitialImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isHintVisible);
-
-  /// Create a copy of SettingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SettingInitialImplCopyWith<_$SettingInitialImpl> get copyWith =>
-      __$$SettingInitialImplCopyWithImpl<_$SettingInitialImpl>(
-          this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isHintVisible) initial,
-    required TResult Function(bool isHintVisible) changed,
+    required TResult Function() initial,
+    required TResult Function() changed,
   }) {
-    return initial(isHintVisible);
+    return initial();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isHintVisible)? initial,
-    TResult? Function(bool isHintVisible)? changed,
+    TResult? Function()? initial,
+    TResult? Function()? changed,
   }) {
-    return initial?.call(isHintVisible);
+    return initial?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isHintVisible)? initial,
-    TResult Function(bool isHintVisible)? changed,
+    TResult Function()? initial,
+    TResult Function()? changed,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(isHintVisible);
+      return initial();
     }
     return orElse();
   }
@@ -231,29 +179,14 @@ class _$SettingInitialImpl implements SettingInitial {
 }
 
 abstract class SettingInitial implements SettingState {
-  const factory SettingInitial({required final bool isHintVisible}) =
-      _$SettingInitialImpl;
-
-  @override
-  bool get isHintVisible;
-
-  /// Create a copy of SettingState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SettingInitialImplCopyWith<_$SettingInitialImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory SettingInitial() = _$SettingInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$SettingChangedImplCopyWith<$Res>
-    implements $SettingStateCopyWith<$Res> {
+abstract class _$$SettingChangedImplCopyWith<$Res> {
   factory _$$SettingChangedImplCopyWith(_$SettingChangedImpl value,
           $Res Function(_$SettingChangedImpl) then) =
       __$$SettingChangedImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({bool isHintVisible});
 }
 
 /// @nodoc
@@ -266,81 +199,54 @@ class __$$SettingChangedImplCopyWithImpl<$Res>
 
   /// Create a copy of SettingState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? isHintVisible = null,
-  }) {
-    return _then(_$SettingChangedImpl(
-      isHintVisible: null == isHintVisible
-          ? _value.isHintVisible
-          : isHintVisible // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$SettingChangedImpl implements SettingChanged {
-  const _$SettingChangedImpl({required this.isHintVisible});
-
-  @override
-  final bool isHintVisible;
+  const _$SettingChangedImpl();
 
   @override
   String toString() {
-    return 'SettingState.changed(isHintVisible: $isHintVisible)';
+    return 'SettingState.changed()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SettingChangedImpl &&
-            (identical(other.isHintVisible, isHintVisible) ||
-                other.isHintVisible == isHintVisible));
+        (other.runtimeType == runtimeType && other is _$SettingChangedImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isHintVisible);
-
-  /// Create a copy of SettingState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SettingChangedImplCopyWith<_$SettingChangedImpl> get copyWith =>
-      __$$SettingChangedImplCopyWithImpl<_$SettingChangedImpl>(
-          this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isHintVisible) initial,
-    required TResult Function(bool isHintVisible) changed,
+    required TResult Function() initial,
+    required TResult Function() changed,
   }) {
-    return changed(isHintVisible);
+    return changed();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isHintVisible)? initial,
-    TResult? Function(bool isHintVisible)? changed,
+    TResult? Function()? initial,
+    TResult? Function()? changed,
   }) {
-    return changed?.call(isHintVisible);
+    return changed?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isHintVisible)? initial,
-    TResult Function(bool isHintVisible)? changed,
+    TResult Function()? initial,
+    TResult Function()? changed,
     required TResult orElse(),
   }) {
     if (changed != null) {
-      return changed(isHintVisible);
+      return changed();
     }
     return orElse();
   }
@@ -378,16 +284,5 @@ class _$SettingChangedImpl implements SettingChanged {
 }
 
 abstract class SettingChanged implements SettingState {
-  const factory SettingChanged({required final bool isHintVisible}) =
-      _$SettingChangedImpl;
-
-  @override
-  bool get isHintVisible;
-
-  /// Create a copy of SettingState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SettingChangedImplCopyWith<_$SettingChangedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory SettingChanged() = _$SettingChangedImpl;
 }

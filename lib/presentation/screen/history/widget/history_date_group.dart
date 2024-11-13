@@ -1,5 +1,5 @@
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/profile/widget/history_item.dart';
+import 'package:anivsub/presentation/screen/history/widget/history_item.dart';
 import 'package:anivsub/shared/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -30,8 +30,16 @@ class HistoryDateGroup extends StatelessWidget {
             ),
           ),
         ),
-        ...items.map(
-          (e) => e is QueryHistoryEntity ? HistoryItem(item: e) : Container(),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            final item = items[index];
+            return item is QueryHistoryEntity
+                ? HistoryItem(item: item)
+                : const SizedBox.shrink();
+          },
         ),
       ],
     );

@@ -13,14 +13,16 @@ class HistoryRemoteDataSourceImpl implements HistoryRemoteDataSource {
     required int page,
     required int size,
   }) async {
-    final response = await _client.rpc<List>(
-      RpcFunction.queryHistory.name,
-      params: QueryHistoryParamsDTO(
-        userUid: userUid,
-        page: page,
-        size: size,
-      ).toJson(),
-    );
+    final response = await _client
+        .rpc<List>(
+          RpcFunction.queryHistory.name,
+          params: QueryHistoryParamsDTO(
+            userUid: userUid,
+            page: page,
+            size: size,
+          ).toJson(),
+        )
+        .onError((_, __) => []);
     return response.map((e) => QueryHistoryDTO.fromJson(e)).toList();
   }
 

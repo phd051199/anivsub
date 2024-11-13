@@ -30,11 +30,12 @@ class EpisodesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<WatchBloc, WatchState>(
       builder: (context, state) {
-        if (state.detail == null) {
+        if (state.isChapsLoading) {
           return const SizedBox(height: 100, child: LoadingWidget());
         }
 
-        if (state.detail!.season.isNotEmpty && state.tabViewItems != null) {
+        if ((state.detail?.season.isNotEmpty ?? false) &&
+            state.tabViewItems != null) {
           return _MultiSeasonView(
             tabController: tabController,
             onEpisodeTap: onEpisodeTap,
@@ -42,14 +43,10 @@ class EpisodesSection extends StatelessWidget {
           );
         }
 
-        if (state.chaps != null && state.chaps!.isNotEmpty) {
-          return _SingleSeasonView(
-            onEpisodeTap: onEpisodeTap,
-            onChapTap: onChapTap,
-          );
-        }
-
-        return const SizedBox(height: 100, child: LoadingWidget());
+        return _SingleSeasonView(
+          onEpisodeTap: onEpisodeTap,
+          onChapTap: onChapTap,
+        );
       },
     );
   }
@@ -90,7 +87,7 @@ class _SeasonTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<WatchBloc>().state;
 
-    if (state.detail!.season.isEmpty) {
+    if (state.detail?.season.isEmpty ?? true) {
       return const SizedBox.shrink();
     }
 
@@ -98,8 +95,10 @@ class _SeasonTabBar extends StatelessWidget {
       tabAlignment: TabAlignment.start,
       controller: tabController,
       isScrollable: true,
-      tabs:
-          state.detail!.season.map((item) => _buildTab(context, item)).toList(),
+      tabs: state.detail?.season
+              .map((item) => _buildTab(context, item))
+              .toList() ??
+          [],
     );
   }
 
@@ -107,7 +106,7 @@ class _SeasonTabBar extends StatelessWidget {
     return Tab(
       child: Text(
         item.name,
-        style: context.textTheme.titleSmall!.copyWith(
+        style: context.textTheme.titleSmall?.copyWith(
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -135,15 +134,16 @@ class _SeasonTabView extends StatelessWidget {
       height: 128,
       child: TabBarView(
         controller: tabController,
-        children: state.tabViewItems!.map((item) {
-          return item?.chaps == null
-              ? const LoadingWidget(withBox: false)
-              : _EpisodeList(
-                  chaps: item!.chaps,
-                  onEpisodeTap: onEpisodeTap,
-                  onChapTap: onChapTap,
-                );
-        }).toList(),
+        children: state.tabViewItems?.map((item) {
+              return item?.chaps == null
+                  ? const LoadingWidget(withBox: false)
+                  : _EpisodeList(
+                      chaps: item?.chaps ?? [],
+                      onEpisodeTap: onEpisodeTap,
+                      onChapTap: onChapTap,
+                    );
+            }).toList() ??
+            [],
       ),
     );
   }
@@ -161,13 +161,13 @@ class _SingleSeasonView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<WatchBloc>().state;
-    final chaps = state.chaps!.whereNotNull().toList();
+    final chaps = state.chaps?.whereNotNull().toList();
 
     return Container(
       height: 128,
       padding: const EdgeInsets.all(16),
       child: _EpisodeList(
-        chaps: chaps,
+        chaps: chaps ?? [],
         onEpisodeTap: onEpisodeTap,
         onChapTap: onChapTap,
       ),
@@ -236,7 +236,7 @@ class _EpisodeHeader extends StatelessWidget {
         ),
         title: Text(
           context.l10n.episodeList,
-          style: context.textTheme.bodyMedium!.copyWith(
+          style: context.textTheme.bodyMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: context.theme.colorScheme.onSurface,
           ),
@@ -317,7 +317,7 @@ class _EpisodeChip extends StatelessWidget {
       elevation: 0,
       label: Text(
         chap.name,
-        style: context.theme.textTheme.bodySmall!.copyWith(
+        style: context.theme.textTheme.bodySmall?.copyWith(
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -341,7 +341,7 @@ class _EpisodeChip extends StatelessWidget {
       if (initialData?.initialChap == null) {
         return index == 0;
       }
-      return initialData?.initialChap!.id == chap.id;
+      return initialData?.initialChap?.id == chap.id;
     }
 
     return false;

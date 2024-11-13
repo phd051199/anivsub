@@ -58,11 +58,11 @@ import 'package:anivsub/domain/usecases/get_user_history_usecase.dart' as _i339;
 import 'package:anivsub/domain/usecases/search_anime_usecase.dart' as _i125;
 import 'package:anivsub/domain/usecases/set_single_progress_usecase.dart'
     as _i469;
+import 'package:anivsub/presentation/screen/history/cubit/history_cubit.dart'
+    as _i917;
 import 'package:anivsub/presentation/screen/home/bloc/home_bloc.dart' as _i865;
 import 'package:anivsub/presentation/screen/login/cubit/login_cubit.dart'
     as _i200;
-import 'package:anivsub/presentation/screen/profile/cubit/profile_cubit.dart'
-    as _i346;
 import 'package:anivsub/presentation/screen/search/bloc/search_bloc.dart'
     as _i342;
 import 'package:anivsub/presentation/screen/setting/cubit/setting_cubit.dart'
@@ -198,7 +198,7 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i644.AuthNotifier(authUseCases: gh<_i772.AuthUseCase>()));
     gh.factory<_i200.LoginCubit>(
         () => _i200.LoginCubit(gh<_i772.AuthUseCase>()));
-    gh.factory<_i346.ProfileCubit>(() => _i346.ProfileCubit(
+    gh.factory<_i917.HistoryCubit>(() => _i917.HistoryCubit(
           gh<_i772.AuthUseCase>(),
           gh<_i772.GetUserHistoryUseCase>(),
         ));

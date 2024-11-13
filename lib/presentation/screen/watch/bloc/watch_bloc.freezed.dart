@@ -1381,6 +1381,7 @@ mixin _$WatchState {
   int? get totalCommentCount => throw _privateConstructorUsedError;
   ActorEntity? get fbUser => throw _privateConstructorUsedError;
   bool get isCmtLoading => throw _privateConstructorUsedError;
+  bool get isChapsLoading => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
@@ -1391,7 +1392,8 @@ mixin _$WatchState {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)
+            bool isCmtLoading,
+            bool isChapsLoading)
         initial,
     required TResult Function(
             List<ChapDataEntity?>? chaps,
@@ -1401,7 +1403,8 @@ mixin _$WatchState {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)
+            bool isCmtLoading,
+            bool isChapsLoading)
         loaded,
     required TResult Function(
             String message,
@@ -1412,7 +1415,8 @@ mixin _$WatchState {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)
+            bool isCmtLoading,
+            bool isChapsLoading)
         error,
   }) =>
       throw _privateConstructorUsedError;
@@ -1426,7 +1430,8 @@ mixin _$WatchState {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         initial,
     TResult? Function(
             List<ChapDataEntity?>? chaps,
@@ -1436,7 +1441,8 @@ mixin _$WatchState {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         loaded,
     TResult? Function(
             String message,
@@ -1447,7 +1453,8 @@ mixin _$WatchState {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         error,
   }) =>
       throw _privateConstructorUsedError;
@@ -1461,7 +1468,8 @@ mixin _$WatchState {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         initial,
     TResult Function(
             List<ChapDataEntity?>? chaps,
@@ -1471,7 +1479,8 @@ mixin _$WatchState {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         loaded,
     TResult Function(
             String message,
@@ -1482,7 +1491,8 @@ mixin _$WatchState {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         error,
     required TResult orElse(),
   }) =>
@@ -1531,7 +1541,8 @@ abstract class $WatchStateCopyWith<$Res> {
       List<CommentEntity?>? comments,
       int? totalCommentCount,
       ActorEntity? fbUser,
-      bool isCmtLoading});
+      bool isCmtLoading,
+      bool isChapsLoading});
 
   $InitialDataCopyWith<$Res>? get initialData;
   $AnimeDetailEntityCopyWith<$Res>? get detail;
@@ -1561,6 +1572,7 @@ class _$WatchStateCopyWithImpl<$Res, $Val extends WatchState>
     Object? totalCommentCount = freezed,
     Object? fbUser = freezed,
     Object? isCmtLoading = null,
+    Object? isChapsLoading = null,
   }) {
     return _then(_value.copyWith(
       chaps: freezed == chaps
@@ -1594,6 +1606,10 @@ class _$WatchStateCopyWithImpl<$Res, $Val extends WatchState>
       isCmtLoading: null == isCmtLoading
           ? _value.isCmtLoading
           : isCmtLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isChapsLoading: null == isChapsLoading
+          ? _value.isChapsLoading
+          : isChapsLoading // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -1657,7 +1673,8 @@ abstract class _$$WatchInitialImplCopyWith<$Res>
       List<CommentEntity?>? comments,
       int? totalCommentCount,
       ActorEntity? fbUser,
-      bool isCmtLoading});
+      bool isCmtLoading,
+      bool isChapsLoading});
 
   @override
   $InitialDataCopyWith<$Res>? get initialData;
@@ -1688,6 +1705,7 @@ class __$$WatchInitialImplCopyWithImpl<$Res>
     Object? totalCommentCount = freezed,
     Object? fbUser = freezed,
     Object? isCmtLoading = null,
+    Object? isChapsLoading = null,
   }) {
     return _then(_$WatchInitialImpl(
       chaps: freezed == chaps
@@ -1722,6 +1740,10 @@ class __$$WatchInitialImplCopyWithImpl<$Res>
           ? _value.isCmtLoading
           : isCmtLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isChapsLoading: null == isChapsLoading
+          ? _value.isChapsLoading
+          : isChapsLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1737,7 +1759,8 @@ class _$WatchInitialImpl implements WatchInitial {
       final List<CommentEntity?>? comments = const [],
       this.totalCommentCount,
       this.fbUser,
-      this.isCmtLoading = false})
+      this.isCmtLoading = false,
+      this.isChapsLoading = false})
       : _chaps = chaps,
         _tabViewItems = tabViewItems,
         _comments = comments;
@@ -1786,10 +1809,13 @@ class _$WatchInitialImpl implements WatchInitial {
   @override
   @JsonKey()
   final bool isCmtLoading;
+  @override
+  @JsonKey()
+  final bool isChapsLoading;
 
   @override
   String toString() {
-    return 'WatchState.initial(chaps: $chaps, initialData: $initialData, detail: $detail, tabViewItems: $tabViewItems, comments: $comments, totalCommentCount: $totalCommentCount, fbUser: $fbUser, isCmtLoading: $isCmtLoading)';
+    return 'WatchState.initial(chaps: $chaps, initialData: $initialData, detail: $detail, tabViewItems: $tabViewItems, comments: $comments, totalCommentCount: $totalCommentCount, fbUser: $fbUser, isCmtLoading: $isCmtLoading, isChapsLoading: $isChapsLoading)';
   }
 
   @override
@@ -1808,7 +1834,9 @@ class _$WatchInitialImpl implements WatchInitial {
                 other.totalCommentCount == totalCommentCount) &&
             (identical(other.fbUser, fbUser) || other.fbUser == fbUser) &&
             (identical(other.isCmtLoading, isCmtLoading) ||
-                other.isCmtLoading == isCmtLoading));
+                other.isCmtLoading == isCmtLoading) &&
+            (identical(other.isChapsLoading, isChapsLoading) ||
+                other.isChapsLoading == isChapsLoading));
   }
 
   @override
@@ -1821,7 +1849,8 @@ class _$WatchInitialImpl implements WatchInitial {
       const DeepCollectionEquality().hash(_comments),
       totalCommentCount,
       fbUser,
-      isCmtLoading);
+      isCmtLoading,
+      isChapsLoading);
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -1842,7 +1871,8 @@ class _$WatchInitialImpl implements WatchInitial {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)
+            bool isCmtLoading,
+            bool isChapsLoading)
         initial,
     required TResult Function(
             List<ChapDataEntity?>? chaps,
@@ -1852,7 +1882,8 @@ class _$WatchInitialImpl implements WatchInitial {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)
+            bool isCmtLoading,
+            bool isChapsLoading)
         loaded,
     required TResult Function(
             String message,
@@ -1863,11 +1894,12 @@ class _$WatchInitialImpl implements WatchInitial {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)
+            bool isCmtLoading,
+            bool isChapsLoading)
         error,
   }) {
     return initial(chaps, initialData, detail, tabViewItems, comments,
-        totalCommentCount, fbUser, isCmtLoading);
+        totalCommentCount, fbUser, isCmtLoading, isChapsLoading);
   }
 
   @override
@@ -1881,7 +1913,8 @@ class _$WatchInitialImpl implements WatchInitial {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         initial,
     TResult? Function(
             List<ChapDataEntity?>? chaps,
@@ -1891,7 +1924,8 @@ class _$WatchInitialImpl implements WatchInitial {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         loaded,
     TResult? Function(
             String message,
@@ -1902,11 +1936,12 @@ class _$WatchInitialImpl implements WatchInitial {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         error,
   }) {
     return initial?.call(chaps, initialData, detail, tabViewItems, comments,
-        totalCommentCount, fbUser, isCmtLoading);
+        totalCommentCount, fbUser, isCmtLoading, isChapsLoading);
   }
 
   @override
@@ -1920,7 +1955,8 @@ class _$WatchInitialImpl implements WatchInitial {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         initial,
     TResult Function(
             List<ChapDataEntity?>? chaps,
@@ -1930,7 +1966,8 @@ class _$WatchInitialImpl implements WatchInitial {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         loaded,
     TResult Function(
             String message,
@@ -1941,13 +1978,14 @@ class _$WatchInitialImpl implements WatchInitial {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         error,
     required TResult orElse(),
   }) {
     if (initial != null) {
       return initial(chaps, initialData, detail, tabViewItems, comments,
-          totalCommentCount, fbUser, isCmtLoading);
+          totalCommentCount, fbUser, isCmtLoading, isChapsLoading);
     }
     return orElse();
   }
@@ -1996,7 +2034,8 @@ abstract class WatchInitial implements WatchState {
       final List<CommentEntity?>? comments,
       final int? totalCommentCount,
       final ActorEntity? fbUser,
-      final bool isCmtLoading}) = _$WatchInitialImpl;
+      final bool isCmtLoading,
+      final bool isChapsLoading}) = _$WatchInitialImpl;
 
   @override
   List<ChapDataEntity?>? get chaps;
@@ -2014,6 +2053,8 @@ abstract class WatchInitial implements WatchState {
   ActorEntity? get fbUser;
   @override
   bool get isCmtLoading;
+  @override
+  bool get isChapsLoading;
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -2039,7 +2080,8 @@ abstract class _$$WatchLoadedImplCopyWith<$Res>
       List<CommentEntity?>? comments,
       int? totalCommentCount,
       ActorEntity? fbUser,
-      bool isCmtLoading});
+      bool isCmtLoading,
+      bool isChapsLoading});
 
   @override
   $InitialDataCopyWith<$Res>? get initialData;
@@ -2070,6 +2112,7 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
     Object? totalCommentCount = freezed,
     Object? fbUser = freezed,
     Object? isCmtLoading = null,
+    Object? isChapsLoading = null,
   }) {
     return _then(_$WatchLoadedImpl(
       chaps: freezed == chaps
@@ -2104,6 +2147,10 @@ class __$$WatchLoadedImplCopyWithImpl<$Res>
           ? _value.isCmtLoading
           : isCmtLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isChapsLoading: null == isChapsLoading
+          ? _value.isChapsLoading
+          : isChapsLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -2129,7 +2176,8 @@ class _$WatchLoadedImpl implements WatchLoaded {
       final List<CommentEntity?>? comments,
       this.totalCommentCount,
       this.fbUser,
-      this.isCmtLoading = false})
+      this.isCmtLoading = false,
+      this.isChapsLoading = false})
       : _chaps = chaps,
         _tabViewItems = tabViewItems,
         _comments = comments;
@@ -2175,10 +2223,13 @@ class _$WatchLoadedImpl implements WatchLoaded {
   @override
   @JsonKey()
   final bool isCmtLoading;
+  @override
+  @JsonKey()
+  final bool isChapsLoading;
 
   @override
   String toString() {
-    return 'WatchState.loaded(chaps: $chaps, initialData: $initialData, detail: $detail, tabViewItems: $tabViewItems, comments: $comments, totalCommentCount: $totalCommentCount, fbUser: $fbUser, isCmtLoading: $isCmtLoading)';
+    return 'WatchState.loaded(chaps: $chaps, initialData: $initialData, detail: $detail, tabViewItems: $tabViewItems, comments: $comments, totalCommentCount: $totalCommentCount, fbUser: $fbUser, isCmtLoading: $isCmtLoading, isChapsLoading: $isChapsLoading)';
   }
 
   @override
@@ -2197,7 +2248,9 @@ class _$WatchLoadedImpl implements WatchLoaded {
                 other.totalCommentCount == totalCommentCount) &&
             (identical(other.fbUser, fbUser) || other.fbUser == fbUser) &&
             (identical(other.isCmtLoading, isCmtLoading) ||
-                other.isCmtLoading == isCmtLoading));
+                other.isCmtLoading == isCmtLoading) &&
+            (identical(other.isChapsLoading, isChapsLoading) ||
+                other.isChapsLoading == isChapsLoading));
   }
 
   @override
@@ -2210,7 +2263,8 @@ class _$WatchLoadedImpl implements WatchLoaded {
       const DeepCollectionEquality().hash(_comments),
       totalCommentCount,
       fbUser,
-      isCmtLoading);
+      isCmtLoading,
+      isChapsLoading);
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -2231,7 +2285,8 @@ class _$WatchLoadedImpl implements WatchLoaded {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)
+            bool isCmtLoading,
+            bool isChapsLoading)
         initial,
     required TResult Function(
             List<ChapDataEntity?>? chaps,
@@ -2241,7 +2296,8 @@ class _$WatchLoadedImpl implements WatchLoaded {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)
+            bool isCmtLoading,
+            bool isChapsLoading)
         loaded,
     required TResult Function(
             String message,
@@ -2252,11 +2308,12 @@ class _$WatchLoadedImpl implements WatchLoaded {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)
+            bool isCmtLoading,
+            bool isChapsLoading)
         error,
   }) {
     return loaded(chaps, initialData, detail, tabViewItems, comments,
-        totalCommentCount, fbUser, isCmtLoading);
+        totalCommentCount, fbUser, isCmtLoading, isChapsLoading);
   }
 
   @override
@@ -2270,7 +2327,8 @@ class _$WatchLoadedImpl implements WatchLoaded {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         initial,
     TResult? Function(
             List<ChapDataEntity?>? chaps,
@@ -2280,7 +2338,8 @@ class _$WatchLoadedImpl implements WatchLoaded {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         loaded,
     TResult? Function(
             String message,
@@ -2291,11 +2350,12 @@ class _$WatchLoadedImpl implements WatchLoaded {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         error,
   }) {
     return loaded?.call(chaps, initialData, detail, tabViewItems, comments,
-        totalCommentCount, fbUser, isCmtLoading);
+        totalCommentCount, fbUser, isCmtLoading, isChapsLoading);
   }
 
   @override
@@ -2309,7 +2369,8 @@ class _$WatchLoadedImpl implements WatchLoaded {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         initial,
     TResult Function(
             List<ChapDataEntity?>? chaps,
@@ -2319,7 +2380,8 @@ class _$WatchLoadedImpl implements WatchLoaded {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         loaded,
     TResult Function(
             String message,
@@ -2330,13 +2392,14 @@ class _$WatchLoadedImpl implements WatchLoaded {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
       return loaded(chaps, initialData, detail, tabViewItems, comments,
-          totalCommentCount, fbUser, isCmtLoading);
+          totalCommentCount, fbUser, isCmtLoading, isChapsLoading);
     }
     return orElse();
   }
@@ -2385,7 +2448,8 @@ abstract class WatchLoaded implements WatchState {
       final List<CommentEntity?>? comments,
       final int? totalCommentCount,
       final ActorEntity? fbUser,
-      final bool isCmtLoading}) = _$WatchLoadedImpl;
+      final bool isCmtLoading,
+      final bool isChapsLoading}) = _$WatchLoadedImpl;
 
   @override
   List<ChapDataEntity?>? get chaps;
@@ -2403,6 +2467,8 @@ abstract class WatchLoaded implements WatchState {
   ActorEntity? get fbUser;
   @override
   bool get isCmtLoading;
+  @override
+  bool get isChapsLoading;
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -2429,7 +2495,8 @@ abstract class _$$WatchErrorImplCopyWith<$Res>
       List<CommentEntity?>? comments,
       int? totalCommentCount,
       ActorEntity? fbUser,
-      bool isCmtLoading});
+      bool isCmtLoading,
+      bool isChapsLoading});
 
   @override
   $InitialDataCopyWith<$Res>? get initialData;
@@ -2461,6 +2528,7 @@ class __$$WatchErrorImplCopyWithImpl<$Res>
     Object? totalCommentCount = freezed,
     Object? fbUser = freezed,
     Object? isCmtLoading = null,
+    Object? isChapsLoading = null,
   }) {
     return _then(_$WatchErrorImpl(
       message: null == message
@@ -2499,6 +2567,10 @@ class __$$WatchErrorImplCopyWithImpl<$Res>
           ? _value.isCmtLoading
           : isCmtLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isChapsLoading: null == isChapsLoading
+          ? _value.isChapsLoading
+          : isChapsLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -2515,7 +2587,8 @@ class _$WatchErrorImpl implements WatchError {
       final List<CommentEntity?>? comments = const [],
       this.totalCommentCount,
       this.fbUser,
-      this.isCmtLoading = false})
+      this.isCmtLoading = false,
+      this.isChapsLoading = false})
       : _chaps = chaps,
         _tabViewItems = tabViewItems,
         _comments = comments;
@@ -2566,10 +2639,13 @@ class _$WatchErrorImpl implements WatchError {
   @override
   @JsonKey()
   final bool isCmtLoading;
+  @override
+  @JsonKey()
+  final bool isChapsLoading;
 
   @override
   String toString() {
-    return 'WatchState.error(message: $message, chaps: $chaps, initialData: $initialData, detail: $detail, tabViewItems: $tabViewItems, comments: $comments, totalCommentCount: $totalCommentCount, fbUser: $fbUser, isCmtLoading: $isCmtLoading)';
+    return 'WatchState.error(message: $message, chaps: $chaps, initialData: $initialData, detail: $detail, tabViewItems: $tabViewItems, comments: $comments, totalCommentCount: $totalCommentCount, fbUser: $fbUser, isCmtLoading: $isCmtLoading, isChapsLoading: $isChapsLoading)';
   }
 
   @override
@@ -2589,7 +2665,9 @@ class _$WatchErrorImpl implements WatchError {
                 other.totalCommentCount == totalCommentCount) &&
             (identical(other.fbUser, fbUser) || other.fbUser == fbUser) &&
             (identical(other.isCmtLoading, isCmtLoading) ||
-                other.isCmtLoading == isCmtLoading));
+                other.isCmtLoading == isCmtLoading) &&
+            (identical(other.isChapsLoading, isChapsLoading) ||
+                other.isChapsLoading == isChapsLoading));
   }
 
   @override
@@ -2603,7 +2681,8 @@ class _$WatchErrorImpl implements WatchError {
       const DeepCollectionEquality().hash(_comments),
       totalCommentCount,
       fbUser,
-      isCmtLoading);
+      isCmtLoading,
+      isChapsLoading);
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.
@@ -2624,7 +2703,8 @@ class _$WatchErrorImpl implements WatchError {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)
+            bool isCmtLoading,
+            bool isChapsLoading)
         initial,
     required TResult Function(
             List<ChapDataEntity?>? chaps,
@@ -2634,7 +2714,8 @@ class _$WatchErrorImpl implements WatchError {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)
+            bool isCmtLoading,
+            bool isChapsLoading)
         loaded,
     required TResult Function(
             String message,
@@ -2645,11 +2726,12 @@ class _$WatchErrorImpl implements WatchError {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)
+            bool isCmtLoading,
+            bool isChapsLoading)
         error,
   }) {
     return error(message, chaps, initialData, detail, tabViewItems, comments,
-        totalCommentCount, fbUser, isCmtLoading);
+        totalCommentCount, fbUser, isCmtLoading, isChapsLoading);
   }
 
   @override
@@ -2663,7 +2745,8 @@ class _$WatchErrorImpl implements WatchError {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         initial,
     TResult? Function(
             List<ChapDataEntity?>? chaps,
@@ -2673,7 +2756,8 @@ class _$WatchErrorImpl implements WatchError {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         loaded,
     TResult? Function(
             String message,
@@ -2684,11 +2768,12 @@ class _$WatchErrorImpl implements WatchError {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         error,
   }) {
     return error?.call(message, chaps, initialData, detail, tabViewItems,
-        comments, totalCommentCount, fbUser, isCmtLoading);
+        comments, totalCommentCount, fbUser, isCmtLoading, isChapsLoading);
   }
 
   @override
@@ -2702,7 +2787,8 @@ class _$WatchErrorImpl implements WatchError {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         initial,
     TResult Function(
             List<ChapDataEntity?>? chaps,
@@ -2712,7 +2798,8 @@ class _$WatchErrorImpl implements WatchError {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         loaded,
     TResult Function(
             String message,
@@ -2723,13 +2810,14 @@ class _$WatchErrorImpl implements WatchError {
             List<CommentEntity?>? comments,
             int? totalCommentCount,
             ActorEntity? fbUser,
-            bool isCmtLoading)?
+            bool isCmtLoading,
+            bool isChapsLoading)?
         error,
     required TResult orElse(),
   }) {
     if (error != null) {
       return error(message, chaps, initialData, detail, tabViewItems, comments,
-          totalCommentCount, fbUser, isCmtLoading);
+          totalCommentCount, fbUser, isCmtLoading, isChapsLoading);
     }
     return orElse();
   }
@@ -2779,7 +2867,8 @@ abstract class WatchError implements WatchState {
       final List<CommentEntity?>? comments,
       final int? totalCommentCount,
       final ActorEntity? fbUser,
-      final bool isCmtLoading}) = _$WatchErrorImpl;
+      final bool isCmtLoading,
+      final bool isChapsLoading}) = _$WatchErrorImpl;
 
   String get message;
   @override
@@ -2798,6 +2887,8 @@ abstract class WatchError implements WatchState {
   ActorEntity? get fbUser;
   @override
   bool get isCmtLoading;
+  @override
+  bool get isChapsLoading;
 
   /// Create a copy of WatchState
   /// with the given fields replaced by the non-null parameter values.

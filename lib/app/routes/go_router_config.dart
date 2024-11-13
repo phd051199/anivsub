@@ -1,8 +1,6 @@
-import 'package:anivsub/app/notifier/auth_notifier.dart';
 import 'package:anivsub/presentation/screen/bottom_navigation.dart';
+import 'package:anivsub/presentation/screen/history/history.dart';
 import 'package:anivsub/presentation/screen/home/home.dart';
-import 'package:anivsub/presentation/screen/login/login.dart';
-import 'package:anivsub/presentation/screen/profile/profile.dart';
 import 'package:anivsub/presentation/screen/search/search.dart';
 import 'package:anivsub/presentation/screen/setting/setting.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
@@ -14,36 +12,17 @@ import 'package:go_router/go_router.dart';
 part 'screen_names.dart';
 part 'screen_paths.dart';
 
-final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final goRouter = GoRouter(
   debugLogDiagnostics: kDebugMode,
   initialLocation: ScreenPaths.home,
   navigatorKey: _rootNavigatorKey,
   refreshListenable: authNotifier,
-  redirect: _handleRedirect,
   routes: [
-    _loginRoute,
     _watchRoute,
     _bottomNavigationRoute,
   ],
-);
-
-String? _handleRedirect(BuildContext context, GoRouterState state) {
-  if (authNotifier.status == AuthStatus.notAuthenticated) {
-    return ScreenPaths.login;
-  }
-  if (authNotifier.status == AuthStatus.authenticated &&
-      state.matchedLocation == ScreenPaths.login) {
-    return ScreenPaths.home;
-  }
-  return null;
-}
-
-final _loginRoute = GoRoute(
-  name: ScreenNames.login,
-  path: ScreenPaths.login,
-  builder: (context, state) => const LoginScreen(),
 );
 
 final _watchRoute = GoRoute(
@@ -67,7 +46,7 @@ final _bottomNavigationRoute = StatefulShellRoute.indexedStack(
       routes: [_searchRoute],
     ),
     StatefulShellBranch(
-      routes: [_profileRoute],
+      routes: [_historyRoute],
     ),
     StatefulShellBranch(
       routes: [_settingRoute],
@@ -87,10 +66,10 @@ final _searchRoute = GoRoute(
   builder: (context, state) => const SearchPage(),
 );
 
-final _profileRoute = GoRoute(
-  name: ScreenNames.profile,
-  path: ScreenPaths.profile,
-  builder: (context, state) => const ProfilePage(),
+final _historyRoute = GoRoute(
+  name: ScreenNames.history,
+  path: ScreenPaths.history,
+  builder: (context, state) => const HistoryPage(),
 );
 
 final _settingRoute = GoRoute(

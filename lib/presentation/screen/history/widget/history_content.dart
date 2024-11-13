@@ -1,30 +1,35 @@
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/profile/profile.dart';
+import 'package:anivsub/presentation/screen/history/history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'history_date_group.dart';
 import 'user_info.dart';
 
-class ProfileContent extends StatelessWidget {
-  const ProfileContent({super.key});
+class HistoryContent extends StatelessWidget {
+  const HistoryContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<ProfileCubit>().state;
+    final state = context.watch<HistoryCubit>().state;
     final groupedHistory = _groupHistoryByDate(state.queryHistory);
 
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: UserInfo(user: state.user!),
+          child: UserInfo(user: state.user),
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            (context, index) => HistoryDateGroup(
-              groupedHistory: groupedHistory,
-              index: index,
-            ),
+            (context, index) {
+              if (index == groupedHistory.length - 1) {
+                context.read<HistoryCubit>().loadMore();
+              }
+              return HistoryDateGroup(
+                groupedHistory: groupedHistory,
+                index: index,
+              );
+            },
             childCount: groupedHistory.length,
           ),
         ),

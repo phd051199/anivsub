@@ -126,7 +126,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   }
 
   void _initializeTabController(WatchState state) {
-    if (state.detail!.season.isEmpty) return;
+    if (state.detail?.season.isEmpty ?? true) return;
 
     final initialTabIndex = _getInitialTabIndex(state);
     _updateTabController(state, initialTabIndex);
@@ -137,7 +137,7 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     if (_shouldRecreateTabController(state)) {
       _tabController?.dispose();
       _tabController = TabController(
-        length: state.detail!.season.length,
+        length: state.detail?.season.length ?? 0,
         vsync: this,
         initialIndex: initialTabIndex,
       );
@@ -147,11 +147,11 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
 
   bool _shouldRecreateTabController(WatchState state) {
     return _tabController == null ||
-        _tabController!.length != state.detail!.season.length;
+        _tabController?.length != state.detail?.season.length;
   }
 
   void _handleTabIndexUpdate(int initialTabIndex) {
-    _currentTabIndex = _tabController!.index;
+    _currentTabIndex = _tabController?.index ?? 0;
 
     if (_needUpdateTabIndex) {
       _tabController?.animateTo(initialTabIndex);
@@ -163,19 +163,20 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
   int _getInitialTabIndex(WatchState state) {
     final pathToView = state.detail?.pathToView?.cleanPathToView();
     if (pathToView == null) {
-      return state.detail!.season.length - 1;
+      return (state.detail?.season.length ?? 0) - 1;
     }
 
-    final index = state.detail!.season.indexWhere(
-      (item) => item.path == pathToView,
-    );
+    final index = state.detail?.season.indexWhere(
+          (item) => item.path == pathToView,
+        ) ??
+        -1;
     return index >= 0 ? index : 0;
   }
 
   void _onTabChange() {
-    if (_currentTabIndex == _tabController!.index) return;
+    if (_currentTabIndex == _tabController?.index) return;
 
-    _currentTabIndex = _tabController!.index;
+    _currentTabIndex = _tabController?.index ?? 0;
     final state = bloc.state;
     if (state is! WatchLoaded) return;
 

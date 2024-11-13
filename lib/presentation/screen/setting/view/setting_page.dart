@@ -1,5 +1,4 @@
 import 'package:anivsub/presentation/screen/setting/setting.dart';
-import 'package:anivsub/presentation/screen/setting/widget/logout_widget.dart';
 import 'package:anivsub/presentation/screen/setting/widget/theme_color_widget.dart';
 import 'package:anivsub/presentation/screen/setting/widget/theme_mode_widget.dart';
 import 'package:anivsub/shared/base/base.dart';
@@ -22,8 +21,6 @@ class _SettingPageState extends CubitState<SettingPage, SettingCubit> {
           ThemeModeWidget(),
           Divider(),
           ThemeColorWidget(),
-          Divider(),
-          LogoutWidget(),
         ],
       ),
     );

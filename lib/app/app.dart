@@ -1,10 +1,10 @@
 import 'package:anivsub/app/routes/go_router_config.dart';
 import 'package:anivsub/app/theme/app_theme.dart';
 import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
+import 'package:anivsub/shared/di/shared_export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => GetIt.I<ThemeCubit>(),
+      create: (_) => themeCubit,
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) => _buildApp(context, state),
       ),

@@ -94,7 +94,7 @@ class AnimeCard extends StatelessWidget {
                       '${context.l10n.views}: ${item.views?.formatNumber()}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: context.textTheme.labelSmall!.copyWith(
+                      style: context.textTheme.labelSmall?.copyWith(
                         color: context.theme.colorScheme.secondary,
                       ),
                     ),

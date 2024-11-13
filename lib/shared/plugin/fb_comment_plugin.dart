@@ -17,8 +17,8 @@ class FBCommentPlugin {
     bool post = false,
     bool force = false,
   }) async {
-    if (!force && _setupData != null && _setupData!.isNotEmpty) {
-      if (post && _setupData!.setupParams.fbDtsg != null) {
+    if (!force && _setupData != null && (_setupData?.isNotEmpty ?? false)) {
+      if (post && _setupData?.setupParams.fbDtsg != null) {
         return _setupData!;
       }
       if (!post) {
@@ -107,7 +107,7 @@ class FBCommentPlugin {
     final setup = await this.setup(post: true);
 
     if (setup.setupParams.fbDtsg == null &&
-        _setupData!.setupParams.fbDtsg == null) {
+        _setupData?.setupParams.fbDtsg == null) {
       throw Exception('fb_dtsg not found');
     }
 
@@ -133,7 +133,7 @@ class FBCommentPlugin {
       lsd: setup.setupParams.lsd ?? '',
       jazoest: setup.setupParams.jazoest,
       sp: setup.setupParams.sp,
-      fbDtsg: setup.setupParams.fbDtsg ?? _setupData!.setupParams.fbDtsg ?? '',
+      fbDtsg: setup.setupParams.fbDtsg ?? _setupData?.setupParams.fbDtsg ?? '',
     ).toJson();
 
     final headers = setup.headers;
@@ -156,7 +156,7 @@ class FBCommentPlugin {
     final setup = await this.setup(post: true);
 
     if (setup.setupParams.fbDtsg == null &&
-        _setupData!.setupParams.fbDtsg == null) {
+        _setupData?.setupParams.fbDtsg == null) {
       throw Exception('fb_dtsg not found');
     }
 
@@ -175,7 +175,7 @@ class FBCommentPlugin {
       lsd: setup.setupParams.lsd ?? '',
       jazoest: setup.setupParams.jazoest,
       sp: setup.setupParams.sp,
-      fbDtsg: setup.setupParams.fbDtsg ?? _setupData!.setupParams.fbDtsg ?? '',
+      fbDtsg: setup.setupParams.fbDtsg ?? _setupData?.setupParams.fbDtsg ?? '',
       user: loginUser?.id ?? '',
       ccg: 'EXCELLENT',
     ).toJson();
@@ -205,7 +205,7 @@ class FBCommentPlugin {
       lsd: setup.setupParams.lsd ?? '',
       jazoest: setup.setupParams.jazoest,
       sp: setup.setupParams.sp,
-      fbDtsg: setup.setupParams.fbDtsg ?? _setupData!.setupParams.fbDtsg ?? '',
+      fbDtsg: setup.setupParams.fbDtsg ?? _setupData?.setupParams.fbDtsg ?? '',
     ).toJson();
 
     body['comment_id'] = commentId;
@@ -234,7 +234,7 @@ class FBCommentPlugin {
       lsd: setup.setupParams.lsd ?? '',
       jazoest: setup.setupParams.jazoest,
       sp: setup.setupParams.sp,
-      fbDtsg: setup.setupParams.fbDtsg ?? _setupData!.setupParams.fbDtsg ?? '',
+      fbDtsg: setup.setupParams.fbDtsg ?? _setupData?.setupParams.fbDtsg ?? '',
       afterCursor: afterCursor,
     ).toJson();
 

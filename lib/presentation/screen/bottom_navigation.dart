@@ -16,7 +16,7 @@ class BottomNavigation extends StatelessWidget {
         forceMaterialTransparency: true,
         title: Text(
           _getScreenTitle(context, navigationShell.currentIndex),
-          style: context.textTheme.headlineMedium!.copyWith(
+          style: context.textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -53,8 +53,8 @@ class BottomNavigation extends StatelessWidget {
         label: context.l10n.search,
       ),
       NavigationDestination(
-        icon: const Icon(Icons.person),
-        label: context.l10n.profile,
+        icon: const Icon(Icons.history),
+        label: context.l10n.history,
       ),
       NavigationDestination(
         icon: const Icon(Icons.settings),
@@ -67,7 +67,7 @@ class BottomNavigation extends StatelessWidget {
     final titles = [
       context.l10n.home,
       context.l10n.search,
-      context.l10n.profile,
+      context.l10n.history,
       context.l10n.setting,
     ];
 

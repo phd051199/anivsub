@@ -163,7 +163,7 @@ class DHAImpl implements DHA {
   }
 
   int _allocateMemory(int size, int id) {
-    return (instance.getFunction('__new')!.call([size, id])[0] as int) >>> 0;
+    return (instance.getFunction('__new')?.call([size, id])[0] as int) >>> 0;
   }
 
   String _padBase64(String str) {
@@ -266,7 +266,7 @@ class DHAImpl implements DHA {
 
   int _callTransformBuff(int ptr, List<int> flags) {
     final transformBuffFn = instance.getFunction('transformBuff');
-    return (transformBuffFn!.call([ptr, ...flags])[0] as int) >>> 0;
+    return (transformBuffFn?.call([ptr, ...flags])[0] as int) >>> 0;
   }
 
   List<Uint8List> _processTransformBuffResult(int result) {
@@ -358,7 +358,7 @@ class DHAImpl implements DHA {
 
   int _callDezipFunction(int ptr) {
     final dezipFn = instance.getFunction('dezip');
-    return (dezipFn!.call([ptr])[0] as int) >>> 0;
+    return (dezipFn?.call([ptr])[0] as int) >>> 0;
   }
 
   int _allocateMemoryForData(List<int>? data) {
@@ -425,7 +425,7 @@ class DHAImpl implements DHA {
       if (count != null) {
         refCounts[ptr] = count + 1;
       } else {
-        final pinned = (instance.getFunction('__pin')!.call([ptr])[0] as int);
+        final pinned = (instance.getFunction('__pin')?.call([ptr])[0] as int);
         refCounts[pinned] = 1;
       }
     }
@@ -436,7 +436,7 @@ class DHAImpl implements DHA {
     if (ptr != 0) {
       final count = refCounts[ptr];
       if (count == 1) {
-        instance.getFunction('__unpin')!.call([ptr]);
+        instance.getFunction('__unpin')?.call([ptr]);
         refCounts.remove(ptr);
       } else if (count != null) {
         refCounts[ptr] = count - 1;

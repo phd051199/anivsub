@@ -27,7 +27,9 @@ class CookiesUtils {
       ..domain = cookie.domain
       ..path = cookie.path
       ..expires = cookie.expiresDate != null
-          ? DateTime.fromMillisecondsSinceEpoch(cookie.expiresDate!.toInt())
+          ? DateTime.fromMillisecondsSinceEpoch(
+              cookie.expiresDate!.toInt(),
+            )
           : null
       ..httpOnly = cookie.isHttpOnly ?? false
       ..secure = cookie.isSecure ?? false;

@@ -89,7 +89,7 @@ class _CommentSectionState extends State<CommentSection> {
       builder: (context, state) {
         if (state is! WatchLoaded) return const SizedBox.shrink();
         return CommentList(
-          comments: state.comments!.whereNotNull().toList(),
+          comments: state.comments?.whereNotNull().toList() ?? [],
           fbUser: state.fbUser,
           onDeleteComment: _handleDeleteComment,
           onLikeComment: _handleLikeComment,
@@ -255,7 +255,7 @@ class CommentInputField extends StatelessWidget {
             child: CircleAvatar(
               radius: 20,
               backgroundImage: state.fbUser?.thumbSrc != null
-                  ? CachedNetworkImageProvider(state.fbUser!.thumbSrc!)
+                  ? CachedNetworkImageProvider(state.fbUser?.thumbSrc ?? '')
                   : null,
               child: state.fbUser == null ? const Icon(Icons.person) : null,
             ),
@@ -466,7 +466,7 @@ class CommentTreeItem extends StatelessWidget {
                       const Gap(4),
                       Text(
                         '${data.likeCount} ${data.likeCount > 1 ? 'likes' : 'like'}',
-                        style: context.textTheme.bodySmall!.copyWith(
+                        style: context.textTheme.bodySmall?.copyWith(
                           color: likeColor,
                         ),
                       ),

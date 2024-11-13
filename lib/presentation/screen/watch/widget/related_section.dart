@@ -16,7 +16,7 @@ class RelatedSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: AnimeList(
-        movies: context.watch<WatchBloc>().state.detail!.toPut,
+        movies: context.watch<WatchBloc>().state.detail?.toPut ?? [],
         onTap: onTap,
       ),
     );

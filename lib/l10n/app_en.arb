@@ -201,5 +201,13 @@
   "yesterday": "Yesterday",
   "@yesterday": {
     "description": "Label for yesterday."
+  },
+  "history": "History",
+  "@history": {
+    "description": "Label for history."
+  },
+  "loginMessage": "Login to your account",
+  "@loginMessage": {
+    "description": "Message displayed when logging in."
   }
 }

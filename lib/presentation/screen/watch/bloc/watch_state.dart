@@ -11,6 +11,7 @@ class WatchState extends BaseBlocState with _$WatchState {
     int? totalCommentCount,
     ActorEntity? fbUser,
     @Default(false) bool isCmtLoading,
+    @Default(false) bool isChapsLoading,
   }) = WatchInitial;
 
   const factory WatchState.loaded({
@@ -22,6 +23,7 @@ class WatchState extends BaseBlocState with _$WatchState {
     int? totalCommentCount,
     ActorEntity? fbUser,
     @Default(false) bool isCmtLoading,
+    @Default(false) bool isChapsLoading,
   }) = WatchLoaded;
 
   const factory WatchState.error({
@@ -34,6 +36,7 @@ class WatchState extends BaseBlocState with _$WatchState {
     int? totalCommentCount,
     ActorEntity? fbUser,
     @Default(false) bool isCmtLoading,
+    @Default(false) bool isChapsLoading,
   }) = WatchError;
 }
 

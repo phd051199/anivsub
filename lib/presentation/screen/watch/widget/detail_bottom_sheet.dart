@@ -24,7 +24,7 @@ class DetailBottomSheet extends StatelessWidget {
               ),
             ),
             const Gap(12),
-            AnimeThumbnail(imageUrl: state.detail!.image),
+            AnimeThumbnail(imageUrl: state.detail?.image ?? ''),
             const Gap(12),
             ListTile(
               contentPadding: EdgeInsets.zero,
@@ -38,7 +38,7 @@ class DetailBottomSheet extends StatelessWidget {
                 ),
               ),
               subtitle: Text(
-                state.detail!.description,
+                state.detail?.description ?? '',
                 style: context.textTheme.bodyMedium?.copyWith(
                   color: context.theme.colorScheme.secondary,
                 ),

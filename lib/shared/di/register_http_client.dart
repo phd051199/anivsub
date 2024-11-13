@@ -71,7 +71,7 @@ void registerCacheManager() {
     CacheOptions(
       store: MemCacheStore(),
       maxStale: const Duration(minutes: 1),
-      policy: CachePolicy.request,
+      policy: CachePolicy.forceCache,
     ),
   );
 }

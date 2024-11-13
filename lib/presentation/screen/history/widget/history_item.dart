@@ -38,14 +38,16 @@ class HistoryItem extends StatelessWidget {
           ),
         ),
         title: Text(
-          '${item.name}\n${item.seasonName} ${context.l10n.episode} ${item.watchName}',
-          style: const TextStyle(fontSize: kDefaultFontSize),
+          '${context.l10n.ep} ${item.watchName} - ${item.name}\n${item.seasonName}',
+          style: context.textTheme.titleSmall,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(
           DateTimeUtils.formatTimestamp(item.createdAt, context),
-          style: const TextStyle(fontSize: kDefaultFontSize),
+          style: context.textTheme.bodySmall?.copyWith(
+            color: context.theme.colorScheme.onSurfaceVariant,
+          ),
         ),
       ),
     );

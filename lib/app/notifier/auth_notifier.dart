@@ -54,7 +54,7 @@ class AuthNotifier with ChangeNotifier {
       final output = await authUseCases.execute(
         const GetLocalAuthTokenInput(),
       );
-      if (output.localSession?.email != null) {
+      if (output.localSession?.id != null) {
         _loginResponseEntity = output.localSession;
         _status = AuthStatus.authenticated;
         notifyListeners();

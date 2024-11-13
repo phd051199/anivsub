@@ -1,4 +1,5 @@
 import 'package:anivsub/app/notifier/auth_notifier.dart';
+import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
 import 'package:anivsub/shared/plugin/plugin.dart';
@@ -16,5 +17,7 @@ FlutterSecureStorageService get flutterSecureStorageService =>
 CookieJar get cookieJar => GetIt.I<CookieJar>();
 DHA get dha => GetIt.I<DHA>();
 FbApiClient get fbApiClient => GetIt.I<FbApiClient>();
-VideoPlayerCubit get videoPlayerCubit => GetIt.I<VideoPlayerCubit>();
 Logger get log => GetIt.I<Logger>();
+
+ThemeCubit get themeCubit => GetIt.I<ThemeCubit>();
+VideoPlayerCubit get videoPlayerCubit => GetIt.I<VideoPlayerCubit>();

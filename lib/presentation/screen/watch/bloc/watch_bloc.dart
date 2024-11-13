@@ -56,7 +56,11 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     try {
       final animeDetail = await _fetchDetailData(event.id);
       safeEmit(
-        WatchLoaded(detail: animeDetail, isCmtLoading: true),
+        WatchLoaded(
+          detail: animeDetail,
+          isCmtLoading: true,
+          isChapsLoading: true,
+        ),
       );
 
       add(LoadWatch(id: event.id));
@@ -159,7 +163,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
         _filterNewComments(result.comments, existingCommentIds);
 
     return [
-      ...state.comments!.whereNotNull(),
+      ...state.comments?.whereNotNull() ?? [],
       ...newUniqueComments,
     ];
   }
@@ -358,6 +362,7 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
           chaps: chaps,
           tabViewItems: chapterLists,
           initialData: initialData,
+          isChapsLoading: false,
         ),
       );
 
@@ -371,9 +376,10 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
     ChangeSeasonTab event,
     Emitter<WatchState> emit,
   ) async {
-    final newIndex = state.detail!.season.indexWhere(
-      (item) => item.path == event.id,
-    );
+    final newIndex = state.detail?.season.indexWhere(
+          (item) => item.path == event.id,
+        ) ??
+        -1;
     if (!_shouldUpdateTab(state, newIndex)) return;
 
     try {

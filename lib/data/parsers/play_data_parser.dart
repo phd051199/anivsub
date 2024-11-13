@@ -29,7 +29,7 @@ class PlayDataParser {
       final hour = int.parse(match.group(2)!);
       final minute = int.parse(match.group(3)!);
 
-      update = [dayTextToNum(day!.toLowerCase()), hour, minute];
+      update = [dayTextToNum(day?.toLowerCase() ?? ''), hour, minute];
     }
 
     final image = document.querySelector('.Image img')?.attributes['src'] ?? '';

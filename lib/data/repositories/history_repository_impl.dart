@@ -17,6 +17,8 @@ class HistoryRepositoryImpl implements HistoryRepository {
     int? size,
   }) async {
     final userSession = await _authLocalDataSource.getLocalUserSession();
+    if (userSession.id == null) return [];
+
     final result = await _historyRemoteDataSource.queryHistory(
       userUid: userSession.id!,
       page: page,
@@ -30,6 +32,8 @@ class HistoryRepositoryImpl implements HistoryRepository {
     required String seasonId,
   }) async {
     final userSession = await _authLocalDataSource.getLocalUserSession();
+    if (userSession.id == null) return null;
+
     final result = await _historyRemoteDataSource.getLastChap(
       userUid: userSession.id!,
       seasonId: seasonId,
@@ -40,6 +44,8 @@ class HistoryRepositoryImpl implements HistoryRepository {
   @override
   Future<void> setSingleProgress(SetSingleProgressEntity data) async {
     final userSession = await _authLocalDataSource.getLocalUserSession();
+    if (userSession.id == null) return;
+
     await _historyRemoteDataSource.setSingleProgress(
       data.copyWith(userUid: userSession.id!).toDTO(),
     );
@@ -51,6 +57,8 @@ class HistoryRepositoryImpl implements HistoryRepository {
     required String seasonId,
   }) async {
     final userSession = await _authLocalDataSource.getLocalUserSession();
+    if (userSession.id == null) return null;
+
     final result = await _historyRemoteDataSource.getSingleProgress(
       userUid: userSession.id!,
       chapId: chapId,

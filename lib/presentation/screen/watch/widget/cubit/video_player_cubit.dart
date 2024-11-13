@@ -158,13 +158,13 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     final progress = await _getSingleProgressUseCase.execute(
       GetSingleProgressUseCaseInput(
         chapId: episode.id,
-        seasonId: state.animeDetail!.pathToView?.parseSeasonId() ?? '',
+        seasonId: state.animeDetail?.pathToView?.parseSeasonId() ?? '',
       ),
     );
 
     if (progress.result?.cur != null) {
       await playerController?.seekTo(
-        Duration(seconds: progress.result!.cur!.toInt()),
+        Duration(seconds: progress.result?.cur?.toInt() ?? 0),
       );
     } else {
       await playerController?.seekTo(Duration.zero);
@@ -205,22 +205,22 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
     final currentTime = _getCurrentPositionInSeconds().toDouble();
 
     try {
-      final seasonId = state.animeDetail!.pathToView?.parseSeasonId();
+      final seasonId = state.animeDetail?.pathToView?.parseSeasonId();
       final currentSeason = _getCurrentSeason(state.animeDetail!);
 
       await _setSingleProgressUseCase.execute(
         SetSingleProgressUseCaseInput(
           data: SetSingleProgressEntity(
-            pName: state.animeDetail!.name,
+            pName: state.animeDetail?.name,
             pPoster: ImageUrlUtils.removeHostUrlImage(
-              state.animeDetail!.poster,
+              state.animeDetail?.poster ?? '',
             ),
             seasonId: seasonId!,
             pSeasonName: currentSeason,
             eCur: currentTime,
             eDur: totalDuration,
-            eName: state.currentChap!.name,
-            eChap: state.currentChap!.id,
+            eName: state.currentChap?.name ?? '',
+            eChap: state.currentChap?.id ?? '',
           ),
         ),
       );

@@ -1,20 +1,20 @@
-part of 'profile_cubit.dart';
+part of 'history_cubit.dart';
 
 @freezed
-class ProfileState with _$ProfileState {
-  const factory ProfileState.initial({
+class HistoryState with _$HistoryState {
+  const factory HistoryState.initial({
     UserSessionResponseEntity? user,
     List<QueryHistoryEntity?>? queryHistory,
-  }) = ProfileInitial;
+  }) = HistoryInitial;
 
-  const factory ProfileState.loaded({
+  const factory HistoryState.loaded({
     required UserSessionResponseEntity user,
     List<QueryHistoryEntity?>? queryHistory,
-  }) = ProfileLoaded;
+  }) = HistoryLoaded;
 
-  const factory ProfileState.error({
+  const factory HistoryState.error({
     required String message,
     UserSessionResponseEntity? user,
     List<QueryHistoryEntity?>? queryHistory,
-  }) = ProfileError;
+  }) = HistoryError;
 }

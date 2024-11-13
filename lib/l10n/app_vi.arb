@@ -201,5 +201,13 @@
   "yesterday": "Hôm qua",
   "@yesterday": {
     "description": "Label for yesterday."
+  },
+  "history": "Lịch sử",
+  "@history": {
+    "description": "Label for history."
+  },
+  "loginMessage": "Đăng nhập vào tài khoản của bạn",
+  "@loginMessage": {
+    "description": "Message displayed when logging in."
   }
 }

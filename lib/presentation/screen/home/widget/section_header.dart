@@ -11,7 +11,7 @@ class SectionHeader extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 4),
       leading: Text(
         title,
-        style: context.textTheme.titleLarge!.copyWith(
+        style: context.textTheme.titleLarge?.copyWith(
           fontWeight: FontWeight.bold,
         ),
       ),

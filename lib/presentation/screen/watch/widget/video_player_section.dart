@@ -41,12 +41,12 @@ class VideoPlayerSection extends StatelessWidget {
       );
     }
 
-    if (state.chaps!.isEmpty) {
+    if (state.chaps?.isEmpty ?? true) {
       return const EmptyPlayer();
     }
 
     return VideoPlayerWidget(
-      chaps: state.chaps!.whereNotNull().toList(),
+      chaps: state.chaps?.whereNotNull().toList() ?? [],
       detail: state.detail,
       initialData: state.initialData,
       listEpisodeSkip: state.tabViewItems?[currentTabIndex]?.listEpisode,

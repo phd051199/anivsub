@@ -1,6 +1,5 @@
 import 'package:anivsub/app/theme/const/theme_colors.dart';
 import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
-import 'package:anivsub/presentation/screen/setting/cubit/setting_cubit.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,71 +25,42 @@ class _ThemeColorWidgetState extends State<ThemeColorWidget>
             children: [
               Text(context.l10n.themeColorMessage),
               const SizedBox(height: 8),
-              NotificationListener<ScrollNotification>(
-                onNotification: (scrollNotification) {
-                  final settingCubit = context.read<SettingCubit>();
-                  if (scrollNotification is ScrollStartNotification) {
-                    settingCubit.toggleHintVisibility();
-                  } else if (scrollNotification is ScrollEndNotification) {
-                    settingCubit.toggleHintVisibility();
-                  }
-                  return true;
-                },
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: ToggleButtons(
-                    isSelected: kThemeColors
-                        .map(
-                          (color) =>
-                              color.value ==
-                              context.read<ThemeCubit>().state.appSetting.color,
-                        )
-                        .toList(),
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    onPressed: (index) {
-                      context
-                          .read<ThemeCubit>()
-                          .changeThemeColor(kThemeColors[index]);
-                    },
-                    renderBorder: false,
-                    children: kThemeColors.map((color) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: 24,
-                          height: 24,
-                          decoration: BoxDecoration(
-                            color: color,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: ToggleButtons(
+                  isSelected: kThemeColors
+                      .map(
+                        (color) =>
+                            color.value ==
+                            context.read<ThemeCubit>().state.appSetting.color,
+                      )
+                      .toList(),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  onPressed: (index) {
+                    context
+                        .read<ThemeCubit>()
+                        .changeThemeColor(kThemeColors[index]);
+                  },
+                  renderBorder: false,
+                  children: kThemeColors.map((color) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      );
-                    }).toList(),
-                  ),
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
             ],
           ),
-          titleTextStyle: context.textTheme.titleMedium!.copyWith(
+          titleTextStyle: context.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
-          ),
-        ),
-        AnimatedSize(
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-          child: Visibility(
-            visible: context.watch<SettingCubit>().state.isHintVisible,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                context.l10n.themeScrollMessage,
-                textAlign: TextAlign.center,
-                style: context.textTheme.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
           ),
         ),
       ],

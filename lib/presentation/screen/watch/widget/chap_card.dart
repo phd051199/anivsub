@@ -15,14 +15,14 @@ class ChapCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card.filled(
       color: isPlaying
-          ? context.theme.colorScheme.primaryContainer
+          ? context.theme.colorScheme.secondaryContainer
           : context.theme.colorScheme.surfaceContainer,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Center(
           child: Text(
             chap.name,
-            style: context.textTheme.bodySmall!.copyWith(
+            style: context.textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),

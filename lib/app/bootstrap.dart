@@ -8,7 +8,7 @@ Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  await dotenv.load(fileName: '.env');
+  await dotenv.load();
 
   await registerDependencies();
   await authNotifier.checkToken();

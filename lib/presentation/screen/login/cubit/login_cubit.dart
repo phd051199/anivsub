@@ -26,7 +26,7 @@ class LoginCubit extends BaseCubit<LoginState> {
     );
   }
 
-  void getUserSession(UserSessionRequestEntity request) async {
+  Future<void> getUserSession(UserSessionRequestEntity request) async {
     safeEmit(
       LoginLoading(
         isPasswordObscured: state.isPasswordObscured,
@@ -39,6 +39,12 @@ class LoginCubit extends BaseCubit<LoginState> {
       );
 
       await authNotifier.doLogin(output.sessionResult);
+
+      safeEmit(
+        const LoginLoaded(
+          isPasswordObscured: true,
+        ),
+      );
     } catch (error) {
       safeEmit(
         LoginError(

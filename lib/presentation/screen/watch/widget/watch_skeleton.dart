@@ -174,7 +174,7 @@ class WatchSkeleton extends StatelessWidget {
         child: Center(
           child: Text(
             chap.name,
-            style: context.textTheme.bodySmall!.copyWith(
+            style: context.textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),

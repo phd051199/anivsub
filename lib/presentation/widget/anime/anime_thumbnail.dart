@@ -27,7 +27,7 @@ class AnimeThumbnail extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       child: Stack(
         children: [
-          if (imageUrl != null && imageUrl!.isNotEmpty)
+          if (imageUrl?.isNotEmpty ?? false)
             CachedNetworkImage(
               imageUrl: imageUrl!,
               httpHeaders: headers,
