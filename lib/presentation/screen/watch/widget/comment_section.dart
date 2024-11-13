@@ -349,10 +349,11 @@ class CommentTreeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selfComment = comment.authorName == fbUser?.name &&
-        StringUtils.getImageNameFromUrl(comment.authorThumbSrc) ==
-            StringUtils.getImageNameFromUrl(fbUser?.thumbSrc ?? '');
+        ImageUrlUtils.getImageNameFromUrl(comment.authorThumbSrc) ==
+            ImageUrlUtils.getImageNameFromUrl(fbUser?.thumbSrc ?? '');
 
-    Widget commentWidget = CommentTreeWidget<CommentEntity, CommentEntity>(
+    final Widget commentWidget =
+        CommentTreeWidget<CommentEntity, CommentEntity>(
       comment,
       comment.replies,
       treeThemeData: TreeThemeData(

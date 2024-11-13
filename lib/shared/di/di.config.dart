@@ -97,7 +97,6 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
-    gh.factory<_i989.SettingCubit>(() => _i989.SettingCubit());
     gh.singleton<_i974.Logger>(() => registerModule.logger);
     gh.singleton<_i4.SharedPreferenceService>(
         () => _i4.SharedPreferenceService());
@@ -169,6 +168,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i469.SetSingleProgressUseCase(gh<_i772.HistoryRepository>()));
     gh.factory<_i976.ThemeCubit>(
         () => _i976.ThemeCubit(gh<_i1036.AppSettingUseCase>()));
+    gh.factory<_i989.SettingCubit>(
+        () => _i989.SettingCubit(gh<_i772.AppSettingUseCase>()));
     gh.factory<_i865.HomeBloc>(
         () => _i865.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
     gh.singleton<_i711.VideoPlayerCubit>(() => _i711.VideoPlayerCubit(

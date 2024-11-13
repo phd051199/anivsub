@@ -18,13 +18,13 @@ class SearchResultParser {
         now,
       );
     }
-    int curPage = int.tryParse(
+    final int curPage = int.tryParse(
           document.querySelector('.current')?.attributes['data'] ??
               document.querySelector('.current')?.attributes['title'] ??
               '1',
         ) ??
         1;
-    int maxPage = int.tryParse(
+    final int maxPage = int.tryParse(
           document
                   .querySelector(
                     '.larger:last-child, .wp-pagenavi > *:last-child',

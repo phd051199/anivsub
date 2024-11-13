@@ -12,6 +12,7 @@ class AppSettingDTO extends BaseDTO<AppSettingEntity> with _$AppSettingDTO {
     required int themeMode,
     required int color,
     @Default(false) bool skipIntro,
+    String? host,
   }) = _AppSettingDTO;
 
   const AppSettingDTO._();
@@ -32,6 +33,7 @@ class AppSettingDTO extends BaseDTO<AppSettingEntity> with _$AppSettingDTO {
         themeMode,
         color,
         skipIntro,
+        host,
       ];
 
   @override
@@ -40,6 +42,7 @@ class AppSettingDTO extends BaseDTO<AppSettingEntity> with _$AppSettingDTO {
       themeMode: themeMode,
       color: color,
       skipIntro: skipIntro,
+      host: host,
     );
   }
 }

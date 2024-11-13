@@ -112,7 +112,6 @@ class _WatchPageState extends BlocState<WatchPage, WatchBloc>
     _needUpdateTabIndex = true;
     _tabController?.dispose();
     _tabController = null;
-    videoPlayerCubit.close();
   }
 
   void _showDetailBottomSheet(WatchState state) {

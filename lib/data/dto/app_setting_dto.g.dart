@@ -11,6 +11,7 @@ _$AppSettingDTOImpl _$$AppSettingDTOImplFromJson(Map<String, dynamic> json) =>
       themeMode: (json['themeMode'] as num).toInt(),
       color: (json['color'] as num).toInt(),
       skipIntro: json['skipIntro'] as bool? ?? false,
+      host: json['host'] as String?,
     );
 
 Map<String, dynamic> _$$AppSettingDTOImplToJson(_$AppSettingDTOImpl instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$AppSettingDTOImplToJson(_$AppSettingDTOImpl instance) =>
       'themeMode': instance.themeMode,
       'color': instance.color,
       'skipIntro': instance.skipIntro,
+      'host': instance.host,
     };

@@ -93,4 +93,14 @@ extension StringExtension on String {
         .map((char) => accentedCharacters[char] ?? char)
         .join('');
   }
+
+  bool isValidHost() {
+    try {
+      final host = Uri.parse(this).host;
+      return host.isNotEmpty &&
+          RegExp(r'animevietsub\..*', caseSensitive: false).hasMatch(host);
+    } catch (e) {
+      return false;
+    }
+  }
 }

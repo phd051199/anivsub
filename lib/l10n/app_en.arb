@@ -209,5 +209,21 @@
   "loginMessage": "Login to your account",
   "@loginMessage": {
     "description": "Message displayed when logging in."
+  },
+  "invalidHost": "Invalid host",
+  "@invalidHost": {
+    "description": "Message displayed when the host is invalid."
+  },
+  "updateHost": "Update Host",
+  "@updateHost": {
+    "description": "Label for update host."
+  },
+  "updateHostMessage": "Host updated. Please restart the app to apply the changes.",
+  "@updateHostMessage": {
+    "description": "Message displayed when host is updated."
+  },
+  "hostUrl": "Host URL",
+  "@hostUrl": {
+    "description": "Label for host URL."
   }
 }

@@ -209,5 +209,21 @@
   "loginMessage": "Đăng nhập vào tài khoản của bạn",
   "@loginMessage": {
     "description": "Message displayed when logging in."
+  },
+  "invalidHost": "Địa chỉ không hợp lệ",
+  "@invalidHost": {
+    "description": "Message displayed when the host is invalid."
+  },
+  "updateHost": "Cập nhật host",
+  "@updateHost": {
+    "description": "Label for update host."
+  },
+  "updateHostMessage": "Host đã cập nhật. Vui lòng khởi động lại app để áp dụng thay đổi.",
+  "@updateHostMessage": {
+    "description": "Message displayed when host is updated."
+  },
+  "hostUrl": "Địa chỉ host",
+  "@hostUrl": {
+    "description": "Label for host URL."
   }
 }

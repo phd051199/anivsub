@@ -13,6 +13,7 @@ class AppSettingEntity extends BaseEntity<AppSettingDTO>
     required int themeMode,
     required int color,
     @Default(false) bool skipIntro,
+    String? host,
   }) = _AppSettingEntity;
 
   const AppSettingEntity._();
@@ -32,12 +33,13 @@ class AppSettingEntity extends BaseEntity<AppSettingDTO>
   Color get colorEnum => Color(color);
 
   @override
-  List<Object?> get props => [themeMode, color, skipIntro];
+  List<Object?> get props => [themeMode, color, skipIntro, host];
 
   @override
   AppSettingDTO toDTO() => AppSettingDTO(
         themeMode: themeMode,
         color: color,
         skipIntro: skipIntro,
+        host: host,
       );
 }

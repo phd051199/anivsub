@@ -8,7 +8,7 @@ class CookiesUtils {
 
   static Future<void> getCookiesAndSetInDio(String url) async {
     try {
-      List<Cookie> cookies =
+      final List<Cookie> cookies =
           await CookieManager.instance().getCookies(url: WebUri(url));
 
       if (cookies.isNotEmpty) {

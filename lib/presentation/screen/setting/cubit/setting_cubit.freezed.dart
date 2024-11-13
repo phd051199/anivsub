@@ -16,22 +16,33 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SettingState {
+  bool get isEditingHost => throw _privateConstructorUsedError;
+  bool get isHostUpdated => throw _privateConstructorUsedError;
+  String? get host => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() changed,
+    required TResult Function(
+            bool isEditingHost, bool isHostUpdated, String? host)
+        initial,
+    required TResult Function(
+            bool isEditingHost, bool isHostUpdated, String? host)
+        changed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? changed,
+    TResult? Function(bool isEditingHost, bool isHostUpdated, String? host)?
+        initial,
+    TResult? Function(bool isEditingHost, bool isHostUpdated, String? host)?
+        changed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? changed,
+    TResult Function(bool isEditingHost, bool isHostUpdated, String? host)?
+        initial,
+    TResult Function(bool isEditingHost, bool isHostUpdated, String? host)?
+        changed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -54,6 +65,12 @@ mixin _$SettingState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  /// Create a copy of SettingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $SettingStateCopyWith<SettingState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -61,6 +78,8 @@ abstract class $SettingStateCopyWith<$Res> {
   factory $SettingStateCopyWith(
           SettingState value, $Res Function(SettingState) then) =
       _$SettingStateCopyWithImpl<$Res, SettingState>;
+  @useResult
+  $Res call({bool isEditingHost, bool isHostUpdated, String? host});
 }
 
 /// @nodoc
@@ -75,13 +94,39 @@ class _$SettingStateCopyWithImpl<$Res, $Val extends SettingState>
 
   /// Create a copy of SettingState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isEditingHost = null,
+    Object? isHostUpdated = null,
+    Object? host = freezed,
+  }) {
+    return _then(_value.copyWith(
+      isEditingHost: null == isEditingHost
+          ? _value.isEditingHost
+          : isEditingHost // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isHostUpdated: null == isHostUpdated
+          ? _value.isHostUpdated
+          : isHostUpdated // ignore: cast_nullable_to_non_nullable
+              as bool,
+      host: freezed == host
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$SettingInitialImplCopyWith<$Res> {
+abstract class _$$SettingInitialImplCopyWith<$Res>
+    implements $SettingStateCopyWith<$Res> {
   factory _$$SettingInitialImplCopyWith(_$SettingInitialImpl value,
           $Res Function(_$SettingInitialImpl) then) =
       __$$SettingInitialImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool isEditingHost, bool isHostUpdated, String? host});
 }
 
 /// @nodoc
@@ -94,54 +139,110 @@ class __$$SettingInitialImplCopyWithImpl<$Res>
 
   /// Create a copy of SettingState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isEditingHost = null,
+    Object? isHostUpdated = null,
+    Object? host = freezed,
+  }) {
+    return _then(_$SettingInitialImpl(
+      isEditingHost: null == isEditingHost
+          ? _value.isEditingHost
+          : isEditingHost // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isHostUpdated: null == isHostUpdated
+          ? _value.isHostUpdated
+          : isHostUpdated // ignore: cast_nullable_to_non_nullable
+              as bool,
+      host: freezed == host
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SettingInitialImpl implements SettingInitial {
-  const _$SettingInitialImpl();
+  const _$SettingInitialImpl(
+      {this.isEditingHost = false, this.isHostUpdated = false, this.host});
+
+  @override
+  @JsonKey()
+  final bool isEditingHost;
+  @override
+  @JsonKey()
+  final bool isHostUpdated;
+  @override
+  final String? host;
 
   @override
   String toString() {
-    return 'SettingState.initial()';
+    return 'SettingState.initial(isEditingHost: $isEditingHost, isHostUpdated: $isHostUpdated, host: $host)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SettingInitialImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SettingInitialImpl &&
+            (identical(other.isEditingHost, isEditingHost) ||
+                other.isEditingHost == isEditingHost) &&
+            (identical(other.isHostUpdated, isHostUpdated) ||
+                other.isHostUpdated == isHostUpdated) &&
+            (identical(other.host, host) || other.host == host));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, isEditingHost, isHostUpdated, host);
+
+  /// Create a copy of SettingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SettingInitialImplCopyWith<_$SettingInitialImpl> get copyWith =>
+      __$$SettingInitialImplCopyWithImpl<_$SettingInitialImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() changed,
+    required TResult Function(
+            bool isEditingHost, bool isHostUpdated, String? host)
+        initial,
+    required TResult Function(
+            bool isEditingHost, bool isHostUpdated, String? host)
+        changed,
   }) {
-    return initial();
+    return initial(isEditingHost, isHostUpdated, host);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? changed,
+    TResult? Function(bool isEditingHost, bool isHostUpdated, String? host)?
+        initial,
+    TResult? Function(bool isEditingHost, bool isHostUpdated, String? host)?
+        changed,
   }) {
-    return initial?.call();
+    return initial?.call(isEditingHost, isHostUpdated, host);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? changed,
+    TResult Function(bool isEditingHost, bool isHostUpdated, String? host)?
+        initial,
+    TResult Function(bool isEditingHost, bool isHostUpdated, String? host)?
+        changed,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(isEditingHost, isHostUpdated, host);
     }
     return orElse();
   }
@@ -179,14 +280,35 @@ class _$SettingInitialImpl implements SettingInitial {
 }
 
 abstract class SettingInitial implements SettingState {
-  const factory SettingInitial() = _$SettingInitialImpl;
+  const factory SettingInitial(
+      {final bool isEditingHost,
+      final bool isHostUpdated,
+      final String? host}) = _$SettingInitialImpl;
+
+  @override
+  bool get isEditingHost;
+  @override
+  bool get isHostUpdated;
+  @override
+  String? get host;
+
+  /// Create a copy of SettingState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SettingInitialImplCopyWith<_$SettingInitialImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SettingChangedImplCopyWith<$Res> {
+abstract class _$$SettingChangedImplCopyWith<$Res>
+    implements $SettingStateCopyWith<$Res> {
   factory _$$SettingChangedImplCopyWith(_$SettingChangedImpl value,
           $Res Function(_$SettingChangedImpl) then) =
       __$$SettingChangedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool isEditingHost, bool isHostUpdated, String? host});
 }
 
 /// @nodoc
@@ -199,54 +321,110 @@ class __$$SettingChangedImplCopyWithImpl<$Res>
 
   /// Create a copy of SettingState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isEditingHost = null,
+    Object? isHostUpdated = null,
+    Object? host = freezed,
+  }) {
+    return _then(_$SettingChangedImpl(
+      isEditingHost: null == isEditingHost
+          ? _value.isEditingHost
+          : isEditingHost // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isHostUpdated: null == isHostUpdated
+          ? _value.isHostUpdated
+          : isHostUpdated // ignore: cast_nullable_to_non_nullable
+              as bool,
+      host: freezed == host
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$SettingChangedImpl implements SettingChanged {
-  const _$SettingChangedImpl();
+  const _$SettingChangedImpl(
+      {this.isEditingHost = false, this.isHostUpdated = false, this.host});
+
+  @override
+  @JsonKey()
+  final bool isEditingHost;
+  @override
+  @JsonKey()
+  final bool isHostUpdated;
+  @override
+  final String? host;
 
   @override
   String toString() {
-    return 'SettingState.changed()';
+    return 'SettingState.changed(isEditingHost: $isEditingHost, isHostUpdated: $isHostUpdated, host: $host)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SettingChangedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SettingChangedImpl &&
+            (identical(other.isEditingHost, isEditingHost) ||
+                other.isEditingHost == isEditingHost) &&
+            (identical(other.isHostUpdated, isHostUpdated) ||
+                other.isHostUpdated == isHostUpdated) &&
+            (identical(other.host, host) || other.host == host));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, isEditingHost, isHostUpdated, host);
+
+  /// Create a copy of SettingState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SettingChangedImplCopyWith<_$SettingChangedImpl> get copyWith =>
+      __$$SettingChangedImplCopyWithImpl<_$SettingChangedImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() changed,
+    required TResult Function(
+            bool isEditingHost, bool isHostUpdated, String? host)
+        initial,
+    required TResult Function(
+            bool isEditingHost, bool isHostUpdated, String? host)
+        changed,
   }) {
-    return changed();
+    return changed(isEditingHost, isHostUpdated, host);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? changed,
+    TResult? Function(bool isEditingHost, bool isHostUpdated, String? host)?
+        initial,
+    TResult? Function(bool isEditingHost, bool isHostUpdated, String? host)?
+        changed,
   }) {
-    return changed?.call();
+    return changed?.call(isEditingHost, isHostUpdated, host);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? changed,
+    TResult Function(bool isEditingHost, bool isHostUpdated, String? host)?
+        initial,
+    TResult Function(bool isEditingHost, bool isHostUpdated, String? host)?
+        changed,
     required TResult orElse(),
   }) {
     if (changed != null) {
-      return changed();
+      return changed(isEditingHost, isHostUpdated, host);
     }
     return orElse();
   }
@@ -284,5 +462,22 @@ class _$SettingChangedImpl implements SettingChanged {
 }
 
 abstract class SettingChanged implements SettingState {
-  const factory SettingChanged() = _$SettingChangedImpl;
+  const factory SettingChanged(
+      {final bool isEditingHost,
+      final bool isHostUpdated,
+      final String? host}) = _$SettingChangedImpl;
+
+  @override
+  bool get isEditingHost;
+  @override
+  bool get isHostUpdated;
+  @override
+  String? get host;
+
+  /// Create a copy of SettingState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SettingChangedImplCopyWith<_$SettingChangedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

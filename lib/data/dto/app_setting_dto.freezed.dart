@@ -23,6 +23,7 @@ mixin _$AppSettingDTO {
   int get themeMode => throw _privateConstructorUsedError;
   int get color => throw _privateConstructorUsedError;
   bool get skipIntro => throw _privateConstructorUsedError;
+  String? get host => throw _privateConstructorUsedError;
 
   /// Serializes this AppSettingDTO to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +41,7 @@ abstract class $AppSettingDTOCopyWith<$Res> {
           AppSettingDTO value, $Res Function(AppSettingDTO) then) =
       _$AppSettingDTOCopyWithImpl<$Res, AppSettingDTO>;
   @useResult
-  $Res call({int themeMode, int color, bool skipIntro});
+  $Res call({int themeMode, int color, bool skipIntro, String? host});
 }
 
 /// @nodoc
@@ -61,6 +62,7 @@ class _$AppSettingDTOCopyWithImpl<$Res, $Val extends AppSettingDTO>
     Object? themeMode = null,
     Object? color = null,
     Object? skipIntro = null,
+    Object? host = freezed,
   }) {
     return _then(_value.copyWith(
       themeMode: null == themeMode
@@ -75,6 +77,10 @@ class _$AppSettingDTOCopyWithImpl<$Res, $Val extends AppSettingDTO>
           ? _value.skipIntro
           : skipIntro // ignore: cast_nullable_to_non_nullable
               as bool,
+      host: freezed == host
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -87,7 +93,7 @@ abstract class _$$AppSettingDTOImplCopyWith<$Res>
       __$$AppSettingDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int themeMode, int color, bool skipIntro});
+  $Res call({int themeMode, int color, bool skipIntro, String? host});
 }
 
 /// @nodoc
@@ -106,6 +112,7 @@ class __$$AppSettingDTOImplCopyWithImpl<$Res>
     Object? themeMode = null,
     Object? color = null,
     Object? skipIntro = null,
+    Object? host = freezed,
   }) {
     return _then(_$AppSettingDTOImpl(
       themeMode: null == themeMode
@@ -120,6 +127,10 @@ class __$$AppSettingDTOImplCopyWithImpl<$Res>
           ? _value.skipIntro
           : skipIntro // ignore: cast_nullable_to_non_nullable
               as bool,
+      host: freezed == host
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -128,7 +139,10 @@ class __$$AppSettingDTOImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AppSettingDTOImpl extends _AppSettingDTO {
   const _$AppSettingDTOImpl(
-      {required this.themeMode, required this.color, this.skipIntro = false})
+      {required this.themeMode,
+      required this.color,
+      this.skipIntro = false,
+      this.host})
       : super._();
 
   factory _$AppSettingDTOImpl.fromJson(Map<String, dynamic> json) =>
@@ -141,6 +155,8 @@ class _$AppSettingDTOImpl extends _AppSettingDTO {
   @override
   @JsonKey()
   final bool skipIntro;
+  @override
+  final String? host;
 
   /// Create a copy of AppSettingDTO
   /// with the given fields replaced by the non-null parameter values.
@@ -162,7 +178,8 @@ abstract class _AppSettingDTO extends AppSettingDTO {
   const factory _AppSettingDTO(
       {required final int themeMode,
       required final int color,
-      final bool skipIntro}) = _$AppSettingDTOImpl;
+      final bool skipIntro,
+      final String? host}) = _$AppSettingDTOImpl;
   const _AppSettingDTO._() : super._();
 
   factory _AppSettingDTO.fromJson(Map<String, dynamic> json) =
@@ -174,6 +191,8 @@ abstract class _AppSettingDTO extends AppSettingDTO {
   int get color;
   @override
   bool get skipIntro;
+  @override
+  String? get host;
 
   /// Create a copy of AppSettingDTO
   /// with the given fields replaced by the non-null parameter values.

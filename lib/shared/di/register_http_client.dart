@@ -1,5 +1,6 @@
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/shared/const/const.dart';
+import 'package:anivsub/shared/di/shared_export.dart';
 import 'package:anivsub/shared/network/cookies_manager.dart';
 import 'package:anivsub/shared/network/network_client.dart';
 import 'package:cookie_jar/cookie_jar.dart';
@@ -12,7 +13,7 @@ void registerHttpClient() {
   GetIt.I.registerSingleton<AuthApiClient>(
     AuthApiClient(
       NetworkClient.getDio(
-        baseUrl: hostCurl,
+        baseUrl: getItHost,
         headers: headers,
         cookieManager: cookieManager,
       ),
@@ -22,7 +23,7 @@ void registerHttpClient() {
   GetIt.I.registerSingleton<ScrapingClient>(
     ScrapingClient(
       NetworkClient.getDio(
-        baseUrl: hostCurl,
+        baseUrl: getItHost,
         headers: headers,
         isAuthenticated: false,
         cookieManager: cookieManager,

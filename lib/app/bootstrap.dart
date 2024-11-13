@@ -9,6 +9,7 @@ Future<void> bootstrap() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await dotenv.load();
+  await registerHost();
 
   await registerDependencies();
   await authNotifier.checkToken();

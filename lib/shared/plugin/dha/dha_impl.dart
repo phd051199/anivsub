@@ -134,7 +134,7 @@ class DHAImpl implements DHA {
 
     final u16View = Uint16List.view(buffer);
     int offset = ptr >>> 1;
-    StringBuffer result = StringBuffer();
+    final StringBuffer result = StringBuffer();
 
     while (end - offset > 1024) {
       result

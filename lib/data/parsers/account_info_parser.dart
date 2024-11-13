@@ -1,4 +1,4 @@
-import 'package:anivsub/shared/const/const.dart';
+import 'package:anivsub/shared/di/shared_export.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
 
@@ -35,7 +35,7 @@ class AccountInfoParser {
     if (avatarSrc != null) {
       return avatarSrc.replaceFirst(
         RegExp(r'animevietsub\.\w+/'),
-        '${hostCurl.substring(hostCurl.indexOf('://') + 3)}/',
+        '${getItHost.substring(getItHost.indexOf('://') + 3)}/',
       );
     }
     return null;

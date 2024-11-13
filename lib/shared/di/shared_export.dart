@@ -21,3 +21,4 @@ Logger get log => GetIt.I<Logger>();
 
 ThemeCubit get themeCubit => GetIt.I<ThemeCubit>();
 VideoPlayerCubit get videoPlayerCubit => GetIt.I<VideoPlayerCubit>();
+String get getItHost => GetIt.I.get<String>(instanceName: 'HOST_CURL');
