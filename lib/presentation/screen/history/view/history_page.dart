@@ -32,8 +32,6 @@ class _HistoryPageState extends CubitState<HistoryPage, HistoryCubit> {
     });
   }
 
-
-
   @override
   Widget buildPage(BuildContext context) {
     return BlocConsumer<HistoryCubit, HistoryState>(

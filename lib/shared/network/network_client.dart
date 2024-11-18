@@ -4,6 +4,7 @@ import 'package:anivsub/shared/network/redirect_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -35,6 +36,9 @@ class NetworkClient {
         followRedirects: false,
         validateStatus: (status) =>
             status != null && status >= 200 && status < 400,
+        connectTimeout: const Duration(seconds: 2),
+        sendTimeout: const Duration(seconds: 2),
+        receiveTimeout: const Duration(seconds: 2),
       ),
     );
   }
@@ -46,18 +50,29 @@ class NetworkClient {
     bool useCache,
   ) {
     dio.interceptors.addAll([
+      // Authentication
+      if (isAuthenticated) AuthInterceptor(),
+      if (cookieManager != null) cookieManager,
+
+      // Caching
+      if (useCache) ...[
+        DioCacheInterceptor(options: GetIt.I.get<CacheOptions>()),
+      ],
+
+      // Request/Response handling
+      ParseJsonInterceptor(),
+      RedirectInterceptor(dio),
+      RetryInterceptor(
+        dio: dio,
+        retries: 3,
+      ),
+
+      // Debugging (added last to log final request/response)
       if (kDebugMode)
         PrettyDioLogger(
           requestBody: true,
           responseBody: false,
         ),
-      if (isAuthenticated) AuthInterceptor(),
-      if (cookieManager != null) cookieManager,
-      if (useCache) ...[
-        DioCacheInterceptor(options: GetIt.I.get<CacheOptions>()),
-      ],
-      ParseJsonInterceptor(),
-      RedirectInterceptor(dio),
     ]);
   }
 }

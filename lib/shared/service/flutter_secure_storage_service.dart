@@ -1,24 +1,18 @@
 import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class FlutterSecureStorageService {
-  FlutterSecureStorageService({
-    AndroidOptions? externalAndroidOptions,
-    IOSOptions? externalIosOptions,
-  })  : androidOptions = externalAndroidOptions ??
-            const AndroidOptions(
-              encryptedSharedPreferences: true,
-            ),
-        iosOptions = externalIosOptions ??
-            const IOSOptions(
-              accessibility: KeychainAccessibility.unlocked,
-            );
+  const FlutterSecureStorageService();
 
   final storage = const FlutterSecureStorage();
-  final AndroidOptions androidOptions;
-  final IOSOptions iosOptions;
+  final AndroidOptions androidOptions =
+      const AndroidOptions(encryptedSharedPreferences: true);
+  final IOSOptions iosOptions = const IOSOptions(
+    accessibility: KeychainAccessibility.unlocked,
+  );
 
   Future<String?> getValue({required String key}) async {
     return await storage.read(

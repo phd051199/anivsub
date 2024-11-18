@@ -16,24 +16,24 @@ A modern Flutter application for anime streaming, offering a seamless viewing ex
 <table>
    <tr>
       <td>
-         <img width="250px" src="docs/simulator_screenshot_9AC9505F-1921-4927-A2AF-C5EE634D312D.png">
+         <img width="250px" src="screenshots/simulator_screenshot_9AC9505F-1921-4927-A2AF-C5EE634D312D.png">
       </td>
       <td>
-         <img width="250px" src="docs/simulator_screenshot_339899C9-BD3D-4338-AD73-7EBB275164E8.png">
+         <img width="250px" src="screenshots/simulator_screenshot_339899C9-BD3D-4338-AD73-7EBB275164E8.png">
       </td>
       <td>
-         <img width="250px" src="docs/simulator_screenshot_6C13C370-2796-4789-B256-44912AA76733.png">
+         <img width="250px" src="screenshots/simulator_screenshot_6C13C370-2796-4789-B256-44912AA76733.png">
       </td>
    </tr>
    <tr>
       <td>
-         <img width="250px" src="docs/simulator_screenshot_2B8C8E5E-F6B4-4E39-91A1-192269F17043.png">
+         <img width="250px" src="screenshots/simulator_screenshot_2B8C8E5E-F6B4-4E39-91A1-192269F17043.png">
       </td>
       <td>
-         <img width="250px" src="docs/simulator_screenshot_362D1B89-2239-4CAE-AC74-8431A2060463.png">
+         <img width="250px" src="screenshots/simulator_screenshot_362D1B89-2239-4CAE-AC74-8431A2060463.png">
       </td>
       <td>
-         <img width="250px" src="docs/simulator_screenshot_AE0A6C47-9CB9-428E-86C1-02FFB4105457.png">
+         <img width="250px" src="screenshots/simulator_screenshot_AE0A6C47-9CB9-428E-86C1-02FFB4105457.png">
       </td>
    </tr>
 </table>

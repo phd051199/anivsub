@@ -79,7 +79,6 @@ import 'package:anivsub/shared/service/flutter_secure_storage_service.dart'
     as _i285;
 import 'package:anivsub/shared/service/service.dart' as _i5;
 import 'package:anivsub/shared/service/shared_preferences_service.dart' as _i4;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/logger.dart' as _i974;
@@ -100,16 +99,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i974.Logger>(() => registerModule.logger);
     gh.singleton<_i4.SharedPreferenceService>(
         () => _i4.SharedPreferenceService());
-    gh.lazySingleton<_i558.AndroidOptions>(() => registerModule.androidOptions);
-    gh.lazySingleton<_i558.IOSOptions>(() => registerModule.iosOptions);
+    gh.lazySingleton<_i285.FlutterSecureStorageService>(
+        () => const _i285.FlutterSecureStorageService());
     gh.lazySingleton<_i987.AnimeRemoteDataSource>(() =>
         _i603.AnimeRemoteDataSourceImpl(client: gh<_i987.ScrapingClient>()));
     gh.lazySingleton<_i940.DHA>(() => _i1001.DHAImpl());
-    gh.lazySingleton<_i285.FlutterSecureStorageService>(
-        () => _i285.FlutterSecureStorageService(
-              externalAndroidOptions: gh<_i558.AndroidOptions>(),
-              externalIosOptions: gh<_i558.IOSOptions>(),
-            ));
     gh.lazySingleton<_i987.HistoryRemoteDataSource>(
         () => _i201.HistoryRemoteDataSourceImpl(gh<_i454.SupabaseClient>()));
     gh.lazySingleton<_i1029.AppSettingLocalDataSource>(() =>

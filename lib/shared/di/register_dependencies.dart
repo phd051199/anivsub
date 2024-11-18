@@ -33,6 +33,8 @@ Future<void> registerHost() async {
       result.host?.isValidHost() == true ? result.host! : hostCurl,
       instanceName: 'HOST_CURL',
     );
+  } else {
+    GetIt.I.registerSingleton<String>(hostCurl, instanceName: 'HOST_CURL');
   }
 }
 

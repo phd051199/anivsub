@@ -71,6 +71,4 @@ class StringUtils {
       return url;
     }
   }
-
-
 }
