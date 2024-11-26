@@ -3,6 +3,7 @@ import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,10 @@ class EpisodesSection extends StatelessWidget {
     return BlocBuilder<WatchBloc, WatchState>(
       builder: (context, state) {
         if (state.isChapsLoading) {
-          return const SizedBox(height: 100, child: LoadingWidget());
+          return SizedBox(
+            height: Dimens.d100.responsive(),
+            child: const LoadingWidget(),
+          );
         }
 
         if ((state.detail?.season.isNotEmpty ?? false) &&
@@ -130,8 +134,8 @@ class _SeasonTabView extends StatelessWidget {
     final state = context.watch<WatchBloc>().state;
 
     return Container(
-      padding: const EdgeInsets.all(16),
-      height: 128,
+      padding: EdgeInsets.all(Dimens.d16.responsive()),
+      height: Dimens.d128.responsive(),
       child: TabBarView(
         controller: tabController,
         children: state.tabViewItems?.map((item) {
@@ -164,8 +168,8 @@ class _SingleSeasonView extends StatelessWidget {
     final chaps = state.chaps?.whereNotNull().toList();
 
     return Container(
-      height: 128,
-      padding: const EdgeInsets.all(16),
+      height: Dimens.d128.responsive(),
+      padding: EdgeInsets.all(Dimens.d16.responsive()),
       child: _EpisodeList(
         chaps: chaps ?? [],
         onEpisodeTap: onEpisodeTap,
@@ -229,7 +233,10 @@ class _EpisodeHeader extends StatelessWidget {
       onTap: onTap,
       child: ListTile(
         minTileHeight: 42,
-        contentPadding: const EdgeInsets.only(left: 4, bottom: 4),
+        contentPadding: EdgeInsets.only(
+          left: Dimens.d4.responsive(),
+          bottom: Dimens.d4.responsive(),
+        ),
         leading: Icon(
           Icons.playlist_play_rounded,
           color: context.theme.colorScheme.onSurface,
@@ -250,7 +257,7 @@ class _EpisodeHeader extends StatelessWidget {
                 color: context.theme.colorScheme.onSurface,
               ),
             ),
-            const SizedBox(width: 8),
+            Gap(Dimens.d8.responsive()),
             const Icon(Icons.chevron_right),
           ],
         ),
@@ -275,13 +282,13 @@ class _EpisodeScrollList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 48,
+      height: Dimens.d48.responsive(),
       child: ScrollablePositionedList.separated(
         itemScrollController: itemScrollController,
         initialScrollIndex: initialIndex,
         scrollDirection: Axis.horizontal,
         itemCount: chaps.length,
-        separatorBuilder: (_, __) => const Gap(12),
+        separatorBuilder: (_, __) => Gap(Dimens.d12.responsive()),
         itemBuilder: (context, index) => _EpisodeChip(
           chap: chaps[index],
           index: index,

@@ -1,6 +1,6 @@
 import 'dart:io' as io;
 
-import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class CookiesUtils {

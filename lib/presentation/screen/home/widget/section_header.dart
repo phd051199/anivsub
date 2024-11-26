@@ -1,3 +1,4 @@
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ class SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+      contentPadding: EdgeInsets.symmetric(horizontal: Dimens.d4.responsive()),
       leading: Text(
         title,
         style: context.textTheme.titleLarge?.copyWith(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:anivsub/app/base/base.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/screen/watch/widget/chapters_grid.dart';
@@ -7,11 +8,10 @@ import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubi
 import 'package:anivsub/presentation/screen/watch/widget/detail_bottom_sheet.dart';
 import 'package:anivsub/presentation/screen/watch/widget/watch_content.dart';
 import 'package:anivsub/presentation/screen/watch/widget/watch_skeleton.dart';
-import 'package:anivsub/shared/base/base.dart';
 import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/di/shared_export.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:anivsub/shared/plugin/plugin.dart';
+import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,5 +1,6 @@
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/history/widget/history_item.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class HistoryDateGroup extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(Dimens.d16.responsive()),
           child: Text(
             DateTimeUtils.formatTimestamp(date, context, withTime: false),
             style: const TextStyle(

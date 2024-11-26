@@ -1,7 +1,9 @@
 import 'package:anivsub/presentation/screen/watch/watch.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 
 class DetailSection extends StatelessWidget {
   const DetailSection({
@@ -16,7 +18,10 @@ class DetailSection extends StatelessWidget {
     final state = context.watch<WatchBloc>().state;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.symmetric(
+        horizontal: Dimens.d16.responsive(),
+        vertical: Dimens.d8.responsive(),
+      ),
       child: Column(
         children: [
           GestureDetector(
@@ -45,7 +50,7 @@ class DetailSection extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: EdgeInsets.only(top: Dimens.d8.responsive()),
         child: Text(
           '${state.detail?.views.formatNumber() ?? 0} ${context.l10n.views.toLowerCase()}',
           style: context.textTheme.titleSmall?.copyWith(
@@ -99,7 +104,7 @@ class DetailSection extends StatelessWidget {
       color: context.theme.colorScheme.surfaceContainer,
       margin: EdgeInsets.zero,
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.all(Dimens.d12.responsive()),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: infoTexts.map((item) => item.build(context)).toList(),
@@ -117,12 +122,16 @@ class InfoText {
 
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: EdgeInsets.symmetric(vertical: Dimens.d5.responsive()),
       child: Row(
         children: [
           if (icon != null)
-            Icon(icon, size: 20, color: context.theme.colorScheme.secondary),
-          const SizedBox(width: 12),
+            Icon(
+              icon,
+              size: 20,
+              color: context.theme.colorScheme.secondary,
+            ),
+          Gap(Dimens.d12.responsive()),
           Expanded(
             child: Text(
               text,

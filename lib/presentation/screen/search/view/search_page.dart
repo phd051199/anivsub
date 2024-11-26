@@ -1,14 +1,17 @@
+import 'package:anivsub/app/base/base.dart';
 import 'package:anivsub/app/routes/go_router_config.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/search/bloc/search_bloc.dart';
 import 'package:anivsub/presentation/screen/search/widget/search_results.dart';
 import 'package:anivsub/presentation/screen/search/widget/suggestion_image.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
-import 'package:anivsub/shared/base/base.dart';
+import 'package:anivsub/shared/const/const.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -22,7 +25,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
   final _searchInputController = TextEditingController();
   late final PagingController<int, AnimeDataEntity> _pagingController;
-  static const int _initPage = 1;
+  static const int _initPage = PagingConstants.initialPage;
 
   @override
   void initState() {
@@ -45,7 +48,7 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
   void _initPagingController() {
     _pagingController = PagingController(
       firstPageKey: _initPage,
-      invisibleItemsThreshold: 3,
+      invisibleItemsThreshold: PagingConstants.defaultInvisibleItemsThreshold,
     )..addPageRequestListener(_onPageRequest);
   }
 
@@ -84,7 +87,11 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
   Widget _buildContent(BuildContext context, SearchState state) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(left: 12, right: 12, top: 12),
+        padding: EdgeInsets.only(
+          left: Dimens.d12.responsive(),
+          right: Dimens.d12.responsive(),
+          top: Dimens.d12.responsive(),
+        ),
         child: Column(
           children: [
             SearchForm(
@@ -92,7 +99,7 @@ class _SearchPageState extends BlocState<SearchPage, SearchBloc> {
               onSearch: () => _onSearch(context),
               suggestionsCallback: bloc.suggestionsCallback,
             ),
-            const SizedBox(height: 8),
+            Gap(Dimens.d8.responsive()),
             Expanded(
               child: SearchResults(
                 pagingController: _pagingController,
@@ -135,7 +142,9 @@ class SearchForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TypeAheadField<PreSearchItemEntity>(
-      constraints: const BoxConstraints(maxHeight: 320),
+      constraints: BoxConstraints(
+        maxHeight: Dimens.d320.responsive(),
+      ),
       controller: controller,
       suggestionsCallback: suggestionsCallback,
       builder: _buildSearchInput,
@@ -170,7 +179,7 @@ class SearchForm extends StatelessWidget {
 
   Widget _buildSuggestionItem(BuildContext context, PreSearchItemEntity item) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+      contentPadding: EdgeInsets.symmetric(horizontal: Dimens.d16.responsive()),
       leading: SuggestionImage(imageUrl: item.image),
       title: Text(item.name),
       subtitle: Text(item.status),
@@ -180,7 +189,7 @@ class SearchForm extends StatelessWidget {
 
   void _onSuggestionSelected(BuildContext context, PreSearchItemEntity item) {
     context.pushNamed(
-      ScreenNames.watch,
+      Routes.watch.name,
       queryParameters: {'path': item.path},
     );
   }

@@ -1,3 +1,4 @@
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -19,11 +20,15 @@ class EmptyPlayer extends StatelessWidget {
           child: child ?? _buildErrorText(context),
         ),
         Positioned(
-          top: 10,
-          left: 6,
+          top: Dimens.d10.responsive(),
+          left: Dimens.d6.responsive(),
           child: IconButton(
             onPressed: context.pop,
-            icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+              size: 28,
+            ),
           ),
         ),
       ],

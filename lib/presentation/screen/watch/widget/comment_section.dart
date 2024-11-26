@@ -3,8 +3,9 @@ import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
 import 'package:anivsub/presentation/widget/web_view.dart';
 import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
+import 'package:anivsub/shared/shared_exports.dart';
 import 'package:anivsub/shared/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
@@ -222,7 +223,11 @@ class CommentInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+      padding: EdgeInsets.only(
+        left: Dimens.d16.responsive(),
+        right: Dimens.d16.responsive(),
+        top: Dimens.d16.responsive(),
+      ),
       child: Row(
         children: [
           GestureDetector(
@@ -260,7 +265,7 @@ class CommentInputField extends StatelessWidget {
               child: state.fbUser == null ? const Icon(Icons.person) : null,
             ),
           ),
-          const Gap(8),
+          Gap(Dimens.d8.responsive()),
           Expanded(
             child: TextField(
               onTapOutside: (_) => context.focusScope.unfocus(),
@@ -272,8 +277,10 @@ class CommentInputField extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide.none,
                 ),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: Dimens.d16.responsive(),
+                  vertical: Dimens.d12.responsive(),
+                ),
                 suffixIcon: IconButton(
                   onPressed: onSubmit,
                   icon: state.isCmtLoading
@@ -311,15 +318,15 @@ class CommentList extends StatelessWidget {
     final state = context.watch<WatchBloc>().state;
 
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(Dimens.d16.responsive()),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: comments.length + (state.isCmtLoading ? 1 : 0),
       itemBuilder: (context, index) {
         if (index == comments.length) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            child: LoadingWidget(withBox: false),
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: Dimens.d16.responsive()),
+            child: const LoadingWidget(withBox: false),
           );
         }
         return CommentTreeItem(
@@ -382,7 +389,7 @@ class CommentTreeItem extends StatelessWidget {
           alignment: Alignment.centerRight,
           color: context.theme.colorScheme.error,
           child: Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: EdgeInsets.only(right: Dimens.d16.responsive()),
             child: Icon(
               Icons.delete,
               color: context.theme.colorScheme.onError,
@@ -423,7 +430,7 @@ class CommentTreeItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.all(12),
+          padding: EdgeInsets.all(Dimens.d12.responsive()),
           decoration: BoxDecoration(
             color: context.theme.colorScheme.surfaceContainer,
             borderRadius: BorderRadius.circular(16),
@@ -436,16 +443,16 @@ class CommentTreeItem extends StatelessWidget {
                 style: context.textTheme.bodyMedium!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 4),
+              Gap(Dimens.d4.responsive()),
               SelectableText(data.body, style: context.textTheme.bodyMedium),
             ],
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(
-            top: 8,
-            left: 8,
-            bottom: 12,
+          padding: EdgeInsets.only(
+            top: Dimens.d8.responsive(),
+            left: Dimens.d8.responsive(),
+            bottom: Dimens.d12.responsive(),
           ),
           child: DefaultTextStyle(
             style: context.textTheme.bodySmall!.copyWith(
@@ -454,7 +461,7 @@ class CommentTreeItem extends StatelessWidget {
             child: Row(
               children: [
                 Text(data.timestamp),
-                const Gap(12),
+                Gap(Dimens.d12.responsive()),
                 GestureDetector(
                   onTap: () => onLikeComment(data.id),
                   child: Row(
@@ -464,7 +471,7 @@ class CommentTreeItem extends StatelessWidget {
                         size: 12,
                         color: likeColor,
                       ),
-                      const Gap(4),
+                      Gap(Dimens.d4.responsive()),
                       Text(
                         '${data.likeCount} ${data.likeCount > 1 ? 'likes' : 'like'}',
                         style: context.textTheme.bodySmall?.copyWith(

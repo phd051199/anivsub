@@ -1,4 +1,4 @@
-import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/shared_exports.dart';
 import 'package:anivsub/shared/utils/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';

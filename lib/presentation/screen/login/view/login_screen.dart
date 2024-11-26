@@ -1,7 +1,8 @@
+import 'package:anivsub/app/base/base.dart';
 import 'package:anivsub/domain/entities/user/user_session_request_entity.dart';
 import 'package:anivsub/presentation/screen/login/cubit/login_cubit.dart';
 import 'package:anivsub/presentation/widget/error_dialog.dart';
-import 'package:anivsub/shared/base/base.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:anivsub/shared/utils/validator.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,7 @@ class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
             AnimatedContainer(
               duration: const Duration(seconds: 2),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(Dimens.d16.responsive()),
                 child: Column(
                   children: [
                     Text(
@@ -95,7 +96,7 @@ class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
                               ),
                               validator: emailValidator.validate,
                             ),
-                            const Gap(24),
+                            Gap(Dimens.d24.responsive()),
                             TextFormField(
                               controller: _passwordController,
                               obscureText: state.isPasswordObscured,
@@ -122,15 +123,15 @@ class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: context.theme.colorScheme.primary,
                         elevation: 0,
-                        minimumSize: const Size.fromHeight(48),
+                        minimumSize: Size.fromHeight(Dimens.d48.responsive()),
                       ),
                       onPressed:
                           state is LoginLoading ? null : () => doLogin(state),
                       child: state is LoginLoading
-                          ? const SizedBox(
-                              height: 16,
-                              width: 16,
-                              child: CircularProgressIndicator(),
+                          ? SizedBox(
+                              height: Dimens.d16.responsive(),
+                              width: Dimens.d16.responsive(),
+                              child: const CircularProgressIndicator(),
                             )
                           : Text(
                               context.l10n.login,

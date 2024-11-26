@@ -1,5 +1,5 @@
+import 'package:anivsub/app/base/base.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/shared/base/base.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';

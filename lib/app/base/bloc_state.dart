@@ -1,3 +1,4 @@
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +12,8 @@ abstract class BlocState<T extends StatefulWidget, B extends BaseBloc>
 
   @override
   Widget build(BuildContext context) {
+    AppDimen.of(context);
+
     return BlocProvider(
       create: (_) => bloc,
       child: buildPage(context),

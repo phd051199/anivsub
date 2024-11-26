@@ -1,3 +1,4 @@
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class ErrorDialog {
         return AlertDialog(
           title: Text(title ?? context.l10n.genericErrorTitle),
           content: Text(message ?? context.l10n.genericErrorMessage),
-          contentPadding: const EdgeInsets.all(16),
+          contentPadding: EdgeInsets.all(Dimens.d16.responsive()),
           actions: <Widget>[
             if (onClose != null)
               TextButton(

@@ -1,8 +1,10 @@
 import 'package:anivsub/presentation/screen/setting/setting.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:anivsub/shared/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 
 class HostEditInput extends StatelessWidget {
   const HostEditInput({
@@ -45,10 +47,10 @@ class HostEditInput extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildHeader(context),
-          const SizedBox(height: 8),
+          Gap(Dimens.d8.responsive()),
           _buildHostInput(context, state, colorScheme),
           if (state.isHostUpdated) ...[
-            const SizedBox(height: 8),
+            Gap(Dimens.d8.responsive()),
             _buildSuccessMessage(context),
           ],
         ],
@@ -77,7 +79,7 @@ class HostEditInput extends StatelessWidget {
           validator: validator.validate,
           decoration: InputDecoration(
             labelText: context.l10n.hostUrl,
-            suffixIcon: const SizedBox(width: 40),
+            suffixIcon: SizedBox(width: Dimens.d40.responsive()),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -89,7 +91,7 @@ class HostEditInput extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
                 color: colorScheme.primary,
-                width: 2,
+                width: Dimens.d2.responsive(),
               ),
             ),
             errorBorder: OutlineInputBorder(
@@ -118,8 +120,8 @@ class HostEditInput extends StatelessWidget {
               borderRadius: BorderRadius.circular(24),
               onTap: () => _handleEditToggle(state, context),
               child: Container(
-                margin: const EdgeInsets.all(8),
-                padding: const EdgeInsets.all(8),
+                margin: EdgeInsets.all(Dimens.d8.responsive()),
+                padding: EdgeInsets.all(Dimens.d8.responsive()),
                 child: Icon(
                   state.isEditingHost ? Icons.save_rounded : Icons.edit_rounded,
                   color: colorScheme.primary,
@@ -134,9 +136,9 @@ class HostEditInput extends StatelessWidget {
 
   Widget _buildSuccessMessage(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 8,
+      padding: EdgeInsets.symmetric(
+        horizontal: Dimens.d12.responsive(),
+        vertical: Dimens.d8.responsive(),
       ),
       decoration: BoxDecoration(
         color: Colors.green.withOpacity(0.1),
@@ -149,7 +151,7 @@ class HostEditInput extends StatelessWidget {
             color: Colors.green,
             size: 20,
           ),
-          const SizedBox(width: 8),
+          Gap(Dimens.d8.responsive()),
           Expanded(
             child: Text(
               context.l10n.updateHostMessage,

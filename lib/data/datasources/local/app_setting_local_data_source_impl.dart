@@ -1,7 +1,7 @@
 import 'package:anivsub/data/datasources/local/app_setting_local_data_source.dart';
 import 'package:anivsub/data/dto/app_setting_dto.dart';
 import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/service/service.dart';
+import 'package:anivsub/shared/services/service.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AppSettingLocalDataSource)

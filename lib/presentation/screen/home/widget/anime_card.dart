@@ -2,6 +2,7 @@ import 'package:anivsub/app/routes/go_router_config.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/widget/anime_description.dart';
 import 'package:anivsub/presentation/widget/anime/anime_thumbnail.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,11 +18,11 @@ class AnimeCard extends StatelessWidget {
       tag: tag,
       child: GestureDetector(
         onTap: () => context.pushNamed(
-          ScreenNames.watch,
+          Routes.watch.name,
           queryParameters: {'path': movie.path, 'tag': tag},
         ),
         child: SizedBox(
-          width: 340,
+          width: Dimens.d340.responsive(),
           child: Row(
             children: [
               AnimeThumbnail(

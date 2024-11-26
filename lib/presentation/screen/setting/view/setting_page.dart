@@ -1,8 +1,9 @@
+import 'package:anivsub/app/base/base.dart';
 import 'package:anivsub/presentation/screen/setting/setting.dart';
 import 'package:anivsub/presentation/screen/setting/widget/host_edit_input.dart';
 import 'package:anivsub/presentation/screen/setting/widget/theme_color_widget.dart';
 import 'package:anivsub/presentation/screen/setting/widget/theme_mode_widget.dart';
-import 'package:anivsub/shared/base/base.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:anivsub/shared/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class _SettingPageState extends CubitState<SettingPage, SettingCubit> {
     return BlocBuilder<SettingCubit, SettingState>(
       builder: (context, state) {
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(Dimens.d16.responsive()),
           child: Column(
             children: [
               const ThemeModeWidget(),

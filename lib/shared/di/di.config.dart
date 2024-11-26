@@ -75,10 +75,11 @@ import 'package:anivsub/shared/di/di.dart' as _i976;
 import 'package:anivsub/shared/plugin/dha/dha.dart' as _i940;
 import 'package:anivsub/shared/plugin/dha/dha_impl.dart' as _i1001;
 import 'package:anivsub/shared/plugin/plugin.dart' as _i427;
-import 'package:anivsub/shared/service/flutter_secure_storage_service.dart'
-    as _i285;
-import 'package:anivsub/shared/service/service.dart' as _i5;
-import 'package:anivsub/shared/service/shared_preferences_service.dart' as _i4;
+import 'package:anivsub/shared/services/flutter_secure_storage_service.dart'
+    as _i536;
+import 'package:anivsub/shared/services/service.dart' as _i775;
+import 'package:anivsub/shared/services/shared_preferences_service.dart'
+    as _i676;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/logger.dart' as _i974;
@@ -97,35 +98,42 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final registerModule = _$RegisterModule();
     gh.singleton<_i974.Logger>(() => registerModule.logger);
-    gh.singleton<_i4.SharedPreferenceService>(
-        () => _i4.SharedPreferenceService());
-    gh.lazySingleton<_i285.FlutterSecureStorageService>(
-        () => const _i285.FlutterSecureStorageService());
+    gh.singleton<_i676.SharedPreferenceService>(
+        () => _i676.SharedPreferenceService());
+    gh.lazySingleton<_i536.FlutterSecureStorageService>(
+        () => const _i536.FlutterSecureStorageService());
     gh.lazySingleton<_i987.AnimeRemoteDataSource>(() =>
         _i603.AnimeRemoteDataSourceImpl(client: gh<_i987.ScrapingClient>()));
-    gh.lazySingleton<_i940.DHA>(() => _i1001.DHAImpl());
-    gh.lazySingleton<_i987.HistoryRemoteDataSource>(
-        () => _i201.HistoryRemoteDataSourceImpl(gh<_i454.SupabaseClient>()));
-    gh.lazySingleton<_i1029.AppSettingLocalDataSource>(() =>
-        _i506.AppSettingLocalDataSourceImpl(
-            sharedPreferenceService: gh<_i5.SharedPreferenceService>()));
-    gh.lazySingleton<_i987.AuthRemoteDataSource>(() =>
-        _i254.AuthRemoteDataSourceImpl(client: gh<_i987.AuthApiClient>()));
     gh.lazySingleton<_i987.AuthLocalDataSource>(() =>
         _i278.AuthLocalDataSourceImpl(
             flutterSecureStorageService:
-                gh<_i5.FlutterSecureStorageService>()));
+                gh<_i775.FlutterSecureStorageService>()));
+    gh.lazySingleton<_i940.DHA>(() => _i1001.DHAImpl());
+    gh.lazySingleton<_i987.HistoryRemoteDataSource>(
+        () => _i201.HistoryRemoteDataSourceImpl(gh<_i454.SupabaseClient>()));
+    gh.lazySingleton<_i772.HistoryRepository>(() => _i604.HistoryRepositoryImpl(
+          gh<_i987.HistoryRemoteDataSource>(),
+          gh<_i987.AuthLocalDataSource>(),
+        ));
+    gh.lazySingleton<_i987.AuthRemoteDataSource>(() =>
+        _i254.AuthRemoteDataSourceImpl(client: gh<_i987.AuthApiClient>()));
     gh.lazySingleton<_i987.EpisodeSkipRemoteDataSource>(() =>
         _i984.EpisodeSkipRemoteDataSourceImpl(
             gh<_i987.EpisodeSkipApiClient>()));
-    gh.lazySingleton<_i596.AppSettingLocalRepository>(() =>
-        _i848.AppSettingLocalRepositoryImpl(
-            appSettingLocalDataSource: gh<_i1029.AppSettingLocalDataSource>()));
+    gh.lazySingleton<_i1029.AppSettingLocalDataSource>(() =>
+        _i506.AppSettingLocalDataSourceImpl(
+            sharedPreferenceService: gh<_i775.SharedPreferenceService>()));
+    gh.factory<_i420.GetLastChapUseCase>(
+        () => _i420.GetLastChapUseCase(gh<_i772.HistoryRepository>()));
+    gh.factory<_i1045.GetSingleProgressUseCase>(
+        () => _i1045.GetSingleProgressUseCase(gh<_i772.HistoryRepository>()));
+    gh.factory<_i339.GetUserHistoryUseCase>(
+        () => _i339.GetUserHistoryUseCase(gh<_i772.HistoryRepository>()));
+    gh.factory<_i469.SetSingleProgressUseCase>(
+        () => _i469.SetSingleProgressUseCase(gh<_i772.HistoryRepository>()));
     gh.lazySingleton<_i1060.AuthLocalRepository>(() =>
         _i954.AuthLocalRepositoryImpl(
             authLocalDataSource: gh<_i833.AuthLocalDataSource>()));
-    gh.factory<_i1036.AppSettingUseCase>(
-        () => _i1036.AppSettingUseCase(gh<_i772.AppSettingLocalRepository>()));
     gh.lazySingleton<_i772.AuthRepository>(() => _i792.AuthRepositoryImpl(
         authRemoteDataSource: gh<_i987.AuthRemoteDataSource>()));
     gh.lazySingleton<_i772.AnimeRepository>(() => _i728.AnimeRepositoryImpl(
@@ -148,39 +156,13 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i32.GetPreSearchUseCase(gh<_i772.AnimeRepository>()));
     gh.factory<_i611.GetEpisodeSkipUsecase>(
         () => _i611.GetEpisodeSkipUsecase(gh<_i772.AnimeRepository>()));
-    gh.lazySingleton<_i772.HistoryRepository>(() => _i604.HistoryRepositoryImpl(
-          gh<_i987.HistoryRemoteDataSource>(),
-          gh<_i987.AuthLocalDataSource>(),
-        ));
-    gh.factory<_i420.GetLastChapUseCase>(
-        () => _i420.GetLastChapUseCase(gh<_i772.HistoryRepository>()));
-    gh.factory<_i1045.GetSingleProgressUseCase>(
-        () => _i1045.GetSingleProgressUseCase(gh<_i772.HistoryRepository>()));
-    gh.factory<_i339.GetUserHistoryUseCase>(
-        () => _i339.GetUserHistoryUseCase(gh<_i772.HistoryRepository>()));
-    gh.factory<_i469.SetSingleProgressUseCase>(
-        () => _i469.SetSingleProgressUseCase(gh<_i772.HistoryRepository>()));
-    gh.factory<_i976.ThemeCubit>(
-        () => _i976.ThemeCubit(gh<_i1036.AppSettingUseCase>()));
-    gh.factory<_i989.SettingCubit>(
-        () => _i989.SettingCubit(gh<_i772.AppSettingUseCase>()));
+    gh.lazySingleton<_i596.AppSettingLocalRepository>(() =>
+        _i848.AppSettingLocalRepositoryImpl(
+            appSettingLocalDataSource: gh<_i1029.AppSettingLocalDataSource>()));
     gh.factory<_i865.HomeBloc>(
         () => _i865.HomeBloc(gh<_i772.GetHomeDataUseCase>()));
-    gh.singleton<_i711.VideoPlayerCubit>(() => _i711.VideoPlayerCubit(
-          gh<_i772.GetEncryptedHlsUseCase>(),
-          gh<_i772.GetEpisodeSkipUsecase>(),
-          gh<_i772.AppSettingUseCase>(),
-          gh<_i772.GetSingleProgressUseCase>(),
-          gh<_i772.SetSingleProgressUseCase>(),
-          gh<_i427.DHA>(),
-        ));
-    gh.factory<_i835.WatchBloc>(() => _i835.WatchBloc(
-          gh<_i772.GetPlayDataUseCase>(),
-          gh<_i772.GetAnimeDetailUseCase>(),
-          gh<_i772.GetListEpisodeUseCase>(),
-          gh<_i5.SharedPreferenceService>(),
-          gh<_i772.GetLastChapUseCase>(),
-        ));
+    gh.factory<_i1036.AppSettingUseCase>(
+        () => _i1036.AppSettingUseCase(gh<_i772.AppSettingLocalRepository>()));
     gh.factory<_i342.SearchBloc>(() => _i342.SearchBloc(
           gh<_i772.SearchAnimeUseCase>(),
           gh<_i772.GetPreSearchUseCase>(),
@@ -189,6 +171,13 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i772.AuthRepository>(),
           gh<_i772.AuthLocalRepository>(),
         ));
+    gh.factory<_i835.WatchBloc>(() => _i835.WatchBloc(
+          gh<_i772.GetPlayDataUseCase>(),
+          gh<_i772.GetAnimeDetailUseCase>(),
+          gh<_i772.GetListEpisodeUseCase>(),
+          gh<_i775.SharedPreferenceService>(),
+          gh<_i772.GetLastChapUseCase>(),
+        ));
     gh.singleton<_i644.AuthNotifier>(
         () => _i644.AuthNotifier(authUseCases: gh<_i772.AuthUseCase>()));
     gh.factory<_i200.LoginCubit>(
@@ -196,6 +185,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i917.HistoryCubit>(() => _i917.HistoryCubit(
           gh<_i772.AuthUseCase>(),
           gh<_i772.GetUserHistoryUseCase>(),
+        ));
+    gh.factory<_i976.ThemeCubit>(
+        () => _i976.ThemeCubit(gh<_i1036.AppSettingUseCase>()));
+    gh.factory<_i989.SettingCubit>(
+        () => _i989.SettingCubit(gh<_i772.AppSettingUseCase>()));
+    gh.singleton<_i711.VideoPlayerCubit>(() => _i711.VideoPlayerCubit(
+          gh<_i772.GetEncryptedHlsUseCase>(),
+          gh<_i772.GetEpisodeSkipUsecase>(),
+          gh<_i772.AppSettingUseCase>(),
+          gh<_i772.GetSingleProgressUseCase>(),
+          gh<_i772.SetSingleProgressUseCase>(),
+          gh<_i427.DHA>(),
         ));
     return this;
   }

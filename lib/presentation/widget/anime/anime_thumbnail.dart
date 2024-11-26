@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:anivsub/shared/const/const.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class AnimeThumbnail extends StatelessWidget {
   const AnimeThumbnail({
@@ -49,17 +51,17 @@ class AnimeThumbnail extends StatelessWidget {
 
   Widget _buildProcessOverlay(BuildContext context) {
     return Positioned(
-      bottom: 10,
-      left: 10,
-      right: 10,
+      bottom: Dimens.d10.responsive(),
+      left: Dimens.d10.responsive(),
+      right: Dimens.d10.responsive(),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: Container(
-            height: 32,
+            height: Dimens.d32.responsive(),
             alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: EdgeInsets.symmetric(horizontal: Dimens.d4.responsive()),
             decoration: BoxDecoration(
               color: context.theme.colorScheme.onPrimary.withOpacity(0.8),
               borderRadius: BorderRadius.circular(12),
@@ -91,8 +93,8 @@ class AnimeThumbnail extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
         child: Container(
-          height: 24,
-          width: 48,
+          height: Dimens.d24.responsive(),
+          width: Dimens.d48.responsive(),
           decoration: BoxDecoration(
             color:
                 context.theme.colorScheme.secondaryContainer.withOpacity(0.9),
@@ -119,7 +121,7 @@ class AnimeThumbnail extends StatelessWidget {
             color: context.theme.colorScheme.onSecondaryContainer,
           ),
         ),
-        const SizedBox(width: 2),
+        Gap(Dimens.d2.responsive()),
         Icon(
           Icons.star,
           size: 14,

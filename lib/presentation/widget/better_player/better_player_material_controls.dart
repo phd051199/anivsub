@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
-import 'package:anivsub/shared/di/shared_export.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
+import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:river_player/src/configuration/better_player_controls_configuration.dart';

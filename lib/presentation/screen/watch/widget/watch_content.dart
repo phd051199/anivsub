@@ -6,9 +6,11 @@ import 'package:anivsub/presentation/screen/watch/widget/episodes_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/related_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/video_player_section.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 
 class WatchContent extends StatelessWidget {
   const WatchContent({
@@ -81,12 +83,12 @@ class WatchContent extends StatelessWidget {
   Widget _buildTab(BuildContext context, IconData icon, String text) {
     return Tab(
       child: Padding(
-        padding: const EdgeInsets.only(right: 8.0),
+        padding: EdgeInsets.only(right: Dimens.d8.responsive()),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(icon, size: 20),
-            const SizedBox(width: 8),
+            Gap(Dimens.d8.responsive()),
             Text(
               text,
               style: const TextStyle(fontWeight: FontWeight.bold),
@@ -103,12 +105,12 @@ class WatchContent extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.comment_outlined, size: 20),
-          const SizedBox(width: 8),
+          Gap(Dimens.d8.responsive()),
           Text(
             context.l10n.comment,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          const SizedBox(width: 8),
+          Gap(Dimens.d8.responsive()),
           _buildCommentCount(context),
         ],
       ),
@@ -117,9 +119,9 @@ class WatchContent extends StatelessWidget {
 
   Widget _buildCommentCount(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: 2,
+      padding: EdgeInsets.symmetric(
+        horizontal: Dimens.d8.responsive(),
+        vertical: Dimens.d2.responsive(),
       ),
       decoration: BoxDecoration(
         color: context.theme.colorScheme.secondaryContainer,
@@ -181,7 +183,7 @@ class WatchContent extends StatelessWidget {
           Icons.error_outline,
           color: context.theme.colorScheme.onSurface,
         ),
-        const SizedBox(height: 12),
+        Gap(Dimens.d12.responsive()),
         Text(
           context.l10n.failedToLoadComments,
           style: context.textTheme.bodyMedium?.copyWith(

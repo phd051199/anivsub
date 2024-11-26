@@ -1,7 +1,8 @@
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/login/view/login_screen.dart';
-import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
+import 'package:anivsub/shared/shared_exports.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -16,11 +17,11 @@ class UserInfo extends StatelessWidget {
       color: Colors.transparent,
       elevation: 0,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(Dimens.d16.responsive()),
         child: Row(
           children: [
             _buildAvatar(context),
-            const Gap(16),
+            Gap(Dimens.d16.responsive()),
             Expanded(
               child: user?.id != null
                   ? _buildUserInfo(context)
@@ -56,7 +57,7 @@ class UserInfo extends StatelessWidget {
             color: context.theme.colorScheme.onSurfaceVariant,
           ),
         ),
-        const Gap(4),
+        Gap(Dimens.d4.responsive()),
         Text(
           user?.email ?? '',
           style: context.textTheme.bodyMedium?.copyWith(
@@ -88,7 +89,7 @@ class UserInfo extends StatelessWidget {
           ),
         ),
         subtitle: Padding(
-          padding: const EdgeInsets.only(top: 4),
+          padding: EdgeInsets.only(top: Dimens.d4.responsive()),
           child: Text(
             context.l10n.loginMessage,
             style: context.textTheme.bodyMedium?.copyWith(

@@ -1,4 +1,4 @@
-import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/shared_exports.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
 

@@ -20,23 +20,10 @@ class AppTheme {
       colorScheme: colorScheme,
       useMaterial3: true,
     ).copyWith(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
       textTheme: GoogleFonts.openSansTextTheme(
         ThemeData(
           colorScheme: colorScheme,
         ).textTheme,
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(
-            double.infinity,
-            40,
-          ),
-        ),
-      ),
-      navigationBarTheme: const NavigationBarThemeData(
-        elevation: 0,
       ),
       inputDecorationTheme: InputDecorationTheme(
         prefixIconColor: colorScheme.primary,
@@ -52,10 +39,17 @@ class AppTheme {
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            color: colorScheme.error,
+          ),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(
+            color: colorScheme.error,
+            width: 2,
+          ),
         ),
       ),
     );

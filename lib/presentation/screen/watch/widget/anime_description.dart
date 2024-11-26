@@ -1,4 +1,5 @@
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -15,8 +16,11 @@ class AnimeDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        height: 180,
-        margin: const EdgeInsets.only(left: 12, right: 24),
+        height: Dimens.d180.responsive(),
+        margin: EdgeInsets.only(
+          left: Dimens.d12.responsive(),
+          right: Dimens.d24.responsive(),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -29,7 +33,7 @@ class AnimeDescription extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-            const Gap(4),
+            Gap(Dimens.d4.responsive()),
             Text(
               movie.name,
               maxLines: 2,
@@ -38,7 +42,7 @@ class AnimeDescription extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Gap(4),
+            Gap(Dimens.d4.responsive()),
             Text(
               movie.description,
               maxLines: 4,

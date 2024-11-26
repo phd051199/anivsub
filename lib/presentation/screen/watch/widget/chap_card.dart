@@ -1,4 +1,5 @@
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class ChapCard extends StatelessWidget {
           ? context.theme.colorScheme.secondaryContainer
           : context.theme.colorScheme.surfaceContainer,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: Dimens.d16.responsive()),
         child: Center(
           child: Text(
             chap.name,

@@ -1,5 +1,6 @@
 import 'package:anivsub/app/routes/go_router_config.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:anivsub/shared/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -15,18 +16,19 @@ class HistoryItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.pushNamed(
-          ScreenNames.watch,
+          Routes.watch.name,
           queryParameters: {
             'path': '/phim/${item.season}/',
           },
         );
       },
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+        contentPadding:
+            EdgeInsets.symmetric(horizontal: Dimens.d16.responsive()),
         leading: AspectRatio(
           aspectRatio: 16 / 9,
           child: Container(
-            width: 100,
+            width: Dimens.d100.responsive(),
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const kThemeColors = [
+  Colors.deepPurple,
   Colors.blueAccent,
   Colors.red,
   Colors.green,

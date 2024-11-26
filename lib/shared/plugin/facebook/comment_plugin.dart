@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/shared/di/shared_export.dart';
 import 'package:anivsub/shared/extension/string_extension.dart';
+import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/foundation.dart';
 
 class FBCommentPlugin {

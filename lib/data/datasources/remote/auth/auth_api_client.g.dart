@@ -104,7 +104,7 @@ class _AuthApiClient implements AuthApiClient {
     )
         .compose(
           _dio.options,
-          'https://animevietsub.ink/account/info',
+          '/account/info',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -150,7 +150,7 @@ class _AuthApiClient implements AuthApiClient {
     )
         .compose(
           _dio.options,
-          'https://animevietsub.ink/account/login',
+          '/account/login',
           queryParameters: queryParameters,
           data: _data,
         )

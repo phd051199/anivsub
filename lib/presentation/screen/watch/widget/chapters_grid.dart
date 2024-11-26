@@ -1,6 +1,7 @@
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/screen/watch/widget/chapter_item.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -20,14 +21,14 @@ class ChaptersGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: context.screenSize.height * 0.75,
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(Dimens.d16.responsive()),
       child: GridView.builder(
         shrinkWrap: true,
         itemCount: chaps.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 5,
-          mainAxisSpacing: 4,
-          crossAxisSpacing: 4,
+          mainAxisSpacing: Dimens.d4.responsive(),
+          crossAxisSpacing: Dimens.d4.responsive(),
           childAspectRatio: 62 / 60,
         ),
         itemBuilder: (context, index) => ChapterItem(

@@ -1,4 +1,5 @@
 import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,18 +30,18 @@ class ThemeModeWidget extends StatelessWidget {
         },
         textStyle:
             context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
-        children: const [
+        children: [
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(Icons.contrast),
+            padding: EdgeInsets.all(Dimens.d8.responsive()),
+            child: const Icon(Icons.contrast),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(Icons.light_mode_outlined),
+            padding: EdgeInsets.all(Dimens.d8.responsive()),
+            child: const Icon(Icons.light_mode_outlined),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(Icons.dark_mode_outlined),
+            padding: EdgeInsets.all(Dimens.d8.responsive()),
+            child: const Icon(Icons.dark_mode_outlined),
           ),
         ],
       ),

@@ -3,7 +3,7 @@ import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
 import 'package:anivsub/shared/plugin/plugin.dart';
-import 'package:anivsub/shared/service/service.dart';
+import 'package:anivsub/shared/services/service.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';

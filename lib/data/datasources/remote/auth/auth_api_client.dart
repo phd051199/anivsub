@@ -18,10 +18,10 @@ abstract class AuthApiClient {
     @Body() RefreshUserSessionRequestDTO refreshTokenRequestModel,
   );
 
-  @GET('https://animevietsub.ink/account/info')
+  @GET('/account/info')
   Future<String> getUser();
 
-  @POST('https://animevietsub.ink/account/login')
+  @POST('/account/login')
   @FormUrlEncoded()
   Future<String> loginWithUsernameAndPassword(
     @Field('email') String email,

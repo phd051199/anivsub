@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/shared_exports.dart';
 import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';

@@ -1,5 +1,5 @@
 import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/di/shared_export.dart';
+import 'package:anivsub/shared/shared_exports.dart';
 import 'package:dio/dio.dart';
 
 class RedirectInterceptor extends Interceptor {

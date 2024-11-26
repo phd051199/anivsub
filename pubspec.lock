@@ -334,14 +334,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
-  dio_smart_retry:
-    dependency: "direct main"
-    description:
-      name: dio_smart_retry
-      sha256: "3d71450c19b4d91ef4c7d726a55a284bfc11eb3634f1f25006cdfab3f8595653"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.0"
   dio_web_adapter:
     dependency: transitive
     description:
@@ -568,6 +560,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.82.6"
+  flutter_screenutil:
+    dependency: "direct main"
+    description:
+      name: flutter_screenutil
+      sha256: "8239210dd68bee6b0577aa4a090890342d04a136ce1c81f98ee513fc0ce891de"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.9.3"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -1006,10 +1006,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: c464428172cb986b758c6d1724c603097febb8fb855aa265aeecc9280c294d4a
+      sha256: "8c4967f8b7cb46dc914e178daa29813d83ae502e0529d7b0478330616a691ef7"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.12"
+    version: "2.2.14"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -1690,11 +1690,10 @@ packages:
   wasm_run_flutter:
     dependency: "direct main"
     description:
-      path: "packages/wasm_run_flutter"
-      ref: fix-namespace
-      resolved-ref: "23d460a6d705ccfc2f7daf11fc70270670b730a4"
-      url: "https://github.com/phd051199/wasm_run.git"
-    source: git
+      name: wasm_run_flutter
+      sha256: "9807fd559676614350d5480846de29aa687a1f48b6a1b438cf120e01cffd84a0"
+      url: "https://pub.dev"
+    source: hosted
     version: "0.1.0"
   watcher:
     dependency: transitive

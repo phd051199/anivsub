@@ -1,3 +1,4 @@
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -8,7 +9,7 @@ class SuggestionImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 42,
+      width: Dimens.d42.responsive(),
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),

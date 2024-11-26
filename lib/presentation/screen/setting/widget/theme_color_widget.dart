@@ -1,8 +1,10 @@
 import 'package:anivsub/app/theme/const/theme_colors.dart';
 import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 
 class ThemeColorWidget extends StatefulWidget {
   const ThemeColorWidget({super.key});
@@ -24,7 +26,7 @@ class _ThemeColorWidgetState extends State<ThemeColorWidget>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(context.l10n.themeColorMessage),
-              const SizedBox(height: 8),
+              Gap(Dimens.d8.responsive()),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: ToggleButtons(
@@ -44,10 +46,10 @@ class _ThemeColorWidgetState extends State<ThemeColorWidget>
                   renderBorder: false,
                   children: kThemeColors.map((color) {
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(Dimens.d8.responsive()),
                       child: Container(
-                        width: 24,
-                        height: 24,
+                        width: Dimens.d24.responsive(),
+                        height: Dimens.d24.responsive(),
                         decoration: BoxDecoration(
                           color: color,
                           borderRadius: BorderRadius.circular(8),

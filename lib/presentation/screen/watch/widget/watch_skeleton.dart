@@ -2,6 +2,7 @@ import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/widget/detail_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/empty_player.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:anivsub/shared/extension/number_extension.dart';
 import 'package:flutter/material.dart';
@@ -25,20 +26,19 @@ class WatchSkeleton extends StatelessWidget {
             child: EmptyPlayer(child: LoadingWidget(color: Colors.white)),
           ),
         ),
-        const Gap(4),
+        Gap(Dimens.d4.responsive()),
         Skeletonizer(
           enabled: true,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: Dimens.d16.responsive()),
             child: _buildDetailInfo(context, detail),
           ),
         ),
-        const Gap(4),
+        Gap(Dimens.d4.responsive()),
         Skeletonizer(
-          enabled: true,
           child: Container(
-            height: 112,
-            padding: const EdgeInsets.all(12),
+            height: Dimens.d112.responsive(),
+            padding: EdgeInsets.all(Dimens.d12.responsive()),
             child: _buildChaptersPlaceholder(
               context,
               List.generate(6, (_) => ChapDataEntity.mockup()),
@@ -61,7 +61,7 @@ class WatchSkeleton extends StatelessWidget {
 
   Widget _buildDetailTile(BuildContext context, AnimeDetailEntity detail) {
     return ListTile(
-      minVerticalPadding: 16,
+      minVerticalPadding: Dimens.d16.responsive(),
       contentPadding: EdgeInsets.zero,
       title: Text(
         detail.name,
@@ -73,7 +73,7 @@ class WatchSkeleton extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: EdgeInsets.only(top: Dimens.d8.responsive()),
         child: Text(
           '${detail.views.formatNumber()} ${context.l10n.views.toLowerCase()}',
           style: context.textTheme.titleSmall?.copyWith(
@@ -127,7 +127,7 @@ class WatchSkeleton extends StatelessWidget {
       color: context.theme.colorScheme.surfaceContainer,
       margin: EdgeInsets.zero,
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.all(Dimens.d12.responsive()),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: infoTexts.map((item) => item.build(context)).toList(),
@@ -144,17 +144,19 @@ class WatchSkeleton extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ListTile(
-          minTileHeight: 32,
-          contentPadding: const EdgeInsets.only(left: 4),
-          title:
-              Text(context.l10n.episode, style: context.textTheme.titleSmall),
+          minTileHeight: Dimens.d32.responsive(),
+          contentPadding: EdgeInsets.only(left: Dimens.d4.responsive()),
+          title: Text(
+            context.l10n.episode,
+            style: context.textTheme.titleSmall,
+          ),
           trailing: const Icon(Icons.chevron_right),
         ),
         Expanded(
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: chaps.length,
-            separatorBuilder: (context, index) => const Gap(2),
+            separatorBuilder: (context, index) => Gap(Dimens.d2.responsive()),
             itemBuilder: (context, index) =>
                 _buildChapCard(context, chaps[index]),
           ),
@@ -170,7 +172,7 @@ class WatchSkeleton extends StatelessWidget {
     return Card.filled(
       color: context.theme.colorScheme.surfaceContainer,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
+        padding: EdgeInsets.symmetric(horizontal: Dimens.d18.responsive()),
         child: Center(
           child: Text(
             chap.name,

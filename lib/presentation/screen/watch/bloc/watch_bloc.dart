@@ -1,10 +1,10 @@
+import 'package:anivsub/app/base/base.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/shared/base/base.dart';
 import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/di/shared_export.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:anivsub/shared/plugin/plugin.dart';
-import 'package:anivsub/shared/service/service.dart';
+import 'package:anivsub/shared/services/service.dart';
+import 'package:anivsub/shared/shared_exports.dart';
 import 'package:anivsub/shared/utils/utils.dart';
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';

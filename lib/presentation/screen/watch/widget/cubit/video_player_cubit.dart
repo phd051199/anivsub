@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:anivsub/app/base/base.dart';
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/shared/base/base.dart';
-import 'package:anivsub/shared/di/shared_export.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:anivsub/shared/plugin/plugin.dart';
+import 'package:anivsub/shared/shared_exports.dart';
 import 'package:anivsub/shared/utils/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -140,7 +140,7 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }
 
   void _initializeComponents({required BetterPlayerController controller}) {
-    playerController = controller;
+    playerController ??= controller;
     _isNextEpisodeTriggered = false;
     cancelToken = CancelToken();
     _startProgressUpdateTimer();
@@ -172,12 +172,14 @@ class VideoPlayerCubit extends BaseCubit<VideoPlayerState> {
   }
 
   void _cleanupResources() {
-    playerController?.dispose();
-    playerController = null;
     cancelToken?.cancel();
-    cancelToken = null;
     _progressUpdateTimer?.cancel();
     _skipIntroDebounceTimer?.cancel();
+
+    playerController = null;
+    cancelToken = null;
+    _progressUpdateTimer = null;
+    _skipIntroDebounceTimer = null;
   }
 
   void _scheduleHideSkipIntroText() {

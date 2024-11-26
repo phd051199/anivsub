@@ -2,6 +2,7 @@ import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/home/home.dart';
 import 'package:anivsub/presentation/screen/home/widget/airing_list.dart';
 import 'package:anivsub/presentation/screen/home/widget/anime_section.dart';
+import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -16,12 +17,12 @@ class HomeContent extends StatelessWidget {
       shrinkWrap: true,
       slivers: [
         SliverPadding(
-          padding: const EdgeInsets.all(12),
+          padding: EdgeInsets.all(Dimens.d12.responsive()),
           sliver: SliverList(
             delegate: SliverChildListDelegate([
               if (state is HomeLoaded) ...[
                 AiringList(movies: state.homeData.sliderMovies),
-                const Gap(12),
+                Gap(Dimens.d12.responsive()),
                 ...state.homeData.toMap().keys.map((key) {
                   return AnimeSection(
                     title: state.homeData.toMapLocalized(context)[key]!,
@@ -32,7 +33,7 @@ class HomeContent extends StatelessWidget {
                 AiringList(
                   movies: List.generate(2, (_) => AnimeDataEntity.mockup()),
                 ),
-                const Gap(12),
+                Gap(Dimens.d12.responsive()),
                 AnimeSection(
                   title: 'Loading...',
                   movies: List.generate(6, (_) => AnimeDataEntity.mockup()),
