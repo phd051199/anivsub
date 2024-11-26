@@ -1,7 +1,7 @@
 part of 'dimens.dart';
 
 class AppDimen {
-  AppDimen._({
+  const AppDimen._({
     required this.screenWidth,
     required this.screenHeight,
     required this.devicePixelRatio,

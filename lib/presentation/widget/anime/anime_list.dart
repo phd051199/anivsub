@@ -1,5 +1,6 @@
 import 'package:anivsub/app/routes/go_router_config.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +94,7 @@ class AnimeCard extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(top: Dimens.d2.responsive()),
                     child: Text(
-                      '${context.l10n.views}: ${item.views?.formatNumber()}',
+                      '${S.current.views}: ${item.views?.formatNumber()}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.labelSmall?.copyWith(

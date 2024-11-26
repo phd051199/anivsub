@@ -1,5 +1,6 @@
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/history/widget/history_item.dart';
+import 'package:anivsub/shared/const/const.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class HistoryDateGroup extends StatelessWidget {
           child: Text(
             DateTimeUtils.formatTimestamp(date, context, withTime: false),
             style: const TextStyle(
-              fontSize: 18,
+              fontSize: kTitleFontSize,
               fontWeight: FontWeight.bold,
             ),
           ),

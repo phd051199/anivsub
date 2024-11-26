@@ -1,4 +1,6 @@
 import 'package:anivsub/presentation/screen/watch/watch.dart';
+import 'package:anivsub/resources/localization.dart';
+import 'package:anivsub/shared/const/const.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +46,7 @@ class DetailSection extends StatelessWidget {
         state.detail?.name ?? '',
         style: context.textTheme.titleLarge?.copyWith(
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: kTitleFontSize,
         ),
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -52,7 +54,7 @@ class DetailSection extends StatelessWidget {
       subtitle: Padding(
         padding: EdgeInsets.only(top: Dimens.d8.responsive()),
         child: Text(
-          '${state.detail?.views.formatNumber() ?? 0} ${context.l10n.views.toLowerCase()}',
+          '${state.detail?.views.formatNumber() ?? 0} ${S.current.views.toLowerCase()}',
           style: context.textTheme.titleSmall?.copyWith(
             color: context.theme.colorScheme.secondary,
           ),
@@ -68,7 +70,7 @@ class DetailSection extends StatelessWidget {
 
     final infoTexts = [
       InfoText(
-        '${context.l10n.producedBy} ${detail.studio}',
+        '${S.current.producedBy} ${detail.studio}',
         TextStyle(
           color: context.theme.colorScheme.tertiary,
           fontWeight: FontWeight.bold,
@@ -76,17 +78,17 @@ class DetailSection extends StatelessWidget {
         Icons.movie_creation_outlined,
       ),
       InfoText(
-        detail.schedule != '' ? detail.schedule! : context.l10n.seasonEnd,
+        detail.schedule != '' ? detail.schedule! : S.current.seasonEnd,
         null,
         Icons.calendar_today_outlined,
       ),
       InfoText(
-        '${detail.yearOf} • ${context.l10n.episode} ${detail.duration} • ${detail.countries.map((e) => e.name).join(', ')}',
+        '${detail.yearOf} • ${S.current.episode} ${detail.duration} • ${detail.countries.map((e) => e.name).join(', ')}',
         null,
         Icons.info_outline,
       ),
       InfoText(
-        '${detail.rate}/10 • ${detail.countRate} ${context.l10n.rating} • ${detail.seasonOf?.name}',
+        '${detail.rate}/10 • ${detail.countRate} ${S.current.rating} • ${detail.seasonOf?.name}',
         null,
         Icons.star_outline,
       ),

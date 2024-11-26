@@ -2,6 +2,8 @@ import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/widget/detail_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/empty_player.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/resources/localization.dart';
+import 'package:anivsub/shared/const/const.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:anivsub/shared/extension/number_extension.dart';
@@ -67,7 +69,7 @@ class WatchSkeleton extends StatelessWidget {
         detail.name,
         style: context.textTheme.titleLarge?.copyWith(
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: kTitleFontSize,
         ),
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -75,7 +77,7 @@ class WatchSkeleton extends StatelessWidget {
       subtitle: Padding(
         padding: EdgeInsets.only(top: Dimens.d8.responsive()),
         child: Text(
-          '${detail.views.formatNumber()} ${context.l10n.views.toLowerCase()}',
+          '${detail.views.formatNumber()} ${S.current.views.toLowerCase()}',
           style: context.textTheme.titleSmall?.copyWith(
             color: context.theme.colorScheme.secondary,
           ),
@@ -147,7 +149,7 @@ class WatchSkeleton extends StatelessWidget {
           minTileHeight: Dimens.d32.responsive(),
           contentPadding: EdgeInsets.only(left: Dimens.d4.responsive()),
           title: Text(
-            context.l10n.episode,
+            S.current.episode,
             style: context.textTheme.titleSmall,
           ),
           trailing: const Icon(Icons.chevron_right),

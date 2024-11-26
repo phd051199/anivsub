@@ -1,3 +1,4 @@
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class EmptyPlayer extends StatelessWidget {
   Center _buildErrorText(BuildContext context) {
     return Center(
       child: Text(
-        context.l10n.noChaptersFound,
+        S.current.noChaptersFound,
         style: context.textTheme.bodyMedium?.copyWith(
           fontWeight: FontWeight.bold,
           color: Colors.white,

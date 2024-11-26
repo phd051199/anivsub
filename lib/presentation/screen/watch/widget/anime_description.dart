@@ -47,7 +47,7 @@ class AnimeDescription extends StatelessWidget {
               movie.description,
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
-              style: context.textTheme.bodySmall?.copyWith(
+              style: context.textTheme.titleSmall?.copyWith(
                 color: context.theme.colorScheme.secondary,
               ),
             ),
@@ -57,8 +57,8 @@ class AnimeDescription extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: context.textTheme.bodySmall?.copyWith(
-                fontWeight: FontWeight.bold,
                 color: context.theme.colorScheme.tertiary,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],

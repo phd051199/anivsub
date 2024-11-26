@@ -6,6 +6,7 @@ import 'package:anivsub/presentation/screen/watch/widget/episodes_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/related_section.dart';
 import 'package:anivsub/presentation/screen/watch/widget/video_player_section.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
@@ -73,9 +74,9 @@ class WatchContent extends StatelessWidget {
       isScrollable: true,
       tabAlignment: TabAlignment.start,
       tabs: [
-        _buildTab(context, Icons.info_outline, context.l10n.detail),
+        _buildTab(context, Icons.info_outline, S.current.detail),
         _buildCommentTab(context),
-        _buildTab(context, Icons.video_library_outlined, context.l10n.related),
+        _buildTab(context, Icons.video_library_outlined, S.current.related),
       ],
     );
   }
@@ -107,7 +108,7 @@ class WatchContent extends StatelessWidget {
           const Icon(Icons.comment_outlined, size: 20),
           Gap(Dimens.d8.responsive()),
           Text(
-            context.l10n.comment,
+            S.current.comment,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           Gap(Dimens.d8.responsive()),
@@ -132,7 +133,7 @@ class WatchContent extends StatelessWidget {
             '0',
         style: TextStyle(
           color: context.theme.colorScheme.onSecondaryContainer,
-          fontSize: 12,
+          fontSize: kDefaultFontSize,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -185,7 +186,7 @@ class WatchContent extends StatelessWidget {
         ),
         Gap(Dimens.d12.responsive()),
         Text(
-          context.l10n.failedToLoadComments,
+          S.current.failedToLoadComments,
           style: context.textTheme.bodyMedium?.copyWith(
             color: context.theme.colorScheme.onSurface,
           ),

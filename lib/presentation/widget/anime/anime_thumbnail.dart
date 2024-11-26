@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/const/const.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
@@ -75,7 +76,7 @@ class AnimeThumbnail extends StatelessWidget {
 
   Widget _buildProcessText(BuildContext context) {
     return Text(
-      '${context.l10n.ep} $process',
+      '${S.current.ep} $process',
       style: context.textTheme.labelMedium?.copyWith(
         fontWeight: FontWeight.bold,
       ),

@@ -1,5 +1,6 @@
 import 'package:anivsub/app/routes/go_router_config.dart';
 import 'package:anivsub/domain/domain_exports.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:anivsub/shared/utils/utils.dart';
@@ -40,14 +41,14 @@ class HistoryItem extends StatelessWidget {
           ),
         ),
         title: Text(
-          '${context.l10n.ep} ${item.watchName} - ${item.name}\n${item.seasonName}',
+          '${S.current.ep} ${item.watchName} - ${item.name}\n${item.seasonName}',
           style: context.textTheme.titleSmall,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(
           DateTimeUtils.formatTimestamp(item.createdAt, context),
-          style: context.textTheme.bodySmall?.copyWith(
+          style: context.textTheme.titleSmall?.copyWith(
             color: context.theme.colorScheme.onSurfaceVariant,
           ),
         ),

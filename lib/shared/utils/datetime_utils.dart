@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -48,11 +49,11 @@ class DateTimeUtils {
     final String dateStr = dateFormat.format(dateTime);
 
     if (dateTime.isToday) {
-      return withTime ? '${context.l10n.today}, $timeStr' : context.l10n.today;
+      return withTime ? '${S.current.today}, $timeStr' : S.current.today;
     } else if (dateTime.isYesterday) {
       return withTime
-          ? '${context.l10n.yesterday}, $timeStr'
-          : context.l10n.yesterday;
+          ? '${S.current.yesterday}, $timeStr'
+          : S.current.yesterday;
     }
 
     return withTime ? '$dateStr $timeStr' : dateStr;

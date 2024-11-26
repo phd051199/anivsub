@@ -25,7 +25,7 @@ class HomeContent extends StatelessWidget {
                 Gap(Dimens.d12.responsive()),
                 ...state.homeData.toMap().keys.map((key) {
                   return AnimeSection(
-                    title: state.homeData.toMapLocalized(context)[key]!,
+                    title: state.homeData.toMapLocalized()[key]!,
                     movies: state.homeData.toMap()[key],
                   );
                 }),

@@ -1,7 +1,6 @@
 import 'package:anivsub/data/data_exports.dart';
 import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
-import 'package:flutter/widgets.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'home_data_categories_entity.freezed.dart';
@@ -40,13 +39,13 @@ class HomeDataCategoriesEntity extends BaseEntity<HomeDataCategoriesDTO>
     };
   }
 
-  Map<String, String> toMapLocalized(BuildContext context) {
+  Map<String, String> toMapLocalized() {
     return {
-      'topMovies': context.l10n.topMovies,
-      'latestUpdates': context.l10n.latestUpdates,
-      'preRelease': context.l10n.preRelease,
-      'hotUpdates': context.l10n.hotUpdates,
-      'thisSeason': context.l10n.thisSeason,
+      'topMovies': S.current.topMovies,
+      'latestUpdates': S.current.latestUpdates,
+      'preRelease': S.current.preRelease,
+      'hotUpdates': S.current.hotUpdates,
+      'thisSeason': S.current.thisSeason,
     };
   }
 

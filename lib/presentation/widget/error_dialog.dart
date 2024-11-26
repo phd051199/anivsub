@@ -1,5 +1,5 @@
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class ErrorDialog {
@@ -14,8 +14,8 @@ class ErrorDialog {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title ?? context.l10n.genericErrorTitle),
-          content: Text(message ?? context.l10n.genericErrorMessage),
+          title: Text(title ?? S.current.genericErrorTitle),
+          content: Text(message ?? S.current.genericErrorMessage),
           contentPadding: EdgeInsets.all(Dimens.d16.responsive()),
           actions: <Widget>[
             if (onClose != null)
@@ -24,7 +24,7 @@ class ErrorDialog {
                   Navigator.of(context).pop();
                   onClose();
                 },
-                child: Text(context.l10n.close),
+                child: Text(S.current.close),
               ),
             if (onRetry != null)
               TextButton(
@@ -32,7 +32,7 @@ class ErrorDialog {
                   Navigator.of(context).pop();
                   onRetry();
                 },
-                child: Text(context.l10n.retry),
+                child: Text(S.current.retry),
               ),
           ],
         );

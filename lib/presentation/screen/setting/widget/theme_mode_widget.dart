@@ -1,4 +1,5 @@
 import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,8 @@ class ThemeModeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      title: Text(context.l10n.theme),
-      subtitle: Text(context.l10n.themeMessage),
+      title: Text(S.current.theme),
+      subtitle: Text(S.current.themeMessage),
       titleTextStyle: context.textTheme.titleMedium?.copyWith(
         fontWeight: FontWeight.bold,
       ),

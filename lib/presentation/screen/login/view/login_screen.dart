@@ -2,6 +2,7 @@ import 'package:anivsub/app/base/base.dart';
 import 'package:anivsub/domain/entities/user/user_session_request_entity.dart';
 import 'package:anivsub/presentation/screen/login/cubit/login_cubit.dart';
 import 'package:anivsub/presentation/widget/error_dialog.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:anivsub/shared/utils/validator.dart';
@@ -28,10 +29,10 @@ class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
   void initState() {
     super.initState();
     emailValidator = Validator<String>([
-      (value) => value.isEmpty ? context.l10n.requiredField : null,
+      (value) => value.isEmpty ? S.current.requiredField : null,
     ]);
     passwordValidator = Validator<String>([
-      (value) => value.isEmpty ? context.l10n.requiredField : null,
+      (value) => value.isEmpty ? S.current.requiredField : null,
     ]);
   }
 
@@ -60,7 +61,7 @@ class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
         if (state is LoginError) {
           ErrorDialog.showErrorDialog(
             context: context,
-            title: context.l10n.login_error,
+            title: S.current.login_error,
             message: state.message,
             onClose: () {},
             onRetry: () => doLogin(state),
@@ -77,7 +78,7 @@ class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
                 child: Column(
                   children: [
                     Text(
-                      context.l10n.login,
+                      S.current.login,
                       style: context.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -91,7 +92,7 @@ class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
                             TextFormField(
                               controller: _emailController,
                               decoration: InputDecoration(
-                                labelText: context.l10n.email,
+                                labelText: S.current.email,
                                 prefixIcon: const Icon(Icons.email),
                               ),
                               validator: emailValidator.validate,
@@ -101,7 +102,7 @@ class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
                               controller: _passwordController,
                               obscureText: state.isPasswordObscured,
                               decoration: InputDecoration(
-                                labelText: context.l10n.password,
+                                labelText: S.current.password,
                                 prefixIcon: const Icon(Icons.lock),
                                 suffixIcon: IconButton(
                                   icon: Icon(
@@ -134,7 +135,7 @@ class _LoginScreenState extends CubitState<LoginScreen, LoginCubit> {
                               child: const CircularProgressIndicator(),
                             )
                           : Text(
-                              context.l10n.login,
+                              S.current.login,
                               style: context.textTheme.titleMedium?.copyWith(
                                 color: context.theme.colorScheme.onPrimary,
                               ),

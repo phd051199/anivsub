@@ -8,6 +8,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:anivsub/app/base/common/common_bloc.dart' as _i203;
 import 'package:anivsub/app/notifier/auth_notifier.dart' as _i644;
 import 'package:anivsub/app/theme/cubit/theme_cubit.dart' as _i976;
 import 'package:anivsub/data/data_exports.dart' as _i987;
@@ -97,6 +98,7 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
+    gh.factory<_i203.CommonBloc>(() => _i203.CommonBloc());
     gh.singleton<_i974.Logger>(() => registerModule.logger);
     gh.singleton<_i676.SharedPreferenceService>(
         () => _i676.SharedPreferenceService());

@@ -3,6 +3,7 @@ import 'package:anivsub/presentation/screen/setting/setting.dart';
 import 'package:anivsub/presentation/screen/setting/widget/host_edit_input.dart';
 import 'package:anivsub/presentation/screen/setting/widget/theme_color_widget.dart';
 import 'package:anivsub/presentation/screen/setting/widget/theme_mode_widget.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:anivsub/shared/utils/utils.dart';
@@ -26,8 +27,8 @@ class _SettingPageState extends CubitState<SettingPage, SettingCubit> {
     super.initState();
     _hostController = TextEditingController(text: cubit.state.host ?? '');
     _hostValidator = Validator<String>([
-      (value) => value.isEmpty ? context.l10n.requiredField : null,
-      (value) => value.isValidHost() ? null : context.l10n.invalidHost,
+      (value) => value.isEmpty ? S.current.requiredField : null,
+      (value) => value.isValidHost() ? null : S.current.invalidHost,
     ]);
   }
 

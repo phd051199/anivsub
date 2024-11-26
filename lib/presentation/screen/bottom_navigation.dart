@@ -1,3 +1,4 @@
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +14,6 @@ class BottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        forceMaterialTransparency: true,
         title: Text(
           _getScreenTitle(context, navigationShell.currentIndex),
           style: context.textTheme.headlineMedium?.copyWith(
@@ -46,29 +46,29 @@ class BottomNavigation extends StatelessWidget {
     return [
       NavigationDestination(
         icon: const Icon(Icons.home_filled),
-        label: context.l10n.home,
+        label: S.current.home,
       ),
       NavigationDestination(
         icon: const Icon(Icons.search),
-        label: context.l10n.search,
+        label: S.current.search,
       ),
       NavigationDestination(
         icon: const Icon(Icons.history),
-        label: context.l10n.history,
+        label: S.current.history,
       ),
       NavigationDestination(
         icon: const Icon(Icons.settings),
-        label: context.l10n.setting,
+        label: S.current.setting,
       ),
     ];
   }
 
   String _getScreenTitle(BuildContext context, int index) {
     final titles = [
-      context.l10n.home,
-      context.l10n.search,
-      context.l10n.history,
-      context.l10n.setting,
+      S.current.home,
+      S.current.search,
+      S.current.history,
+      S.current.setting,
     ];
 
     return (index >= 0 && index < titles.length) ? titles[index] : '';

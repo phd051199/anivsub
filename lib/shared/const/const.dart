@@ -5,6 +5,9 @@ export 'ui/paging_constants.dart';
 export 'ui/ui_constants.dart';
 
 const appSettingKey = 'app_setting';
+
+const kTitleFontSize = 20.0;
+
 const accentedCharacters = {
   'à': 'a',
   'á': 'a',

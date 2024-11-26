@@ -1,6 +1,7 @@
 import 'package:anivsub/app/routes/go_router_config.dart';
 import 'package:anivsub/app/theme/app_theme.dart';
 import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/const/const.dart';
 import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +30,9 @@ class MyApp extends StatelessWidget {
       ),
       child: MaterialApp.router(
         builder: (context, child) {
+          S.of(context);
           return MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaler: const TextScaler.linear(1.0),
-            ),
+            data: MediaQuery.of(context),
             child: child ?? const SizedBox.shrink(),
           );
         },

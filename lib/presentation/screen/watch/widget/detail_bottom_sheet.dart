@@ -1,5 +1,6 @@
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/widget/anime/anime_thumbnail.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class DetailBottomSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              context.l10n.detail,
+              S.current.detail,
               style: context.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -32,7 +33,7 @@ class DetailBottomSheet extends StatelessWidget {
               title: Padding(
                 padding: EdgeInsets.only(bottom: Dimens.d12.responsive()),
                 child: Text(
-                  context.l10n.introduction,
+                  S.current.introduction,
                   style: context.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),

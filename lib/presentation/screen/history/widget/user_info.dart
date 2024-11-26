@@ -1,5 +1,6 @@
 import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/login/view/login_screen.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:anivsub/shared/shared_exports.dart';
@@ -60,7 +61,7 @@ class UserInfo extends StatelessWidget {
         Gap(Dimens.d4.responsive()),
         Text(
           user?.email ?? '',
-          style: context.textTheme.bodyMedium?.copyWith(
+          style: context.textTheme.titleMedium?.copyWith(
             color: context.theme.colorScheme.onSurfaceVariant.withOpacity(0.8),
           ),
         ),
@@ -82,7 +83,7 @@ class UserInfo extends StatelessWidget {
       },
       child: ListTile(
         title: Text(
-          context.l10n.login,
+          S.current.login,
           style: context.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
             color: context.theme.colorScheme.onSurfaceVariant,
@@ -91,8 +92,8 @@ class UserInfo extends StatelessWidget {
         subtitle: Padding(
           padding: EdgeInsets.only(top: Dimens.d4.responsive()),
           child: Text(
-            context.l10n.loginMessage,
-            style: context.textTheme.bodyMedium?.copyWith(
+            S.current.loginMessage,
+            style: context.textTheme.titleMedium?.copyWith(
               color:
                   context.theme.colorScheme.onSurfaceVariant.withOpacity(0.8),
             ),

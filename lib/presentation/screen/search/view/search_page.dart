@@ -5,6 +5,7 @@ import 'package:anivsub/presentation/screen/search/bloc/search_bloc.dart';
 import 'package:anivsub/presentation/screen/search/widget/search_results.dart';
 import 'package:anivsub/presentation/screen/search/widget/suggestion_image.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/const/const.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
@@ -165,7 +166,7 @@ class SearchForm extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.search),
-        hintText: context.l10n.searchHint,
+        hintText: S.current.searchHint,
         suffixIcon: context.read<SearchBloc>().state.showClearButton
             ? IconButton(
                 icon: const Icon(Icons.clear),

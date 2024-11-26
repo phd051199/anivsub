@@ -1,5 +1,6 @@
 import 'package:anivsub/app/theme/const/theme_colors.dart';
 import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +22,11 @@ class _ThemeColorWidgetState extends State<ThemeColorWidget>
       children: [
         ListTile(
           contentPadding: EdgeInsets.zero,
-          title: Text(context.l10n.themeColor),
+          title: Text(S.current.themeColor),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(context.l10n.themeColorMessage),
+              Text(S.current.themeColorMessage),
               Gap(Dimens.d8.responsive()),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,

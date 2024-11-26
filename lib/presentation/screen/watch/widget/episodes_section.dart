@@ -3,6 +3,7 @@ import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:collection/collection.dart';
@@ -242,7 +243,7 @@ class _EpisodeHeader extends StatelessWidget {
           color: context.theme.colorScheme.onSurface,
         ),
         title: Text(
-          context.l10n.episodeList,
+          S.current.episodeList,
           style: context.textTheme.bodyMedium?.copyWith(
             fontWeight: FontWeight.bold,
             color: context.theme.colorScheme.onSurface,
@@ -252,7 +253,7 @@ class _EpisodeHeader extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              context.l10n.fullSeason,
+              S.current.fullSeason,
               style: context.textTheme.bodyMedium?.copyWith(
                 color: context.theme.colorScheme.onSurface,
               ),

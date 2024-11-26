@@ -2,6 +2,7 @@ import 'package:anivsub/domain/domain_exports.dart';
 import 'package:anivsub/presentation/screen/watch/watch.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
 import 'package:anivsub/presentation/widget/web_view.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/const/const.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
@@ -271,7 +272,7 @@ class CommentInputField extends StatelessWidget {
               onTapOutside: (_) => context.focusScope.unfocus(),
               controller: textController,
               decoration: InputDecoration(
-                hintText: context.l10n.commentHint,
+                hintText: S.current.commentHint,
                 filled: true,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),

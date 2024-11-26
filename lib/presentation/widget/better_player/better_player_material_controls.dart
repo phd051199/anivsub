@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
 import 'package:anivsub/presentation/widget/loading_widget.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/material.dart';
@@ -243,7 +244,7 @@ class _BetterPlayerCustomMaterialControlsState
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 Text(
-                                  '${context.l10n.episode} ${videoPlayerCubit.state.currentChap?.name}',
+                                  '${S.current.episode} ${videoPlayerCubit.state.currentChap?.name}',
                                   style: context.theme.textTheme.titleSmall!
                                       .copyWith(
                                     color: _controlsConfiguration.textColor

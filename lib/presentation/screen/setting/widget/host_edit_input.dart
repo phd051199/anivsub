@@ -1,4 +1,5 @@
 import 'package:anivsub/presentation/screen/setting/setting.dart';
+import 'package:anivsub/resources/localization.dart';
 import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:anivsub/shared/extension/extension.dart';
 import 'package:anivsub/shared/utils/utils.dart';
@@ -43,27 +44,23 @@ class HostEditInput extends StatelessWidget {
 
     return Form(
       key: formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildHeader(context),
-          Gap(Dimens.d8.responsive()),
-          _buildHostInput(context, state, colorScheme),
-          if (state.isHostUpdated) ...[
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        title: Text(S.current.updateHost),
+        titleTextStyle: context.textTheme.titleMedium?.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Gap(Dimens.d8.responsive()),
-            _buildSuccessMessage(context),
+            _buildHostInput(context, state, colorScheme),
+            if (state.isHostUpdated) ...[
+              Gap(Dimens.d8.responsive()),
+              _buildSuccessMessage(context),
+            ],
           ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeader(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      title: Text(context.l10n.updateHost),
-      titleTextStyle: context.textTheme.titleMedium?.copyWith(
-        fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
@@ -78,7 +75,6 @@ class HostEditInput extends StatelessWidget {
         TextFormField(
           validator: validator.validate,
           decoration: InputDecoration(
-            labelText: context.l10n.hostUrl,
             suffixIcon: SizedBox(width: Dimens.d40.responsive()),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -154,10 +150,10 @@ class HostEditInput extends StatelessWidget {
           Gap(Dimens.d8.responsive()),
           Expanded(
             child: Text(
-              context.l10n.updateHostMessage,
+              S.current.updateHostMessage,
               style: TextStyle(
                 color: Colors.green.shade700,
-                fontSize: 13,
+                fontSize: kDefaultFontSize,
               ),
             ),
           ),
