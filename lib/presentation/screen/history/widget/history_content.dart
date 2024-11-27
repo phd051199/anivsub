@@ -1,8 +1,8 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/history/history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../domain/domain_exports.dart';
+import '../history.dart';
 import 'history_date_group.dart';
 import 'user_info.dart';
 

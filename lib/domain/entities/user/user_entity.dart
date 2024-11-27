@@ -1,6 +1,7 @@
-import 'package:anivsub/data/dto/user/user_dto.dart';
-import 'package:anivsub/domain/domain_exports.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../data/dto/user/user_dto.dart';
+import '../../domain_exports.dart';
 
 part 'user_entity.freezed.dart';
 part 'user_entity.g.dart';

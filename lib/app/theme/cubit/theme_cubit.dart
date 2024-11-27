@@ -1,10 +1,11 @@
-import 'package:anivsub/domain/entities/app/app_setting_entity.dart';
-import 'package:anivsub/domain/usecases/app_setting_usecase.dart';
-import 'package:anivsub/shared/extension/extension.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../domain/entities/app/app_setting_entity.dart';
+import '../../../domain/usecases/app_setting_usecase.dart';
+import '../../../shared/extension/extension.dart';
 
 part 'theme_state.dart';
 

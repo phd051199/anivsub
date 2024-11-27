@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../../resources/localization.dart';
+import '../extension/extension.dart';
 
 class DateTimeUtils {
   const DateTimeUtils._();

@@ -1,5 +1,6 @@
-import 'package:anivsub/data/data_exports.dart';
 import 'package:html/dom.dart' as dom;
+
+import '../data_exports.dart';
 
 class CommonParser {
   const CommonParser._();

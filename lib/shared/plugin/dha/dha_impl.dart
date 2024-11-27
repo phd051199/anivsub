@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pointycastle/export.dart';
 import 'package:wasm_run_flutter/wasm_run_flutter.dart';
 
+import '../../shared_exports.dart';
 import 'dha.dart';
 
 @LazySingleton(as: DHA)

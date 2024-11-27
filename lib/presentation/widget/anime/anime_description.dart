@@ -1,8 +1,9 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
+import '../../../domain/domain_exports.dart';
+import '../../../shared/dimens/dimens.dart';
+import '../../../shared/extension/context_extension.dart';
 
 class AnimeDescription extends StatelessWidget {
   const AnimeDescription({
@@ -26,12 +27,12 @@ class AnimeDescription extends StatelessWidget {
           children: [
             Text(
               movie.studio ?? '',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: context.textTheme.titleSmall?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: context.theme.colorScheme.primary,
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
             Gap(Dimens.d4.responsive()),
             Text(
@@ -45,7 +46,7 @@ class AnimeDescription extends StatelessWidget {
             Gap(Dimens.d4.responsive()),
             Text(
               movie.description,
-              maxLines: 4,
+              maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: context.textTheme.titleSmall?.copyWith(
                 color: context.theme.colorScheme.secondary,
@@ -56,7 +57,7 @@ class AnimeDescription extends StatelessWidget {
               movie.genre?.map((e) => e['name']).join(', ') ?? '',
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: context.textTheme.bodySmall?.copyWith(
+              style: context.textTheme.titleSmall?.copyWith(
                 color: context.theme.colorScheme.tertiary,
                 fontWeight: FontWeight.bold,
               ),

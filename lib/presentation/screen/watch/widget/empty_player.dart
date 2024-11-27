@@ -1,8 +1,9 @@
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../resources/localization.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/extension.dart';
 
 class EmptyPlayer extends StatelessWidget {
   const EmptyPlayer({

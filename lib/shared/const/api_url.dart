@@ -1,5 +1,6 @@
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import '../shared_exports.dart';
 
 const sk9animetvApiUrl = 'https://sk-9animetv.dph.workers.dev';
 const skHianimeApiUrl = 'https://sk-hianime.dph.workers.dev';

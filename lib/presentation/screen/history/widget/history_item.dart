@@ -1,12 +1,13 @@
-import 'package:anivsub/app/routes/go_router_config.dart';
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
-import 'package:anivsub/shared/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../app/routes/go_router_config.dart';
+import '../../../../domain/domain_exports.dart';
+import '../../../../resources/localization.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/context_extension.dart';
+import '../../../../shared/utils/utils.dart';
 
 class HistoryItem extends StatelessWidget {
   const HistoryItem({super.key, required this.item});

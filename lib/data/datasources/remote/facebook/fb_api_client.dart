@@ -1,7 +1,8 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/shared/const/const.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/const/const.dart';
 
 part 'fb_api_client.g.dart';
 

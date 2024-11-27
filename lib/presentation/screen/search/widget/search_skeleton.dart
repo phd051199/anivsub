@@ -1,8 +1,9 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/widget/anime/anime_list.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../widget/anime/anime_list.dart';
 
 class SearchSkeleton extends StatelessWidget {
   const SearchSkeleton({

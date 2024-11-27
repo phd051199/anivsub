@@ -1,7 +1,8 @@
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../resources/localization.dart';
+import '../../shared/extension/context_extension.dart';
 
 class BottomNavigation extends StatelessWidget {
   const BottomNavigation({

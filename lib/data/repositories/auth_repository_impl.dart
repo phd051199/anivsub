@@ -1,7 +1,8 @@
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/shared/utils/utils.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../domain/domain_exports.dart';
+import '../../shared/utils/utils.dart';
+import '../data_exports.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {

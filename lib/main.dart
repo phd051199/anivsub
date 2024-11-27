@@ -1,12 +1,13 @@
 import 'dart:async';
 
-import 'package:anivsub/app/app.dart';
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/di/register_dependencies.dart';
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'app/app.dart';
+import 'shared/const/const.dart';
+import 'shared/di/register_dependencies.dart';
+import 'shared/shared_exports.dart';
 
 void main() => runZonedGuarded(_runMyApp, _reportError);
 

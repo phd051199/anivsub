@@ -1,6 +1,7 @@
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/domain_exports.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../domain/domain_exports.dart';
+import '../data_exports.dart';
 
 @LazySingleton(as: HistoryRepository)
 class HistoryRepositoryImpl implements HistoryRepository {

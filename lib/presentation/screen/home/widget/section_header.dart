@@ -1,6 +1,7 @@
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/context_extension.dart';
 
 class SectionHeader extends StatelessWidget {
   const SectionHeader({super.key, required this.title});

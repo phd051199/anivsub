@@ -1,13 +1,14 @@
-import 'package:anivsub/presentation/screen/bottom_navigation.dart';
-import 'package:anivsub/presentation/screen/history/history.dart';
-import 'package:anivsub/presentation/screen/home/home.dart';
-import 'package:anivsub/presentation/screen/search/search.dart';
-import 'package:anivsub/presentation/screen/setting/setting.dart';
-import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../presentation/screen/bottom_navigation.dart';
+import '../../presentation/screen/history/history.dart';
+import '../../presentation/screen/home/home.dart';
+import '../../presentation/screen/search/search.dart';
+import '../../presentation/screen/setting/setting.dart';
+import '../../presentation/screen/watch/watch.dart';
+import '../../shared/shared_exports.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 

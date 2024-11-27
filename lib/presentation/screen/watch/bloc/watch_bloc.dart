@@ -1,17 +1,18 @@
-import 'package:anivsub/app/base/base.dart';
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/extension/extension.dart';
-import 'package:anivsub/shared/plugin/plugin.dart';
-import 'package:anivsub/shared/services/service.dart';
-import 'package:anivsub/shared/shared_exports.dart';
-import 'package:anivsub/shared/utils/utils.dart';
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
+
+import '../../../../app/base/base.dart';
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/const/const.dart';
+import '../../../../shared/extension/extension.dart';
+import '../../../../shared/plugin/plugin.dart';
+import '../../../../shared/services/service.dart';
+import '../../../../shared/shared_exports.dart';
+import '../../../../shared/utils/utils.dart';
 
 part 'watch_bloc.freezed.dart';
 part 'watch_event.dart';
@@ -545,9 +546,14 @@ class WatchBloc extends BaseBloc<WatchEvent, WatchState> {
   }
 
   List<String> _extractAnimeNames(AnimeDetailEntity detail) {
-    return [detail.name, ...detail.othername.split(',')]
+    return [
+      ...detail.name.split('-'),
+      ...detail.othername.split(','),
+    ]
         .map((name) => name.trim())
-        .where((name) => name.isNotEmpty)
+        .where(
+          (name) => name.isNotEmpty,
+        )
         .toList();
   }
 

@@ -1,12 +1,13 @@
 import 'dart:ui';
 
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/extension.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
+import '../../../resources/localization.dart';
+import '../../../shared/const/const.dart';
+import '../../../shared/dimens/dimens.dart';
+import '../../../shared/extension/extension.dart';
 
 class AnimeThumbnail extends StatelessWidget {
   const AnimeThumbnail({

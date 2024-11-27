@@ -1,9 +1,10 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/presentation/widget/anime/anime_list.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../widget/anime/anime_list.dart';
+import '../watch.dart';
 
 class RelatedSection extends StatelessWidget {
   const RelatedSection({

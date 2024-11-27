@@ -1,6 +1,7 @@
-import 'package:anivsub/data/data_exports.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../data_exports.dart';
 
 @LazySingleton(as: AnimeRemoteDataSource)
 class AnimeRemoteDataSourceImpl implements AnimeRemoteDataSource {

@@ -1,10 +1,11 @@
-import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/presentation/widget/anime/anime_thumbnail.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
+import '../../../../resources/localization.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/context_extension.dart';
+import '../../../widget/anime/anime_thumbnail.dart';
+import '../watch.dart';
 
 class DetailBottomSheet extends StatelessWidget {
   const DetailBottomSheet({super.key, required this.state});

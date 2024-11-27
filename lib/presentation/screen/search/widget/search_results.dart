@@ -1,12 +1,13 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/search/bloc/search_bloc.dart';
-import 'package:anivsub/presentation/screen/search/widget/search_skeleton.dart';
-import 'package:anivsub/presentation/widget/anime/anime_list.dart';
-import 'package:anivsub/presentation/widget/loading_widget.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../widget/anime/anime_list.dart';
+import '../../../widget/loading_widget.dart';
+import '../bloc/search_bloc.dart';
+import 'search_skeleton.dart';
 
 class SearchResults extends StatelessWidget {
   const SearchResults({

@@ -1,10 +1,5 @@
 import 'dart:async';
 
-import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
-import 'package:anivsub/presentation/widget/loading_widget.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:river_player/src/configuration/better_player_controls_configuration.dart';
@@ -16,6 +11,11 @@ import 'package:river_player/src/core/better_player_controller.dart';
 import 'package:river_player/src/core/better_player_utils.dart';
 import 'package:river_player/src/video_player/video_player.dart';
 
+import '../../../resources/localization.dart';
+import '../../../shared/extension/context_extension.dart';
+import '../../../shared/shared_exports.dart';
+import '../../screen/watch/widget/cubit/video_player_cubit.dart';
+import '../loading_widget.dart';
 import 'better_player_material_progress_bar.dart';
 
 class BetterPlayerCustomMaterialControls extends StatefulWidget {

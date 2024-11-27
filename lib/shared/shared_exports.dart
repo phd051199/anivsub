@@ -1,12 +1,13 @@
-import 'package:anivsub/app/notifier/auth_notifier.dart';
-import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
-import 'package:anivsub/shared/plugin/plugin.dart';
-import 'package:anivsub/shared/services/service.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
+
+import '../app/notifier/auth_notifier.dart';
+import '../app/theme/cubit/theme_cubit.dart';
+import '../data/data_exports.dart';
+import '../presentation/screen/watch/widget/cubit/video_player_cubit.dart';
+import 'plugin/plugin.dart';
+import 'services/service.dart';
 
 AuthNotifier get authNotifier => GetIt.I<AuthNotifier>();
 

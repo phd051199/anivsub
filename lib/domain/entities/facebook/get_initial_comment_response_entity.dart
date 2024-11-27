@@ -1,6 +1,7 @@
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/domain_exports.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../data/data_exports.dart';
+import '../../domain_exports.dart';
 
 part 'get_initial_comment_response_entity.freezed.dart';
 

@@ -1,6 +1,7 @@
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/domain_exports.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../domain/domain_exports.dart';
+import '../../data_exports.dart';
 
 part 'pre_search_item_dto.freezed.dart';
 part 'pre_search_item_dto.g.dart';

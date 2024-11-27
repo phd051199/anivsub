@@ -1,13 +1,3 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/presentation/widget/loading_widget.dart';
-import 'package:anivsub/presentation/widget/web_view.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/extension.dart';
-import 'package:anivsub/shared/shared_exports.dart';
-import 'package:anivsub/shared/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:comment_tree/comment_tree.dart';
@@ -15,6 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:gap/gap.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../../resources/localization.dart';
+import '../../../../shared/const/const.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/extension.dart';
+import '../../../../shared/shared_exports.dart';
+import '../../../../shared/utils/utils.dart';
+import '../../../widget/loading_widget.dart';
+import '../../../widget/web_view.dart';
+import '../watch.dart';
 
 class CommentSection extends StatefulWidget {
   const CommentSection({super.key});

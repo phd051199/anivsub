@@ -1,15 +1,16 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/widget/detail_section.dart';
-import 'package:anivsub/presentation/screen/watch/widget/empty_player.dart';
-import 'package:anivsub/presentation/widget/loading_widget.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
-import 'package:anivsub/shared/extension/number_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../../resources/localization.dart';
+import '../../../../shared/const/const.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/context_extension.dart';
+import '../../../../shared/extension/number_extension.dart';
+import '../../../widget/loading_widget.dart';
+import 'detail_section.dart';
+import 'empty_player.dart';
 
 class WatchSkeleton extends StatelessWidget {
   const WatchSkeleton({super.key, this.tag});

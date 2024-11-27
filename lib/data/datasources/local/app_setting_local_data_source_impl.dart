@@ -1,8 +1,9 @@
-import 'package:anivsub/data/datasources/local/app_setting_local_data_source.dart';
-import 'package:anivsub/data/dto/app_setting_dto.dart';
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/services/service.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../shared/const/const.dart';
+import '../../../shared/services/service.dart';
+import '../../dto/app_setting_dto.dart';
+import 'app_setting_local_data_source.dart';
 
 @LazySingleton(as: AppSettingLocalDataSource)
 class AppSettingLocalDataSourceImpl implements AppSettingLocalDataSource {

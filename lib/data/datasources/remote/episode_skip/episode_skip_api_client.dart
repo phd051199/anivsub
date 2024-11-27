@@ -1,7 +1,8 @@
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/shared/const/const.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+
+import '../../../../shared/const/const.dart';
+import '../../../data_exports.dart';
 
 part 'episode_skip_api_client.g.dart';
 

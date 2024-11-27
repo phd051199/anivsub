@@ -1,5 +1,5 @@
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/entities/base_entity.dart';
+import '../../../data/data_exports.dart';
+import '../base_entity.dart';
 
 class RefreshUserSessionResponseEntity
     extends BaseEntity<RefreshUserSessionResponseDTO> {

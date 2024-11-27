@@ -1,6 +1,7 @@
-import 'package:anivsub/data/data_exports.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../data_exports.dart';
 
 @LazySingleton(as: HistoryRemoteDataSource)
 class HistoryRemoteDataSourceImpl implements HistoryRemoteDataSource {

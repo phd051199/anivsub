@@ -1,6 +1,7 @@
-import 'package:anivsub/domain/usecases/base/base.dart';
-import 'package:anivsub/shared/mixin/mixin.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../shared/mixin/mixin.dart';
+import 'base.dart';
 
 abstract class BaseUseCase<Input extends BaseInput, Output> with LogMixin {
   const BaseUseCase();

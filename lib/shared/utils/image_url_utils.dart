@@ -1,4 +1,4 @@
-import 'package:anivsub/shared/shared_exports.dart';
+import '../shared_exports.dart';
 
 class ImageUrlUtils {
   const ImageUrlUtils._();

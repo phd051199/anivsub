@@ -1,7 +1,8 @@
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/resources/localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../data/data_exports.dart';
+import '../../../resources/localization.dart';
+import '../../domain_exports.dart';
 
 part 'home_data_categories_entity.freezed.dart';
 

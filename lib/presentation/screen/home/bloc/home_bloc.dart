@@ -1,9 +1,10 @@
-import 'package:anivsub/app/base/base.dart';
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/shared/extension/extension.dart';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../../app/base/base.dart';
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/extension/extension.dart';
 
 part 'home_bloc.freezed.dart';
 part 'home_event.dart';

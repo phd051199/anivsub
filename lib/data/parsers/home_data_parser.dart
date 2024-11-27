@@ -1,6 +1,7 @@
-import 'package:anivsub/data/data_exports.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
+
+import '../data_exports.dart';
 
 class HomeDataParser {
   const HomeDataParser._();

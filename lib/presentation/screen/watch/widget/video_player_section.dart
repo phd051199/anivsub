@@ -1,10 +1,11 @@
-import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/presentation/screen/watch/widget/empty_player.dart';
-import 'package:anivsub/presentation/screen/watch/widget/video_player.dart';
-import 'package:anivsub/presentation/widget/loading_widget.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../widget/loading_widget.dart';
+import '../watch.dart';
+import 'empty_player.dart';
+import 'video_player.dart';
 
 class VideoPlayerSection extends StatelessWidget {
   const VideoPlayerSection({

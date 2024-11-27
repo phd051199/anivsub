@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import 'package:anivsub/domain/domain_exports.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../domain/domain_exports.dart';
 
 @singleton
 class AuthNotifier with ChangeNotifier {

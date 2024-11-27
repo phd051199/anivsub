@@ -1,11 +1,12 @@
-import 'package:anivsub/presentation/screen/setting/setting.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/extension.dart';
-import 'package:anivsub/shared/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+
+import '../../../../resources/localization.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/extension.dart';
+import '../../../../shared/utils/utils.dart';
+import '../setting.dart';
 
 class HostEditInput extends StatelessWidget {
   const HostEditInput({

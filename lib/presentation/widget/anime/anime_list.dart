@@ -1,12 +1,12 @@
-import 'package:anivsub/app/routes/go_router_config.dart';
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/routes/go_router_config.dart';
+import '../../../domain/domain_exports.dart';
+import '../../../resources/localization.dart';
+import '../../../shared/dimens/dimens.dart';
+import '../../../shared/extension/extension.dart';
 import 'anime_thumbnail.dart';
 
 class AnimeList extends StatelessWidget {
@@ -64,7 +64,10 @@ class AnimeCard extends StatelessWidget {
           } else {
             context.pushNamed(
               Routes.watch.name,
-              queryParameters: {'path': item.path, 'tag': tag.toString()},
+              queryParameters: {
+                'path': item.path,
+                'tag': tag.toString(),
+              },
             );
           }
         },
@@ -86,22 +89,23 @@ class AnimeCard extends StatelessWidget {
                   item.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                if (item.views != null && item.views != 0)
+                if (item.views != null && item.views != 0) ...[
                   Padding(
                     padding: EdgeInsets.only(top: Dimens.d2.responsive()),
                     child: Text(
                       '${S.current.views}: ${item.views?.formatNumber()}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: context.textTheme.labelSmall?.copyWith(
+                      style: context.textTheme.bodySmall?.copyWith(
                         color: context.theme.colorScheme.secondary,
                       ),
                     ),
                   ),
+                ],
               ],
             ),
           ),

@@ -1,14 +1,15 @@
-import 'package:anivsub/app/base/base.dart';
-import 'package:anivsub/presentation/screen/setting/setting.dart';
-import 'package:anivsub/presentation/screen/setting/widget/host_edit_input.dart';
-import 'package:anivsub/presentation/screen/setting/widget/theme_color_widget.dart';
-import 'package:anivsub/presentation/screen/setting/widget/theme_mode_widget.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/extension.dart';
-import 'package:anivsub/shared/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../app/base/base.dart';
+import '../../../../resources/localization.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/extension.dart';
+import '../../../../shared/utils/utils.dart';
+import '../setting.dart';
+import '../widget/host_edit_input.dart';
+import '../widget/theme_color_widget.dart';
+import '../widget/theme_mode_widget.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});

@@ -1,13 +1,14 @@
 import 'dart:async';
 
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:river_player/river_player.dart';
 import 'package:river_player/src/video_player/video_player.dart';
 import 'package:river_player/src/video_player/video_player_platform_interface.dart';
+
+import '../../../domain/domain_exports.dart';
+import '../../../shared/extension/context_extension.dart';
+import '../../../shared/shared_exports.dart';
+import '../../screen/watch/widget/cubit/video_player_cubit.dart';
 
 class BetterPlayerCustomMaterialVideoProgressBar extends StatefulWidget {
   const BetterPlayerCustomMaterialVideoProgressBar({

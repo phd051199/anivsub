@@ -1,17 +1,18 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/presentation/screen/watch/widget/comment_section.dart';
-import 'package:anivsub/presentation/screen/watch/widget/detail_section.dart';
-import 'package:anivsub/presentation/screen/watch/widget/episodes_section.dart';
-import 'package:anivsub/presentation/screen/watch/widget/related_section.dart';
-import 'package:anivsub/presentation/screen/watch/widget/video_player_section.dart';
-import 'package:anivsub/presentation/widget/loading_widget.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../../resources/localization.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/extension.dart';
+import '../../../widget/loading_widget.dart';
+import '../watch.dart';
+import 'comment_section.dart';
+import 'detail_section.dart';
+import 'episodes_section.dart';
+import 'related_section.dart';
+import 'video_player_section.dart';
 
 class WatchContent extends StatelessWidget {
   const WatchContent({

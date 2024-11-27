@@ -1,6 +1,7 @@
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:flutter/material.dart';
+
+import '../../resources/localization.dart';
+import '../../shared/dimens/dimens.dart';
 
 class ErrorDialog {
   static void showErrorDialog({

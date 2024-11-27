@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/shared/extension/string_extension.dart';
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/foundation.dart';
+
+import '../../../data/data_exports.dart';
+import '../../../domain/domain_exports.dart';
+import '../../extension/string_extension.dart';
+import '../../shared_exports.dart';
 
 class FBCommentPlugin {
   FBCommentPlugin({required this.config});

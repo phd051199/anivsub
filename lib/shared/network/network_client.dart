@@ -1,12 +1,13 @@
-import 'package:anivsub/shared/network/auth_interceptor.dart';
-import 'package:anivsub/shared/network/parse_json_interceptor.dart';
-import 'package:anivsub/shared/network/redirect_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
+import 'auth_interceptor.dart';
+import 'parse_json_interceptor.dart';
+import 'redirect_interceptor.dart';
 
 class NetworkClient {
   static Dio getDio({

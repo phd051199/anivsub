@@ -1,20 +1,21 @@
-import 'package:anivsub/app/base/base.dart';
-import 'package:anivsub/app/routes/go_router_config.dart';
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/search/bloc/search_bloc.dart';
-import 'package:anivsub/presentation/screen/search/widget/search_results.dart';
-import 'package:anivsub/presentation/screen/search/widget/suggestion_image.dart';
-import 'package:anivsub/presentation/widget/loading_widget.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+import '../../../../app/base/base.dart';
+import '../../../../app/routes/go_router_config.dart';
+import '../../../../domain/domain_exports.dart';
+import '../../../../resources/localization.dart';
+import '../../../../shared/const/const.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/extension.dart';
+import '../../../widget/loading_widget.dart';
+import '../bloc/search_bloc.dart';
+import '../widget/search_results.dart';
+import '../widget/suggestion_image.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

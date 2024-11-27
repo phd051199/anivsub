@@ -1,4 +1,4 @@
-import 'package:anivsub/domain/entities/app/app_setting_entity.dart';
+import '../entities/app/app_setting_entity.dart';
 
 abstract class AppSettingLocalRepository {
   Future<void> setAppSetting(AppSettingEntity appSetting);

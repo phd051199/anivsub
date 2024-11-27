@@ -1,4 +1,4 @@
-import 'package:anivsub/shared/shared_exports.dart';
+import '../shared_exports.dart';
 
 mixin LogMixin on Object {
   void logDebug(String message, {DateTime? time}) {

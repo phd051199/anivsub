@@ -1,5 +1,6 @@
-import 'package:anivsub/shared/extension/extension.dart';
 import 'package:dio/dio.dart';
+
+import '../extension/extension.dart';
 
 class StringUtils {
   const StringUtils._();

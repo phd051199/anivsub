@@ -1,5 +1,6 @@
-import 'package:anivsub/data/data_exports.dart';
 import 'package:html/parser.dart' as parser;
+
+import '../data_exports.dart';
 
 class PlayDataParser {
   const PlayDataParser._();

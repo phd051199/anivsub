@@ -1,10 +1,11 @@
-import 'package:anivsub/app/routes/go_router_config.dart';
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/widget/anime_description.dart';
-import 'package:anivsub/presentation/widget/anime/anime_thumbnail.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../app/routes/go_router_config.dart';
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../widget/anime/anime_description.dart';
+import '../../../widget/anime/anime_thumbnail.dart';
 
 class AnimeCard extends StatelessWidget {
   const AnimeCard({super.key, required this.movie});

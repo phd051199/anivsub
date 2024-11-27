@@ -1,9 +1,10 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/history/widget/history_item.dart';
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/utils/utils.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/const/const.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/utils/utils.dart';
+import 'history_item.dart';
 
 class HistoryDateGroup extends StatelessWidget {
   const HistoryDateGroup({

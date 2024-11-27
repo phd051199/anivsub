@@ -1,6 +1,7 @@
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
+
+import '../../shared/shared_exports.dart';
 
 class AccountInfoParser {
   const AccountInfoParser._();

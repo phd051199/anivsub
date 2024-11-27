@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:anivsub/shared/const/const.dart';
+import '../const/const.dart';
 
 extension StringExtension on String {
   int extractFirstInt() {

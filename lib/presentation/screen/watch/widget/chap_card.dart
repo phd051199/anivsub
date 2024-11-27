@@ -1,7 +1,8 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/context_extension.dart';
 
 class ChapCard extends StatelessWidget {
   const ChapCard({

@@ -1,5 +1,6 @@
-import 'package:anivsub/domain/domain_exports.dart';
 import 'package:dio/dio.dart';
+
+import '../domain_exports.dart';
 
 abstract class AnimeRepository {
   Future<HomeDataCategoriesEntity> getHomeData();

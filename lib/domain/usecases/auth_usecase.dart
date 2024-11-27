@@ -1,6 +1,7 @@
-import 'package:anivsub/domain/domain_exports.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+
+import '../domain_exports.dart';
 
 part 'auth_usecase.freezed.dart';
 

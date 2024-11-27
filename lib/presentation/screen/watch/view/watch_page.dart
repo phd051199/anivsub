@@ -1,19 +1,20 @@
 import 'dart:io';
 
-import 'package:anivsub/app/base/base.dart';
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/presentation/screen/watch/widget/chapters_grid.dart';
-import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
-import 'package:anivsub/presentation/screen/watch/widget/detail_bottom_sheet.dart';
-import 'package:anivsub/presentation/screen/watch/widget/watch_content.dart';
-import 'package:anivsub/presentation/screen/watch/widget/watch_skeleton.dart';
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/extension/extension.dart';
-import 'package:anivsub/shared/plugin/plugin.dart';
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../app/base/base.dart';
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/const/const.dart';
+import '../../../../shared/extension/extension.dart';
+import '../../../../shared/plugin/plugin.dart';
+import '../../../../shared/shared_exports.dart';
+import '../watch.dart';
+import '../widget/chapters_grid.dart';
+import '../widget/cubit/video_player_cubit.dart';
+import '../widget/detail_bottom_sheet.dart';
+import '../widget/watch_content.dart';
+import '../widget/watch_skeleton.dart';
 
 class WatchPage extends StatefulWidget {
   const WatchPage({super.key, required this.path, this.tag});

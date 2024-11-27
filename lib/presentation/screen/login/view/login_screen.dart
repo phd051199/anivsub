@@ -1,15 +1,16 @@
-import 'package:anivsub/app/base/base.dart';
-import 'package:anivsub/domain/entities/user/user_session_request_entity.dart';
-import 'package:anivsub/presentation/screen/login/cubit/login_cubit.dart';
-import 'package:anivsub/presentation/widget/error_dialog.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
-import 'package:anivsub/shared/utils/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../app/base/base.dart';
+import '../../../../domain/entities/user/user_session_request_entity.dart';
+import '../../../../resources/localization.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/context_extension.dart';
+import '../../../../shared/utils/validator.dart';
+import '../../../widget/error_dialog.dart';
+import '../cubit/login_cubit.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

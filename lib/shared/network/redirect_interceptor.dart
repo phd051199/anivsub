@@ -1,6 +1,7 @@
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:dio/dio.dart';
+
+import '../const/const.dart';
+import '../shared_exports.dart';
 
 class RedirectInterceptor extends Interceptor {
   RedirectInterceptor(this._dio);

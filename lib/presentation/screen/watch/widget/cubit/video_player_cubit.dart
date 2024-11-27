@@ -1,17 +1,18 @@
 import 'dart:async';
 
-import 'package:anivsub/app/base/base.dart';
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/shared/extension/extension.dart';
-import 'package:anivsub/shared/plugin/plugin.dart';
-import 'package:anivsub/shared/shared_exports.dart';
-import 'package:anivsub/shared/utils/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:river_player/river_player.dart';
+
+import '../../../../../app/base/base.dart';
+import '../../../../../data/data_exports.dart';
+import '../../../../../domain/domain_exports.dart';
+import '../../../../../shared/extension/extension.dart';
+import '../../../../../shared/plugin/plugin.dart';
+import '../../../../../shared/shared_exports.dart';
+import '../../../../../shared/utils/utils.dart';
+import '../../watch.dart';
 
 part 'video_player_cubit.freezed.dart';
 part 'video_player_state.dart';

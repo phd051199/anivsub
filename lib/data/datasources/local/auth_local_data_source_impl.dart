@@ -1,6 +1,7 @@
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/shared/services/service.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../shared/services/service.dart';
+import '../../data_exports.dart';
 
 @LazySingleton(as: AuthLocalDataSource)
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {

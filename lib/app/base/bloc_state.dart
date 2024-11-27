@@ -1,9 +1,9 @@
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../shared/dimens/dimens.dart';
+import '../../shared/extension/extension.dart';
 import 'bloc/base_bloc.dart';
 import 'common/common_bloc.dart';
 

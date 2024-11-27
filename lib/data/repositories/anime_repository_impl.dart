@@ -1,8 +1,9 @@
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/domain_exports.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../domain/domain_exports.dart';
+import '../data_exports.dart';
 
 @LazySingleton(as: AnimeRepository)
 class AnimeRepositoryImpl implements AnimeRepository {

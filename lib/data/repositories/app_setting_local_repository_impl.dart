@@ -1,7 +1,8 @@
-import 'package:anivsub/data/datasources/local/app_setting_local_data_source.dart';
-import 'package:anivsub/domain/entities/app/app_setting_entity.dart';
-import 'package:anivsub/domain/repositories/app_setting_local_repository.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../domain/entities/app/app_setting_entity.dart';
+import '../../domain/repositories/app_setting_local_repository.dart';
+import '../datasources/local/app_setting_local_data_source.dart';
 
 @LazySingleton(as: AppSettingLocalRepository)
 class AppSettingLocalRepositoryImpl implements AppSettingLocalRepository {

@@ -1,6 +1,7 @@
-import 'package:anivsub/data/data_exports.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+
+import '../../../data_exports.dart';
 
 part 'scraping_client.g.dart';
 

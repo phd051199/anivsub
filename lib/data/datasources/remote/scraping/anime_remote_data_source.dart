@@ -1,5 +1,6 @@
-import 'package:anivsub/data/data_exports.dart';
 import 'package:dio/dio.dart';
+
+import '../../../data_exports.dart';
 
 abstract class AnimeRemoteDataSource {
   Future<String> getHomeData();

@@ -1,7 +1,8 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/home/widget/section_header.dart';
-import 'package:anivsub/presentation/widget/anime/anime_list.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../widget/anime/anime_list.dart';
+import 'section_header.dart';
 
 class AnimeSection extends StatelessWidget {
   const AnimeSection({super.key, required this.title, required this.movies});

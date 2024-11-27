@@ -1,9 +1,10 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/presentation/screen/watch/widget/chapter_item.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/context_extension.dart';
+import '../watch.dart';
+import 'chapter_item.dart';
 
 class ChaptersGrid extends StatelessWidget {
   const ChaptersGrid({

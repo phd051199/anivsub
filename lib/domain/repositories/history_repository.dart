@@ -1,4 +1,4 @@
-import 'package:anivsub/domain/domain_exports.dart';
+import '../domain_exports.dart';
 
 abstract class HistoryRepository {
   Future<List<QueryHistoryEntity>> queryHistory({

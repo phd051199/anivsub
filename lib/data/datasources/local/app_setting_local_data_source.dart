@@ -1,4 +1,4 @@
-import 'package:anivsub/data/dto/app_setting_dto.dart';
+import '../../dto/app_setting_dto.dart';
 
 abstract class AppSettingLocalDataSource {
   Future<void> setAppSetting(AppSettingDTO appSetting);

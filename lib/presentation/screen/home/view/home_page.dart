@@ -1,9 +1,10 @@
-import 'package:anivsub/app/base/base.dart';
-import 'package:anivsub/presentation/screen/home/home.dart';
-import 'package:anivsub/presentation/screen/home/widget/home_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../../app/base/base.dart';
+import '../home.dart';
+import '../widget/home_content.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

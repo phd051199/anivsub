@@ -1,10 +1,11 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/presentation/screen/watch/widget/chap_card.dart';
-import 'package:anivsub/presentation/screen/watch/widget/cubit/video_player_cubit.dart';
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/shared_exports.dart';
+import '../watch.dart';
+import 'chap_card.dart';
+import 'cubit/video_player_cubit.dart';
 
 class ChapterItem extends StatelessWidget {
   const ChapterItem({

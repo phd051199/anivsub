@@ -1,11 +1,12 @@
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/network/cookies_manager.dart';
-import 'package:anivsub/shared/network/network_client.dart';
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:get_it/get_it.dart';
+
+import '../../data/data_exports.dart';
+import '../const/const.dart';
+import '../network/cookies_manager.dart';
+import '../network/network_client.dart';
+import '../shared_exports.dart';
 
 void registerHttpClient() {
   final cookieManager = GetIt.I<CustomCookiesManager>();

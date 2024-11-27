@@ -1,7 +1,8 @@
-import 'package:anivsub/data/datasources/local/auth_local_data_source.dart';
-import 'package:anivsub/domain/entities/user/user_session_response_entity.dart';
-import 'package:anivsub/domain/repositories/auth_local_repository.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../domain/entities/user/user_session_response_entity.dart';
+import '../../domain/repositories/auth_local_repository.dart';
+import '../datasources/local/auth_local_data_source.dart';
 
 @LazySingleton(as: AuthLocalRepository)
 class AuthLocalRepositoryImpl implements AuthLocalRepository {

@@ -1,13 +1,14 @@
-import 'package:anivsub/app/routes/go_router_config.dart';
-import 'package:anivsub/app/theme/app_theme.dart';
-import 'package:anivsub/app/theme/cubit/theme_cubit.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/shared_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../resources/localization.dart';
+import '../shared/const/const.dart';
+import '../shared/shared_exports.dart';
+import 'routes/go_router_config.dart';
+import 'theme/app_theme.dart';
+import 'theme/cubit/theme_cubit.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -1,7 +1,8 @@
-import 'package:anivsub/data/data_exports.dart';
-import 'package:anivsub/domain/domain_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../data/data_exports.dart';
+import '../../domain_exports.dart';
 
 part 'app_setting_entity.freezed.dart';
 part 'app_setting_entity.g.dart';

@@ -1,11 +1,12 @@
-import 'package:anivsub/domain/domain_exports.dart';
-import 'package:anivsub/presentation/screen/home/home.dart';
-import 'package:anivsub/presentation/screen/home/widget/airing_list.dart';
-import 'package:anivsub/presentation/screen/home/widget/anime_section.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+
+import '../../../../domain/domain_exports.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../home.dart';
+import 'airing_list.dart';
+import 'anime_section.dart';
 
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});

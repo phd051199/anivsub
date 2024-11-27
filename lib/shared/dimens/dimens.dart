@@ -1,6 +1,7 @@
-import 'package:anivsub/shared/const/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../const/const.dart';
 
 part 'app_dimen.dart';
 

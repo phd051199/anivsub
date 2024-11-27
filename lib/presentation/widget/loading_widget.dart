@@ -1,8 +1,9 @@
 import 'dart:io';
 
-import 'package:anivsub/shared/extension/context_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../shared/extension/context_extension.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({

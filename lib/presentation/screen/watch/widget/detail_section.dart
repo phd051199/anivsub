@@ -1,11 +1,12 @@
-import 'package:anivsub/presentation/screen/watch/watch.dart';
-import 'package:anivsub/resources/localization.dart';
-import 'package:anivsub/shared/const/const.dart';
-import 'package:anivsub/shared/dimens/dimens.dart';
-import 'package:anivsub/shared/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+
+import '../../../../resources/localization.dart';
+import '../../../../shared/const/const.dart';
+import '../../../../shared/dimens/dimens.dart';
+import '../../../../shared/extension/extension.dart';
+import '../watch.dart';
 
 class DetailSection extends StatelessWidget {
   const DetailSection({

@@ -1,7 +1,8 @@
-import 'package:anivsub/domain/domain_exports.dart';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+
+import '../domain_exports.dart';
 
 part 'get_play_data_usecase.freezed.dart';
 

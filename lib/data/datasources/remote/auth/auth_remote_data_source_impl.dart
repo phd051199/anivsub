@@ -1,5 +1,6 @@
-import 'package:anivsub/data/data_exports.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../data_exports.dart';
 
 @LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
