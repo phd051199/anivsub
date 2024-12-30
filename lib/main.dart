@@ -9,11 +9,17 @@ import 'shared/const/const.dart';
 import 'shared/di/register_dependencies.dart';
 import 'shared/shared_exports.dart';
 
-void main() => runZonedGuarded(_runMyApp, _reportError);
+Future<void> main() async {
+  await runZonedGuarded(
+    () async => await _runMyApp(),
+    _reportError,
+  );
+}
 
 Future<void> _runMyApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
+
+  await SystemChrome.setPreferredOrientations(
     UiConstants.mobileOrientation,
   );
 
