@@ -2,8 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../shared_exports.dart';
 
-const sk9animetvApiUrl = 'https://sk-9animetv.dph.workers.dev';
-const skHianimeApiUrl = 'https://sk-hianime.dph.workers.dev';
+const skApiUrl = 'https://opend-9animetv.animevsub.eu.org';
 const fbBaseUrl = 'https://www.facebook.com';
 
 final hostCurl = dotenv.get('HOST_CURL');

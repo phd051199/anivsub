@@ -42,10 +42,10 @@ dependencies:
   path_provider: ^2.1.5
   pointycastle: ^3.9.1
   pretty_dio_logger: ^1.4.0
-  retrofit: ^4.4.1
+  retrofit: ^4.4.2
   river_player: ^0.1.4
   scrollable_positioned_list: ^0.3.8
-  shared_preferences: ^2.3.4
+  shared_preferences: ^2.3.5
   skeletonizer: ^1.4.2
   supabase_flutter: ^2.8.2
   video_player: ^2.9.2

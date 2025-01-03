@@ -60,7 +60,7 @@ class _EpisodeSkipApiClient implements EpisodeSkipApiClient {
   }
 
   @override
-  Future<EpisodeSkipResponseDTO> skipEpisode9animetv(
+  Future<EpisodeSkipResponseDTO> skipEpisode(
     String id, {
     CancelToken? cancelToken,
   }) async {
@@ -76,45 +76,7 @@ class _EpisodeSkipApiClient implements EpisodeSkipApiClient {
     )
         .compose(
           _dio.options,
-          'https://sk-9animetv.dph.workers.dev/episode-skip/${id}',
-          queryParameters: queryParameters,
-          data: _data,
-          cancelToken: cancelToken,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late EpisodeSkipResponseDTO _value;
-    try {
-      _value = EpisodeSkipResponseDTO.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
-  }
-
-  @override
-  Future<EpisodeSkipResponseDTO> skipEpisodeHianime(
-    String id, {
-    CancelToken? cancelToken,
-  }) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<EpisodeSkipResponseDTO>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          'https://sk-hianime.dph.workers.dev/episode-skip/${id}',
+          '/episode-skip/${id}',
           queryParameters: queryParameters,
           data: _data,
           cancelToken: cancelToken,

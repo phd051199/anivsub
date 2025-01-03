@@ -35,7 +35,7 @@ void registerHttpClient() {
   GetIt.I.registerSingleton<EpisodeSkipApiClient>(
     EpisodeSkipApiClient(
       NetworkClient.getDio(
-        baseUrl: sk9animetvApiUrl,
+        baseUrl: skApiUrl,
         isAuthenticated: false,
       ),
     ),

@@ -21,10 +21,6 @@ class EpisodeSkipRemoteDataSourceImpl implements EpisodeSkipRemoteDataSource {
     String id, {
     CancelToken? cancelToken,
   }) async {
-    final result = await Future.any([
-      client.skipEpisodeHianime(id, cancelToken: cancelToken),
-      client.skipEpisode9animetv(id, cancelToken: cancelToken),
-    ]);
-    return result;
+    return client.skipEpisode(id, cancelToken: cancelToken);
   }
 }

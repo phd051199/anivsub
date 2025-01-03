@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../../../../shared/const/const.dart';
 import '../../../data_exports.dart';
 
 part 'episode_skip_api_client.g.dart';
@@ -16,14 +15,8 @@ abstract class EpisodeSkipApiClient {
     @CancelRequest() CancelToken? cancelToken,
   });
 
-  @GET('$sk9animetvApiUrl/episode-skip/{id}')
-  Future<EpisodeSkipResponseDTO> skipEpisode9animetv(
-    @Path('id') String id, {
-    @CancelRequest() CancelToken? cancelToken,
-  });
-
-  @GET('$skHianimeApiUrl/episode-skip/{id}')
-  Future<EpisodeSkipResponseDTO> skipEpisodeHianime(
+  @GET('/episode-skip/{id}')
+  Future<EpisodeSkipResponseDTO> skipEpisode(
     @Path('id') String id, {
     @CancelRequest() CancelToken? cancelToken,
   });
